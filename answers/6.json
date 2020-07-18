@@ -1,0 +1,21 @@
+{
+  "title": "Question 6",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360022761833-I-claimed-my-SNX-staking-rewards-but-I-don-t-see-them-in-my-wallet-",
+  "fields": [
+    {
+      "title": "I claimed my SNX staking rewards but I don't see them in my wallet?",
+      "value": "When you 'claim' in the Rewards tab on Mintr you are assigned your % of SNX in an escrow record in the [RewardEscrow Contract ](https://etherscan.io/address/0xb671F2210B1F6621A2607EA63E6B2DC3e2464d1F). Your rewards will not show in your wallet address but they are assigned to your wallet address to be vested in 12 months from their claim date. You will now be able to mint from those escrowed SNX as they are also used as your collateral. So mint away if you can and compound your next weeks SNX rewards.",
+      "inline": true
+    },
+    {
+      "title": "\u200b",
+      "value": "\u200b"
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360022761833-I-claimed-my-SNX-staking-rewards-but-I-don-t-see-them-in-my-wallet-)"
+    }
+  ],
+  "footer": {}
+}

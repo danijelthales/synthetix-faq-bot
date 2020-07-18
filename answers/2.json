@@ -1,0 +1,28 @@
+{
+  "title": "Question 2:",
+  "description": "How can I check exactly how many of my SNX are unlocked?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360022761833-I-claimed-my-SNX-staking-rewards-but-I-don-t-see-them-in-my-wallet-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "If you try to send more SNX than is transferrable the transaction will fail. There are two ways you can check how many SNX are unlocked:"
+    },
+    {
+      "title": "Mintr",
+      "value": "[mintr](https://mintr.synthetix.io/) shows your transferable SNX. To unstake SNX you must burn your Synths or sUSD allow more to be",
+      "inline": true
+    },
+    {
+      "title": "Codepen",
+      "value": "A Synthetix team member created a tool for stakers to check. Go to [codepen](https://codepen.io/justinjmoses/pen/qwqoBR) and enter your wallet address, and you'll be told how many unlocked SNX you have. ",
+      "inline": true
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020902694-How-can-I-check-exactly-how-many-of-my-SNX-are-unlocked-)"
+    }
+  ],
+  "image": "mceclip1.png",
+  "footer": {}
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Question 8",
+  "color": "0099ff",
+  "url": "https://ethgasstation.info/",
+  "fields": [
+    {
+      "title": "What is the current safe gas price?",
+      "value": "Current safe gas price is 23 gwei",
+      "inline": true
+    }
+  ],
+  "footer": {}
+}
