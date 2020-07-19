@@ -2,6 +2,7 @@ require("dotenv").config()
 const Discord = require("discord.js")
 const client = new Discord.Client();
 const replaceString = require('replace-string');
+const https = require('https');
 
 var fs = require('fs');
 
@@ -59,6 +60,7 @@ client.on("message", msg => {
                 args.shift();
                 const command = args.shift();
 
+
                 let rawdata = fs.readFileSync('answers/' + command + '.json');
                 let answer = JSON.parse(rawdata);
 
@@ -68,21 +70,93 @@ client.on("message", msg => {
                 exampleEmbed.setDescription(answer.description);
                 exampleEmbed.setURL(answer.url);
 
-                answer.fields.forEach(function (field) {
-                    exampleEmbed.addField(field.title, field.value, field.inline);
-                });
+                if (command == "7") {
 
-                if (answer.footer.title) {
-                    exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
+                    https.get('https://ethgasstation.info/api/ethgasAPI.json', (resp) => {
+                        let data = '';
 
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("Safe low gas price:", result.safeLow / 10 + ' gwei', false);
+                            exampleEmbed.addField("Standard gas price:", result.average / 10 + ' gwei', false);
+                            exampleEmbed.addField("Fast gas price:", result.fast / 10 + ' gwei', false);
+                            msg.reply(exampleEmbed);
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                } else if (command == "9") {
+
+                    https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
+                        let data = '';
+
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
+                            exampleEmbed.addField("ETH:", result.market_data.current_price.eth, false);
+                            exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
+                            msg.reply(exampleEmbed);
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                } else if (command == "8") {
+
+                    https.get('https://www.coingecko.com/en/coins/susd', (resp) => {
+                        let data = '';
+
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = data.toString();
+                            result = result.substring(result.indexOf("data-coin-symbol=\"susd\" data-target=\"price.price\">") + 51,
+                                result.indexOf("data-coin-symbol=\"susd\" data-target=\"price.price\">") + 55);
+                            exampleEmbed.addField("USD", result, false);
+                            msg.reply(exampleEmbed);
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                } else {
+
+                    answer.fields.forEach(function (field) {
+                        exampleEmbed.addField(field.title, field.value, field.inline);
+                    });
+
+                    if (answer.footer.title) {
+                        exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
+
+                    }
+
+                    if (answer.image) {
+                        exampleEmbed.attachFiles(['images/' + answer.image])
+                            .setImage('attachment://' + answer.image);
+                    }
+
+                    msg.reply(exampleEmbed);
                 }
-
-                if (answer.image) {
-                    exampleEmbed.attachFiles(['images/' + answer.image])
-                        .setImage('attachment://' + answer.image);
-                }
-
-                msg.reply(exampleEmbed);
 
             } else if (msg.content == "categories") {
 
@@ -94,9 +168,11 @@ client.on("message", msg => {
                     .setTitle('Categories');
 
                 categories.forEach(function (category) {
-                    exampleEmbed.addField(category.name, "category " + category.name, false);
+                    exampleEmbed.addField(category.name, category.desc, false);
                 });
 
+                exampleEmbed.setFooter('Choose the category with "category {categoryName}", e.g. "category SNX"',
+                    'https://iafFAQ.files.wordpress.com/2020/03/FAQ-image-iaf-2.png?w=1200');
                 msg.reply(exampleEmbed);
 
             } else if (msg.content.startsWith("category")) {

@@ -1,1 +1,1 @@
-What is the current safe gas price?
+What is the current gas price?

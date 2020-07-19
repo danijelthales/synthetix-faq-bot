@@ -1,0 +1,21 @@
+{
+  "title": "Question 17:",
+  "description": "How can I receive SNX staking rewards?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360019880594-How-can-I-receive-SNX-staking-rewards-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "In February 2019, we provided a long [explanation](https://blog.synthetix.io/synthetix-monetary-policy-changes/) of why we decided after consulting with our large holders to change the total SNX supply over the next five years from 100,000,000 to ~260,000,000, after which there will be an annual 2.5% terminal inflation for [perpetuity](https://blog.synthetix.io/the-capella-release/). The primary reason is to increase greater incentive for SNX holders to stake their SNX and mint Synths, and the schedule is designed to reward early contributors. \n\nThe way the SNX staking rewards work is that holders who have staked their SNX and keep their collateralisation ratio at or above 750% receive a portion of the additional SNX added to the supply. Rewards are distributed weekly to be claimed by SNX holders, and holders can claim their tokens at Mintr for up to two periods (i.e. up to two weeks) in arrears. "
+    },
+    {
+      "title": "Fee Claim: Blocked Status",
+      "value": "Rewards and Fees are blocked from being able to claim if you are below the target C-Ratio. To unblock claiming your rewards you must burn sUSD to get to the target."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360019880594-How-can-I-receive-SNX-staking-rewards-)"
+    }
+  ],
+  "footer": {}
+}

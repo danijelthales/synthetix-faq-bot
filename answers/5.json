@@ -1,21 +1,18 @@
 {
-  "title": "Question 5",
+  "title": "Question 5:",
+  "description": "How can I unlock/vest my escrowed tokens from the HAV token sale?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360022761833-I-claimed-my-SNX-staking-rewards-but-I-don-t-see-them-in-my-wallet-",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360021099893-How-can-I-unlock-vest-my-escrowed-tokens-from-the-HAV-token-sale-",
   "fields": [
     {
-      "title": "I claimed my SNX staking rewards but I don't see them in my wallet?",
-      "value": "When you 'claim' in the Rewards tab on Mintr you are assigned your % of SNX in an escrow record in the [RewardEscrow Contract ](https://etherscan.io/address/0xb671F2210B1F6621A2607EA63E6B2DC3e2464d1F). Your rewards will not show in your wallet address but they are assigned to your wallet address to be vested in 12 months from their claim date. You will now be able to mint from those escrowed SNX as they are also used as your collateral. So mint away if you can and compound your next weeks SNX rewards.",
-      "inline": true
-    },
-    {
-      "title": "\u200b",
-      "value": "\u200b"
+      "title": "Answer:",
+      "value": "If you've got some escrowed SNX (formerly HAV) from the token sale in February 2018, then you'll need to vest (unlock) them.\n\n1. Go to Mintr, and connect your wallet. \n2. In the tabs at the top, select 'ESCROW.' \n3. Select the 'VIEW TOKEN SALE ESCROW' button. \n4. It should give you a schedule of when tokens have become available for vesting. To vest, press the 'VEST NOW' button, which will release the unlocked SNX into your wallet. \n5. Please note that while your tokens were still escrowed, you were able to stake them and mint sUSD against them. If you did this, then you are likely to still have a 'debt' to pay back before you can transfer them. \nAlternatively, to vest them directly using the ABI on MEW, follow the instructions outlined [here](https://blog.synthetix.io/escrowed-havvens-update/). "
     },
     {
       "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360022761833-I-claimed-my-SNX-staking-rewards-but-I-don-t-see-them-in-my-wallet-)"
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360021099893-How-can-I-unlock-vest-my-escrowed-tokens-from-the-HAV-token-sale-)"
     }
   ],
+  "image": "havvEscrow.png",
   "footer": {}
 }

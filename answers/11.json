@@ -1,0 +1,21 @@
+{
+  "title": "Question 11:",
+  "description": "Why does my total sUSD debt fluctuate over time?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360023174973-Why-does-my-total-sUSD-debt-fluctuate-over-time-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "When you stake SNX and mint sUSD, you create a 'debt,' which is how much sUSD you need to burn to unlock your SNX again. Your debt represents a proportion of all the debt in the system. Whenever someone makes a gain through Synths, they make it against all the debt in the system. Therefore, if the system debt increases, your debt will proportionately increase as well. \n\nWhen you mint sUSD, the Synthetix smart contract will work out how much debt you represented in the network at the time you joined. For example, if you minted $1000 sUSD and the total sUSD value of all Synths in circulation is currently $1 million, your debt ratio owed to the network is 0.1%. However, as the total sUSD value of Synths increase (such as when sBTC or sETH increase in value), your debt ratio owed to the network remains constant at 0.1%. Imagine if total sUSD value of all Synths suddenly doubles due to price increases in Synths such as sBTC or sETH, and now gets to $2 million, you will need to repay $2000 sUSD in order to unlock all your SNX.\n\nWhy does this happen? This is because every staker needs to share the debt in proportion to their initial ratio so that the monetary policy balances out. There is no free money created out of thin air. Every sUSD gain generates a corresponding debt value. "
+    },
+    {
+      "title": "A detailed example.",
+      "value": "There is $50k of sUSD in circulation, which represents the total value of all Synths. You then stake your SNX and mint $50k of sBTC (10 sBTC worth $5000 sUSD each) so there's now $100k in total worth of Synths. So, now we have 50k sUSD and 10 sBTC. Now the price of sBTC doubles. There is now 150k in the network in sUSD. So you want to leave. At the time you joined your proportion of the debt was 50%. So you are responsible for 50% now, which is $75k USD. But BTC is $10k, so you will need 7.5 sBTC to exit. This would leave you with 2.5 sBTC free.\n\nWAIT! Where did that 'free money' come from? The answer is that the total debt of the other SNX stakers, the ones who supplied the sUSD, went up by 50% from $50k sUSD to $75k sUSD. So now they will need to burn that much to unlock their SNX. "
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "https://help.synthetix.io/hc/en-us/articles/360023174973-Why-does-my-total-sUSD-debt-fluctuate-over-time-"
+    }
+  ],
+  "footer": {}
+}

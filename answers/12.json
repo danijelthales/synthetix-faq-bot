@@ -1,0 +1,18 @@
+{
+  "title": "Question 12:",
+  "description": "How to claim Synth Exchange Rewards without Mintr, directly using the smart contract?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360022635873-How-to-claim-Synth-Exchange-Rewards-without-Mintr-directly-using-the-smart-contract",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Using Etherscan\n1. Go to the FeePool Contract on Etherscan. \n2. Find the claimFees function.\n3. Click Write "
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360022635873-How-to-claim-Synth-Exchange-Rewards-without-Mintr-directly-using-the-smart-contract)"
+    }
+  ],
+  "image": "claimFees.png",
+  "footer": {}
+}

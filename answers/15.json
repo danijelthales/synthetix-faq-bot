@@ -1,0 +1,21 @@
+{
+  "title": "Question 15:",
+  "description": "How can I claim my SNX Staking Rewards?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360020074534-How-can-I-claim-my-SNX-Staking-Rewards-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "SNX staking rewards can be claimed through Mintr. To claim them through Mintr, go to the 'fees' screen and claim the rewards preferably every week. After 12 months when the escrowed SNX become unlockable, go to the 'Escrow' screen to unlock them.\n\nThe 'fees' screen shows you the number of SNX Rewards you are eligible for. When you click claim/withdraw you will be sent:\n\ns1. USD exchange fees. Which will be available in your wallet immediately after claiming.\n2. SNX staking rewards (remember that they'll be escrowed). \nPlease note that they will be escrowed for 12 months. It is possible to use your escrowed SNX staking rewards as part of your collateral to use to mint sUSD with. It is recommended to mint straight away more sUSD if you can. That way you will be compounding your eligible SNX rewards each week. \n\nBefore claiming, check and adjust your collateralization ratio to minimize any penalties.\n\nWhen 12 months have passed, a vest button will become available on the Escrow screen, which will unlock the SNX. \n\n \n\nOnce in your wallet, you can unlock the SNX from the collateral pool by burning the sUSD you minted from it sUSD. "
+    },
+    {
+      "title": "Recap - Each week:",
+      "value": "1. Fix your c-ratio making sure its above 750% with no fee penalty.\na. Burn sUSD to get above 750%\nb. Mint sUSD to get to 750%\n\n2. Claim rewards each week\n\n3. Mint new sUSD straight away\n\n4. Sell the sUSD or trade it on synthetix.exchange"
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020074534-How-can-I-claim-my-SNX-Staking-Rewards-)"
+    }
+  ],
+  "footer": {}
+}
