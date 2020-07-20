@@ -1,0 +1,1 @@
+How often are prices updated? And where is the price feed/oracle coming from?

@@ -1,0 +1,17 @@
+{
+  "title": "Question 22:",
+  "description": "Why am I blocked from claiming rewards?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "You are blocked from claiming rewards because your Collateralisation Ratio is below the required level (usually 750%, with a small buffer to allow for price fluctuations). To increase your Collateralisation Ratio, you'll need to burn enough sUSD to get your Collateralisation Ratio above 750%. "
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-)"
+    }
+  ],
+  "footer": {}
+}

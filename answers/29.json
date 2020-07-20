@@ -1,0 +1,18 @@
+{
+  "title": "Question 29:",
+  "description": "How often are prices updated? And where is the price feed/oracle coming from?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360020483513-How-often-are-prices-updated-And-where-is-the-price-feed-oracle-coming-from-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Here is the Synthetix oracle address on [etherscan](https://etherscan.io/address/0xac1ed4fabbd5204e02950d68b6fc8c446ac95362).\n\nYou can see when and how often the updateRates calls are made.\n\nAt anypoint you can access what the exchange rates are on the ExchangeRates Contract\n\nIf you want to see the current rate for sBTC. Enter sBTC and click the \"Query\" button.\nThe 18 numbers from the right is the decimal place so in this case after putting the value into the [converter](https://etherconverter.online/) will show the price of sBTC is 9294.8611338663351868"
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020483513-How-often-are-prices-updated-And-where-is-the-price-feed-oracle-coming-from-)"
+    }
+  ],
+  "image": "rateForCurrency.png",
+  "footer": {}
+}

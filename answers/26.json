@@ -1,0 +1,17 @@
+{
+  "title": "Question 26:",
+  "description": "What is fee reclamation?",
+  "color": "0099ff",
+  "url": "https://blog.synthetix.io/how-fee-reclamation-rebates-work/",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "With on chain prices there is always a risk of frontrunning. To protect stakers from frontrunning exposure a fee reclamation mechanism was introduced. Visit the blog page for detailed explanation."
+    },
+    {
+      "title": "For more details visit our blog page:",
+      "value": "[here](https://blog.synthetix.io/how-fee-reclamation-rebates-work/"
+    }
+  ],
+  "footer": {}
+}

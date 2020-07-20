@@ -1,57 +1,98 @@
 [
   {
     "name": "SNX",
-    "desc": "General question about SNX coin",
+    "desc": "General question about SNX token",
     "questions": [
       1,
       2,
-      3,
-      9,
-      17
+      3
     ]
   },
   {
-    "name": "Staking",
-    "desc": "Questions related to staking SNX",
+    "name": "Staking&Minting",
+    "desc": "General question staking SNX and minting sUSD",
     "questions": [
       1,
       2,
       3,
       10,
       11,
-      12,
-      13,
-      14,
       15,
       16,
-      17
+      22,
+      32,
+      33
+    ]
+  },
+  {
+    "name": "Debt&cRatio",
+    "desc": "Questions about debt management and cRatio",
+    "questions": [
+      11,
+      14
+    ]
+  },
+  {
+    "name": "SNX Rewards",
+    "desc": "General question SNX rewards (staking and liquidity pools)",
+    "questions": [
+      1,
+      15,
+      17,
+      22
     ]
   },
   {
     "name": "Synthetix.Exchange",
-    "desc": "Questions about synthetix exchange and synths",
+    "desc": "General question the exchange and synths",
     "questions": [
       4,
+      12,
+      13,
       18,
       19,
-      20
+      20,
+      26,
+      29,
+      30,
+      31
     ]
   },
   {
-    "name": "HAVVEN",
-    "desc": "Questions about old token contract/name",
+    "name": "HAVVEN&ICO",
+    "desc": "Question about the old token name and contracts and the ICO",
     "questions": [
       5,
       6
     ]
   },
   {
-    "name": "GAS",
-    "desc": "Questions about gas amount and prices for synthetix related transactions",
+    "name": "Gas, SNX and synths prices",
+    "desc": "Question about current gas, SNX and synth prices",
     "questions": [
       7,
       8,
       9
     ]
+  },
+  {
+    "name": "Transactions and gas limits",
+    "desc": "Question about failing transactions and their gas limits",
+    "questions": [
+      21,
+      23,
+      25,
+      26,
+      27
+    ]
+  },
+  {
+    "name": "Wallet&dApps",
+    "desc": "Question about supported wallets and dApps",
+    "questions": [
+      24,
+      28
+    ]
   }
+
 ]

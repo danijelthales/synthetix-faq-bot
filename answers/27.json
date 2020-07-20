@@ -1,0 +1,26 @@
+{
+  "title": "Question 27:",
+  "description": "I am not able to burn my sUSD because the transaction keeps failing?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360020077234-I-am-not-able-to-burn-my-sUSD-because-the-transaction-keeps-failing-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "This is usually caused by one of two issues: You do not have enough sUSD in your wallet or 'out of gas' in which case you just need to increase the gas limit. Burning is currently about 1800000 gas. so set it to 2000000.\n\nIf you don't have enough or any sUSD in your wallet, then you probably either:\n\n1. Sold it on an exchange such as Kucoin for ETH or BTC\n2. Or deposited it into the Depot to be sold for ETH on Synthetix.Exchange\n3. Or you exchanged the sUSD into another Synth on Synthetix.Exchange"
+    },
+    {
+      "title": "If so, then this what you need to do:",
+      "value": "1. If you did option 1, buy sUSD with the ETH you received for it from Synthetix.Exchange or Kucoin\n2. If option 2, then if it has not been sold yet, withdraw it from the Depot by clicking the Withdraw sUSD Button \n 3. In this Mintr screen, we have deposited 500 sUSD that has not been sold, so it is available for withdrawal. "
+    },
+    {
+      "title": "Burn any Synth",
+      "value": "If you want to burn any Synth directly on the contract\n\n1. Go to the latest Synthetix [contract](https://contracts.synthetix.io/Synthetix).\n2. Connect your wallet\n3. Find the burnSynths function \n4. Enter the synth Symbol to burn e.g. sETH, sXAU\n5. Enter the amount in [wei](https://etherconverter.online/) to burn e.g. $1sUSD in wei is 1000000000000000000\n6. Click Write"
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020077234-I-am-not-able-to-burn-my-sUSD-because-the-transaction-keeps-failing-)"
+    }
+  ],
+  "image": "burn.png",
+  "footer": {}
+}

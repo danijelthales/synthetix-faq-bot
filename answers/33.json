@@ -1,0 +1,16 @@
+{
+  "title": "Question 33:",
+  "description": "What's the minimum amount of SNX to stake?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "There is no minimum. However, considering the gas prices to claim rewards, it is not advised to stake under 1000 SNX"
+    },
+    {
+      "title": "For more details on rewards calculation check staking calculator:",
+      "value": "[here](https://snx.tools/calculator/staking/)"
+    }
+  ],
+  "footer": {}
+}

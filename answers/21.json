@@ -1,0 +1,17 @@
+{
+  "title": "Question 21:",
+  "description": "Why are my transactions failing?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360019874614-Why-are-my-transactions-failing-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "The most common reason for SNX transfers to fail is that you might have locked SNX. Please read the answer to 'question 3'"
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360019874614-Why-are-my-transactions-failing-)"
+    }
+  ],
+  "footer": {}
+}

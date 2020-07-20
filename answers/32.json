@@ -1,0 +1,17 @@
+{
+  "title": "Question 32:",
+  "description": "Why is there a minimum deposit of 50 sUSD into the Depot?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360019870934-Why-is-there-a-minimum-deposit-of-50-sUSD-into-the-Depot-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "We've implemented a minimum deposit to prevent bad actors filling the queue with tiny amounts (e.g. .0000005) of sUSD, which could cause anyone buying sUSD on Synthetix.Exchange to pay a large amount of gas as they attempted to gather all the tiny entries of sUSD. \n \nFor amounts lower than $50, sell it on an exchange where sUSD is listed, Uniswap, or use it at Synthetix.Exchange to trade for other synthetic assets such as sBTC or Gold."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360019870934-Why-is-there-a-minimum-deposit-of-50-sUSD-into-the-Depot-)"
+    }
+  ],
+  "footer": {}
+}

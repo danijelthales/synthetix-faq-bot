@@ -1,0 +1,1 @@
+How to interact with a Synthetix contract using Metamask Mobile Wallet (Android/IOS)?

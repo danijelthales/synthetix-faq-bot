@@ -1,0 +1,17 @@
+{
+  "title": "Question 28:",
+  "description": "How to interact with a Synthetix contract using Metamask Mobile Wallet (Android/IOS)?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360042212113-How-to-interact-with-a-Synthetix-contract-using-Metamask-Mobile-Wallet-Android-IOS-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "The step below will show you how to:\n\nDownload & setup a new Metamask Mobile Wallet\nInteract with a Smart Contract from a Mobile dApp Browser.\nThe below steps are using Metamask Mobile App which is in beta (use at your own risk) the process has been tested with Trust wallet, but as 23/01 this was not working.\n Download Metamask Mobile App (Beta) Android/IOS  from this [link](https://metamask.zendesk.com/hc/en-us/articles/360031184911-How-to-install-MetaMask-Mobile-Public-Beta-)"
+    },
+    {
+      "title": "Follow the detailed instructions on this page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360042212113-How-to-interact-with-a-Synthetix-contract-using-Metamask-Mobile-Wallet-Android-IOS-)"
+    }
+  ],
+  "footer": {}
+}

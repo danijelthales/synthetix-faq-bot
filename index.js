@@ -118,7 +118,7 @@ client.on("message", msg => {
 
                 } else if (command == "8") {
 
-                    https.get('https://www.coingecko.com/en/coins/susd', (resp) => {
+                    https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
                         let data = '';
 
                         // A chunk of data has been recieved.
@@ -128,10 +128,8 @@ client.on("message", msg => {
 
                         // The whole response has been received. Print out the result.
                         resp.on('end', () => {
-                            let result = data.toString();
-                            result = result.substring(result.indexOf("data-coin-symbol=\"susd\" data-target=\"price.price\">") + 51,
-                                result.indexOf("data-coin-symbol=\"susd\" data-target=\"price.price\">") + 55);
-                            exampleEmbed.addField("USD", result, false);
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
                             msg.reply(exampleEmbed);
                         });
 

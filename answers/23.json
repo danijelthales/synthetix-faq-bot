@@ -1,0 +1,17 @@
+{
+  "title": "Question 23:",
+  "description": "Why are Synthetix transactions so expensive?",
+  "color": "0099ff",
+  "url": "https://help.synthetix.io/hc/en-us/articles/360037619914-Why-are-Synthetix-transactions-so-expensive-",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Transactions cost a certain amount proportional to how much processing power is required for Ethereum miners to process it. The Synthetix system and tokens are more complex than the majority of other Ethereum projects, so its transactions—including simple token transfers—require more gas to be completed. \n\nIf you are used to tokens that are far cheaper to interact with or transfer, that is because they can do far less than the tokens in the Synthetix system. Unfortunately the tradeoff for having a token that can do many things is that it can cost more. The best way to get around this is to try to pay as low GWEI as possible. For more info on how gas works on Ethereum, see this [article](https://blockgeeks.com/guides/ethereum-gas/). "
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360037619914-Why-are-Synthetix-transactions-so-expensive-)"
+    }
+  ],
+  "footer": {}
+}
