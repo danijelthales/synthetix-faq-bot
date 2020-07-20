@@ -33,7 +33,7 @@
     ]
   },
   {
-    "name": "SNX Rewards",
+    "name": "SNX-Rewards",
     "desc": "General question SNX rewards (staking and liquidity pools)",
     "questions": [
       1,
@@ -67,8 +67,8 @@
     ]
   },
   {
-    "name": "Gas, SNX and synths prices",
-    "desc": "Question about current gas, SNX and synth prices",
+    "name": "Prices",
+    "desc": "Question about current gas, SNX and synths prices",
     "questions": [
       7,
       8,
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "name": "Transactions and gas limits",
+    "name": "Transactions&Gas",
     "desc": "Question about failing transactions and their gas limits",
     "questions": [
       21,
