@@ -11,15 +11,16 @@ client.on("ready", () => {
 })
 client.on("message", msg => {
 
-
         if (msg.author.username != "FAQ") {
             if (!(msg.channel.type == "dm")) {
-                if (msg.content.startsWith("!FAQ")) {
+                if (msg.content.toLowerCase().equals("!faq")) {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for help in DM.");
+                } else if (msg.content.toLowerCase().startsWith("!faq question")) {
+                    doQuestion(msg, "!faq question");
                 }
             } else {
                 try {
-                    if (msg.content.trim() == "help") {
+                    if (msg.content.toLowerCase().trim() == "help") {
 
                         const exampleEmbed = new Discord.MessageEmbed()
                             .setColor('#0099ff')
@@ -49,7 +50,7 @@ client.on("message", msg => {
                         } else {
                             msg.reply("I don't know that one. Try just **help** for known commands");
                         }
-                    } else if (msg.content.trim() == "list" || msg.content.trim() == "questions") {
+                    } else if (msg.content.toLowerCase().trim() == "list" || msg.content.toLowerCase().trim() == "questions") {
 
                         let exampleEmbed = new Discord.MessageEmbed()
                             .setColor('#0099ff')
@@ -84,111 +85,8 @@ client.on("message", msg => {
                             msg.reply(exampleEmbed);
                         })
 
-                    } else if (msg.content.startsWith("question ")) {
-
-                        const args = msg.content.slice("question".length).split(' ');
-                        args.shift();
-                        const command = args.shift();
-
-                        try {
-                            let rawdata = fs.readFileSync('answers/' + command + '.json');
-                            let answer = JSON.parse(rawdata);
-
-                            const exampleEmbed = new Discord.MessageEmbed();
-                            exampleEmbed.setColor(answer.color);
-                            exampleEmbed.setTitle(answer.title);
-                            exampleEmbed.setDescription(answer.description);
-                            exampleEmbed.setURL(answer.url);
-
-                            if (command == "7") {
-
-                                https.get('https://ethgasstation.info/api/ethgasAPI.json', (resp) => {
-                                    let data = '';
-
-                                    // A chunk of data has been recieved.
-                                    resp.on('data', (chunk) => {
-                                        data += chunk;
-                                    });
-
-                                    // The whole response has been received. Print out the result.
-                                    resp.on('end', () => {
-                                        let result = JSON.parse(data);
-                                        exampleEmbed.addField("Safe low gas price:", result.safeLow / 10 + ' gwei', false);
-                                        exampleEmbed.addField("Standard gas price:", result.average / 10 + ' gwei', false);
-                                        exampleEmbed.addField("Fast gas price:", result.fast / 10 + ' gwei', false);
-                                        msg.reply(exampleEmbed);
-                                    });
-
-                                }).on("error", (err) => {
-                                    console.log("Error: " + err.message);
-                                });
-
-                            } else if (command == "9") {
-
-                                https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
-                                    let data = '';
-
-                                    // A chunk of data has been recieved.
-                                    resp.on('data', (chunk) => {
-                                        data += chunk;
-                                    });
-
-                                    // The whole response has been received. Print out the result.
-                                    resp.on('end', () => {
-                                        let result = JSON.parse(data);
-                                        exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                                        exampleEmbed.addField("ETH:", result.market_data.current_price.eth, false);
-                                        exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
-                                        msg.reply(exampleEmbed);
-                                    });
-
-                                }).on("error", (err) => {
-                                    console.log("Error: " + err.message);
-                                });
-
-                            } else if (command == "8") {
-
-                                https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
-                                    let data = '';
-
-                                    // A chunk of data has been recieved.
-                                    resp.on('data', (chunk) => {
-                                        data += chunk;
-                                    });
-
-                                    // The whole response has been received. Print out the result.
-                                    resp.on('end', () => {
-                                        let result = JSON.parse(data);
-                                        exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                                        msg.reply(exampleEmbed);
-                                    });
-
-                                }).on("error", (err) => {
-                                    console.log("Error: " + err.message);
-                                });
-
-                            } else {
-
-                                answer.fields.forEach(function (field) {
-                                    exampleEmbed.addField(field.title, field.value, field.inline);
-                                });
-
-                                if (answer.footer.title) {
-                                    exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
-
-                                }
-
-                                if (answer.image) {
-                                    exampleEmbed.attachFiles(['images/' + answer.image])
-                                        .setImage('attachment://' + answer.image);
-                                }
-
-                                msg.reply(exampleEmbed);
-                            }
-                        } catch (e) {
-                            msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
-                        }
-
+                    } else if (msg.content.toLowerCase().startsWith("question ")) {
+                        doQuestion(msg, "question");
                     } else if (msg.content == "categories") {
 
                         let rawdata = fs.readFileSync('categories/categories.json');
@@ -205,7 +103,7 @@ client.on("message", msg => {
                         exampleEmbed.addField('\u200b', "Choose the category with **category categoryName**, e.g. **category SNX**, or **category Synthetix.Exchange**");
                         msg.reply(exampleEmbed);
 
-                    } else if (msg.content.startsWith("category")) {
+                    } else if (msg.content.toLowerCase().startsWith("category")) {
 
                         const args = msg.content.slice("category".length).split(' ');
                         args.shift();
@@ -236,7 +134,7 @@ client.on("message", msg => {
                         }
                         msg.reply(exampleEmbed);
 
-                    } else if (msg.content.startsWith("search ")) {
+                    } else if (msg.content.toLowerCase().startsWith("search ")) {
 
                         const args = msg.content.slice("search".length).split(' ').slice(1);
 
@@ -397,6 +295,113 @@ client.on("message", msg => {
                 }
             }
         }
+
+
+        function doQuestion(msg, toSlice) {
+            const args = msg.content.slice(toSlice.length).split(' ');
+            args.shift();
+            const command = args.shift();
+
+            try {
+                let rawdata = fs.readFileSync('answers/' + command + '.json');
+                let answer = JSON.parse(rawdata);
+
+                const exampleEmbed = new Discord.MessageEmbed();
+                exampleEmbed.setColor(answer.color);
+                exampleEmbed.setTitle(answer.title);
+                exampleEmbed.setDescription(answer.description);
+                exampleEmbed.setURL(answer.url);
+
+                if (command == "7") {
+
+                    https.get('https://ethgasstation.info/api/ethgasAPI.json', (resp) => {
+                        let data = '';
+
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("Safe low gas price:", result.safeLow / 10 + ' gwei', false);
+                            exampleEmbed.addField("Standard gas price:", result.average / 10 + ' gwei', false);
+                            exampleEmbed.addField("Fast gas price:", result.fast / 10 + ' gwei', false);
+                            msg.reply(exampleEmbed);
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                } else if (command == "9") {
+
+                    https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
+                        let data = '';
+
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
+                            exampleEmbed.addField("ETH:", result.market_data.current_price.eth, false);
+                            exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
+                            msg.reply(exampleEmbed);
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                } else if (command == "8") {
+
+                    https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
+                        let data = '';
+
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
+                            msg.reply(exampleEmbed);
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                } else {
+
+                    answer.fields.forEach(function (field) {
+                        exampleEmbed.addField(field.title, field.value, field.inline);
+                    });
+
+                    if (answer.footer.title) {
+                        exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
+
+                    }
+
+                    if (answer.image) {
+                        exampleEmbed.attachFiles(['images/' + answer.image])
+                            .setImage('attachment://' + answer.image);
+                    }
+
+                    msg.reply(exampleEmbed);
+                }
+            } catch (e) {
+                msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
+            }
+        }
+
     }
 )
 client.login(process.env.BOT_TOKEN)
