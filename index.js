@@ -32,7 +32,7 @@ client.on("message", msg => {
                         }
                     });
                     if (!found) {
-                        msg.reply("Oops, I don't know that one. Check out [link](https://github.com/dgornjakovic/synthetix-faq-bot) for list of known questions or [link](https://github.com/dgornjakovic/synthetix-faq-bot/blob/master/categories/aliases.json) for aliases");
+                        msg.reply("Oops, I don't know that one. Check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions or https://github.com/dgornjakovic/synthetix-faq-bot/blob/master/categories/aliases.json for aliases");
                     }
                 }
             } else {
