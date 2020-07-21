@@ -27,11 +27,12 @@ client.on("message", msg => {
                             .setURL('https://help.synthetix.io/hc/en-us');
 
                         exampleEmbed.setDescription('Hello, here is list of commands I know:');
-                        exampleEmbed.addField("list", "List all known questions");
+                        exampleEmbed.addField("list", "Lists all known questions");
                         exampleEmbed.addField("categories", "Lists all categories of known questions");
-                        exampleEmbed.addField("category categoryName", "List all known questions for a given category, e.g. ** category *Staking&Minting* **");
-                        exampleEmbed.addField("question questionNumber", "Show the answer to the question defined by its number, e.g. ** question *7* **");
+                        exampleEmbed.addField("category categoryName", "Lists all known questions for a given category name, e.g. ** category *Staking&Minting* **");
+                        exampleEmbed.addField("question questionNumber", "Shows the answer to the question defined by its number, e.g. ** question *7* **");
                         exampleEmbed.addField("search searchTerm", "Search all known questions by given search term, e.g. ** search *SNX price* **");
+                        exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
                         msg.reply(exampleEmbed);
 

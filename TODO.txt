@@ -1,1 +1,5 @@
 allow short version in all channels or at least guardians to call it
+
+
+
+Link to add it: https://discordapp.com/oauth2/authorize?&client_id=726768243733299211&scope=bot&permissions=51200
