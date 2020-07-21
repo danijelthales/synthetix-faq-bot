@@ -13,7 +13,7 @@ client.on("message", msg => {
 
         if (msg.author.username != "FAQ") {
             if (!(msg.channel.type == "dm")) {
-                if (msg.content.toLowerCase().equals("!faq")) {
+                if (msg.content.toLowerCase()=="!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for help in DM.");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question");
