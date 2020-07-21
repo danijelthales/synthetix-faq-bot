@@ -147,3 +147,13 @@ Can I use ether as collateral?
 How to Trade?  
 51  
 How do I cancel a pending or stuck transaction?  
+
+
+
+# List of aliases currently available
+Use them in channels with **!FAQ alias**, e.g. **!FAQ gas price**.  
+
+* gas price  
+* gas  
+* SNX price  
+* peg  
