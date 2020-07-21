@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "You've probably either minted or bought sUSD, have been trading on Synthetix.Exchange, and now want to cash out into ETH. Here are your options:\n\n1. Exchange sUSD for ETH at Uniswap.Exchange \n2. Sell sUSD on Kucoin for ETH."
+      "value": "You've probably either minted or bought sUSD, have been trading on Synthetix.Exchange, and now want to cash out into ETH. Here are your options:\n1) Convert your synths profit to sUSD on synthetix.exchange\n2) Convert that sUSD to ETH on 1inch.exchange (they will get you the best possible rate)\n"
     },
     {
       "title": "For more details visit our help page:",

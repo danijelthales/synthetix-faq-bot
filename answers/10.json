@@ -2,21 +2,12 @@
   "title": "Question 10:",
   "description": "How to delegate claiming of SNX Rewards?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360042267673-How-to-delegate-claiming-of-SNX-Rewards",
+  "url": "https://blog.synthetix.io/a-guide-to-delegation",
   "fields": [
     {
       "title": "Answer:",
-      "value": "Delegate you wallet address\n\nThis step assumes you have already have a  wallet address to delegate claiming from\n\nGo to the FeePool Contract address [on Etherscan](https://etherscan.io/address/0x94dBa784e87A3F5F12e25EC98bF14233c1e69017). \n\nGo to 'Contract' tab, press 'Write Contract'.\n\nClick 'Connect to Web3' and sign in using MetaMask\n\nScroll down to locate 'approveClaimOnBehalf' \n Enter your delegated wallet address in 'account(address), and press Write.\n\nConfirm the transaction.\n\nYour delegated wallet is now set for claiming SNX Rewards."
-    },
-    {
-      "title": "Claiming  SNX Rewards from your delegated wallet.",
-      "value": "This steps below assumes:\n\n1. You have already Setup a delegate wallet and delegated it using 'approveClaimOnBehalf' method\n2. You have a small amount of ETH in the wallet.\n3. Your C-Ratio is > 750% at the time of claiming.\nGo to the FeePool Contract address [on Etherscan](https://etherscan.io/address/0x94dBa784e87A3F5F12e25EC98bF14233c1e69017). \n\nGo to 'Contract' tab, press 'Write Contract'.\n\nClick 'Connect to Web3' and sign in using MetaMask\n\nScroll down to locate 'claimOnBehalf'' \n Enter the your SNX wallet address that your are claiming on behalf of in 'ClaimingForAddress(address), and Click Write.\n\nConfirm the Transaction.\n\nYou have now claimed your rewards."
-    },
-    {
-      "title": "For more details visit our help page:",
-      "value": "https://help.synthetix.io/hc/en-us/articles/360042267673-How-to-delegate-claiming-of-SNX-Rewards"
+      "value": " Follow the instructions outlined in this blog [post](https://blog.synthetix.io/a-guide-to-delegation/)."
     }
   ],
-  "image": "clainapprovebehalf.jpg",
   "footer": {}
 }

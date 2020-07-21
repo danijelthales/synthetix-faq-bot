@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "This is usually caused by one of two issues: You do not have enough sUSD in your wallet or 'out of gas' in which case you just need to increase the gas limit. Burning is currently about 1800000 gas. so set it to 2000000.\n\nIf you don't have enough or any sUSD in your wallet, then you probably either:\n\n1. Sold it on an exchange such as Kucoin for ETH or BTC\n2. Or deposited it into the Depot to be sold for ETH on Synthetix.Exchange\n3. Or you exchanged the sUSD into another Synth on Synthetix.Exchange"
+      "value": "This is usually caused by one of two issues: You do not have enough sUSD in your wallet or 'out of gas' in which case you just need to increase the gas limit. \n\nIf you don't have enough or any sUSD in your wallet, then you probably either:\n\n1. Sold it on an exchange such as Kucoin for ETH or BTC\n2. Or deposited it into the Depot to be sold for ETH on Synthetix.Exchange\n3. Or you exchanged the sUSD into another Synth on Synthetix.Exchange"
     },
     {
       "title": "If so, then this what you need to do:",

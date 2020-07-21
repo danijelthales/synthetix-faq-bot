@@ -86,7 +86,7 @@ I don't have MetaMask, Trezor, Ledger, or Coinbase Wallet. How can I use the Syn
 25  
 Why are transactions taking so long to process?  
 26  
-What is fee reclamation?  
+Why did I get a less synths on trade? 
 27  
 I am not able to burn my sUSD because the transaction keeps failing.  
 28  
@@ -135,3 +135,5 @@ What are chanlink oracles?
 Can I use ether as collateral?  
 50  
 How to Trade?  
+51  
+How do I cancel a pending or stuck transaction?  

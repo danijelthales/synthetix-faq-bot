@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "There are some limitations to transferring the SNX tokens in your wallet. You can't transfer:\n\nstaked tokens: the SNX that collateralize your debt up to 800%\nescrowed tokens: SNX rewards remain locked under escrow for a year after distribution"
+      "value": "There are some limitations to transferring the SNX tokens in your wallet. You can't transfer:\n\n1. staked tokens: the SNX that collateralize your debt up to 750%\n2. escrowed tokens: SNX rewards remain locked under escrow for a year after distribution"
     },
     {
       "title": "Burning sUSD",

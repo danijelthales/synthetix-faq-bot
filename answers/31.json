@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "You can find links to all the contracts on all the networks [here](https://developer.synthetix.io/api/docs/deployed-contracts.html#mainnet-contracts)\n\nFor the just the token addresses for inclusion to your wallet, they are listed [here](www.synthetix.io/tokens)."
+      "value": "You can find links to all the contracts on all the networks [here](https://developer.synthetix.io/addresses/)\n\nFor the just the token addresses for inclusion to your wallet, they are listed [here](www.synthetix.io/tokens)."
     },
     {
       "title": "For more details visit our help page:",

@@ -2,7 +2,7 @@
   "title": "Question 42:",
   "description": "What is SNX inflation schedule?",
   "color": "0099ff",
-  "url": "https://synthetix.community/docs/sips-sccps",
+  "url": "https://synthetix.community/docs/inflation-schedule",
   "fields": [
     {
       "title": "Answer:",
@@ -10,7 +10,7 @@
     },
     {
       "title": "For more details visit our help page:",
-      "value": "[here](https://synthetix.community/docs/sips-sccps)"
+      "value": "[here](https://synthetix.community/docs/inflation-schedule)"
     }
   ],
   "footer": {}
