@@ -32,8 +32,8 @@ Search all known questions by given search term, e.g. **search SNX price**
 
 
 # List of questions currently available
-To get the answer to a predefined question send the bot the message **question X**, **X** being the question number.  
-e.g. **question 21**
+To get the answer to a predefined question send the bot the message **question X**  
+**X** being the question number, e.g. **question 21**
 
 1  
 I claimed my SNX staking rewards but I don't see them in my wallet?  
