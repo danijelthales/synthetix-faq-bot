@@ -172,12 +172,13 @@ client.on("message", msg => {
                                     } else {
                                         let matchedCount = 0;
                                         args.sort(function (a, b) {
-                                            return b.length - a.length;
+                                            return a.length - b.length;
                                         });
                                         args.forEach(function (arg) {
                                             if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
                                                 rawdata = replaceString(rawdata, arg, '**' + arg + '**');
                                                 rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
+                                                rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
                                                 matchedCount++;
                                             }
                                         });
@@ -255,13 +256,14 @@ client.on("message", msg => {
                                                 fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
                                             } else {
                                                 args.sort(function (a, b) {
-                                                    return b.length - a.length;
+                                                    return a.length - b.length;
                                                 });
                                                 let matchedCount = 0;
                                                 args.forEach(function (arg) {
                                                     if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
                                                         rawdata = replaceString(rawdata, arg, '**' + arg + '**');
                                                         rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
+                                                        rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
                                                         matchedCount++;
                                                     }
                                                 });
