@@ -13,10 +13,10 @@ client.on("message", msg => {
 
         if (msg.author.username != "FAQ") {
             if (!(msg.channel.type == "dm")) {
-                if (msg.content.toLowerCase()=="!faq") {
+                if (msg.content.toLowerCase() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for help in DM.");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
-                    doQuestion(msg, "!faq question");
+                    doQuestion(msg, "!faq question", false);
                 }
             } else {
                 try {
@@ -86,7 +86,7 @@ client.on("message", msg => {
                         })
 
                     } else if (msg.content.toLowerCase().startsWith("question ")) {
-                        doQuestion(msg, "question");
+                        doQuestion(msg, "question", true);
                     } else if (msg.content == "categories") {
 
                         let rawdata = fs.readFileSync('categories/categories.json');
@@ -303,7 +303,7 @@ client.on("message", msg => {
         }
 
 
-        function doQuestion(msg, toSlice) {
+        function doQuestion(msg, toSlice, doReply) {
             const args = msg.content.slice(toSlice.length).split(' ');
             args.shift();
             const command = args.shift();
@@ -401,7 +401,11 @@ client.on("message", msg => {
                             .setImage('attachment://' + answer.image);
                     }
 
-                    msg.reply(exampleEmbed);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
                 }
             } catch (e) {
                 msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
