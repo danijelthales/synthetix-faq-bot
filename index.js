@@ -347,7 +347,11 @@ client.on("message", msg => {
                             exampleEmbed.addField("Safe low gas price:", result.safeLow / 10 + ' gwei', false);
                             exampleEmbed.addField("Standard gas price:", result.average / 10 + ' gwei', false);
                             exampleEmbed.addField("Fast gas price:", result.fast / 10 + ' gwei', false);
-                            msg.reply(exampleEmbed);
+                            if (doReply) {
+                                msg.reply(exampleEmbed);
+                            } else {
+                                msg.channel.send(exampleEmbed);
+                            }
                         });
 
                     }).on("error", (err) => {
@@ -370,7 +374,11 @@ client.on("message", msg => {
                             exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
                             exampleEmbed.addField("ETH:", result.market_data.current_price.eth, false);
                             exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
-                            msg.reply(exampleEmbed);
+                            if (doReply) {
+                                msg.reply(exampleEmbed);
+                            } else {
+                                msg.channel.send(exampleEmbed);
+                            }
                         });
 
                     }).on("error", (err) => {
@@ -391,7 +399,11 @@ client.on("message", msg => {
                         resp.on('end', () => {
                             let result = JSON.parse(data);
                             exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                            msg.reply(exampleEmbed);
+                            if (doReply) {
+                                msg.reply(exampleEmbed);
+                            } else {
+                                msg.channel.send(exampleEmbed);
+                            }
                         });
 
                     }).on("error", (err) => {
