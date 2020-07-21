@@ -14,7 +14,9 @@ client.on("message", msg => {
         if (msg.author.username != "FAQ") {
             if (!(msg.channel.type == "dm")) {
                 if (msg.content.toLowerCase() == "!faq") {
-                    msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for help in DM.");
+                    msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
+                } else if (msg.content.toLowerCase() == "!faq help") {
+                    msg.reply("I can only answer predefined question in channel, e.g. **question 1**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
                 }
