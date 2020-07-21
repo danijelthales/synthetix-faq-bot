@@ -1,0 +1,17 @@
+{
+  "title": "Question 40:",
+  "description": "What are SIPs & SCCPs?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/sips-sccps",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Synthetix Improvement Proposals (SIPs) and Synthetix Configuration Change Proposals (SCCPs) are the formal mechanisms for making changes to the protocol. SIPs are generally more substantial as they're intended for smart contract level changes, while SCCPs are usually just concerned with changing a configuration variable (like inflation allocations, for example).\n\nAnyone can submit either type of proposal, however there is usually discussion in the Discord and on Github prior to a written proposal. If there is rough consensus, the proposal will be implemented in a future release\n [Full list of SIPs](https://sips.synthetix.io/all-sip) \n[Full list of SCCPs](https://sips.synthetix.io/all-sccp)"
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/sips-sccps)"
+    }
+  ],
+  "footer": {}
+}

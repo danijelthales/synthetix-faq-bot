@@ -1,0 +1,17 @@
+{
+  "title": "Question 38:",
+  "description": "What is Curve Stablecoin Pool?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/stablecoin-pool",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "As of March 2020, Synthetix is running a sUSD liquidity trial on Curve. The Foundation is contributing 32k SNX per week to those incentives, paid programmatically to liquidity providers in the Curve.fi sUSD/y.curve.fi pool.\n\nRead the team's blog post announcing the trial [here](https://blog.synthetix.io/susd-liquidity-trial-with-curve-iearn/)."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/stablecoin-pool)"
+    }
+  ],
+  "footer": {}
+}

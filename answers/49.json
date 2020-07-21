@@ -1,0 +1,21 @@
+{
+  "title": "Question 49:",
+  "description": "Can I use ether as collateral?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/eth-as-collateral",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "One limitation of the Synthetix system is that the total value of all synthetics is capped by the SNX token itself. As of February 2020, the SNX market cap is about $150 million. At a 750% C-RATIO, the maximum synthetics value is about $20 million. Up-to-date stats are available on Dashboard\n\nAs of the February 2020 Achernar release, an experimental version of Ether Collateral is now live. Traders can obtain a sETH loan for 150% ETH collateral and pay a 5% interest fee. The provisional \"Skinny Eth\" period will only last three months and traders must repay their loans by the closing of the period.\n\nYou can take out an ETH Collateral loan here."
+    },
+    {
+      "title": "Community Discussion",
+      "value": "There was a lengthy [discussion](https://github.com/Synthetixio/synthetix/issues/232) of the pros and cons on the Synthetix Github issues page.\n\nCrucially, ETH collateral stakers will not be eligible for staking rewards. Fees will be directed into the SNX stakers rewards pool.\n\nAfter the experimental Skinny ETH Collateral period ends in May 2020, the initiative will be revisited and reformed based on trader and community feedback, as well as an analysis of the mechanics of the system."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/eth-as-collateral)"
+    }
+  ],
+  "footer": {}
+}

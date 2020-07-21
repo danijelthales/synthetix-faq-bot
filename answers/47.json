@@ -1,0 +1,17 @@
+{
+  "title": "Question 47:",
+  "description": "What is layer 2?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/layer-2",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "In order to effectively compete with centralized alternatives, Synthetix intends to migrate the system onto a scalable Layer 2 network. Despite recent improvements, gas costs on Mintr and Exchange are still quite high. Additionally, many potential traders and stakers aren't fluent enough in Web3 to participate in the network (without some abstraction). For both of these reasons, deploying Synthetix onto a scalable, user-friendly Layer 2 is a critical part of the roadmap.\n\nIn May 2020, the team announced a Layer 2 demo launched in coordination with the Optimism team. See the team's [blog post](https://blog.synthetix.io/synthetix-exchange-l2-demo/) for more info."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/layer-2)"
+    }
+  ],
+  "footer": {}
+}

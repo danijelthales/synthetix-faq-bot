@@ -1,0 +1,17 @@
+{
+  "title": "Question 46:",
+  "description": "how can I use my sUSD?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/susd-tracker",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "The Synthetix community is [extremely bullish](https://synthetix.community/blog/2020/04/13/the-rise-of-susd) on the potential for sUSD becoming the decentralized stablecoin of choice in the Ethereum/DeFi ecosystem. This page is for aggregating all the projects and protocols building on and integrating sUSD.\n\n[Aave](https://blog.synthetix.io/susd-and-snx-are-now-available-in-aave-protocol-for-lending-and-borrowing/) for lending and borrowing\n[bZX](https://blog.synthetix.io/susd-is-now-available-for-lending-and-borrowing-through-bzx/) for lending and borrowing\n[Curve](https://blog.synthetix.io/susd-liquidity-trial-with-curve-iearn/) for an incentivized stablecoin trading pool\n[Kyber](https://blog.kyber.network/synth-usd-susd-is-now-available-on-kyber-network-7f5e11a550ea) for trading\n[Sablier](https://pay.sablier.finance/) for streaming (by-the-second continuous payments)\nAnother Synthetix stablecoin - sAUD - is integrated for payments with [RelayPay](https://blog.synthetix.io/use-saud-for-payments-with-relaypay/) as well."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/susd-tracker)"
+    }
+  ],
+  "footer": {}
+}

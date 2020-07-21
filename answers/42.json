@@ -1,0 +1,17 @@
+{
+  "title": "Question 42:",
+  "description": "What is SNX inflation schedule?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/sips-sccps",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "To bootstrap the network early on, the Synthetix team implemented a high incentive inflation model from March 2019, designed to attract capital and promote staking. More on Synthetix's monetary policy and the decision-making process [here](https://blog.synthetix.io/synthetix-monetary-policy-changes/).\n\nThis inflationary monetary policy was planned to begin as a 75% annualized rate distributed weekly, and was set to halve each year for five years. However, a community-driven [initiative](https://blog.synthetix.io/the-capella-release/) that reached consensus through community governance smoothed the inflation rate in December 2019. You can read a detailed post about this process [here](https://blog.synthetix.io/reaching-monetary-policy-consensus/).\n\nThis update also added a perpetual 2.5% annual inflation beginning on September 7, 2023, the 235th week on the SNX inflation schedule. This was determined through the same comumunity governance process."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/sips-sccps)"
+    }
+  ],
+  "footer": {}
+}

@@ -1,2 +1,1 @@
-
 allow short version in all channels or at least guardians to call it

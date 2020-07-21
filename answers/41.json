@@ -1,0 +1,17 @@
+{
+  "title": "Question 41:",
+  "description": "What are inverse synths (iSynths)?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/inverse-synths",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "The team has a [good explanation](https://blog.synthetix.io/inverse-synths-are-back/#how-inverse-synths-work-) of how inverse synths work. Synths trade in a range with an upper and lower limit and, if limits are breached by the real-world asset, the synth is disabled and the positions are liquidated. At some point after, the team will deploy a new version of the inverse synth with new upper and lower bounds."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/inverse-synths)"
+    }
+  ],
+  "footer": {}
+}

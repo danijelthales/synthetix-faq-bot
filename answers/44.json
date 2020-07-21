@@ -1,0 +1,17 @@
+{
+  "title": "Question 44:",
+  "description": "What is Discord Tip Bot?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/tip-bot",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Thanks to the productive SNX professor, @nocturnalsheet, you can now tip SNX to other community members in the Synthetix Discord. Read the post bellow to see how it works."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/tip-bot)"
+    }
+  ],
+  "footer": {}
+}

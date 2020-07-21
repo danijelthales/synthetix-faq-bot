@@ -1,0 +1,17 @@
+{
+  "title": "Question 35:",
+  "description": "Why is it important to incentivise people to create a Synth liquidity pool?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/other",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "There is currently an sUSD liquidity pool on Curve where people can use other stablecoins to purchase sUSD, and vice versa.\n\nThe Curve pool is a decentralized way to provide on/off ramps to the Synth system, so newcomers can start trading easily and exit the system easily. Changes in the exchange rate are bad for liquidity providers (i.e. impermanent loss). Since the sUSD/stablecoin ratio should be pretty much constant, that pool is ideal for liquidity providers: there is no impermanent loss so the liquidity providers should end up getting all of the exchange fees. To make it even more enticing for LPs, some of the SNX inflationary reward has been diverted to them. The result is a deep liquidity pool, which is good for the Synth ecosystem. Before this liquidity pool, the main way to get in and out of trading on Synthetix.Exchange (other than by minting) was to use thin markets on centralized exchanges."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/other)"
+    }
+  ],
+  "footer": {}
+}

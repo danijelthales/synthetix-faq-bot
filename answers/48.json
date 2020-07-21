@@ -1,0 +1,17 @@
+{
+  "title": "Question 48:",
+  "description": "What are chanlink oracles?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/chainlink-oracles",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Chainlink Oracles\nOne potential risk of the Synthetix system is that the oracle price feeds operation - the source of truth for the smart contracts - is still centralized with the Synthetix Core team. While this generally hasn't been an issue, it still represents a centralized point of failure for a protocol that aims to be decentralized.\n\nTo move away from that centralization, the team is experimenting with the Chainlink oracle system. As of April 2020, most market feeds have migrated to Chainlink and all future synth assets must be supportable by Chainlink's network.\n\nRead more [here](https://github.com/Synthetixio/synthetix/issues/293)."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/chainlink-oracles)"
+    }
+  ],
+  "footer": {}
+}

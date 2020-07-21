@@ -1,0 +1,17 @@
+{
+  "title": "Question 37:",
+  "description": "Why does the number of my staked SNX fluctuate?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/staking",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "If you've staked your SNX, you might have noticed that the number of staked SNX in your wallet can change. This is due to fluctuations in the SNX price. If you stake your SNX at a 750% Collateralisation Ratio, and the SNX value increases, then your C-Ratio will increase and some of your SNX will be unstaked. This is because only enough SNX to cover a 750% ratio will be staked. But then if the SNX value decreases, and your C-Ratio goes back to 750%, all of your SNX will be staked once again.\n\nIf your C-Ratio is above 750%, you can always choose to stake the rest of your SNX by selecting 'Mint Max.' This will increase the number of staking rewards you are entitled to receive."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/staking)"
+    }
+  ],
+  "footer": {}
+}

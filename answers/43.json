@@ -1,0 +1,17 @@
+{
+  "title": "Question 43:",
+  "description": "Is SNX Liquid?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/is-snx-liquid",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Most of the supply of SNX is staked to the network, so the free-floating liquidity is less than most tokens with similar supply. However, data providers like CoinMarketCap don't account for the majority of SNX volume, which occurs on decentralized exchanges and on an active OTC market."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/is-snx-liquid)"
+    }
+  ],
+  "footer": {}
+}

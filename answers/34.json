@@ -1,0 +1,17 @@
+{
+  "title": "Question 34:",
+  "description": "Where do Synth price feeds come from?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/other",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "Synthetix has partnered with Chainlink, whose network of independent node operators supply price feeds for our fiat currencies and commodities. We will be furthering the integration with Chainlink in the future to cover the rest of the Synths.\n\nPrice feeds not yet supplied by Chainlink are supplied by a centralised oracle that will be deprecated when the transition is complete."
+    },
+    {
+      "title": "For more details visit our help page:",
+      "value": "[here](https://synthetix.community/docs/other)"
+    }
+  ],
+  "footer": {}
+}
