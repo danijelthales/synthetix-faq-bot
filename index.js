@@ -175,8 +175,9 @@ client.on("message", msg => {
                                             return b.length - a.length;
                                         });
                                         args.forEach(function (arg) {
-                                            if (rawdata.includes(arg)) {
+                                            if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
                                                 rawdata = replaceString(rawdata, arg, '**' + arg + '**');
+                                                rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
                                                 matchedCount++;
                                             }
                                         });
@@ -258,8 +259,9 @@ client.on("message", msg => {
                                                 });
                                                 let matchedCount = 0;
                                                 args.forEach(function (arg) {
-                                                    if (rawdata.includes(arg)) {
+                                                    if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
                                                         rawdata = replaceString(rawdata, arg, '**' + arg + '**');
+                                                        rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
                                                         matchedCount++;
                                                     }
                                                 });
