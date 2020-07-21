@@ -1,5 +1,4 @@
 allow short version in all channels or at least guardians to call it
-
-
+for search is it possible to ignore common words like "the", "my" , "is", etc - give them lowest priority
 
 Link to add it: https://discordapp.com/oauth2/authorize?&client_id=726768243733299211&scope=bot&permissions=51200
