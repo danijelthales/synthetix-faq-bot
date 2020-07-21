@@ -4,6 +4,10 @@
     "alias": "gas price"
   },
   {
+    "number": 7,
+    "alias": "gas"
+  },
+  {
     "number": 8,
     "alias": "peg"
   },
