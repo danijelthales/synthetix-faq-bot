@@ -1,0 +1,14 @@
+[
+  {
+    "number": 7,
+    "alias": "gas price"
+  },
+  {
+    "number": 8,
+    "alias": "peg"
+  },
+  {
+    "number": 9,
+    "alias": "snx price"
+  }
+]

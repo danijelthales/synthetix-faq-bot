@@ -19,6 +19,18 @@ client.on("message", msg => {
                     msg.reply("I can only answer a predefined question in a channel, e.g. **question 1**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
+                } else if (msg.content.toLowerCase().startsWith("!faq ")) {
+                    let potentialAlias = msg.content.toLowerCase().replace("!faq","").trim();
+                    let rawdata = fs.readFileSync('categories/aliases.json');
+                    let aliases = JSON.parse(rawdata);
+                    aliases.forEach(function (alias) {
+                        if (alias.alias.toLowerCase() == potentialAlias) {
+                            msg.content="!faq question "+alias.number;
+                            doQuestion(msg, "!faq question", false);
+                        }
+                    });
+
+
                 }
             } else {
                 try {
