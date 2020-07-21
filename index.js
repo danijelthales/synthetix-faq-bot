@@ -171,6 +171,9 @@ client.on("message", msg => {
                                         fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
                                     } else {
                                         let matchedCount = 0;
+                                        args.sort(function (a, b) {
+                                            return b.length - a.length;
+                                        });
                                         args.forEach(function (arg) {
                                             if (rawdata.includes(arg)) {
                                                 rawdata = replaceString(rawdata, arg, '**' + arg + '**');
@@ -243,6 +246,9 @@ client.on("message", msg => {
                                                 rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
                                                 fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
                                             } else {
+                                                args.sort(function (a, b) {
+                                                    return b.length - a.length;
+                                                });
                                                 let matchedCount = 0;
                                                 args.forEach(function (arg) {
                                                     if (rawdata.includes(arg)) {
