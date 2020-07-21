@@ -193,15 +193,22 @@ client.on("message", msg => {
                                 exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
                             } else {
 
+                                let counter = 0;
                                 fullMatches.forEach(function (match) {
-                                    exampleEmbed.addField(match.title, match.value, false);
+                                    counter++;
+                                    if (counter < 6) {
+                                        exampleEmbed.addField(match.title, match.value, false);
+                                    }
                                 });
 
                                 partialMatches.sort(function (a, b) {
                                     return b.matchedCount - a.matchedCount;
                                 });
                                 partialMatches.forEach(function (match) {
-                                    exampleEmbed.addField(match.title, match.value, false);
+                                    counter++;
+                                    if (counter < 6) {
+                                        exampleEmbed.addField(match.title, match.value, false);
+                                    }
                                 });
 
                                 exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
