@@ -16,21 +16,24 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 } else if (msg.content.toLowerCase() == "!faq help") {
-                    msg.reply("I can only answer a predefined question in a channel, e.g. **question 1**. \n For more commands and options send me **help** in DM");
+                    msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
                 } else if (msg.content.toLowerCase().startsWith("!faq ")) {
-                    let potentialAlias = msg.content.toLowerCase().replace("!faq","").trim();
+                    let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
                     let rawdata = fs.readFileSync('categories/aliases.json');
                     let aliases = JSON.parse(rawdata);
+                    let found = false;
                     aliases.forEach(function (alias) {
                         if (alias.alias.toLowerCase() == potentialAlias) {
-                            msg.content="!faq question "+alias.number;
+                            found = true;
+                            msg.content = "!faq question " + alias.number;
                             doQuestion(msg, "!faq question", false);
                         }
                     });
-
-
+                    if (!found) {
+                        msg.reply("Oops, I don't know that one. Check out [link](https://github.com/dgornjakovic/synthetix-faq-bot) for list of known questions or [link](https://github.com/dgornjakovic/synthetix-faq-bot/blob/master/categories/aliases.json) for aliases");
+                    }
                 }
             } else {
                 try {
