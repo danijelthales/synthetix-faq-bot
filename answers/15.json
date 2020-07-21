@@ -6,7 +6,11 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "SNX staking rewards can be claimed through Mintr. To claim them through Mintr, go to the 'fees' screen and claim the rewards preferably every week. After 12 months when the escrowed SNX become unlockable, go to the 'Escrow' screen to unlock them.\n\nThe 'fees' screen shows you the number of SNX Rewards you are eligible for. When you click claim/withdraw you will be sent:\n\ns1. USD exchange fees. Which will be available in your wallet immediately after claiming.\n2. SNX staking rewards (remember that they'll be escrowed). \nPlease note that they will be escrowed for 12 months. It is possible to use your escrowed SNX staking rewards as part of your collateral to use to mint sUSD with. It is recommended to mint straight away more sUSD if you can. That way you will be compounding your eligible SNX rewards each week. \n\nBefore claiming, check and adjust your collateralization ratio to minimize any penalties.\n\nWhen 12 months have passed, a vest button will become available on the Escrow screen, which will unlock the SNX. \n\n \n\nOnce in your wallet, you can unlock the SNX from the collateral pool by burning the sUSD you minted from it sUSD. "
+      "value": "SNX staking rewards can be claimed through Mintr. To claim them through Mintr, go to the 'fees' screen and claim the rewards preferably every week. After 12 months when the escrowed SNX become unlockable, go to the 'Escrow' screen to unlock them.\n\nThe 'fees' screen shows you the number of SNX Rewards you are eligible for. When you click claim/withdraw you will be sent:\n\ns1. USD exchange fees. Which will be available in your wallet immediately after claiming.\n2. SNX staking rewards (remember that they'll be escrowed)."
+    },
+    {
+      "title": "\u200b:",
+      "value": "Please note that they will be escrowed for 12 months. It is possible to use your escrowed SNX staking rewards as part of your collateral to use to mint sUSD with. It is recommended to mint straight away more sUSD if you can. That way you will be compounding your eligible SNX rewards each week. \n\nBefore claiming, check and adjust your collateralization ratio to minimize any penalties.\n\nWhen 12 months have passed, a vest button will become available on the Escrow screen, which will unlock the SNX. "
     },
     {
       "title": "Recap - Each week:",
