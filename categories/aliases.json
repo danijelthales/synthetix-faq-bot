@@ -30,5 +30,13 @@
   {
     "number": 6,
     "alias": "havven"
+  },
+  {
+    "number": 42,
+    "alias": "inflation"
+  },
+  {
+    "number": 15,
+    "alias": "claim snx rewards"
   }
 ]
