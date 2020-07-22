@@ -15,7 +15,7 @@ All aliases are defined in: https://github.com/dgornjakovic/synthetix-faq-bot/bl
 # Usage in direct messaging
 
 The bot is intended to be used in direct messaging.
-It has a list of predefined commands which can be browser if 'help' message is sent to the bot.
+It has a list of predefined commands which can be browsed if **help** message is sent to the bot.
 
 Additonally to known commands, the bot **can be asked a custom question (detected by a question mark at the end of the message)**. It will search for best possible match in the list of know questions.
 
