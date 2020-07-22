@@ -1,5 +1,15 @@
 # synthetix-faq-bot
-Implementation of Discord bot for answering synthetix related questions
+Implementation of Discord bot for answering synthetix related questions.  
+
+The bot has a categorized predefined list of most frequent questions.  
+    
+It offers search functionality to users in DM.  
+
+When asked a question in DM, the bot will try to find the best possible match from the known questions.  
+
+It also offers using one or many aliases for a question to post an answer to a question in public channel.  
+
+The answers are built using Discord Embeds for pretty print, embedding links and adding images.
 
 # Usage in channels
 The bot is triggered by the prefix **!faq** in channels.  
