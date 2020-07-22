@@ -42,7 +42,7 @@ Shows the answer to the question defined by its number, e.g. **question 7**
 Search all known questions by given search term, e.g. **search SNX price**
 
 
-#List of questions currently available
+# List of questions currently available
 To get the answer to a predefined question send the bot the message **question X**  
 **X** being the question number, e.g. **question 21**
 
@@ -151,7 +151,7 @@ How do I cancel a pending or stuck transaction?
 
 
 
-#List of aliases currently available
+# List of aliases currently available
 Use them in channels with **!FAQ alias**, e.g. **!FAQ gas price**.  
 
 * gas price  
