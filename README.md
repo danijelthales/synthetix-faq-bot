@@ -160,5 +160,6 @@ Use them in channels with **!FAQ alias**, e.g. **!FAQ gas price**.
 * peg  
 * snx unlock  
 * havven  
-* inflation    
+* inflation 
+* expensive transactions     
 

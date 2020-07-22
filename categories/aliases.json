@@ -38,5 +38,9 @@
   {
     "number": 15,
     "alias": "claim snx rewards"
+  },
+  {
+    "number": 23,
+    "alias": "expensive transactions"
   }
 ]
