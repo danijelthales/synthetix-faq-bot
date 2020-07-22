@@ -37,18 +37,19 @@ client.on("message", msg => {
                     const exampleEmbed = new Discord.MessageEmbed()
                         .setColor('#0099ff')
                         .setTitle('Known aliases')
-                        .setURL('https://help.synthetix.io/hc/en-us');
+                        .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
                     exampleEmbed.setDescription('Hello, here are the aliases I know:');
 
-                    questionMap.forEach(function (entry) {
+                    for (let [questionNumber, questions] of questionMap) {
                         let questionsString = "";
-                        let questionNumber = entry[0];
-                        let questions = entry[1];
                         questions.forEach(function (q) {
-                            questions += q + "\n";
+                            questionsString += "faq! " + q + "\n";
                         })
-                        exampleEmbed.addField(questionNumber, questions);
-                    });
+                        let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
+                        let answer = JSON.parse(rawdata);
+                        exampleEmbed.addField(answer.title +' '+ answer.description, questionsString);
+                    }
+
                     msg.channel.send(exampleEmbed);
                 } else if (msg.content.toLowerCase().startsWith("!faq ")) {
                     let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
