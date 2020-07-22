@@ -19,6 +19,37 @@ client.on("message", msg => {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
+                } else if (msg.content.toLowerCase() == "!faq aliases") {
+                    let rawdata = fs.readFileSync('categories/aliases.json');
+                    let aliases = JSON.parse(rawdata);
+                    let questionMap = new Map();
+                    aliases.forEach(function (alias) {
+                        let aliasQuestion = questionMap.get(alias.number);
+                        if (aliasQuestion) {
+                            aliasQuestion.push(alias.alias);
+                            questionMap.set(alias.number, aliasQuestion);
+                        } else {
+                            let aliasQuestion = new Array();
+                            aliasQuestion.push(alias.alias);
+                            questionMap.set(alias.number, aliasQuestion);
+                        }
+                    });
+                    const exampleEmbed = new Discord.MessageEmbed()
+                        .setColor('#0099ff')
+                        .setTitle('Known aliases')
+                        .setURL('https://help.synthetix.io/hc/en-us');
+                    exampleEmbed.setDescription('Hello, here are the aliases I know:');
+
+                    questionMap.forEach(function (entry) {
+                        let questionsString = "";
+                        let questionNumber = entry[0];
+                        let questions = entry[1];
+                        questions.forEach(function (q) {
+                            questions += q + "\n";
+                        })
+                        exampleEmbed.addField(questionNumber, questions);
+                    });
+                    msg.channel.send(exampleEmbed);
                 } else if (msg.content.toLowerCase().startsWith("!faq ")) {
                     let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
                     let rawdata = fs.readFileSync('categories/aliases.json');
@@ -448,10 +479,9 @@ client.on("message", msg => {
                     }
                 }
             } catch (e) {
-                if(doReply) {
+                if (doReply) {
                     msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
-                }
-                else{
+                } else {
                     msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***!FAQ question questionNumber***, e.g. **question 1**\nYou can get the question number if you send me **list** in DM");
                 }
             }
