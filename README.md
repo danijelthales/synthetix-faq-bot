@@ -8,7 +8,7 @@ Examples:
 **!FAQ question 1**  
 **!FAQ gas price**  
 
-The list of all questions is shown [bellow](#List of aliases currently available)  
+The list of all questions is shown bellow.
 All aliases are defined in: https://github.com/dgornjakovic/synthetix-faq-bot/blob/master/categories/aliases.json
 
 # Usage in direct messaging
