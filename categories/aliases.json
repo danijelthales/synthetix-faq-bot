@@ -14,5 +14,13 @@
   {
     "number": 9,
     "alias": "snx price"
+  },
+  {
+    "number": 9,
+    "alias": "snx"
+  },
+  {
+    "number": 3,
+    "alias": "unlock snx"
   }
 ]
