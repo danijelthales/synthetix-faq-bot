@@ -8,7 +8,7 @@ Examples:
 **!FAQ question 1**  
 **!FAQ gas price**  
 
-The list of all questions is shown bellow.  
+The list of all questions is shown [bellow](#List of aliases currently available)  
 All aliases are defined in: https://github.com/dgornjakovic/synthetix-faq-bot/blob/master/categories/aliases.json
 
 # Usage in direct messaging
@@ -41,7 +41,7 @@ Shows the answer to the question defined by its number, e.g. **question 7**
 Search all known questions by given search term, e.g. **search SNX price**
 
 
-# List of questions currently available
+#List of questions currently available
 To get the answer to a predefined question send the bot the message **question X**  
 **X** being the question number, e.g. **question 21**
 
