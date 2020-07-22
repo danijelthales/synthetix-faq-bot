@@ -19,7 +19,7 @@ It has a list of predefined commands which can be browsed if **help** message is
 
 Additonally to known commands, the bot **can be asked a custom question (detected by a question mark at the end of the message)**. It will search for best possible match in the list of know questions.
 
-# Known commands
+## Known DM commands
 
 **help**  
 Displays the list of known commands
