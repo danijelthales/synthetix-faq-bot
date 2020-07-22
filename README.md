@@ -1,7 +1,7 @@
 # synthetix-faq-bot
 Implementation of Discord bot for answering synthetix related questions
 
-# Usage in channel
+# Usage in channels
 The bot is triggered by the prefix **!FAQ** in channels.  
 The bot can answer predefined questions either by their question number of by alias.  
 Examples:  
@@ -14,7 +14,7 @@ All aliases are defined in: https://github.com/dgornjakovic/synthetix-faq-bot/bl
 
 # Usage in direct messaging
 
-The bot is intended to be used in direct messaging.
+The bot is intended to be used mainly in direct messaging.
 It has a list of predefined commands which can be browsed if **help** message is sent to the bot.
 
 Additonally to known commands, the bot **can be asked a custom question (detected by a question mark at the end of the message)**. It will search for best possible match in the list of know questions.
