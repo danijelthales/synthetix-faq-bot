@@ -22,5 +22,13 @@
   {
     "number": 3,
     "alias": "unlock snx"
+  },
+  {
+    "number": 3,
+    "alias": "snx unlock"
+  },
+  {
+    "number": 6,
+    "alias": "havven"
   }
 ]
