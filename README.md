@@ -2,15 +2,15 @@
 Implementation of Discord bot for answering synthetix related questions
 
 # Usage in channels
-The bot is triggered by the prefix **!FAQ** in channels.  
+The bot is triggered by the prefix **!faq** in channels.  
 The bot can answer predefined questions either by their question number of by alias.  
 Examples:  
-**!FAQ question 1**  
-**!FAQ gas price**  
+**!faq question 1**  
+**!faq gas price**  
 
 The list of all [questions](#list-of-questions-currently-available).  
 The list of all [aliases](#list-of-aliases-currently-available).  
-All aliases are defined in: https://github.com/dgornjakovic/synthetix-faq-bot/blob/master/categories/aliases.json
+You can also get the latest aliases from the bot by doing  **!faq aliases**
 
 # Usage in direct messaging
 
@@ -152,15 +152,25 @@ How do I cancel a pending or stuck transaction?
 
 
 # List of aliases currently available
-Use them in channels with **!FAQ alias**, e.g. **!FAQ gas price**.  
+Use them in channels with **!faq alias**, e.g. **!faq gas price**.  
+To get a list of all aliases you can do **!faq aliases**
 
-* gas price  
-* gas  
-* SNX price  
-* snx  
-* peg  
-* snx unlock  
-* havven  
-* inflation 
-* expensive transactions     
-
+* Question 7: What is the current gas price?  
+faq! gas price  
+faq! gas  
+* Question 8: What is the current sUSD price?  
+faq! peg  
+Question 9: What is the current SNX price?  
+faq! snx price  
+faq! snx  
+* Question 3: I previously locked my SNX to mint sUSD. How can I unlock my SNX?  
+faq! unlock snx  
+faq! snx unlock  
+* Question 6: My wallet says I have havvens (HAV) but no SNX?  
+faq! havven  
+* Question 42: What is SNX inflation schedule?  
+faq! inflation  
+Question 15: How can I claim my SNX Staking Rewards?  
+faq! claim snx rewards  
+* Question 23: Why are Synthetix transactions so expensive?  
+faq! expensive transactions  
