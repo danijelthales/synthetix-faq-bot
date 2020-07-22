@@ -8,7 +8,8 @@ Examples:
 **!FAQ question 1**  
 **!FAQ gas price**  
 
-The list of all questions is shown bellow.
+The list of all [questions](#list-of-questions-currently-available).  
+The list of all [aliases](#list-of-aliases-currently-available).  
 All aliases are defined in: https://github.com/dgornjakovic/synthetix-faq-bot/blob/master/categories/aliases.json
 
 # Usage in direct messaging
@@ -150,7 +151,7 @@ How do I cancel a pending or stuck transaction?
 
 
 
-# List of aliases currently available
+#List of aliases currently available
 Use them in channels with **!FAQ alias**, e.g. **!FAQ gas price**.  
 
 * gas price  
