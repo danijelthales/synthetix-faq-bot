@@ -86,5 +86,73 @@
   {
     "number": 52,
     "alias": "$60"
+  },
+  {
+    "number": 41,
+    "alias": "inverse synths"
+  },
+  {
+    "number": 41,
+    "alias": "iSynths"
+  },
+  {
+    "number": 11,
+    "alias": "failing transactions"
+  },
+  {
+    "number": 26,
+    "alias": "fee reclamation"
+  },
+  {
+    "number": 33,
+    "alias": "minimum stake"
+  },
+  {
+    "number": 45,
+    "alias": "high gas"
+  },
+  {
+    "number": 45,
+    "alias": "gasshole"
+  },
+  {
+    "number": 49,
+    "alias": "eth collateral"
+  },
+  {
+    "number": 51,
+    "alias": "stuck transaction"
+  },
+  {
+    "number": 51,
+    "alias": "pending transaction"
+  },
+  {
+    "number": 40,
+    "alias": "sip"
+  },
+  {
+    "number": 40,
+    "alias": "sccp"
+  },
+  {
+    "number": 31,
+    "alias": "contracts"
+  },
+  {
+    "number": 22,
+    "alias": "claiming blocked"
+  },
+  {
+    "number": 10,
+    "alias": "delegate claiming"
+  },
+  {
+    "number": 37,
+    "alias": "snx staked fluctuation"
+  },
+  {
+    "number": 11,
+    "alias": "debt fluctuation"
   }
 ]

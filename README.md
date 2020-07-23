@@ -112,7 +112,7 @@ I don't have MetaMask, Trezor, Ledger, or Coinbase Wallet. How can I use the Syn
 25  
 Why are transactions taking so long to process?  
 26  
-Why did I get a less synths on trade? 
+Why did I get a less synths on trade?   
 27  
 I am not able to burn my sUSD because the transaction keeps failing.  
 28  
