@@ -189,3 +189,32 @@ Question 15: How can I claim my SNX Staking Rewards?
 faq! claim snx rewards  
 * Question 23: Why are Synthetix transactions so expensive?  
 faq! expensive transactions  
+* Question 41: What are inverse synths (iSynths)?  
+faq! inverse synths  
+faq! iSynths  
+* Question 11: Why does my total sUSD debt fluctuate over time?  
+faq! failing transactions  
+faq! debt fluctuation  
+* Question 26: Why did I get a less synths on trade?  
+faq! fee reclamation  
+* Question 33: What's the minimum amount of SNX to stake?  
+faq! minimum stake  
+* Question 45: Why Is Gas So High?  
+faq! high gas  
+faq! gasshole  
+* Question 49: Can I use ether as collateral?  
+faq! eth collateral  
+* Question 51: How do I cancel a pending or stuck transaction?  
+faq! stuck transaction  
+faq! pending transaction  
+* Question 40: What are SIPs & SCCPs?  
+faq! sip  
+faq! sccp  
+* Question 31: Where can I find a list of all the contracts?  
+faq! contracts  
+* Question 22: Why am I blocked from claiming rewards?  
+faq! claiming blocked  
+* Question 10: How to delegate claiming of SNX Rewards?  
+faq! delegate claiming  
+* Question 37: Why does the number of my staked SNX fluctuate?  
+faq! snx staked fluctuation  
