@@ -156,7 +156,7 @@ how can I use my sUSD?
 47  
 What is layer 2?  
 48  
-What are chanlink oracles?  
+What are chainlink oracles?  
 49  
 Can I use ether as collateral?  
 50  
@@ -218,3 +218,7 @@ faq! claiming blocked
 faq! delegate claiming  
 * Question 37: Why does the number of my staked SNX fluctuate?  
 faq! snx staked fluctuation  
+* Question 54: What is the synthetix roadmap?  
+faq! roadmap  
+* Question 47: What is layer 2?  
+faq! l2  
