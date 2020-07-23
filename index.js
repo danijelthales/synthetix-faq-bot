@@ -69,7 +69,7 @@ client.on("message", msg => {
                 }
             } else {
                 try {
-                    let encodedForm = Buffer.from(msg.content).toString().toString('base64');
+                    let encodedForm = Buffer.from(msg.content).toLowerCase().toString('base64');
                     if (encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw=="||
                         encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/"||
                         encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw=="||

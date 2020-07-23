@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "As gas prices on the Ethereum network increase, transaction costs on Synthetix platforms increase. The core contributors have worked to make the Synthetix contracts more gas-efficient, but gas prices on the network are not in the community's control./n This [page](https://synthetix.community/docs/why-is-gas-so-high) contains examples on the synthetix transactions costs per gwei price."
+      "value": "As gas prices on the Ethereum network increase, transaction costs on Synthetix platforms increase. The core contributors have worked to make the Synthetix contracts more gas-efficient, but gas prices on the network are not in the community's control.\n This [page](https://synthetix.community/docs/why-is-gas-so-high) contains examples on the synthetix transactions costs per gwei price."
     },
     {
       "title": "For more details visit our help page:",
