@@ -69,6 +69,21 @@ client.on("message", msg => {
                 }
             } else {
                 try {
+                    let encodedForm = Buffer.from(msg.content).toString('base64');
+                    if (encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw=="||
+                        encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/"||
+                        encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw=="||
+                        encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==") {
+                        const exampleEmbed = new Discord.MessageEmbed()
+                            .setColor('#0099ff')
+                            .setTitle('You found it!');
+
+                        exampleEmbed.setDescription('Wow, bravo, you found the ultimate question!');
+                        exampleEmbed.addField("The answer is:", Buffer.from("NDI=", 'base64').toString('utf-8'));
+
+                        msg.reply(exampleEmbed);
+
+                    } else
                     if (msg.content.toLowerCase().trim() == "help") {
 
                         const exampleEmbed = new Discord.MessageEmbed()
