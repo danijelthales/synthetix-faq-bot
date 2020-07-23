@@ -6,8 +6,9 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "2020. has been a terrific year for synthetix so far. Check what's more to come in the detailed [roadmap](https://blog.synthetix.io/2020-roadmap/)"
+      "value": "2020 has been a terrific year for synthetix so far. Check what's more to come in the detailed [roadmap](https://blog.synthetix.io/2020-roadmap/)"
     }
   ],
-  "footer": {}
+  "footer": {},
+  "image": "2020-roadmap.png"
 }
