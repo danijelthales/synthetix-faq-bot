@@ -7,9 +7,12 @@ It offers search functionality to users in DM.
 
 When asked a question in DM, the bot will try to find the best possible match from the known questions.  
 
-It also offers using one or many aliases for a question to post an answer to a question in public channel.  
+This is the list of [commands](#known-dm-commands) available in DM with the bot.
 
-The answers are built using Discord Embeds for pretty print, embedding links and adding images.
+In public channels the bot is only meant to answer predefined questions, with the command **!FAQ question *questionNumber***, e.g. **!FAQ question 7**.  
+It can also use [aliases](#list-of-aliases-currently-available) for a question to post an answer in public channel, e.g. **!FAQ gas price**.    
+
+The answers are built using Discord [Embeds](https://discordjs.guide/popular-topics/embeds.html) for pretty print, embedding links and adding images.
 
 # Usage in channels
 The bot is triggered by the prefix **!faq** in channels.  
