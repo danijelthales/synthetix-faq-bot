@@ -69,16 +69,16 @@ client.on("message", msg => {
                 }
             } else {
                 try {
-                    let encodedForm = Buffer.from(msg.content).toString('base64');
+                    let encodedForm = Buffer.from(msg.content).toString().toString('base64');
                     if (encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw=="||
                         encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/"||
                         encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw=="||
                         encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==") {
                         const exampleEmbed = new Discord.MessageEmbed()
                             .setColor('#0099ff')
-                            .setTitle('You found it!');
+                            .setTitle('Bravo, you found the ultimate question!');
 
-                        exampleEmbed.setDescription('Wow, bravo, you found the ultimate question!');
+                        exampleEmbed.setDescription(Buffer.from("d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==", 'base64').toString('utf-8'));
                         exampleEmbed.addField("The answer is:", Buffer.from("NDI=", 'base64').toString('utf-8'));
 
                         msg.reply(exampleEmbed);
