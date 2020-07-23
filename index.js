@@ -380,7 +380,7 @@ client.on("message", msg => {
 
                 if (command == "7") {
 
-                    https.get('https://ethgasstation.info/api/ethgasAPI.json', (resp) => {
+                    https.get('https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=f1288d74c2725ac52e2f15d21292a75c07b8428c5671a4fccad1b91aa7ad', (resp) => {
                         let data = '';
 
                         // A chunk of data has been recieved.
