@@ -47,7 +47,7 @@ client.on("message", msg => {
                         })
                         let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
                         let answer = JSON.parse(rawdata);
-                        exampleEmbed.addField(answer.title +' '+ answer.description, questionsString);
+                        exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
                     }
 
                     msg.channel.send(exampleEmbed);
@@ -69,10 +69,10 @@ client.on("message", msg => {
                 }
             } else {
                 try {
-                    let encodedForm = Buffer.from(msg.content).toLowerCase().toString('base64');
-                    if (encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw=="||
-                        encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/"||
-                        encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw=="||
+                    let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
+                    if (encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==" ||
+                        encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/" ||
+                        encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw==" ||
                         encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==") {
                         const exampleEmbed = new Discord.MessageEmbed()
                             .setColor('#0099ff')
@@ -83,8 +83,7 @@ client.on("message", msg => {
 
                         msg.reply(exampleEmbed);
 
-                    } else
-                    if (msg.content.toLowerCase().trim() == "help") {
+                    } else if (msg.content.toLowerCase().trim() == "help") {
 
                         const exampleEmbed = new Discord.MessageEmbed()
                             .setColor('#0099ff')
