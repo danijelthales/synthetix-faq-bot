@@ -17,56 +17,17 @@ client.on("message", msg => {
 
         if (msg.author.username != "FAQ") {
             if (!(msg.channel.type == "dm")) {
-                if (msg.content.toLowerCase() == "!faq") {
+                // this is logic for channels
+                if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
-                } else if (msg.content.toLowerCase() == "!faq help") {
+                } else if (msg.content.toLowerCase().trim() == "!faq help") {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
-                } else if (msg.content.toLowerCase() == "!faq aliases") {
-                    let rawdata = fs.readFileSync('categories/aliases.json');
-                    let aliases = JSON.parse(rawdata);
-                    let questionMap = new Map();
-                    aliases.forEach(function (alias) {
-                        let aliasQuestion = questionMap.get(alias.number);
-                        if (aliasQuestion) {
-                            aliasQuestion.push(alias.alias);
-                            questionMap.set(alias.number, aliasQuestion);
-                        } else {
-                            let aliasQuestion = new Array();
-                            aliasQuestion.push(alias.alias);
-                            questionMap.set(alias.number, aliasQuestion);
-                        }
-                    });
-                    const exampleEmbed = new Discord.MessageEmbed()
-                        .setColor('#0099ff')
-                        .setTitle('Known aliases')
-                        .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
-                    exampleEmbed.setDescription('Hello, here are the aliases I know:');
-
-                    for (let [questionNumber, questions] of questionMap) {
-                        let questionsString = "";
-                        questions.forEach(function (q) {
-                            questionsString += "!faq " + q + "\n";
-                        })
-                        let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
-                        let answer = JSON.parse(rawdata);
-                        exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
-                    }
-
-                    msg.channel.send(exampleEmbed);
-                } else if (msg.content.toLowerCase().startsWith("!faq ")) {
-                    let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
-                    let rawdata = fs.readFileSync('categories/aliases.json');
-                    let aliases = JSON.parse(rawdata);
-                    let found = false;
-                    aliases.forEach(function (alias) {
-                        if (alias.alias.toLowerCase() == potentialAlias) {
-                            found = true;
-                            msg.content = "!faq question " + alias.number;
-                            doQuestion(msg, "!faq question", false);
-                        }
-                    });
+                } else if (msg.content.toLowerCase().trim() == "!faq aliases") {
+                    showAllAliases(false);
+                } else if (msg.content.toLowerCase().trim().startsWith("!faq ")) {
+                    let found = checkAliasMatching(false);
                     if (!found) {
                         msg.reply("Oops, I don't know that one. You can get all aliases I know with **!faq aliases** \nCheck out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
                     }
@@ -74,51 +35,20 @@ client.on("message", msg => {
             } else {
                 try {
 
-                    let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
-                    let rawdata = fs.readFileSync('categories/aliases.json');
-                    let aliases = JSON.parse(rawdata);
-                    let found = false;
-                    aliases.forEach(function (alias) {
-                        if (alias.alias.toLowerCase() == potentialAlias) {
-                            found = true;
-                            msg.content = "!faq question " + alias.number;
-                            doQuestion(msg, "!faq question", false);
-                        }
-                    });
+                    // this is the logic for DM
+                    console.log("I got sent a DM:" + msg.content);
+
+                    let found = checkAliasMatching(true);
+                    // if alias is found, just reply to it, otherwise continue
+
                     if (!found) {
-
-                        console.log("I got sent a DM:" + msg.content);
                         let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
-                        if (encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==" ||
-                            encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/" ||
-                            encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw==" ||
-                            encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==") {
-                            const exampleEmbed = new Discord.MessageEmbed()
-                                .setColor('#0099ff')
-                                .setTitle('Bravo, you found the ultimate question!');
-
-                            exampleEmbed.setDescription(Buffer.from("d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==", 'base64').toString('utf-8'));
-                            exampleEmbed.addField("The answer is:", Buffer.from("NDI=", 'base64').toString('utf-8'));
-
-                            msg.reply(exampleEmbed);
-
+                        if (checkIfUltimateQuestion(encodedForm)) {
+                            answerUltimateQuestion();
+                        } else if (msg.content.toLowerCase().trim() == "aliases") {
+                            showAllAliases(true);
                         } else if (msg.content.toLowerCase().trim() == "help") {
-
-                            const exampleEmbed = new Discord.MessageEmbed()
-                                .setColor('#0099ff')
-                                .setTitle('Synthetix Frequently Asked Questions')
-                                .setURL('https://help.synthetix.io/hc/en-us');
-
-                            exampleEmbed.setDescription('Hello, here is list of commands I know:');
-                            exampleEmbed.addField("list", "Lists all known questions");
-                            exampleEmbed.addField("categories", "Lists all categories of known questions");
-                            exampleEmbed.addField("category categoryName", "Lists all known questions for a given category name, e.g. ** category *Staking&Minting* **");
-                            exampleEmbed.addField("question questionNumber", "Shows the answer to the question defined by its number, e.g. ** question *7* **");
-                            exampleEmbed.addField("search searchTerm", "Search all known questions by given search term, e.g. ** search *SNX price* **");
-                            exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
-
-                            msg.reply(exampleEmbed);
-
+                            doFaqHelp();
                         } else if (msg.content.startsWith("help ")) {
                             const args = msg.content.slice("help".length).split(' ');
                             args.shift();
@@ -133,59 +63,12 @@ client.on("message", msg => {
                                 msg.reply("I don't know that one. Try just **help** for known commands");
                             }
                         } else if (msg.content.toLowerCase().trim() == "list" || msg.content.toLowerCase().trim() == "questions") {
-
-                            let exampleEmbed = new Discord.MessageEmbed()
-                                .setColor('#0099ff')
-                                .setTitle('Frequently Asked Questions')
-                                .setURL('https://help.synthetix.io/hc/en-us');
-
-                            fs.readdir('questions', function (err, files) {
-                                if (err) {
-                                    console.log("Error getting directory information.")
-                                } else {
-                                    let counter = 0;
-                                    let pagenumber = 2;
-                                    files.sort(function (a, b) {
-                                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
-                                    });
-                                    files.forEach(function (file) {
-                                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                                        exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false)
-                                        counter++;
-                                        if (counter == 20) {
-                                            msg.reply(exampleEmbed);
-                                            exampleEmbed = new Discord.MessageEmbed()
-                                                .setColor('#0099ff')
-                                                .setTitle('Frequently Asked Questions page ' + pagenumber)
-                                                .setURL('https://help.synthetix.io/hc/en-us');
-                                            pagenumber++;
-                                            counter = 0;
-                                        }
-                                    })
-                                }
-                                exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-                                msg.reply(exampleEmbed);
-                            })
-
+                            listQuestions();
                         } else if (msg.content.toLowerCase().startsWith("question ")) {
                             console.log("question asked:" + msg.content);
                             doQuestion(msg, "question", true);
                         } else if (msg.content == "categories") {
-
-                            let rawdata = fs.readFileSync('categories/categories.json');
-                            let categories = JSON.parse(rawdata);
-
-                            const exampleEmbed = new Discord.MessageEmbed()
-                                .setColor('#0099ff')
-                                .setTitle('Categories');
-
-                            categories.forEach(function (category) {
-                                exampleEmbed.addField(category.name, category.desc, false);
-                            });
-
-                            exampleEmbed.addField('\u200b', "Choose the category with **category categoryName**, e.g. **category SNX**, or **category Synthetix.Exchange**");
-                            msg.reply(exampleEmbed);
-
+                            listCategories();
                         } else if (msg.content.toLowerCase().startsWith("category")) {
 
                             const args = msg.content.slice("category".length).split(' ');
@@ -220,171 +103,15 @@ client.on("message", msg => {
                         } else if (msg.content.toLowerCase().startsWith("search ")) {
 
                             const args = msg.content.slice("search".length).split(' ').slice(1);
-
                             const searchWord = msg.content.substring("search".length + 1);
-
-                            const exampleEmbed = new Discord.MessageEmbed()
-                                .setColor('#0099ff')
-                                .setTitle('Questions found for ***' + searchWord + '***:');
-
-                            const Match = class {
-                                constructor(title, value) {
-                                    this.title = title;
-                                    this.value = value;
-                                }
-
-                                matchedCount = 0;
-                                title;
-                                value;
-                            };
-
-                            const fullMatches = [];
-                            const partialMatches = [];
-                            fs.readdir('questions', function (err, files) {
-                                if (err) {
-                                    console.log("Error getting directory information.")
-                                } else {
-                                    files.sort(function (a, b) {
-                                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
-                                    });
-                                    files.forEach(function (file) {
-                                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                                        if (rawdata.includes(searchWord)) {
-                                            rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
-                                            fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
-                                        } else {
-                                            let matchedCount = 0;
-                                            args.sort(function (a, b) {
-                                                return a.length - b.length;
-                                            });
-                                            args.forEach(function (arg) {
-                                                if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
-                                                    rawdata = replaceString(rawdata, arg, '**' + arg + '**');
-                                                    rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
-                                                    rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
-                                                    matchedCount++;
-                                                }
-                                            });
-                                            if (matchedCount > 0) {
-                                                let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
-                                                match.matchedCount = matchedCount;
-                                                partialMatches.push(match);
-                                            }
-                                        }
-                                    })
-                                }
-
-                                if (fullMatches.length == 0 && partialMatches.length == 0) {
-                                    exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
-                                } else {
-
-                                    let counter = 0;
-                                    fullMatches.forEach(function (match) {
-                                        counter++;
-                                        if (counter < 6) {
-                                            exampleEmbed.addField(match.title, match.value, false);
-                                        }
-                                    });
-
-                                    partialMatches.sort(function (a, b) {
-                                        return b.matchedCount - a.matchedCount;
-                                    });
-                                    partialMatches.forEach(function (match) {
-                                        counter++;
-                                        if (counter < 6) {
-                                            exampleEmbed.addField(match.title, match.value, false);
-                                        }
-                                    });
-
-                                    exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-                                }
-                                msg.reply(exampleEmbed);
-                            })
+                            doSearch(searchWord, args);
 
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
                                 if (msg.content.endsWith("?")) {
                                     const args = msg.content.substring(0, msg.content.length - 1).split(' ');
-
                                     const searchWord = msg.content;
-
-                                    const exampleEmbed = new Discord.MessageEmbed()
-                                        .setColor('#0099ff')
-                                        .setTitle('Looks like you asked a custom question. This is the best I could find for your query:');
-
-                                    const Match = class {
-                                        constructor(title, value) {
-                                            this.title = title;
-                                            this.value = value;
-                                        }
-
-                                        matchedCount = 0;
-                                        title;
-                                        value;
-                                    };
-
-                                    const fullMatches = [];
-                                    const partialMatches = [];
-                                    fs.readdir('questions', function (err, files) {
-                                        if (err) {
-                                            console.log("Error getting directory information.")
-                                        } else {
-                                            files.sort(function (a, b) {
-                                                return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
-                                            });
-                                            files.forEach(function (file) {
-                                                let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                                                if (rawdata.includes(searchWord)) {
-                                                    rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
-                                                    fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
-                                                } else {
-                                                    args.sort(function (a, b) {
-                                                        return a.length - b.length;
-                                                    });
-                                                    let matchedCount = 0;
-                                                    args.forEach(function (arg) {
-                                                        if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
-                                                            rawdata = replaceString(rawdata, arg, '**' + arg + '**');
-                                                            rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
-                                                            rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
-                                                            matchedCount++;
-                                                        }
-                                                    });
-                                                    if (matchedCount > 0) {
-                                                        let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
-                                                        match.matchedCount = matchedCount;
-                                                        partialMatches.push(match);
-                                                    }
-                                                }
-                                            })
-                                        }
-
-                                        if (fullMatches.length == 0 && partialMatches.length == 0) {
-                                            exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
-                                        } else {
-
-                                            let counter = 0;
-                                            fullMatches.forEach(function (match) {
-                                                counter++;
-                                                if (counter < 4) {
-                                                    exampleEmbed.addField(match.title, match.value, false);
-                                                }
-                                            });
-
-                                            partialMatches.sort(function (a, b) {
-                                                return b.matchedCount - a.matchedCount;
-                                            });
-                                            partialMatches.forEach(function (match) {
-                                                counter++;
-                                                if (counter < 4) {
-                                                    exampleEmbed.addField(match.title, match.value, false);
-                                                }
-                                            });
-
-                                            exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-                                        }
-                                        msg.reply(exampleEmbed);
-                                    })
+                                    doCustomQuestion(searchWord, args);
                                 } else {
                                     msg.reply("Oops, I don't know that one. Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
                                 }
@@ -395,6 +122,302 @@ client.on("message", msg => {
                     msg.reply("Unknown error ocurred.  Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
                 }
             }
+        }
+
+        function showAllAliases(isDM) {
+            let rawdata = fs.readFileSync('categories/aliases.json');
+            let aliases = JSON.parse(rawdata);
+            let questionMap = new Map();
+            aliases.forEach(function (alias) {
+                let aliasQuestion = questionMap.get(alias.number);
+                if (aliasQuestion) {
+                    aliasQuestion.push(alias.alias);
+                    questionMap.set(alias.number, aliasQuestion);
+                } else {
+                    let aliasQuestion = new Array();
+                    aliasQuestion.push(alias.alias);
+                    questionMap.set(alias.number, aliasQuestion);
+                }
+            });
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Known aliases')
+                .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
+            exampleEmbed.setDescription('Hello, here are the aliases I know:');
+
+            for (let [questionNumber, questions] of questionMap) {
+                let questionsString = "";
+                questions.forEach(function (q) {
+                    questionsString += (isDM ? "" : "!faq ") + q + "\n";
+                })
+                let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
+                let answer = JSON.parse(rawdata);
+                exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
+            }
+
+            msg.channel.send(exampleEmbed);
+        }
+
+        function answerUltimateQuestion() {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Bravo, you found the ultimate question!');
+
+            exampleEmbed.setDescription(Buffer.from("d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==", 'base64').toString('utf-8'));
+            exampleEmbed.addField("The answer is:", Buffer.from("NDI=", 'base64').toString('utf-8'));
+
+            msg.reply(exampleEmbed);
+        }
+
+        function checkIfUltimateQuestion(encodedForm) {
+            return encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==" ||
+                encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/" ||
+                encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw==" ||
+                encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==";
+        }
+
+        function checkAliasMatching(doReply) {
+            let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
+            let rawdata = fs.readFileSync('categories/aliases.json');
+            let aliases = JSON.parse(rawdata);
+            let found = false;
+            aliases.forEach(function (alias) {
+                if (alias.alias.toLowerCase().trim() == potentialAlias) {
+                    found = true;
+                    msg.content = "!faq question " + alias.number;
+                    doQuestion(msg, "!faq question", doReply);
+                }
+            });
+            return found;
+        }
+
+        function doFaqHelp() {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Synthetix Frequently Asked Questions')
+                .setURL('https://help.synthetix.io/hc/en-us');
+
+            exampleEmbed.setDescription('Hello, here is list of commands I know:');
+            exampleEmbed.addField("list", "Lists all known questions");
+            exampleEmbed.addField("categories", "Lists all categories of known questions");
+            exampleEmbed.addField("category categoryName", "Lists all known questions for a given category name, e.g. ** category *Staking&Minting* **");
+            exampleEmbed.addField("question questionNumber", "Shows the answer to the question defined by its number, e.g. ** question *7* **");
+            exampleEmbed.addField("search searchTerm", "Search all known questions by given search term, e.g. ** search *SNX price* **");
+            exampleEmbed.addField("aliases", "List all known aliases");
+            exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
+
+            msg.reply(exampleEmbed);
+        }
+
+        function listQuestions() {
+            let exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Frequently Asked Questions')
+                .setURL('https://help.synthetix.io/hc/en-us');
+
+            fs.readdir('questions', function (err, files) {
+                if (err) {
+                    console.log("Error getting directory information.")
+                } else {
+                    let counter = 0;
+                    let pagenumber = 2;
+                    files.sort(function (a, b) {
+                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
+                    });
+                    files.forEach(function (file) {
+                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
+                        exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false)
+                        counter++;
+                        if (counter == 20) {
+                            msg.reply(exampleEmbed);
+                            exampleEmbed = new Discord.MessageEmbed()
+                                .setColor('#0099ff')
+                                .setTitle('Frequently Asked Questions page ' + pagenumber)
+                                .setURL('https://help.synthetix.io/hc/en-us');
+                            pagenumber++;
+                            counter = 0;
+                        }
+                    })
+                }
+                exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                msg.reply(exampleEmbed);
+            })
+        }
+
+        function listCategories() {
+            let rawdata = fs.readFileSync('categories/categories.json');
+            let categories = JSON.parse(rawdata);
+
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Categories');
+
+            categories.forEach(function (category) {
+                exampleEmbed.addField(category.name, category.desc, false);
+            });
+
+            exampleEmbed.addField('\u200b', "Choose the category with **category categoryName**, e.g. **category SNX**, or **category Synthetix.Exchange**");
+            msg.reply(exampleEmbed);
+        }
+
+        function doSearch(searchWord, args) {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Questions found for ***' + searchWord + '***:');
+
+            const Match = class {
+                constructor(title, value) {
+                    this.title = title;
+                    this.value = value;
+                }
+
+                matchedCount = 0;
+                title;
+                value;
+            };
+
+            const fullMatches = [];
+            const partialMatches = [];
+            fs.readdir('questions', function (err, files) {
+                if (err) {
+                    console.log("Error getting directory information.")
+                } else {
+                    files.sort(function (a, b) {
+                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
+                    });
+                    files.forEach(function (file) {
+                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
+                        if (rawdata.includes(searchWord)) {
+                            rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
+                            fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
+                        } else {
+                            let matchedCount = 0;
+                            args.sort(function (a, b) {
+                                return a.length - b.length;
+                            });
+                            args.forEach(function (arg) {
+                                if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
+                                    rawdata = replaceString(rawdata, arg, '**' + arg + '**');
+                                    rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
+                                    rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
+                                    matchedCount++;
+                                }
+                            });
+                            if (matchedCount > 0) {
+                                let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
+                                match.matchedCount = matchedCount;
+                                partialMatches.push(match);
+                            }
+                        }
+                    })
+                }
+
+                if (fullMatches.length == 0 && partialMatches.length == 0) {
+                    exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
+                } else {
+
+                    let counter = 0;
+                    fullMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 6) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
+
+                    partialMatches.sort(function (a, b) {
+                        return b.matchedCount - a.matchedCount;
+                    });
+                    partialMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 6) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
+
+                    exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                }
+                msg.reply(exampleEmbed);
+            })
+        }
+
+        function doCustomQuestion(searchWord, args) {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Looks like you asked a custom question. This is the best I could find for your query:');
+
+            const Match = class {
+                constructor(title, value) {
+                    this.title = title;
+                    this.value = value;
+                }
+
+                matchedCount = 0;
+                title;
+                value;
+            };
+
+            const fullMatches = [];
+            const partialMatches = [];
+            fs.readdir('questions', function (err, files) {
+                if (err) {
+                    console.log("Error getting directory information.")
+                } else {
+                    files.sort(function (a, b) {
+                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
+                    });
+                    files.forEach(function (file) {
+                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
+                        if (rawdata.includes(searchWord)) {
+                            rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
+                            fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
+                        } else {
+                            args.sort(function (a, b) {
+                                return a.length - b.length;
+                            });
+                            let matchedCount = 0;
+                            args.forEach(function (arg) {
+                                if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
+                                    rawdata = replaceString(rawdata, arg, '**' + arg + '**');
+                                    rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
+                                    rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
+                                    matchedCount++;
+                                }
+                            });
+                            if (matchedCount > 0) {
+                                let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
+                                match.matchedCount = matchedCount;
+                                partialMatches.push(match);
+                            }
+                        }
+                    })
+                }
+
+                if (fullMatches.length == 0 && partialMatches.length == 0) {
+                    exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
+                } else {
+
+                    let counter = 0;
+                    fullMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 4) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
+
+                    partialMatches.sort(function (a, b) {
+                        return b.matchedCount - a.matchedCount;
+                    });
+                    partialMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 4) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
+
+                    exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                }
+                msg.reply(exampleEmbed);
+            })
         }
 
 
