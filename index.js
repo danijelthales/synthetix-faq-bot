@@ -394,7 +394,7 @@ client.on("message", msg => {
 
                 if (command == "7") {
 
-                    https.get('https://ethgasstation.info/api/ethgasAPI.json?api-key=f1288d74c2725ac52e2f15d21292a75c07b8428c5671a4fccad1b91aa7ad', (resp) => {
+                    https.get('https://gasprice.poa.network/', (resp) => {
                         let data = '';
 
                         // A chunk of data has been recieved.
@@ -405,9 +405,10 @@ client.on("message", msg => {
                         // The whole response has been received. Print out the result.
                         resp.on('end', () => {
                             let result = JSON.parse(data);
-                            exampleEmbed.addField("Safe low gas price:", result.safeLow / 10 + ' gwei', false);
-                            exampleEmbed.addField("Standard gas price:", result.average / 10 + ' gwei', false);
-                            exampleEmbed.addField("Fast gas price:", result.fast / 10 + ' gwei', false);
+                            exampleEmbed.addField("Safe low gas price:", result.slow  + ' gwei', false);
+                            exampleEmbed.addField("Standard gas price:", result.standard  + ' gwei', false);
+                            exampleEmbed.addField("Fast gas price:", result.fast + ' gwei', false);
+                            exampleEmbed.addField("Instant gas price:", result.instant + ' gwei', false);
                             if (doReply) {
                                 msg.reply(exampleEmbed);
                             } else {
