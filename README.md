@@ -230,3 +230,13 @@ Question 15: How can I claim my SNX Staking Rewards?
 !faq roadmap  
 * Question 47: What is layer 2?  
 !faq l2  
+
+
+# How to add a new question&answer?
+If you find a question missing, please submit it via pull request keeping in mind the following:
+
+1. Add the question itself to the questions folder with its dedicated file with next available number e.g. 60.txt  
+2. Add the question answer in JSON format to the answers folder with the same number, e.g. 60.json. The JSON format corresponds to Discord [Embeds](https://discordjs.guide/popular-topics/embeds.html) to support rich text, images and embedded links.  
+3. Optionally categorize the question to make it findable by category in categories/categories.json file. If you strongly believe the question needs a dedicated category, feel free to add a new one.  
+4. If you want the new question to be available via one or more aliases, add it to the file categories/aliases.json  
+5. If the question should have an image, add the image to images folder and reference it from the answer fire. Only one image per reply is supported with Discord Embeds.
