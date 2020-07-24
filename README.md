@@ -30,7 +30,7 @@ You can also get the latest aliases from the bot by doing  **!faq aliases**
 The bot is intended to be used mainly in direct messaging.
 It has a list of predefined commands which can be browsed if **help** message is sent to the bot.
 
-Additonally to known commands, the bot **can be asked a custom question (detected by a question mark at the end of the message)**. It will search for best possible match in the list of know questions.
+Additonally to known commands, the bot **can be asked a custom question (detected by a question mark at the end of the message)**. It will search for best possible match in the list of known questions.
 
 ## Known DM commands
 
@@ -163,6 +163,14 @@ Can I use ether as collateral?
 How to Trade?  
 51  
 How do I cancel a pending or stuck transaction?  
+52  
+wen moon?  
+53  
+wen six dolla?  
+54  
+What is the synthetix roadmap?  
+55  
+What is the degen list?  
 
 
 

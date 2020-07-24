@@ -69,6 +69,7 @@ client.on("message", msg => {
                 }
             } else {
                 try {
+                    console.log("I got sent a DM:" + msg.content);
                     let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
                     if (encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==" ||
                         encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/" ||
@@ -149,7 +150,7 @@ client.on("message", msg => {
                         })
 
                     } else if (msg.content.toLowerCase().startsWith("question ")) {
-                        console.log("question asked:"+msg.content);
+                        console.log("question asked:" + msg.content);
                         doQuestion(msg, "question", true);
                     } else if (msg.content == "categories") {
 
@@ -406,8 +407,8 @@ client.on("message", msg => {
                         // The whole response has been received. Print out the result.
                         resp.on('end', () => {
                             let result = JSON.parse(data);
-                            exampleEmbed.addField("Safe low gas price:", result.slow  + ' gwei', false);
-                            exampleEmbed.addField("Standard gas price:", result.standard  + ' gwei', false);
+                            exampleEmbed.addField("Safe low gas price:", result.slow + ' gwei', false);
+                            exampleEmbed.addField("Standard gas price:", result.standard + ' gwei', false);
                             exampleEmbed.addField("Fast gas price:", result.fast + ' gwei', false);
                             exampleEmbed.addField("Instant gas price:", result.instant + ' gwei', false);
                             if (doReply) {
