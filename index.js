@@ -149,6 +149,7 @@ client.on("message", msg => {
                         })
 
                     } else if (msg.content.toLowerCase().startsWith("question ")) {
+                        console.log("question asked:"+msg.content);
                         doQuestion(msg, "question", true);
                     } else if (msg.content == "categories") {
 
