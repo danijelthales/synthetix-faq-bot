@@ -64,7 +64,7 @@ client.on("message", msg => {
                         }
                     });
                     if (!found) {
-                        msg.reply("Oops, I don't know that one. Check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
+                        msg.reply("Oops, I don't know that one. You can get all aliases I know with **!faq aliases** \nCheck out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
                     }
                 }
             } else {
