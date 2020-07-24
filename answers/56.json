@@ -1,0 +1,13 @@
+{
+  "title": "Question 56:",
+  "description": "What to buy",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Always buy more SNX!"
+    }
+  ],
+  "footer": {},
+  "image": "snx.png"
+}
