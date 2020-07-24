@@ -27,7 +27,7 @@ client.on("message", msg => {
                 }  else if (msg.content.toLowerCase().trim().startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
-                        msg.reply("Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
+                        msg.reply("Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out [readme](https://github.com/dgornjakovic/synthetix-faq-bot) for list of known questions and aliases");
                     }
                 }
             } else {
