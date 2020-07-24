@@ -3,3 +3,4 @@ all defi token prices?
 something about 24h wait period
 Integrate snx tools
 what is grants dao
+search aliases

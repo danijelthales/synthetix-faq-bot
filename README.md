@@ -23,7 +23,7 @@ Examples:
 
 The list of all [questions](#list-of-questions-currently-available).  
 The list of all [aliases](#list-of-aliases-currently-available).  
-You can also get the latest aliases from the bot by doing  **!faq aliases**
+You can also get the latest aliases from the bot by sending him a DM **aliases**
 
 # Usage in direct messaging
 
@@ -53,6 +53,9 @@ Shows the answer to the question defined by its number, e.g. **question 7**
 
 **search searchTerm**  
 Search all known questions by given search term, e.g. **search SNX price**
+
+**aliases**  
+Lists all known aliases
 
 **Or Ask the bot any question and it will try its' best to find a match from the known questions**
 
@@ -176,7 +179,7 @@ What is the degen list?
 
 # List of aliases currently available
 Use them in channels with **!faq alias**, e.g. **!faq gas price**.  
-To get a list of all aliases you can do **!faq aliases**
+To get a list of all aliases you can send him a DM with **aliases**
 
 * Question 7: What is the current gas price?  
 !faq gas price  

@@ -24,12 +24,10 @@ client.on("message", msg => {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
-                } else if (msg.content.toLowerCase().trim() == "!faq aliases") {
-                    showAllAliases(false);
-                } else if (msg.content.toLowerCase().trim().startsWith("!faq ")) {
+                }  else if (msg.content.toLowerCase().trim().startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
-                        msg.reply("Oops, I don't know that one. You can get all aliases I know with **!faq aliases** \nCheck out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
+                        msg.reply("Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
                     }
                 }
             } else {
