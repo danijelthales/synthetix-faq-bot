@@ -171,54 +171,54 @@ Use them in channels with **!faq alias**, e.g. **!faq gas price**.
 To get a list of all aliases you can do **!faq aliases**
 
 * Question 7: What is the current gas price?  
-faq! gas price  
-faq! gas  
+!faq gas price  
+!faq gas  
 * Question 8: What is the current sUSD price?  
-faq! peg  
+!faq peg  
 Question 9: What is the current SNX price?  
-faq! snx price  
-faq! snx  
+!faq snx price  
+!faq snx  
 * Question 3: I previously locked my SNX to mint sUSD. How can I unlock my SNX?  
-faq! unlock snx  
-faq! snx unlock  
+!faq unlock snx  
+!faq snx unlock  
 * Question 6: My wallet says I have havvens (HAV) but no SNX?  
-faq! havven  
+!faq havven  
 * Question 42: What is SNX inflation schedule?  
-faq! inflation  
+!faq inflation  
 Question 15: How can I claim my SNX Staking Rewards?  
-faq! claim snx rewards  
+!faq claim snx rewards  
 * Question 23: Why are Synthetix transactions so expensive?  
-faq! expensive transactions  
+!faq expensive transactions  
 * Question 41: What are inverse synths (iSynths)?  
-faq! inverse synths  
-faq! iSynths  
+!faq inverse synths  
+!faq iSynths  
 * Question 11: Why does my total sUSD debt fluctuate over time?  
-faq! failing transactions  
-faq! debt fluctuation  
+!faq failing transactions  
+!faq debt fluctuation  
 * Question 26: Why did I get a less synths on trade?  
-faq! fee reclamation  
+!faq fee reclamation  
 * Question 33: What's the minimum amount of SNX to stake?  
-faq! minimum stake  
+!faq minimum stake  
 * Question 45: Why Is Gas So High?  
-faq! high gas  
-faq! gasshole  
+!faq high gas  
+!faq gasshole  
 * Question 49: Can I use ether as collateral?  
-faq! eth collateral  
+!faq eth collateral  
 * Question 51: How do I cancel a pending or stuck transaction?  
-faq! stuck transaction  
-faq! pending transaction  
+!faq stuck transaction  
+!faq pending transaction  
 * Question 40: What are SIPs & SCCPs?  
-faq! sip  
-faq! sccp  
+!faq sip  
+!faq sccp  
 * Question 31: Where can I find a list of all the contracts?  
-faq! contracts  
+!faq contracts  
 * Question 22: Why am I blocked from claiming rewards?  
-faq! claiming blocked  
+!faq claiming blocked  
 * Question 10: How to delegate claiming of SNX Rewards?  
-faq! delegate claiming  
+!faq delegate claiming  
 * Question 37: Why does the number of my staked SNX fluctuate?  
-faq! snx staked fluctuation  
+!faq snx staked fluctuation  
 * Question 54: What is the synthetix roadmap?  
-faq! roadmap  
+!faq roadmap  
 * Question 47: What is layer 2?  
-faq! l2  
+!faq l2  
