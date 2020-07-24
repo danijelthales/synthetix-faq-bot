@@ -10,7 +10,7 @@ client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
 client.on("guildMemberAdd", function (member) {
-    member.send("Hi and welcome ot Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
+    member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
 });
 
 client.on("message", msg => {
