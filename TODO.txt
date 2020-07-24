@@ -1,1 +1,3 @@
 !faq 6 dolla
+change gas to https://gasprice.poa.network/
+check question 8

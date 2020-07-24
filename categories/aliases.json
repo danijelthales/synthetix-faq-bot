@@ -60,6 +60,10 @@
     "alias": "sixty dolla"
   },
   {
+    "number": 52,
+    "alias": "wen sixty dolla"
+  },
+  {
     "number": 53,
     "alias": "six dolla"
   },
@@ -178,5 +182,9 @@
   {
     "number": 47,
     "alias": "l2"
+  },
+  {
+    "number": 55,
+    "alias": "sDEGEN"
   }
 ]
