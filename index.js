@@ -139,12 +139,15 @@ client.on("message", msg => {
                     questionMap.set(alias.number, aliasQuestion);
                 }
             });
-            const exampleEmbed = new Discord.MessageEmbed()
+
+            let exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Known aliases')
                 .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
             exampleEmbed.setDescription('Hello, here are the aliases I know:');
 
+            let counter = 0;
+            let pagenumber = 2;
             for (let [questionNumber, questions] of questionMap) {
                 let questionsString = "";
                 questions.forEach(function (q) {
@@ -153,9 +156,30 @@ client.on("message", msg => {
                 let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
                 let answer = JSON.parse(rawdata);
                 exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
+
+                counter++;
+                if (counter == 10) {
+                    if (isDM) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
+                    exampleEmbed = new Discord.MessageEmbed()
+                        .setColor('#0099ff')
+                        .setTitle('Known aliases page ' + pagenumber)
+                        .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
+                    exampleEmbed.setDescription('Hello, here are the aliases I know:');
+                    pagenumber++;
+                    counter = 0;
+                }
+
             }
 
-            msg.channel.send(exampleEmbed);
+            if (isDM) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed);
+            }
         }
 
         function answerUltimateQuestion() {
