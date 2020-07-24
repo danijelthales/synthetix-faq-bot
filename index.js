@@ -9,6 +9,10 @@ var fs = require('fs');
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
+client.on("guildMemberAdd", function (member) {
+    member.send("Hi and welcome ot Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
+});
+
 client.on("message", msg => {
 
         if (msg.author.username != "FAQ") {
@@ -284,7 +288,7 @@ client.on("message", msg => {
                         })
 
                     } else {
-                        if (msg.author.username != "FAQ") {
+                        if (!msg.author.username.toLowerCase().includes("faq")) {
                             if (msg.content.endsWith("?")) {
                                 const args = msg.content.substring(0, msg.content.length - 1).split(' ');
 
