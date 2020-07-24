@@ -43,7 +43,7 @@ client.on("message", msg => {
                     for (let [questionNumber, questions] of questionMap) {
                         let questionsString = "";
                         questions.forEach(function (q) {
-                            questionsString += "faq! " + q + "\n";
+                            questionsString += "!faq " + q + "\n";
                         })
                         let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
                         let answer = JSON.parse(rawdata);
