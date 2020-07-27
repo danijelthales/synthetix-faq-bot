@@ -555,7 +555,7 @@ client.on("message", msg => {
                     }
 
                     if (answer.thumbnail) {
-                        exampleEmbed.attachFiles(['images/' + answer.image])
+                        exampleEmbed.attachFiles(['images/' + answer.thumbnail])
                             .setThumbnail('attachment://' + answer.thumbnail);
                     }
 
