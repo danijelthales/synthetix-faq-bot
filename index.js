@@ -554,6 +554,11 @@ client.on("message", msg => {
                             .setImage('attachment://' + answer.image);
                     }
 
+                    if (answer.thumbnail) {
+                        exampleEmbed.attachFiles(['images/' + answer.image])
+                            .setThumbnail('attachment://' + answer.thumbnail);
+                    }
+
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/images/hobo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/answers/58.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/58.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,40 +21,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/answers/58.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="101" selection-start-line="7" selection-start-column="101" selection-end-line="7" selection-end-column="101" />
+            <state relative-caret-position="238">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+        <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="247" column="19" selection-start-line="247" selection-start-column="19" selection-end-line="247" selection-end-column="19" />
+            <state relative-caret-position="385">
+              <caret line="557" column="76" lean-forward="true" selection-start-line="557" selection-start-column="76" selection-end-line="557" selection-end-column="76" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/questions/58.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/images/wSTFkRM.png">
-          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>embed</find>
       <find>githu</find>
       <find>inverse</find>
       <find>inflatio</find>
@@ -82,6 +69,7 @@
       <find>.com/dgornjakovic/synthetix-faq-bot</find>
       <find>aliases</find>
       <find>coinge</find>
+      <find>image</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019943674-Now-that-I-ve-minted-sUSD-what-can-I-do-with-it-</replace>
@@ -168,10 +156,10 @@
         <option value="$PROJECT_DIR$/answers/57.json" />
         <option value="$PROJECT_DIR$/answers/56.json" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/TODO.txt" />
         <option value="$PROJECT_DIR$/questions/58.txt" />
         <option value="$PROJECT_DIR$/categories/aliases.json" />
+        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/answers/58.json" />
       </list>
     </option>
@@ -265,12 +253,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
-      <workItem from="1595147151916" duration="92357000" />
+      <workItem from="1595147151916" duration="92581000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92357000" />
+    <option name="totallyTimeSpent" value="92581000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -590,13 +578,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="490" column="8" lean-forward="true" selection-start-line="490" selection-start-column="8" selection-end-line="513" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/57.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -638,10 +619,17 @@
     <entry file="file://$PROJECT_DIR$/images/wSTFkRM.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="557" column="76" lean-forward="true" selection-start-line="557" selection-start-column="76" selection-end-line="557" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/answers/58.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="101" selection-start-line="7" selection-start-column="101" selection-end-line="7" selection-end-column="101" />
+        <state relative-caret-position="238">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
