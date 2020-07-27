@@ -4,3 +4,5 @@ something about 24h wait period
 Integrate snx tools
 what is grants dao
 search aliases
+Calculate rewards for given input, e.g. rewards for 100 SNX
+freezing purging process?
