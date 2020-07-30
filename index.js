@@ -66,8 +66,8 @@ client.on("message", msg => {
                         let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
                         if (checkIfUltimateQuestion(encodedForm)) {
                             answerUltimateQuestion();
-                        } else if (msg.content.toLowerCase().trim().startsWith("subscribe gas")) {
-                            const args = msg.content.slice("subscribe gas".length).split(' ');
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g,'').startsWith("subscribe gas")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g,'').slice("subscribe gas".length).split(' ');
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
