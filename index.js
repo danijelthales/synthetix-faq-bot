@@ -633,6 +633,10 @@ setInterval(function () {
             gasSubscribersMap.forEach(function (value, key) {
                 if (result.standard < value) {
                     client.users.cache.get(key).send('gas price is now bellow your threshold. Current safe gas price is: ' + result.standard);
+                    gasSubscribersMap.delete(key);
+                    if (process.env.REDIS_URL) {
+                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
+                    }
                 }
             });
 
