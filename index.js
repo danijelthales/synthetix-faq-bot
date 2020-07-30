@@ -17,12 +17,15 @@ if (process.env.REDIS_URL) {
         console.error(error);
     });
 
-    let gasSubscribersMapRaw = redisClient.get("gasSubscribersMap", redis.print);
-    console.log("gasSubscribersMapRaw:" + gasSubscribersMapRaw);
-    if (gasSubscribersMapRaw) {
-        gasSubscribersMap = new Map(JSON.parse(gasSubscribersMapRaw));
-        console.log("gasSubscribersMap:" + gasSubscribersMap);
-    }
+    redisClient.get("gasSubscribersMap", function (err, obj) {
+        gasSubscribersMapRaw = obj;
+        console.log("gasSubscribersMapRaw:" + gasSubscribersMapRaw);
+        if (gasSubscribersMapRaw) {
+            gasSubscribersMap = new Map(JSON.parse(gasSubscribersMapRaw));
+            console.log("gasSubscribersMap:" + gasSubscribersMap);
+        }
+    });
+
 
 }
 
