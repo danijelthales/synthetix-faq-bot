@@ -59,6 +59,9 @@ Lists all known aliases
 
 **Or Ask the bot any question and it will try its' best to find a match from the known questions**
 
+**subscribe gas safeGasPrice**  
+Subscribe to the bot so it will inform you if the safe gas price fall bellow the given safeGasPrice threshold, e.g. **subscribe gas 70**  
+
 
 # List of questions currently available
 To get the answer to a predefined question send the bot the message **question X**  
