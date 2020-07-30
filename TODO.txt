@@ -13,3 +13,4 @@ current minting price
 current claim price
 !faq when snapshot?
 !faq countdown
+about tipbot

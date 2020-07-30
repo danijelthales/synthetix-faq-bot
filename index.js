@@ -3,8 +3,26 @@ const Discord = require("discord.js")
 const client = new Discord.Client();
 const replaceString = require('replace-string');
 const https = require('https');
+const redis = require("redis");
+let redisClient = null;
 
 var fs = require('fs');
+
+
+let gasSubscribersMap = new Map();
+console.log("Redis URL:"+process.env.REDIS_URL);
+if (process.env.REDIS_URL) {
+    redisClient = redis.createClient(process.env.REDIS_URL);
+    redisClient.on("error", function (error) {
+        console.error(error);
+    });
+
+    let gasSubscribersMapRaw = redisClient.get("gasSubscribersMap");
+    if (gasSubscribersMapRaw) {
+        gasSubscribersMap = JSON.parse(gasSubscribersMapRaw);
+    }
+
+}
 
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
@@ -24,7 +42,7 @@ client.on("message", msg => {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
-                }  else if (msg.content.toLowerCase().trim().startsWith("!faq ")) {
+                } else if (msg.content.toLowerCase().trim().startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
                         msg.reply("Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
@@ -43,6 +61,19 @@ client.on("message", msg => {
                         let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
                         if (checkIfUltimateQuestion(encodedForm)) {
                             answerUltimateQuestion();
+                        } else if (msg.content.toLowerCase().trim().startsWith("subscribe gas")) {
+                            const args = msg.content.slice("subscribe gas".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command && !isNaN(command)) {
+                                gasSubscribersMap.set(msg.author, command)
+                                if (process.env.USE_REDIS) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify(gasSubscribersMap));
+                                }
+                                msg.reply(" I will send you a message once safe gas price is bellow " + command + " gwei");
+                            } else {
+                                msg.reply(command + " is not a proper integer number.");
+                            }
                         } else if (msg.content.toLowerCase().trim() == "aliases") {
                             showAllAliases(true);
                         } else if (msg.content.toLowerCase().trim() == "help") {
@@ -527,6 +558,10 @@ client.on("message", msg => {
                         resp.on('end', () => {
                             let result = JSON.parse(data);
                             exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
+                            if (result.market_data.current_price.usd == 1) {
+                                exampleEmbed.attachFiles(['images/perfect.jpg'])
+                                    .setImage('attachment://perfect.jpg');
+                            }
                             if (doReply) {
                                 msg.reply(exampleEmbed);
                             } else {
@@ -576,4 +611,33 @@ client.on("message", msg => {
 
     }
 )
+
+setInterval(function () {
+    https.get('https://gasprice.poa.network/', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+
+            gasSubscribersMap.forEach(function (value, key) {
+                if (result.standard < value) {
+                    key.send('gas price is now bellow your threshold. Current safe gas price is: ' + result.standard);
+                }
+            });
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+
 client.login(process.env.BOT_TOKEN)
