@@ -21,6 +21,7 @@ if (process.env.REDIS_URL) {
     console.log("gasSubscribersMapRaw:" + gasSubscribersMapRaw);
     if (gasSubscribersMapRaw) {
         gasSubscribersMap = new Map(JSON.parse(gasSubscribersMapRaw));
+        console.log("gasSubscribersMap:" + gasSubscribersMap);
     }
 
 }
@@ -67,7 +68,7 @@ client.on("message", msg => {
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
-                                gasSubscribersMap.set(msg.author, command)
+                                gasSubscribersMap.set(msg.author.id, command)
                                 if (process.env.REDIS_URL) {
                                     redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
                                 }
@@ -628,7 +629,7 @@ setInterval(function () {
 
             gasSubscribersMap.forEach(function (value, key) {
                 if (result.standard < value) {
-                    key.send('gas price is now bellow your threshold. Current safe gas price is: ' + result.standard);
+                    client.users.cache.get(key).send('gas price is now bellow your threshold. Current safe gas price is: ' + result.standard);
                 }
             });
 
