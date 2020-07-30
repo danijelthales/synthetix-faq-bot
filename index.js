@@ -10,7 +10,7 @@ var fs = require('fs');
 
 
 let gasSubscribersMap = new Map();
-console.log("Redis URL:"+process.env.REDIS_URL);
+console.log("Redis URL:" + process.env.REDIS_URL);
 if (process.env.REDIS_URL) {
     redisClient = redis.createClient(process.env.REDIS_URL);
     redisClient.on("error", function (error) {
@@ -18,6 +18,7 @@ if (process.env.REDIS_URL) {
     });
 
     let gasSubscribersMapRaw = redisClient.get("gasSubscribersMap");
+    console.log("gasSubscribersMapRaw:" + gasSubscribersMapRaw);
     if (gasSubscribersMapRaw) {
         gasSubscribersMap = JSON.parse(gasSubscribersMapRaw);
     }
@@ -67,7 +68,7 @@ client.on("message", msg => {
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
                                 gasSubscribersMap.set(msg.author, command)
-                                if (process.env.USE_REDIS) {
+                                if (process.env.REDIS_URL) {
                                     redisClient.set("gasSubscribersMap", JSON.stringify(gasSubscribersMap));
                                 }
                                 msg.reply(" I will send you a message once safe gas price is bellow " + command + " gwei");
