@@ -17,7 +17,7 @@ if (process.env.REDIS_URL) {
         console.error(error);
     });
 
-    let gasSubscribersMapRaw = redisClient.get("gasSubscribersMap");
+    let gasSubscribersMapRaw = redisClient.get("gasSubscribersMap", redis.print);
     console.log("gasSubscribersMapRaw:" + gasSubscribersMapRaw);
     if (gasSubscribersMapRaw) {
         gasSubscribersMap = JSON.parse(gasSubscribersMapRaw);
@@ -69,7 +69,7 @@ client.on("message", msg => {
                             if (command && !isNaN(command)) {
                                 gasSubscribersMap.set(msg.author, command)
                                 if (process.env.REDIS_URL) {
-                                    redisClient.set("gasSubscribersMap", JSON.stringify(gasSubscribersMap));
+                                    redisClient.set("gasSubscribersMap", JSON.stringify(gasSubscribersMap), redis.print);
                                 }
                                 msg.reply(" I will send you a message once safe gas price is bellow " + command + " gwei");
                             } else {
