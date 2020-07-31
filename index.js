@@ -690,7 +690,7 @@ async function getSnxToolStaking() {
 }
 
 
-getSnxToolStaking();
+setInterval(getSnxToolStaking(),10 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)
