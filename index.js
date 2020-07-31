@@ -49,9 +49,17 @@ client.on("message", msg => {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 } else if (msg.content.toLowerCase().trim() == "!faq help") {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
-                } else if (msg.content.toLowerCase().startsWith("!faq question")) {
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
-                } else if (msg.content.toLowerCase().trim().startsWith("!faq ")) {
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate rewards")) {
+                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq calculate rewards".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    if (command && !isNaN(command)) {
+                        let resRew = command * snxRewardsPerMinterUsd / snxToMintUsd;
+                        msg.reply("You are expected to receive **" + resRew + "** for **" + command + "** staked SNX");
+                    }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
                         msg.reply("Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
@@ -669,7 +677,6 @@ async function getSnxToolStaking() {
         await page.setViewport({width: 1000, height: 926});
         await page.goto("https://snx.tools/calculator/staking/", {waitUntil: 'networkidle2'});
 
-        console.log("start evaluate javascript")
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
             var div = document.querySelectorAll('span.text-white');
