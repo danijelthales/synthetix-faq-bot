@@ -658,39 +658,43 @@ setInterval(function () {
 const puppeteer = require('puppeteer');
 
 async function getSnxToolStaking() {
-    const browser = await puppeteer.launch({
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-        ],
-    });
-    const page = await browser.newPage();
-    await page.setViewport({width: 1000, height: 926});
-    await page.goto("https://snx.tools/calculator/staking/", {waitUntil: 'networkidle2'});
-
-    console.log("start evaluate javascript")
-    /** @type {string[]} */
-    var prices = await page.evaluate(() => {
-        var div = document.querySelectorAll('span.text-white');
-
-        var prices = []
-        div.forEach(element => {
-            prices.push(element.textContent);
+    try {
+        const browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
         });
+        const page = await browser.newPage();
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://snx.tools/calculator/staking/", {waitUntil: 'networkidle2'});
 
-        return prices
-    })
+        console.log("start evaluate javascript")
+        /** @type {string[]} */
+        var prices = await page.evaluate(() => {
+            var div = document.querySelectorAll('span.text-white');
 
-    console.log("I got the prices:" + prices);
-    var snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
-    var snxToMintUsd = prices[4].split(' ')[0] * 1.0;
-    var snxRewardsThisPeriod = prices[5];
-    var totalDebt = prices[5];
-    browser.close()
+            var prices = []
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
+
+            return prices
+        })
+
+        console.log("I got the prices:" + prices);
+        var snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
+        var snxToMintUsd = prices[4].split(' ')[0] * 1.0;
+        var snxRewardsThisPeriod = prices[5];
+        var totalDebt = prices[5];
+        browser.close()
+    } catch (e) {
+        console.log("Error happened on getting data from SNX tools.")
+    }
 }
 
 
-setTimeout(getSnxToolStaking(),10 * 1000);
+setTimeout(getSnxToolStaking(), 10 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)
