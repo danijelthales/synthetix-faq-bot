@@ -7,6 +7,10 @@ const redis = require("redis");
 let redisClient = null;
 
 var fs = require('fs');
+var snxRewardsPerMinterUsd = 0.013;
+var snxToMintUsd = 1.933;
+var snxRewardsThisPeriod = "940,415 SNX";
+var totalDebt = "$71,589,622";
 
 
 let gasSubscribersMap = new Map();
@@ -66,8 +70,8 @@ client.on("message", msg => {
                         let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
                         if (checkIfUltimateQuestion(encodedForm)) {
                             answerUltimateQuestion();
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g,'').startsWith("subscribe gas")) {
-                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g,'').slice("subscribe gas".length).split(' ');
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
@@ -75,7 +79,7 @@ client.on("message", msg => {
                                 if (process.env.REDIS_URL) {
                                     redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
                                 }
-                                msg.reply(" I will send you a message once safe gas price is bellow " + command + " gwei");
+                                msg.reply(" I will send you a message once safe gas price is below " + command + " gwei");
                             } else {
                                 msg.reply(command + " is not a proper integer number.");
                             }
@@ -262,6 +266,8 @@ client.on("message", msg => {
             exampleEmbed.addField("question questionNumber", "Shows the answer to the question defined by its number, e.g. ** question *7* **");
             exampleEmbed.addField("search searchTerm", "Search all known questions by given search term, e.g. ** search *SNX price* **");
             exampleEmbed.addField("aliases", "List all known aliases");
+            exampleEmbed.addField("subscribe gas gasPrice",
+                "I will inform you the next time safe gas price is below your target gasPrice, e.g. **subscribe gas 30** will inform you if safe gas price is below 30 gwei");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
             msg.reply(exampleEmbed);
@@ -632,7 +638,7 @@ setInterval(function () {
 
             gasSubscribersMap.forEach(function (value, key) {
                 if (result.standard < value) {
-                    client.users.cache.get(key).send('gas price is now bellow your threshold. Current safe gas price is: ' + result.standard);
+                    client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
                     gasSubscribersMap.delete(key);
                     if (process.env.REDIS_URL) {
                         redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
@@ -647,6 +653,44 @@ setInterval(function () {
     });
 
 }, 60 * 1000);
+
+
+const puppeteer = require('puppeteer');
+
+async function getSnxToolStaking() {
+    const browser = await puppeteer.launch({
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+        ],
+    });
+    const page = await browser.newPage();
+    await page.setViewport({width: 1000, height: 926});
+    await page.goto("https://snx.tools/calculator/staking/", {waitUntil: 'networkidle2'});
+
+    console.log("start evaluate javascript")
+    /** @type {string[]} */
+    var prices = await page.evaluate(() => {
+        var div = document.querySelectorAll('span.text-white');
+
+        var prices = []
+        div.forEach(element => {
+            prices.push(element.textContent);
+        });
+
+        return prices
+    })
+
+    console.log("I got the prices:" + prices);
+    var snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
+    var snxToMintUsd = prices[4].split(' ')[0] * 1.0;
+    var snxRewardsThisPeriod = prices[5];
+    var totalDebt = prices[5];
+    browser.close()
+}
+
+
+getSnxToolStaking();
 
 
 client.login(process.env.BOT_TOKEN)
