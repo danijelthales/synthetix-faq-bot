@@ -694,7 +694,7 @@ async function getSnxToolStaking() {
 }
 
 
-getSnxToolStaking();
+setTimeout(getSnxToolStaking, 10 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)
