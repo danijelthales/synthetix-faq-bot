@@ -14,3 +14,5 @@ current claim price
 !faq when snapshot?
 !faq countdown
 about tipbot
+You are expected to receive 100 SNX or 3900 USD for 8008 staked SNX
+Claim price

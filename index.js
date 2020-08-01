@@ -57,7 +57,7 @@ client.on("message", msg => {
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
                         let resRew = command * snxRewardsPerMinterUsd / snxToMintUsd;
-                        msg.reply("You are expected to receive **" + resRew + "** for **" + command + "** staked SNX");
+                        msg.reply("You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX");
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
