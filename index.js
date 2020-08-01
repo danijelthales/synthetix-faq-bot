@@ -11,6 +11,11 @@ var snxRewardsPerMinterUsd = 0.013;
 var snxToMintUsd = 1.933;
 var snxRewardsThisPeriod = "940,415 SNX";
 var totalDebt = "$71,589,622";
+var gasPrice = 40;
+var ethPrice = 360;
+var snxPrice = 4;
+var mintGas = 993602;
+var claimGas = 1092941;
 
 
 let gasSubscribersMap = new Map();
@@ -56,8 +61,18 @@ client.on("message", msg => {
                     args.shift();
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
-                        let resRew = command * snxRewardsPerMinterUsd / snxToMintUsd;
-                        msg.reply("You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX");
+                        let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+                        let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
+                        let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+                        let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+                        const exampleEmbed = new Discord.MessageEmbed()
+                            .setColor('#0099ff')
+                            .setTitle('Calculated rewards:');
+                        exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
+                            + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
+                        exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+                            + claimPrice + "$**");
+                        msg.reply(exampleEmbed);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
@@ -152,6 +167,24 @@ client.on("message", msg => {
                             const searchWord = msg.content.substring("search".length + 1);
                             doSearch(searchWord, args);
 
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate rewards")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("calculate rewards".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command && !isNaN(command)) {
+                                let resRew = command * snxRewardsPerMinterUsd / snxToMintUsd;
+                                let resRewInSusd = resRew * snxPrice;
+                                let mintingPrice = mintGas * gasPrice * ethPrice * 0.000000001;
+                                let claimPrice = mintGas * gasPrice * ethPrice * 0.000000001;
+                                const exampleEmbed = new Discord.MessageEmbed()
+                                    .setColor('#0099ff')
+                                    .setTitle('Calculated rewards:');
+                                exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
+                                    + "\n The estimated value of SNX rewards is:**" + resRew + "$**");
+                                exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + "** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+                                    + claimPrice + "$**");
+                                msg.reply(exampleEmbed);
+                            }
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
                                 if (msg.content.endsWith("?")) {
@@ -276,6 +309,8 @@ client.on("message", msg => {
             exampleEmbed.addField("aliases", "List all known aliases");
             exampleEmbed.addField("subscribe gas gasPrice",
                 "I will inform you the next time safe gas price is below your target gasPrice, e.g. **subscribe gas 30** will inform you if safe gas price is below 30 gwei");
+            exampleEmbed.addField("calculate rewards snxStaked",
+                "Calculate weekly SNX rewards per staked snx amount, as well as minting and claiming transaction estimates at current gas price. E.g. *calculate rewards 1000*");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
             msg.reply(exampleEmbed);
@@ -563,6 +598,32 @@ client.on("message", msg => {
                         console.log("Error: " + err.message);
                     });
 
+                } else if (command == "61") {
+
+                    https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
+                        let data = '';
+
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
+                            exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
+                            if (doReply) {
+                                msg.reply(exampleEmbed);
+                            } else {
+                                msg.channel.send(exampleEmbed);
+                            }
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
                 } else if (command == "8") {
 
                     https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
@@ -632,6 +693,49 @@ client.on("message", msg => {
 )
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            ethPrice = result.market_data.current_price.usd;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            snxPrice = result.market_data.current_price.usd;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+
+setInterval(function () {
     https.get('https://gasprice.poa.network/', (resp) => {
         let data = '';
 
@@ -643,7 +747,7 @@ setInterval(function () {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             let result = JSON.parse(data);
-
+            gasPrice = result.standard;
             gasSubscribersMap.forEach(function (value, key) {
                 if (result.standard < value) {
                     client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
