@@ -172,16 +172,16 @@ client.on("message", msg => {
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
-                                let resRew = command * snxRewardsPerMinterUsd / snxToMintUsd;
-                                let resRewInSusd = resRew * snxPrice;
-                                let mintingPrice = mintGas * gasPrice * ethPrice * 0.000000001;
-                                let claimPrice = mintGas * gasPrice * ethPrice * 0.000000001;
+                                let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+                                let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
+                                let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+                                let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
                                 const exampleEmbed = new Discord.MessageEmbed()
                                     .setColor('#0099ff')
                                     .setTitle('Calculated rewards:');
                                 exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
-                                    + "\n The estimated value of SNX rewards is:**" + resRew + "$**");
-                                exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + "** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+                                    + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
+                                exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
                                     + claimPrice + "$**");
                                 msg.reply(exampleEmbed);
                             }
