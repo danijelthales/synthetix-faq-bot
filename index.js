@@ -17,6 +17,9 @@ var snxPrice = 4;
 var mintGas = 993602;
 var claimGas = 1092941;
 
+var usdtPeg = 1;
+var usdcPeg = 1;
+
 
 let gasSubscribersMap = new Map();
 console.log("Redis URL:" + process.env.REDIS_URL);
@@ -93,6 +96,12 @@ client.on("message", msg => {
                         let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
                         if (checkIfUltimateQuestion(encodedForm)) {
                             answerUltimateQuestion();
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("unsubscribe")) {
+                            gasSubscribersMap.delete(msg.author.id)
+                            if (process.env.REDIS_URL) {
+                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                });
+                            }
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
                             const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
                             args.shift();
@@ -100,7 +109,8 @@ client.on("message", msg => {
                             if (command && !isNaN(command)) {
                                 gasSubscribersMap.set(msg.author.id, command)
                                 if (process.env.REDIS_URL) {
-                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
                                 }
                                 msg.reply(" I will send you a message once safe gas price is below " + command + " gwei");
                             } else {
@@ -638,7 +648,9 @@ client.on("message", msg => {
                         resp.on('end', () => {
                             let result = JSON.parse(data);
                             exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                            if (result.market_data.current_price.usd == 1) {
+                            exampleEmbed.addField("USDC", usdcPeg, false);
+                            exampleEmbed.addField("USDT", usdtPeg, false);
+                            if (result.market_data.current_price.usd == 1 && usdcPeg == 1 && usdtPeg == 1) {
                                 exampleEmbed.attachFiles(['images/perfect.jpg'])
                                     .setImage('attachment://perfect.jpg');
                             }
@@ -755,6 +767,15 @@ setInterval(function () {
                     if (process.env.REDIS_URL) {
                         redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
                     }
+                    setTimeout(function () {
+                        if (!gasSubscribersMap.has(key)) {
+                            gasSubscribersMap.set(key, value);
+                            if (process.env.REDIS_URL) {
+                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
+                            }
+                        }
+                    }, 1000 * 60 * 60);
+
                 }
             });
 
@@ -803,6 +824,49 @@ async function getSnxToolStaking() {
         console.log("Error happened on getting data from SNX tools.")
     }
 }
+
+setInterval(function () {
+    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=100000000000000000000', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            usdcPeg = Math.round(((result.toTokenAmount / 100000000) + Number.EPSILON) * 100) / 100;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+
+setInterval(function () {
+    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=100000000000000000000', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            usdtPeg = Math.round(((result.toTokenAmount / 100000000) + Number.EPSILON) * 100) / 100;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
 
 
 setTimeout(getSnxToolStaking, 10 * 1000);

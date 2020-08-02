@@ -22,20 +22,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="64" column="43" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="106" />
+            <state relative-caret-position="226">
+              <caret line="769" column="44" lean-forward="true" selection-start-line="769" selection-start-column="44" selection-end-line="769" selection-end-column="44" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="mock://internal/inspector_async_hook.js">
+          <provider selected="true" editor-type-id="vmFileEditor" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>faq!</find>
-      <find>sixt</find>
-      <find>ethg</find>
-      <find>gash</find>
       <find>console.log</find>
       <find>know</find>
       <find>Oops, I don't know that one.</find>
@@ -62,6 +63,10 @@
       <find>networkidle2</find>
       <find>calcula</find>
       <find>calculate rewards</find>
+      <find>usdtPeg</find>
+      <find>usdc</find>
+      <find>subscribe</find>
+      <find>60 *</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019880594-How-can-I-receive-SNX-staking-rewards-</replace>
@@ -245,12 +250,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
-      <workItem from="1595147151916" duration="124429000" />
+      <workItem from="1595147151916" duration="125952000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124429000" />
+    <option name="totallyTimeSpent" value="125952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -271,7 +276,7 @@
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.35427952" />
+      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.37594798" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -291,6 +296,16 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>result.toTokenAmount / 100000000;</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>result.toTokenAmount</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>prices[3].split(' ')[0]</expression-string>
         <language-id>JavaScript</language-id>
@@ -323,16 +338,6 @@
       </expression>
       <expression>
         <expression-string>isNaN(command*1.0)</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>command*1.0</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>isNaN((command*1.0))</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -654,8 +659,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="64" column="43" selection-start-line="64" selection-start-column="43" selection-end-line="64" selection-end-column="106" />
+        <state relative-caret-position="226">
+          <caret line="769" column="44" lean-forward="true" selection-start-line="769" selection-start-column="44" selection-end-line="769" selection-end-column="44" />
         </state>
       </provider>
     </entry>
