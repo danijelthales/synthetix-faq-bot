@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "One limitation of the Synthetix system is that the total value of all synthetics is capped by the SNX token itself. As of February 2020, the SNX market cap is about $150 million. At a 750% C-RATIO, the maximum synthetics value is about $20 million. Up-to-date stats are available on Dashboard\n\nAs of the February 2020 Achernar release, an experimental version of Ether Collateral is now live. Traders can obtain a sETH loan for 150% ETH collateral and pay a 5% interest fee. The provisional \"Skinny Eth\" period will only last three months and traders must repay their loans by the closing of the period.\n\nYou can take out an ETH Collateral loan here."
+      "value": "One limitation of the Synthetix system is that the total value of all synths is capped by the SNX token itself. To further increase  the amount of synths in the system, synth can be minted against ETH Collateral. Traders can obtain a sETH loan for 125% ETH collateral and pay a 5% interest fee. The current sETH loan against ETH collateral is currently experimental will last only last three months and traders must repay their loans by the closing of the period.\n\nYou can take out an ETH Collateral loan here."
     },
     {
       "title": "Community Discussion",

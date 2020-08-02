@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "The easiest way is to connect your wallet to https://synthetix.exchange\n\nYou will see all of your Synth balances [under](https://synthetix.exchange/#/assets/overview). "
+      "value": "The easiest way is to connect your wallet to https://synthetix.exchange/#/assets/overview \n\nYou will see all of your Synth balances [under](https://synthetix.exchange/#/assets/overview). "
     },
     {
       "title": "For more details visit our help page:",
