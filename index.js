@@ -858,7 +858,7 @@ function doCalculate(command, msg) {
         + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
     exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
         + claimPrice + "$**");
-    exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n");
+    exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n"+ "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
     msg.reply(exampleEmbed);
 }
 
