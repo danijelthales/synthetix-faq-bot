@@ -70,7 +70,7 @@ client.on("message", msg => {
                             .setTitle('Calculated rewards:');
                         exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
                             + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-                        exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+                        exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
                             + claimPrice + "$**");
                         msg.reply(exampleEmbed);
                     }
@@ -181,7 +181,7 @@ client.on("message", msg => {
                                     .setTitle('Calculated rewards:');
                                 exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
                                     + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-                                exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+                                exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
                                     + claimPrice + "$**");
                                 msg.reply(exampleEmbed);
                             }
