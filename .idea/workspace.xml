@@ -22,10 +22,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="828" column="123" selection-start-line="828" selection-start-column="123" selection-end-line="828" selection-end-column="123" />
+            <state relative-caret-position="188">
+              <caret line="742" column="53" lean-forward="true" selection-start-line="742" selection-start-column="53" selection-end-line="742" selection-end-column="53" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="mock://internal/timers.js">
+          <provider selected="true" editor-type-id="vmFileEditor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -37,7 +42,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>showAllAliases</find>
       <find>checkAliasMatching</find>
       <find>!faq ali</find>
       <find>.com/dgornjakovic/synthetix-faq-bot</find>
@@ -67,6 +71,7 @@
       <find>if (command &amp;&amp; !isNaN(command)) {</find>
       <find>calculate rewards</find>
       <find>getSnxToolStaking</find>
+      <find>totalD</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019880594-How-can-I-receive-SNX-staking-rewards-</replace>
@@ -250,12 +255,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
-      <workItem from="1595147151916" duration="126771000" />
+      <workItem from="1595147151916" duration="126994000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126771000" />
+    <option name="totallyTimeSpent" value="126994000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -297,6 +302,11 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>prices</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>result.toTokenAmount / 100000000;</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -333,11 +343,6 @@
       </expression>
       <expression>
         <expression-string>result.standard &lt; &quot;70&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>isNaN(command*1.0)</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -659,8 +664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="828" column="123" selection-start-line="828" selection-start-column="123" selection-end-line="828" selection-end-column="123" />
+        <state relative-caret-position="188">
+          <caret line="742" column="53" lean-forward="true" selection-start-line="742" selection-start-column="53" selection-end-line="742" selection-end-column="53" />
         </state>
       </provider>
     </entry>

@@ -793,10 +793,10 @@ async function getSnxToolStaking() {
         })
 
         console.log("I got the prices:" + prices);
-        var snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
-        var snxToMintUsd = prices[4].split(' ')[0] * 1.0;
-        var snxRewardsThisPeriod = prices[5];
-        var totalDebt = prices[6];
+        snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
+        snxToMintUsd = prices[4].split(' ')[0] * 1.0;
+        snxRewardsThisPeriod = prices[5];
+        totalDebt = prices[6];
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from SNX tools.")
