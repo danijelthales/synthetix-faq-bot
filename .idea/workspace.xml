@@ -22,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="769" column="44" lean-forward="true" selection-start-line="769" selection-start-column="44" selection-end-line="769" selection-end-column="44" />
+            <state relative-caret-position="124">
+              <caret line="828" column="123" selection-start-line="828" selection-start-column="123" selection-end-line="828" selection-end-column="123" />
             </state>
           </provider>
         </entry>
@@ -37,11 +37,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>console.log</find>
-      <find>know</find>
-      <find>Oops, I don't know that one.</find>
-      <find>fee r</find>
-      <find>24h</find>
       <find>showAllAliases</find>
       <find>checkAliasMatching</find>
       <find>!faq ali</find>
@@ -62,11 +57,16 @@
       <find>help</find>
       <find>networkidle2</find>
       <find>calcula</find>
-      <find>calculate rewards</find>
       <find>usdtPeg</find>
       <find>usdc</find>
       <find>subscribe</find>
       <find>60 *</find>
+      <find>snxRewardsThisPeriod</find>
+      <find>snxToMintUsd</find>
+      <find>The estimated value</find>
+      <find>if (command &amp;&amp; !isNaN(command)) {</find>
+      <find>calculate rewards</find>
+      <find>getSnxToolStaking</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019880594-How-can-I-receive-SNX-staking-rewards-</replace>
@@ -250,12 +250,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
-      <workItem from="1595147151916" duration="125952000" />
+      <workItem from="1595147151916" duration="126771000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125952000" />
+    <option name="totallyTimeSpent" value="126771000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -659,8 +659,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="769" column="44" lean-forward="true" selection-start-line="769" selection-start-column="44" selection-end-line="769" selection-end-column="44" />
+        <state relative-caret-position="124">
+          <caret line="828" column="123" selection-start-line="828" selection-start-column="123" selection-end-line="828" selection-end-column="123" />
         </state>
       </provider>
     </entry>

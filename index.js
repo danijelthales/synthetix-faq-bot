@@ -64,18 +64,7 @@ client.on("message", msg => {
                     args.shift();
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
-                        let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
-                        let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
-                        let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                        let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                        const exampleEmbed = new Discord.MessageEmbed()
-                            .setColor('#0099ff')
-                            .setTitle('Calculated rewards:');
-                        exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
-                            + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-                        exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
-                            + claimPrice + "$**");
-                        msg.reply(exampleEmbed);
+                        doCalculate(command, msg);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
@@ -182,18 +171,7 @@ client.on("message", msg => {
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
-                                let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
-                                let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
-                                let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                                let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                                const exampleEmbed = new Discord.MessageEmbed()
-                                    .setColor('#0099ff')
-                                    .setTitle('Calculated rewards:');
-                                exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
-                                    + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-                                exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
-                                    + claimPrice + "$**");
-                                msg.reply(exampleEmbed);
+                                doCalculate(command, msg);
                             }
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -818,7 +796,7 @@ async function getSnxToolStaking() {
         var snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
         var snxToMintUsd = prices[4].split(' ')[0] * 1.0;
         var snxRewardsThisPeriod = prices[5];
-        var totalDebt = prices[5];
+        var totalDebt = prices[6];
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from SNX tools.")
@@ -826,7 +804,7 @@ async function getSnxToolStaking() {
 }
 
 setInterval(function () {
-    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=100000000000000000000', (resp) => {
+    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -848,7 +826,7 @@ setInterval(function () {
 
 
 setInterval(function () {
-    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=100000000000000000000', (resp) => {
+    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -868,8 +846,24 @@ setInterval(function () {
 
 }, 60 * 1000);
 
+function doCalculate(command, msg) {
+    let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+    let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
+    let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+    let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+    const exampleEmbed = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle('Calculated rewards:');
+    exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
+        + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
+    exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+        + claimPrice + "$**");
+    exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n");
+    msg.reply(exampleEmbed);
+}
 
 setTimeout(getSnxToolStaking, 10 * 1000);
+setInterval(getSnxToolStaking, 60 * 60 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)
