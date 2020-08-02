@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="860" column="185" selection-start-line="860" selection-start-column="185" selection-end-line="860" selection-end-column="185" />
+            <state relative-caret-position="362">
+              <caret line="839" column="69" selection-start-line="839" selection-start-column="69" selection-end-line="839" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -43,8 +42,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>!faq ali</find>
-      <find>.com/dgornjakovic/synthetix-faq-bot</find>
       <find>aliases</find>
       <find>coinge</find>
       <find>image</find>
@@ -73,6 +70,8 @@
       <find>getSnxToolStaking</find>
       <find>totalD</find>
       <find>totalDebt</find>
+      <find>inch</find>
+      <find>10000</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019880594-How-can-I-receive-SNX-staking-rewards-</replace>
@@ -256,12 +255,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
-      <workItem from="1595147151916" duration="127299000" />
+      <workItem from="1595147151916" duration="127870000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127299000" />
+    <option name="totallyTimeSpent" value="127870000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -665,8 +664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="860" column="185" selection-start-line="860" selection-start-column="185" selection-end-line="860" selection-end-column="185" />
+        <state relative-caret-position="362">
+          <caret line="839" column="69" selection-start-line="839" selection-start-column="69" selection-end-line="839" selection-end-column="69" />
         </state>
       </provider>
     </entry>

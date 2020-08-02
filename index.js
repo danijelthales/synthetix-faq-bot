@@ -815,7 +815,7 @@ setInterval(function () {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             let result = JSON.parse(data);
-            usdcPeg = Math.round(((result.toTokenAmount / 100000000) + Number.EPSILON) * 100) / 100;
+            usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
         });
 
     }).on("error", (err) => {
@@ -837,7 +837,7 @@ setInterval(function () {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             let result = JSON.parse(data);
-            usdtPeg = Math.round(((result.toTokenAmount / 100000000) + Number.EPSILON) * 100) / 100;
+            usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
         });
 
     }).on("error", (err) => {
