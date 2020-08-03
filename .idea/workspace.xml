@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/images/easycancel.PNG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/answers/51.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/51.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/categories/aliases.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/aliases.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/categories/aliases.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="194" column="17" lean-forward="true" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="17" />
+            <state relative-caret-position="287">
+              <caret line="261" column="3" lean-forward="true" selection-start-line="261" selection-start-column="3" selection-end-line="261" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -298,12 +295,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
-      <workItem from="1595147151916" duration="128649000" />
+      <workItem from="1595147151916" duration="129267000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128649000" />
+    <option name="totallyTimeSpent" value="129267000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -699,8 +696,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/categories/aliases.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="194" column="17" lean-forward="true" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="17" />
+        <state relative-caret-position="287">
+          <caret line="261" column="3" lean-forward="true" selection-start-line="261" selection-start-column="3" selection-end-line="261" selection-end-column="3" />
         </state>
       </provider>
     </entry>
