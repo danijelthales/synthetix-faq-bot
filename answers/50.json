@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "Accessing the Ecosystem\nThere are four ways to acquire the assets needed to trade on Synthetix Exchange:\n\n[Stake SNX](https://synthetix.community/docs/staking-snx-overview) and mint sUSD to trade\nUse Uniswap or DEX.AG to exchange ETH for sETH or sUSD to trade on Exchange\nUse Ether Collateral to take out a sETH [loan](https://synthetix.exchange/loans) on Synthetix Exchange"
+      "value": "Accessing the Ecosystem\nThere are four ways to acquire the assets needed to trade on Synthetix Exchange:\n\n[Stake SNX](https://synthetix.community/docs/staking-snx-overview) and mint sUSD to trade\nUse Curve.fi or 1inch.exchange to exchange a stable coin such as USDC for sUSD to trade on the Exchange\nUse You can also take out a sETH loan against ETH Collateral [loan](https://synthetix.exchange/loans) on Synthetix Exchange"
     },
     {
       "title": "Executing a Trade",
@@ -14,7 +14,7 @@
     },
     {
       "title": "\u200b",
-      "value": " Traders can execute a transaction by selecting an input asset, an output asset and an amount. The trading fee is 0.3% of the transaction value.\n\nFor trades exchanging a long asset for an inverse asset (e.g. sETH for iBTC), the fee is doubled. Crucially, there is no slippage. The spot price for 1 sETH is the same as for 100 sETH.\n\nThe Exchange interface allows the trader to choose from a range of transaction speeds. Beyond speed of transaction confirmation, selecting a slower or faster gas value won't affect the trade itself. However, if the network is highly congested, the trade may fail if the token is no longer available at the same price."
+      "value": " Traders can execute a transaction by selecting an input asset, an output asset and an amount. The trading fee depends on the currency traded into. Crucially, there is no slippage. The spot price for 1 sETH is the same as for 100 sETH.\n\nThe Exchange interface allows the trader to choose from a range of transaction speeds. Beyond speed of transaction confirmation, selecting a slower or faster gas value won't affect the trade itself. However, if the network is highly congested, the trade may fail if the token is no longer available at the same price."
     },
     {
       "title": "For more details visit our help page:",

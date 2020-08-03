@@ -188,6 +188,14 @@
     "alias": "pending transaction"
   },
   {
+    "number": 51,
+    "alias": "cancel transaction"
+  },
+  {
+    "number": 51,
+    "alias": "cancel"
+  },
+  {
     "number": 40,
     "alias": "sip"
   },
@@ -254,5 +262,9 @@
   {
     "number": 60,
     "alias": "QueenA"
+  },
+  {
+    "number": 37,
+    "alias": "fluctuation"
   }
 ]

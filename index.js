@@ -17,6 +17,9 @@ var snxPrice = 4;
 var mintGas = 993602;
 var claimGas = 1092941;
 
+var usdtPeg = 1;
+var usdcPeg = 1;
+
 
 let gasSubscribersMap = new Map();
 console.log("Redis URL:" + process.env.REDIS_URL);
@@ -61,18 +64,7 @@ client.on("message", msg => {
                     args.shift();
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
-                        let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
-                        let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
-                        let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                        let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                        const exampleEmbed = new Discord.MessageEmbed()
-                            .setColor('#0099ff')
-                            .setTitle('Calculated rewards:');
-                        exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
-                            + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-                        exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
-                            + claimPrice + "$**");
-                        msg.reply(exampleEmbed);
+                        doCalculate(command, msg);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
@@ -93,6 +85,12 @@ client.on("message", msg => {
                         let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
                         if (checkIfUltimateQuestion(encodedForm)) {
                             answerUltimateQuestion();
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("unsubscribe")) {
+                            gasSubscribersMap.delete(msg.author.id)
+                            if (process.env.REDIS_URL) {
+                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                });
+                            }
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
                             const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
                             args.shift();
@@ -100,7 +98,8 @@ client.on("message", msg => {
                             if (command && !isNaN(command)) {
                                 gasSubscribersMap.set(msg.author.id, command)
                                 if (process.env.REDIS_URL) {
-                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
                                 }
                                 msg.reply(" I will send you a message once safe gas price is below " + command + " gwei");
                             } else {
@@ -172,18 +171,7 @@ client.on("message", msg => {
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
-                                let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
-                                let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
-                                let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                                let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-                                const exampleEmbed = new Discord.MessageEmbed()
-                                    .setColor('#0099ff')
-                                    .setTitle('Calculated rewards:');
-                                exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
-                                    + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-                                exampleEmbed.addField("Transaction costs", "With the current gas as price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
-                                    + claimPrice + "$**");
-                                msg.reply(exampleEmbed);
+                                doCalculate(command, msg);
                             }
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -638,7 +626,9 @@ client.on("message", msg => {
                         resp.on('end', () => {
                             let result = JSON.parse(data);
                             exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                            if (result.market_data.current_price.usd == 1) {
+                            exampleEmbed.addField("USDC", usdcPeg, false);
+                            exampleEmbed.addField("USDT", usdtPeg, false);
+                            if (result.market_data.current_price.usd == 1 && usdcPeg == 1 && usdtPeg == 1) {
                                 exampleEmbed.attachFiles(['images/perfect.jpg'])
                                     .setImage('attachment://perfect.jpg');
                             }
@@ -755,6 +745,15 @@ setInterval(function () {
                     if (process.env.REDIS_URL) {
                         redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
                     }
+                    setTimeout(function () {
+                        if (!gasSubscribersMap.has(key)) {
+                            gasSubscribersMap.set(key, value);
+                            if (process.env.REDIS_URL) {
+                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
+                            }
+                        }
+                    }, 1000 * 60 * 60);
+
                 }
             });
 
@@ -794,18 +793,77 @@ async function getSnxToolStaking() {
         })
 
         console.log("I got the prices:" + prices);
-        var snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
-        var snxToMintUsd = prices[4].split(' ')[0] * 1.0;
-        var snxRewardsThisPeriod = prices[5];
-        var totalDebt = prices[5];
+        snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
+        snxToMintUsd = prices[4].split(' ')[0] * 1.0;
+        snxRewardsThisPeriod = prices[5];
+        totalDebt = prices[6];
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from SNX tools.")
     }
 }
 
+setInterval(function () {
+    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+
+setInterval(function () {
+    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+function doCalculate(command, msg) {
+    let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+    let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
+    let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+    let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+    const exampleEmbed = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle('Calculated rewards:');
+    exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
+        + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
+    exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+        + claimPrice + "$**");
+    exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n"+ "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
+    msg.reply(exampleEmbed);
+}
 
 setTimeout(getSnxToolStaking, 10 * 1000);
+setInterval(getSnxToolStaking, 60 * 60 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)

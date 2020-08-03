@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "Here is the Synthetix oracle address on [etherscan](https://etherscan.io/address/0xac1ed4fabbd5204e02950d68b6fc8c446ac95362).\n\nYou can see when and how often the updateRates calls are made.\n\nAt anypoint you can access what the exchange rates are on the ExchangeRates Contract\n\nIf you want to see the current rate for sBTC. Enter sBTC and click the \"Query\" button.\nThe 18 numbers from the right is the decimal place so in this case after putting the value into the [converter](https://etherconverter.online/) will show the price of sBTC is 9294.8611338663351868"
+      "value": "All the live rates can be found on the [exchange](synthetix.exchange) or on this [site](https://codepen.io/justinjmoses/full/vMKywz).  To get the rates using smart contracts,  find the ExchangeRates contract under [here](https://docs.synthetix.io/addresses/).\n\nYou can see when and how often the updateRates calls are made.\n\nAt anypoint you can access what the exchange rates are on the ExchangeRates Contract\n\nIf you want to see the current rate for sBTC. Enter sBTC and click the \"Query\" button.\nThe 18 numbers from the right is the decimal place so in this case after putting the value into the [converter](https://etherconverter.online/) will show the price of sBTC is 9294.8611338663351868"
     },
     {
       "title": "Chainlink",
