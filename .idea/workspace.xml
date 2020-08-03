@@ -22,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="749" column="82" selection-start-line="749" selection-start-column="82" selection-end-line="749" selection-end-column="82" />
+            <state relative-caret-position="192">
+              <caret line="768" column="28" lean-forward="true" selection-start-line="768" selection-start-column="28" selection-end-line="768" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -87,7 +87,6 @@
       <find>redisClient</find>
       <find>redis</find>
       <find>gasSubscribersMapRaw</find>
-      <find>gasSubscribersMap</find>
       <find>rediscl</find>
       <find>below</find>
       <find>help</find>
@@ -112,6 +111,7 @@
       <find>51</find>
       <find>redisClient.set</find>
       <find>redis.pri</find>
+      <find>gasSubscribersMap</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019880594-How-can-I-receive-SNX-staking-rewards-</replace>
@@ -295,12 +295,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
-      <workItem from="1595147151916" duration="130208000" />
+      <workItem from="1595147151916" duration="132596000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130208000" />
+    <option name="totallyTimeSpent" value="132596000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -344,9 +344,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>750</line>
+          <line>754</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="44" />
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/index.js</url>
+          <line>769</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -708,8 +714,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="749" column="82" selection-start-line="749" selection-start-column="82" selection-end-line="749" selection-end-column="82" />
+        <state relative-caret-position="192">
+          <caret line="768" column="28" lean-forward="true" selection-start-line="768" selection-start-column="28" selection-end-line="768" selection-end-column="28" />
         </state>
       </provider>
     </entry>

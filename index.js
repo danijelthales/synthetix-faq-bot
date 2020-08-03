@@ -22,7 +22,10 @@ var usdcPeg = 1;
 
 
 let gasSubscribersMap = new Map();
+let gasSubscribersLastPushMap = new Map();
+
 console.log("Redis URL:" + process.env.REDIS_URL);
+
 if (process.env.REDIS_URL) {
     redisClient = redis.createClient(process.env.REDIS_URL);
     redisClient.on("error", function (error) {
@@ -35,6 +38,15 @@ if (process.env.REDIS_URL) {
         if (gasSubscribersMapRaw) {
             gasSubscribersMap = new Map(JSON.parse(gasSubscribersMapRaw));
             console.log("gasSubscribersMap:" + gasSubscribersMap);
+        }
+    });
+
+    redisClient.get("gasSubscribersLastPushMap", function (err, obj) {
+        gasSubscribersLastPushMapRaw = obj;
+        console.log("gasSubscribersMapRaw:" + gasSubscribersLastPushMapRaw);
+        if (gasSubscribersLastPushMapRaw) {
+            gasSubscribersLastPushMap = new Map(JSON.parse(gasSubscribersLastPushMapRaw));
+            console.log("gasSubscribersLastPushMap:" + gasSubscribersLastPushMap);
         }
     });
 
@@ -86,21 +98,21 @@ client.on("message", msg => {
                         if (checkIfUltimateQuestion(encodedForm)) {
                             answerUltimateQuestion();
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("unsubscribe")) {
-                            gasSubscribersMap.delete(msg.author.id)
+                            gasSubscribersMap.delete(msg.author.id);
+                            gasSubscribersLastPushMap.delete(msg.author.id);
                             if (process.env.REDIS_URL) {
                                 redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
                                 });
+                                redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                });
                             }
+                            msg.reply("You are now unsubscribed from gas updates");
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
                             const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
                                 gasSubscribersMap.set(msg.author.id, command)
-                                if (process.env.REDIS_URL) {
-                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                    });
-                                }
                                 msg.reply(" I will send you a message once safe gas price is below " + command + " gwei");
                             } else {
                                 msg.reply(command + " is not a proper integer number.");
@@ -740,23 +752,30 @@ setInterval(function () {
             gasPrice = result.standard;
             gasSubscribersMap.forEach(function (value, key) {
                 if (result.standard < value) {
-                    client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
-                    gasSubscribersMap.delete(key);
-                    if (process.env.REDIS_URL) {
-                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                        });
-                    }
-                    setTimeout(function () {
-                        console.log("Resubscribing the user:" +key+ " to "+value);
-                        if (!gasSubscribersMap.has(key)) {
-                            gasSubscribersMap.set(key, value);
+                    if (gasSubscribersLastPushMap.has(key)) {
+                        var curDate = new Date();
+                        var lastNotification = gasSubscribersLastPushMap.get(key);
+                        var hours = Math.abs(curDate - lastNotification) / 36e5;
+                        if (hours > 1) {
+                            client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                            gasSubscribersLastPushMap.set(key, new Date());
                             if (process.env.REDIS_URL) {
                                 redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
                                 });
+                                redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                });
                             }
                         }
-                    }, 1000*60*60);
-
+                    } else {
+                        client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                        gasSubscribersLastPushMap.set(key, new Date());
+                        if (process.env.REDIS_URL) {
+                            redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                            });
+                            redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                            });
+                        }
+                    }
                 }
             });
 
