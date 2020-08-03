@@ -113,7 +113,8 @@ client.on("message", msg => {
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
                                 gasSubscribersMap.set(msg.author.id, command)
-                                msg.reply(" I will send you a message once safe gas price is below " + command + " gwei");
+                                msg.reply(" I will send you a message once safe gas price is below " + command + " gwei , and every hour after that that it remains below that level. \nTo change the threshold level for gas price, send me a new subscribe message with the new amount.\n" +
+                                    "To unsubscribe, send me another DM **unsubscribe**.");
                             } else {
                                 msg.reply(command + " is not a proper integer number.");
                             }
