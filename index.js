@@ -743,16 +743,19 @@ setInterval(function () {
                     client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
                     gasSubscribersMap.delete(key);
                     if (process.env.REDIS_URL) {
-                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
+                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                        });
                     }
                     setTimeout(function () {
+                        console.log("Resubscribing the user:" +key+ " to "+value);
                         if (!gasSubscribersMap.has(key)) {
                             gasSubscribersMap.set(key, value);
                             if (process.env.REDIS_URL) {
-                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), redis.print);
+                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                });
                             }
                         }
-                    }, 1000 * 60 * 60);
+                    }, 1000*60*60);
 
                 }
             });
@@ -858,7 +861,7 @@ function doCalculate(command, msg) {
         + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
     exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
         + claimPrice + "$**");
-    exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n"+ "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
+    exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n" + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
     msg.reply(exampleEmbed);
 }
 
