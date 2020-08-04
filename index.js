@@ -753,12 +753,23 @@ setInterval(function () {
             let result = JSON.parse(data);
             gasPrice = result.standard;
             gasSubscribersMap.forEach(function (value, key) {
-                if (result.standard < value) {
-                    if (gasSubscribersLastPushMap.has(key)) {
-                        var curDate = new Date();
-                        var lastNotification = gasSubscribersLastPushMap.get(key);
-                        var hours = Math.abs(curDate - lastNotification) / 36e5;
-                        if (hours > 1) {
+                try {
+                    if (result.standard < value) {
+                        if (gasSubscribersLastPushMap.has(key)) {
+                            var curDate = new Date();
+                            var lastNotification = gasSubscribersLastPushMap.get(key);
+                            var hours = Math.abs(curDate - lastNotification) / 36e5;
+                            if (hours > 1) {
+                                client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                                gasSubscribersLastPushMap.set(key, new Date());
+                                if (process.env.REDIS_URL) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
+                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                    });
+                                }
+                            }
+                        } else {
                             client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
                             gasSubscribersLastPushMap.set(key, new Date());
                             if (process.env.REDIS_URL) {
@@ -768,16 +779,9 @@ setInterval(function () {
                                 });
                             }
                         }
-                    } else {
-                        client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
-                        gasSubscribersLastPushMap.set(key, new Date());
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                            });
-                            redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                            });
-                        }
                     }
+                } catch (e) {
+                    console.log("Error occured when going through subscriptions: " + e);
                 }
             });
 
