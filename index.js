@@ -770,18 +770,30 @@ setInterval(function () {
                                 }
                             }
                         } else {
-                            client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
-                            gasSubscribersLastPushMap.set(key, new Date());
-                            if (process.env.REDIS_URL) {
-                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                });
-                                redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                });
+                            if (client.users.cache.get(key)) {
+                                client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                                gasSubscribersLastPushMap.set(key, new Date());
+                                if (process.env.REDIS_URL) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
+                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                    });
+                                }
+                            } else {
+                                console.log("User:" + key + " is no longer in this server");
+                                gasSubscribersLastPushMap.delete(key);
+                                gasSubscribersMap.delete(key);
+                                if (process.env.REDIS_URL) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
+                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                    });
+                                }
                             }
                         }
                     }
                 } catch (e) {
-                    console.log("Error occured when going through subscriptions: " + e);
+                    console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);
                 }
             });
 
