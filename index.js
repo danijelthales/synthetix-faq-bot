@@ -903,7 +903,7 @@ function doCalculate(command, msg) {
 }
 
 setTimeout(getSnxToolStaking, 10 * 1000);
-setInterval(getSnxToolStaking, 60 * 60 * 1000);
+setInterval(getSnxToolStaking, 60 * 10 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)
