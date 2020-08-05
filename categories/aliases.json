@@ -266,5 +266,13 @@
   {
     "number": 37,
     "alias": "fluctuation"
-  }
+  },
+  {
+    "number": 62,
+    "alias": "scam"
+  },  
+  {
+    "number": 62,
+    "alias": "telegram"
+  }  
 ]
