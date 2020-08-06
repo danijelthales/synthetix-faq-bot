@@ -955,7 +955,7 @@ setInterval(function () {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             let result = JSON.parse(data);
-            kucoinUsd = result.data.lastTradedPrice;
+            kucoinUsd = result.data[0].lastTradedPrice;
         });
 
     }).on("error", (err) => {
