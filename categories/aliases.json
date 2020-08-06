@@ -274,5 +274,45 @@
   {
     "number": 62,
     "alias": "telegram"
-  }  
+  },
+  {
+    "number": 63,
+    "alias": "conspiracy"
+  },
+  {
+    "number": 61,
+    "alias": "eth"
+  },
+  {
+    "number": 64,
+    "alias": "when rewards"
+  },
+  {
+    "number": 64,
+    "alias": "when rewards?"
+  },
+  {
+    "number": 64,
+    "alias": "wen rewards"
+  },
+  {
+    "number": 64,
+    "alias": "wen rewards?"
+  },
+  {
+    "number": 64,
+    "alias": "next rewards"
+  },
+  {
+    "number": 64,
+    "alias": "snapshot"
+  },
+  {
+    "number": 64,
+    "alias": "when snapshot"
+  },
+  {
+    "number": 64,
+    "alias": "wen snapshot"
+  }
 ]

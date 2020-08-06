@@ -20,6 +20,7 @@ var claimGas = 1092941;
 var usdtPeg = 1;
 var usdcPeg = 1;
 
+var payday = new Date('2020-08-12 12:27');
 
 let gasSubscribersMap = new Map();
 let gasSubscribersLastPushMap = new Map();
@@ -657,6 +658,28 @@ client.on("message", msg => {
                         console.log("Error: " + err.message);
                     });
 
+                } else if (command == "64") {
+
+                    var today = new Date();
+                    while (today > payday) {
+                        payday.setDate(payday.getDate() + 7);
+                    }
+                    var difference = payday.getTime() - today.getTime();
+                    var seconds = Math.floor(difference / 1000);
+                    var minutes = Math.floor(seconds / 60);
+                    var hours = Math.floor(minutes / 60);
+                    var days = Math.floor(hours / 24);
+                    hours %= 24;
+                    minutes %= 60;
+                    seconds %= 60;
+
+                    exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
+
                 } else {
 
                     answer.fields.forEach(function (field) {
@@ -903,7 +926,7 @@ function doCalculate(command, msg) {
 }
 
 setTimeout(getSnxToolStaking, 10 * 1000);
-setInterval(getSnxToolStaking, 60 * 60 * 1000);
+setInterval(getSnxToolStaking, 60 * 10 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)
