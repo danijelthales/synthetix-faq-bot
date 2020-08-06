@@ -316,11 +316,23 @@
     "alias": "wen snapshot"
   },
   {
+    "number": 64,
+    "alias": "payday"
+  },
+  {
+    "number": 64,
+    "alias": "wen payday"
+  },
+  {
     "number": 65,
     "alias": "discord id"
   },
   {
     "number": 65,
     "alias": "id"
+  },
+  {
+    "number": 66,
+    "alias": "buy snx"
   }
 ]

@@ -20,6 +20,12 @@ var claimGas = 1092941;
 var usdtPeg = 1;
 var usdcPeg = 1;
 
+var coingeckoUsd;
+var coingeckoEth;
+var coingeckoBtc;
+var binanceUsd;
+var kucoinUsd;
+
 var payday = new Date('2020-08-12 12:27');
 
 let gasSubscribersMap = new Map();
@@ -576,30 +582,16 @@ client.on("message", msg => {
 
                 } else if (command == "9") {
 
-                    https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
-                        let data = '';
-
-                        // A chunk of data has been recieved.
-                        resp.on('data', (chunk) => {
-                            data += chunk;
-                        });
-
-                        // The whole response has been received. Print out the result.
-                        resp.on('end', () => {
-                            let result = JSON.parse(data);
-                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                            exampleEmbed.addField("ETH:", result.market_data.current_price.eth, false);
-                            exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
-                            if (doReply) {
-                                msg.reply(exampleEmbed);
-                            } else {
-                                msg.channel.send(exampleEmbed);
-                            }
-                        });
-
-                    }).on("error", (err) => {
-                        console.log("Error: " + err.message);
-                    });
+                    exampleEmbed.addField("USD (binance)", binanceUsd, false);
+                    exampleEmbed.addField("USD (kucoin)", kucoinUsd, false);
+                    exampleEmbed.addField("USD (coingecko)", coingeckoUsd, false);
+                    exampleEmbed.addField("ETH (coingecko):", coingeckoEth, false);
+                    exampleEmbed.addField("BTC (coingecko):", coingeckoBtc, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
 
                 } else if (command == "61") {
 
@@ -640,9 +632,9 @@ client.on("message", msg => {
                         // The whole response has been received. Print out the result.
                         resp.on('end', () => {
                             let result = JSON.parse(data);
-                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                            exampleEmbed.addField("USDC", usdcPeg, false);
-                            exampleEmbed.addField("USDT", usdtPeg, false);
+                            exampleEmbed.addField("USD (coingecko)", result.market_data.current_price.usd, false);
+                            exampleEmbed.addField("USDC (1inch)", usdcPeg, false);
+                            exampleEmbed.addField("USDT (1inch)", usdtPeg, false);
                             if (result.market_data.current_price.usd == 1 && usdcPeg == 1 && usdtPeg == 1) {
                                 exampleEmbed.attachFiles(['images/perfect.jpg'])
                                     .setImage('attachment://perfect.jpg');
@@ -907,6 +899,68 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
+}, 60 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            coingeckoUsd = result.market_data.current_price.usd;
+            coingeckoEth = result.market_data.current_price.eth;
+            coingeckoBtc = result.market_data.current_price.btc;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+}, 60 * 1000);
+
+setInterval(function () {
+    https.get('https://api.binance.com/api/v1/ticker/price?symbol=SNXUSDT', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            binanceUsd = result.price;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+}, 60 * 1000);
+
+setInterval(function () {
+    https.get('https://trade.kucoin.com/_api/trade-front/market/getSymbolTick?symbols=SNX-USDT', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            kucoinUsd = result.data.lastTradedPrice;
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
 }, 60 * 1000);
 
 function doCalculate(command, msg) {
