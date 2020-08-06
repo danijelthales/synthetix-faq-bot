@@ -1,20 +1,14 @@
 {
-  "title": "Question 66:",
-  "description": "Where can I buy SNX??",
+  "title": "Question 65:",
+  "description": "How do I get the unique discord ID?",
   "color": "0099ff",
   "fields": [
     {
       "title": "Answer",
-      "value": "There are a number of centralized and decentralized exchanges where you can buy SNX. Here are some:"
-    },
-    {
-      "title": "CEXes",
-      "value": "[kucoin](https://www.kucoin.com/)\n[binance](https://www.binance.com/)\n[poloniex](https://poloniex.com/)"
-    },
-    {
-      "title": "DEXes",
-      "value": "[uniswap](https://app.uniswap.org/#/swap)\n[kyber](https://kyberswap.com/)\n[dex.blue](https://dex.blue/)"
+      "value": "You need to go to User Settings > Appearance and activate Developer Mode."
     }
   ],
-  "footer": {}
+  "footer": {},
+  "image": "getID.gif"
 }
+
