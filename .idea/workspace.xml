@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/images/ani_rocket_60.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/sixty_dolla_club1.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/answers/52.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/52.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/answers/65.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/65.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/answers/66.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/66.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/categories/aliases.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/aliases.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/answers/52.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+              <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -291,12 +287,12 @@
       <option name="presentableId" value="Default" />
       <updated>1595147150385</updated>
       <workItem from="1595147151916" duration="143065000" />
-      <workItem from="1596701776204" duration="3955000" />
+      <workItem from="1596701776204" duration="4035000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147020000" />
+    <option name="totallyTimeSpent" value="147100000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -707,7 +703,7 @@
     <entry file="file://$PROJECT_DIR$/answers/52.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
         </state>
       </provider>
     </entry>
