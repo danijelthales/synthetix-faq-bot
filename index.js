@@ -16,6 +16,11 @@ var ethPrice = 360;
 var snxPrice = 4;
 var mintGas = 993602;
 var claimGas = 1092941;
+var periodVolume = "$33,026,800";
+
+var currentFees = "$159,604";
+var unclaimedFees = "$40,808";
+
 
 var usdtPeg = 1;
 var usdcPeg = 1;
@@ -84,6 +89,13 @@ client.on("message", msg => {
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
                         doCalculate(command, msg);
+                    }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate susd rewards")) {
+                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq calculate susd rewards".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    if (command && !isNaN(command)) {
+                        doCalculateSusd(command, msg);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
@@ -193,6 +205,13 @@ client.on("message", msg => {
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
                                 doCalculate(command, msg);
+                            }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate susd rewards")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("calculate susd rewards".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command && !isNaN(command)) {
+                                doCalculateSusd(command, msg);
                             }
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -650,7 +669,7 @@ client.on("message", msg => {
                         console.log("Error: " + err.message);
                     });
 
-                } else if (command == "64") {
+                } else if (command == "13") {
 
                     var today = new Date();
                     while (today > payday) {
@@ -858,6 +877,72 @@ async function getSnxToolStaking() {
     }
 }
 
+async function getSnxToolHome() {
+    try {
+        const browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
+        const page = await browser.newPage();
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://snx.tools/home", {waitUntil: 'networkidle2'});
+
+        /** @type {string[]} */
+        var prices = await page.evaluate(() => {
+            var div = document.querySelectorAll('span.text-2xl');
+
+            var prices = []
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
+
+            return prices
+        })
+
+        console.log("I got the prices:" + prices);
+        periodVolume = prices[3];
+        browser.close()
+    } catch (e) {
+        console.log("Error happened on getting data from SNX tools.")
+    }
+}
+
+
+async function getDashboard() {
+    try {
+        const browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
+        const page = await browser.newPage();
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://dashboard.synthetix.io/", {waitUntil: 'networkidle2'});
+
+        /** @type {string[]} */
+        var prices = await page.evaluate(() => {
+            var div = document.querySelectorAll('h2');
+
+            var prices = []
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
+
+            return prices
+        })
+
+        console.log("I got the prices:" + prices);
+        currentFees = prices[13];
+        unclaimedFees = prices[14];
+        browser.close()
+    } catch (e) {
+        console.log("Error happened on getting data from SNX tools.")
+    }
+}
+
 setInterval(function () {
     https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
         let data = '';
@@ -979,8 +1064,49 @@ function doCalculate(command, msg) {
     msg.reply(exampleEmbed);
 }
 
+function doCalculateSusd(command, msg) {
+    var today = new Date();
+    while (today > payday) {
+        payday.setDate(payday.getDate() + 7);
+    }
+    var difference = payday.getTime() - today.getTime();
+    var seconds = Math.floor(difference / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+
+    var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
+    var unclaimedFeesNumber = unclaimedFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
+    var feesPeriod = totalFeesNumber - unclaimedFeesNumber;
+    var percentagePassed = Math.round(((100 - (hours * 100) / (7 * 24)) + Number.EPSILON) * 100) / 100;
+    var scaledPeriod = feesPeriod * ((200 - percentagePassed) / 100);
+
+    var totalDebtNumber = totalDebt.replace(/,/g, '').replace(/\$/g, '') * 1.0;
+    var sUsdRewardPerMintedSusd = scaledPeriod / totalDebtNumber;
+
+
+    let resRew = Math.round(((command * sUsdRewardPerMintedSusd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+    const exampleEmbed = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle('Calculated rewards:');
+    exampleEmbed.addField("sUSD weekly rewards", "You are expected to receive **" + resRew + "** sUSD per week for **" + command + "** staked SNX");
+    exampleEmbed.addField("General info", "sUSD fees in this period:**$" + feesPeriod + "**\n"
+        + "Percentage of the period passed:**" + percentagePassed + "%**\n"
+        + "sUSD fees scaled for whole period:**$" + scaledPeriod + "**\n"
+        + "Total debt:**" + totalDebt + "%**\n"
+        + "sUSD rewards per minted sUSD:**" + sUsdRewardPerMintedSusd + "**\n"
+        + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
+
+    msg.reply(exampleEmbed);
+}
+
 setTimeout(getSnxToolStaking, 10 * 1000);
 setInterval(getSnxToolStaking, 60 * 10 * 1000);
+
+setTimeout(getSnxToolHome, 30 * 1000);
+setInterval(getSnxToolHome, 60 * 7 * 1000);
+
+setTimeout(getDashboard, 20 * 1000);
+setInterval(getDashboard, 60 * 13 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)
