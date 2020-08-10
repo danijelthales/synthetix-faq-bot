@@ -334,5 +334,13 @@
   {
     "number": 4,
     "alias": "buy snx"
+  },
+  {
+    "number": 62,
+    "alias": "volume"
+  },
+  {
+    "number": 63,
+    "alias": "debt"
   }
 ]

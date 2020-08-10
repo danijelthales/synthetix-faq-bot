@@ -20,7 +20,7 @@ var periodVolume = "$33,026,800";
 
 var currentFees = "$159,604";
 var unclaimedFees = "$40,808";
-
+var poolDistribution = ["sUSD (51.1%)", "sETH (16.6%)", "sBTC (14.9%)", "iETH (8.1%)", "Others (9.2%)"];
 
 var usdtPeg = 1;
 var usdcPeg = 1;
@@ -84,11 +84,18 @@ client.on("message", msg => {
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate rewards")) {
-                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq calculate rewards".length).split(' ');
+                    let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                    const args = content.slice("faq calculate rewards".length).split(' ');
                     args.shift();
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
-                        doCalculate(command, msg);
+                        var gas = false;
+                        if (content.includes("with")) {
+                            var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                            argsSecondPart.shift();
+                            gas = argsSecondPart.shift().trim();
+                        }
+                        doCalculate(command, msg, gas);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate susd rewards")) {
                     const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq calculate susd rewards".length).split(' ');
@@ -200,18 +207,32 @@ client.on("message", msg => {
                             doSearch(searchWord, args);
 
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate rewards")) {
-                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("calculate rewards".length).split(' ');
+                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                            const args = content.slice("calculate rewards".length).split(' ');
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
-                                doCalculate(command, msg);
+                                var gas = false;
+                                if (content.includes("with")) {
+                                    var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                                    argsSecondPart.shift();
+                                    gas = argsSecondPart.shift().trim();
+                                }
+                                doCalculate(command, msg, gas);
                             }
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate susd rewards")) {
-                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("calculate susd rewards".length).split(' ');
+                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                            const args = content.slice("calculate susd rewards".length).split(' ');
                             args.shift();
                             const command = args.shift().trim();
                             if (command && !isNaN(command)) {
-                                doCalculateSusd(command, msg);
+                                var gas = false;
+                                if (content.includes("with")) {
+                                    var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                                    argsSecondPart.shift();
+                                    gas = argsSecondPart.shift().trim();
+                                }
+                                doCalculateSusd(command, msg, gas);
                             }
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -691,6 +712,29 @@ client.on("message", msg => {
                         msg.channel.send(exampleEmbed);
                     }
 
+                } else if (command == "62") {
+
+                    exampleEmbed.addField("Volume in this period:", periodVolume, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
+
+                } else if (command == "63") {
+
+                    var distribution = "";
+                    poolDistribution.forEach(function (d) {
+                        distribution += d + "\n";
+                    });
+
+                    exampleEmbed.addField("Debt distribution:", distribution, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
+
                 } else {
 
                     answer.fields.forEach(function (field) {
@@ -905,7 +949,7 @@ async function getSnxToolHome() {
         periodVolume = prices[3];
         browser.close()
     } catch (e) {
-        console.log("Error happened on getting data from SNX tools.")
+        console.log("Error happened on getting data from SNX tools home.")
     }
 }
 
@@ -931,15 +975,21 @@ async function getDashboard() {
                 prices.push(element.textContent);
             });
 
+            div = document.querySelectorAll('.pieLegendElement');
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
+
             return prices
         })
 
         console.log("I got the prices:" + prices);
         currentFees = prices[13];
         unclaimedFees = prices[14];
+        poolDistribution = prices.slice(27, prices.length);
         browser.close()
     } catch (e) {
-        console.log("Error happened on getting data from SNX tools.")
+        console.log("Error happened on getting data from dashboard")
     }
 }
 
@@ -1048,17 +1098,21 @@ setInterval(function () {
     });
 }, 60 * 1000);
 
-function doCalculate(command, msg) {
+function doCalculate(command, msg, gasPriceParam) {
+    var gasPriceToUse= gasPrice;
+    if(gasPriceParam){
+        gasPriceToUse=gasPriceParam;
+    }
     let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
     let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
-    let mintingPrice = Math.round(((mintGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-    let claimPrice = Math.round(((claimGas * gasPrice * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+    let mintingPrice = Math.round(((mintGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+    let claimPrice = Math.round(((claimGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
     const exampleEmbed = new Discord.MessageEmbed()
         .setColor('#0099ff')
         .setTitle('Calculated rewards:');
     exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
         + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-    exampleEmbed.addField("Transaction costs", "With the current gas price at **" + gasPrice + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+    exampleEmbed.addField("Transaction costs", "With the gas price at **" + gasPriceToUse + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
         + claimPrice + "$**");
     exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n" + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
     msg.reply(exampleEmbed);
