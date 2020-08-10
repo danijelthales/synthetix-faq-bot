@@ -1,17 +1,7 @@
 {
   "title": "Question 13:",
-  "description": "How can I earn Synth exchange rewards?",
+  "description": "When will next weekly rewards be distributed?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360020245314-How-can-I-earn-Synth-exchange-rewards-",
-  "fields": [
-    {
-      "title": "Answer:",
-      "value": "To earn rewards you need to stake your SNX as collateral and mint sUSD using [Mintr](https://mintr.synthetix.io/). \n\nRewards are generated from trades on https://Synthetix.Exchange/ (transaction fees of each trade is sent to the fee pool to be claimed by staked SNX holders).\n\nRewards can be claimed weekly from the 'Claim' button in Mintr.\n\nBefore claiming rewards, check your Collateralization Ratio status. If your Collateraliszation Ratio status is below the target collateralization ratio, you will not be able to claim rewards until you have adjusted it. "
-    },
-    {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020245314-How-can-I-earn-Synth-exchange-rewards-)"
-    }
-  ],
+  "url": "https://mintr.synthetix.io/",
   "footer": {}
 }
