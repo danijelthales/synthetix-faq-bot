@@ -1079,6 +1079,7 @@ function doCalculateSusd(command, msg) {
     var feesPeriod = totalFeesNumber - unclaimedFeesNumber;
     var percentagePassed = Math.round(((100 - (hours * 100) / (7 * 24)) + Number.EPSILON) * 100) / 100;
     var scaledPeriod = feesPeriod * ((200 - percentagePassed) / 100);
+    scaledPeriod = Math.round((scaledPeriod + Number.EPSILON) * 100) / 100;
 
     var totalDebtNumber = totalDebt.replace(/,/g, '').replace(/\$/g, '') * 1.0;
     var sUsdRewardPerMintedSusd = scaledPeriod / totalDebtNumber;
@@ -1092,7 +1093,7 @@ function doCalculateSusd(command, msg) {
     exampleEmbed.addField("General info", "sUSD fees in this period:**$" + feesPeriod + "**\n"
         + "Percentage of the period passed:**" + percentagePassed + "%**\n"
         + "sUSD fees scaled for whole period:**$" + scaledPeriod + "**\n"
-        + "Total debt:**" + totalDebt + "%**\n"
+        + "Total debt:**" + totalDebt + "**\n"
         + "sUSD rewards per minted sUSD:**" + sUsdRewardPerMintedSusd + "**\n"
         + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
 
