@@ -2,15 +2,15 @@
   "title": "Question 14:",
   "description": "How do I increase my C-Ratio (Collateralization Ratio)?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360020094974-How-do-I-increase-my-C-Ratio-Collateralization-Ratio-",
+  "url": "https://synthetix.community/docs/staking#how-do-i-increase-my-c-ratio-collateralisation-ratio",
   "fields": [
     {
       "title": "Answer:",
-      "value": "If your C-Ratio is below the Target Collateralization Ratio (currently set at 750% Collateral), Mintr will display your status as 'Poor' and you will need to increase your C-Ratio to earn maximum fees.\n\nYou can increase your C-Ratio in two ways:\n\n1. Burning sUSD\n2. Buying more SNX and mint more sUSD.\nIf your C-Ratio is below the Target Collateralization Ratio, you will be blocked and unable to claim your fee rewards. \n\nIf your C-Ratio is above the Target Collateralization Ratio, Mintr will display your status as 'Good' and you can then:\n\n1. Do nothing. Continue to receive fees against your existing minted sUSD\n2. Mint more sUSD. To receive a greater proposition of fees in the next fee period.\nIf you choose to mint more sUSD, you may want to leave a buffer of sUSD to accommodate market fluctuation of the SNX price.\n\nYour Collateralization Ratio must be above the Target Collateralization Ratio to be able to claim your fee rewards. "
+      "value": "If your C-Ratio is below the Target Collateralization Ratio (currently set at 800% Collateral at this of this article), you will be blocked from claiming rewards and you will need to increase your C-Ratio to claim.You can increase your C-Ratio in two ways: 1) Burning sUSD, or 2) Buying more SNX and mint more sUSD. If your C-Ratio is below the Target Collateralization Ratio, you will be blocked and unable to claim your fee rewards. If your C-Ratio is above the Target Collateralization Ratio, Mintr will display your status as 'Good' and you can then: 1) Do nothing. Continue to receive fees against your existing minted sUSD. 2) Mint more sUSD. To receive a greater proposition of fees in the next fee period. 3) If you choose to mint more sUSD, you may want to leave a buffer of sUSD to accommodate market fluctuation of the SNX price. Your Collateralization Ratio must be above the Target Collateralization Ratio to be able to claim your fee rewards."
     },
     {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020094974-How-do-I-increase-my-C-Ratio-Collateralization-Ratio-)"
+      "title": "For more details visit the help page:",
+      "value": "[here](https://synthetix.community/docs/staking#how-do-i-increase-my-c-ratio-collateralisation-ratio)"
     }
   ],
   "footer": {}
