@@ -1,8 +1,8 @@
 {
   "title": "Question 16:",
-  "description": "Now that I've minted sUSD, what can I do with it?",
+  "description": "Now that I've staked SNX and minted sUSD, what can I do with it?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360019943674-Now-that-I-ve-minted-sUSD-what-can-I-do-with-it-",
+  "url": "https://synthetix.community/docs/staking#now-that-ive-staked-snx-and-minted-susd-what-can-i-do-with-it",
   "fields": [
     {
       "title": "Answer:",
@@ -10,11 +10,11 @@
     },
     {
       "title": "\u200b",
-      "value": "Secondly, you can take your sUSD to 1inch.exchange. 1inch is an aggregator that will swap your sUSD at the best rate possible or you can stake your sUSD in curve.fi and earn SNX rewards, on https://www.curve.fi/susdv2/. \n\nThirdly, you can deposit your sUSD into the Depot through Mintr. This will put it into a queue to be sold at Synthetix.Exchange. When your sUSD is purchased, you’ll receive the proceeds of the sale in ETH. While your sUSD is in the queue waiting to be sold, you can withdraw your sUSD back into your wallet at any time through the 'Depot' tab on Mintr. "
+      "value": "Secondly, you can take your sUSD to 1inch.exchange. 1inch is an aggregator that will swap your sUSD at the best rate possible or you can stake your sUSD in curve.fi and earn SNX rewards, on https://www.curve.fi/susdv2/. \n\nThirdly, you can lend it out on a lending platform such as AAVE."
     },
     {
       "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360019943674-Now-that-I-ve-minted-sUSD-what-can-I-do-with-it-)"
+      "value": "[here](https://synthetix.community/docs/staking#now-that-ive-staked-snx-and-minted-susd-what-can-i-do-with-it)"
     }
   ],
   "footer": {}
