@@ -5,7 +5,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "Go to synthetix.exchange and press on trade on the header. You do need synths to trade on the exchange, which you can acquire on CEX such as kucoin (sUSD) or [curve](https://www.curve.fi/susdv2/)."
+      "value": "Go to [Synthetix.Exchange](https://synthetix.exchange) and press on trade on the header. You do need Synths to trade on the exchange, ideally sUSD, which you can acquire on centralised exchanges such as [Kucoin](https://kucoin.com) or [curve](https://www.curve.fi/susdv2/)."
     }
   ],
   "footer": {}

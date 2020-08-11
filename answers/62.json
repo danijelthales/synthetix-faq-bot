@@ -1,13 +1,7 @@
 {
   "title": "Question 62:",
-  "description": "Is there an on-going telegram campaign?",
+  "description": "What is the synthetix.exchange volume in this period?",
   "color": "0099ff",
-  "fields": [
-    {
-      "title": "Answer",
-      "value": "No all official looking SNX telegram groups are scams. SNX Team members will never contact you and offer to sell you SNX. If you spot any SNX team member offering you SNX, they are trying to scam you whether on Discord or on Telegram. To help protect the community please report the scammers on telegram @NoToScam refer to this [link](https://telegram.org/faq) or on [Discord](https://support.discord.com/hc/en-us/requests/new)."
-    }
-  ],
-  "footer": {},
-  "image": "scam.jpg"
+  "url": "https://snx.tools/network/stakers",
+  "footer": {}
 }

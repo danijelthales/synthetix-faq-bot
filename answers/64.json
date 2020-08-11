@@ -1,7 +1,12 @@
 {
   "title": "Question 64:",
-  "description": "When will next weekly rewards be distributed?",
+  "description": "What is a Shillanthropist?",
   "color": "0099ff",
-  "url": "https://mintr.synthetix.io/",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Someone who shills or promotes a project or product out of goodness and sincerity in order to pump or improve his own “bags” for the benefit of others."
+    }
+  ],
   "footer": {}
 }

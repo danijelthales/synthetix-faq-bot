@@ -1,13 +1,7 @@
 {
   "title": "Question 63:",
-  "description": "Why are large amount of tokens being moved?",
+  "description": "What is the debt distribution?",
   "color": "0099ff",
-  "fields": [
-    {
-      "title": "Answer",
-      "value": "Kain is finally tired."
-    }
-  ],
-  "footer": {},
-  "image": "tired.jpg"
+  "url": "https://dashboard.synthetix.io/",
+  "footer": {}
 }

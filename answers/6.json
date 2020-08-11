@@ -2,25 +2,15 @@
   "title": "Question 6:",
   "description": "My wallet says I have havvens (HAV) but no SNX?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360020011854-My-wallet-says-I-have-havvens-HAV-but-no-SNX-",
+  "url": "https://synthetix.community/docs/other#why-arent-my-snx-tokens-showing-up-in-etherscan-or-another-platform",
   "fields": [
     {
       "title": "Answer:",
-      "value": "No conversion required\nWhen we rebranded from Havven to Synthetix, it was just a token symbol name change, so there's no token conversion required. However, your wallet may not have updated the name, because not every cryptocurrency wallet enables all ERC-20 tokens to be viewable by default. You can add the SNX token details from https://etherscan.io/address/0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f. "
-    },
-    {
-      "title": "I have less than 50 HAV",
-      "value": "When we made the name change, HAV holders with a balance of less than 50 were not issued a Transfer event. This means that for some HAV/SNX holders, Etherscan might tell them they have HAV instead of SNX. For people in this situation, they can manually do a 0 SNX transfer, which should emit a transfer event, which will mean that Etherscan will now recognise their SNX tokens or better just use mintr.synthetix.io to see your SNX balance, stake or transfer them. ",
-      "inline": true
-    },
-    {
-      "title": "Do I have double the tokens half HAV and half SNX?",
-      "value": "No. If your wallet says you have both HAV and SNX, you do not have double the tokens that you previously did the HAV balance is dead and replaced with the SNX. If you do not see the SNX check etherscan on the ERC20 tokens tab to see if you have already transferred them somewhere before contacting support. https://etherscan.io/tx/0x9d4b4e2fd9fb9b7ace6a10b085d538d97e689c60613bd08bd62d36dcd44daa8f \n If you see only HAV in your wallet on etherscan these tokens are dead and abandoned. You already have your SNX in your wallet but if your balance was less than 50 tokens you cannot see them. Use mintr.synthetix.io to see and transfer them. ",
-      "inline": true
+      "value": "There are several reasons why they might not be showing up. The most common reason is that you were affected by the proxy contract cutover on May 10. This can look like this. If you want them to show up on that platform, you'll need to 'emit an event' with your SNX by interacting them in some way. The simplest way is by sending yourself (i.e. to your own wallet) a transfer for 0 SNX. using this token address: 0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F. Please note you'll need some ETH in your wallet to pay for gas."
     },
     {
       "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020011854-My-wallet-says-I-have-havvens-HAV-but-no-SNX-)"
+      "value": "[here](https://synthetix.community/docs/other#why-arent-my-snx-tokens-showing-up-in-etherscan-or-another-platform)"
     }
   ],
   "image": "havwallet.png",

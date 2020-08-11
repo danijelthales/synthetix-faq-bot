@@ -2,15 +2,10 @@
   "title": "Question 18:",
   "description": "Do I need to register or open a trading account to use Synthetix.Exchange?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360020721094-Do-I-need-to-register-or-open-a-trading-account-to-use-Synthetix-Exchange-",
   "fields": [
     {
       "title": "Answer:",
       "value": "Registration is not required — simply connect your wallet and start trading. Synthetix.Exchange facilitates simple, on-chain conversions between different synthetic assets. \n\n1. To get started you need to have MetaMask or a hardware wallet, preferably a Trezor or Ledger. \n\n2. You will need some ETH, which you can purchase at any exchange such as Coinbase.\n\n3. Once you have the ETH in your wallet. Click \"Connect Wallet\" on Synthetix.Exchange.\n4. Connect your wallet \n5. To get started with your first trade you will need to acquire some synths like sUSD or sETH with your ETH. \n6. Once you have your synths, follow this article to make your first trade. "
-    },
-    {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020721094-Do-I-need-to-register-or-open-a-trading-account-to-use-Synthetix-Exchange-)"
     }
   ],
   "image": "connectnew.jpg",

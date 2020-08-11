@@ -2,7 +2,7 @@
   "title": "Question 1:",
   "description": "I claimed my SNX staking rewards but I don't see them in my wallet?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360022761833-I-claimed-my-SNX-staking-rewards-but-I-don-t-see-them-in-my-wallet-",
+  "url": "https://synthetix.community/docs/staking#i-claimed-my-snx-staking-rewards-but-i-dont-see-them-in-my-wallet",
   "fields": [
     {
       "title": "Answer:",
@@ -11,7 +11,7 @@
     },
     {
       "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360022761833-I-claimed-my-SNX-staking-rewards-but-I-don-t-see-them-in-my-wallet-)"
+      "value": "[here](https://synthetix.community/docs/staking#i-claimed-my-snx-staking-rewards-but-i-dont-see-them-in-my-wallet)"
     }
   ],
   "footer": {}
