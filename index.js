@@ -31,7 +31,7 @@ var coingeckoBtc;
 var binanceUsd;
 var kucoinUsd;
 
-var payday = new Date('2020-08-12 12:27');
+var payday = new Date('2020-08-12 10:27');
 
 let gasSubscribersMap = new Map();
 let gasSubscribersLastPushMap = new Map();
