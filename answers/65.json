@@ -1,6 +1,6 @@
 {
-  "title": "Question 55:",
-  "description": "What is the degen list?",
+  "title": "Question 65:",
+  "description": "What is the sORACLE list?",
   "color": "0099ff",
   "fields": [
     {
@@ -9,5 +9,5 @@
     }
   ],
   "footer": {},
-  "image": "degen.png"
+  "image": "sOracle.png"
 }

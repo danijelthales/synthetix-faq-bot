@@ -36,10 +36,6 @@
     "alias": "inflation"
   },
   {
-    "number": 15,
-    "alias": "claim snx rewards"
-  },
-  {
     "number": 23,
     "alias": "expensive transactions"
   },
@@ -342,5 +338,21 @@
   {
     "number": 63,
     "alias": "debt"
+  },
+  {
+    "number": 64,
+    "alias": "shillanthropist"
+  },
+  {
+    "number": 65,
+    "alias": "oracle list"
+  },
+  {
+    "number": 65,
+    "alias": "oracle"
+  },
+  {
+    "number": 65,
+    "alias": "sOracle"
   }
 ]
