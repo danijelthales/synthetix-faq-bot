@@ -2,15 +2,10 @@
   "title": "Question 30:",
   "description": "How can I see all of the Synths I own?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360020088834-How-can-I-see-all-of-the-Synths-I-own-",
   "fields": [
     {
       "title": "Answer:",
       "value": "The easiest way is to connect your wallet to https://synthetix.exchange/#/assets/overview \n\nYou will see all of your Synth balances [under](https://synthetix.exchange/#/assets/overview). "
-    },
-    {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020088834-How-can-I-see-all-of-the-Synths-I-own-)"
     }
   ],
   "image": "balances.png",
