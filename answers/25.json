@@ -2,15 +2,10 @@
   "title": "Question 25:",
   "description": "Why are transactions taking so long to process?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360020272513-Why-are-transactions-taking-so-long-to-process-",
   "fields": [
     {
       "title": "Answer:",
       "value": "If transactions are taking a long time to process, that means that Ethereum is slow. To speed up your transactions you'll need to pay a higher gas price. [Here's](https://blockgeeks.com/guides/ethereum-gas/) more info on how gas works on Ethereum. \n\n Ask me 'question 7' to know what are the prevailing rates to get your transaction included in the blockchain. Metamask also gives estimates, although these are only estimates. "
-    },
-    {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020272513-Why-are-transactions-taking-so-long-to-process-)"
     }
   ],
   "footer": {}
