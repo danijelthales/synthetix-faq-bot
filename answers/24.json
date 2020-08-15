@@ -2,15 +2,10 @@
   "title": "Question 24:",
   "description": "I don't have MetaMask, Trezor, Ledger, or Coinbase Wallet. How can I use the Synthetix dApps?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360038099493-I-don-t-have-MetaMask-Trezor-Ledger-or-Coinbase-Wallet-How-can-I-use-the-Synthetix-dApps-",
   "fields": [
     {
       "title": "Answer:",
       "value": "Unfortunately you do need to use one of these to use our dApps. The easiest way to get started is with Metamask, which is a browser extension. You can import your private key from another wallet to be able to use it through Metamask (instructions [here](https://bitcointalk.org/index.php?topic=3124084.msg32306055#msg32306055))."
-    },
-    {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360038099493-I-don-t-have-MetaMask-Trezor-Ledger-or-Coinbase-Wallet-How-can-I-use-the-Synthetix-dApps-)"
     }
   ],
   "footer": {}

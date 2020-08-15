@@ -2,7 +2,6 @@
   "title": "Question 23:",
   "description": "Why are Synthetix transactions so expensive?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360037619914-Why-are-Synthetix-transactions-so-expensive-",
   "fields": [
     {
       "title": "Answer:",
@@ -11,10 +10,6 @@
     {
       "title": "\u200b",
       "value": "Check out this awesome blog [post](https://gist.github.com/Spreek/71993913b5442a49bd4e2a06fa7a8ae6 ) by our guardian Spreek to understand gas cost better: "
-    },
-    {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360037619914-Why-are-Synthetix-transactions-so-expensive-)"
     }
   ],
   "footer": {}
