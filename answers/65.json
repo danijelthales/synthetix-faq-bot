@@ -1,14 +1,13 @@
 {
   "title": "Question 65:",
-  "description": "How do I get the unique discord ID?",
+  "description": "What is the sORACLE list?",
   "color": "0099ff",
   "fields": [
     {
-      "title": "Answer",
-      "value": "You need to go to User Settings > Appearance and activate Developer Mode."
+      "title": "\u200b",
+      "value": "\u200b"
     }
   ],
   "footer": {},
-  "image": "getID.gif"
+  "image": "sOracle.png"
 }
-

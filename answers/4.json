@@ -1,16 +1,19 @@
 {
   "title": "Question 4:",
-  "description": "How can I cash out my Synth gains for ETH?",
+  "description": "Where can I buy SNX?",
   "color": "0099ff",
-  "url": "https://help.synthetix.io/hc/en-us/articles/360020271673-How-can-I-cash-out-my-Synth-gains-for-ETH-",
   "fields": [
     {
-      "title": "Answer:",
-      "value": "You've probably either minted or bought sUSD, have been trading on Synthetix.Exchange, and now want to cash out into ETH. Here are your options:\n1) Convert your synths profit to sUSD on synthetix.exchange\n2) Convert that sUSD to ETH on 1inch.exchange (they will get you the best possible rate)\n"
+      "title": "Answer",
+      "value": "There are a number of centralized and decentralized exchanges where you can buy SNX. Here are some:"
     },
     {
-      "title": "For more details visit our help page:",
-      "value": "[here](https://help.synthetix.io/hc/en-us/articles/360020271673-How-can-I-cash-out-my-Synth-gains-for-ETH-)"
+      "title": "CEXes",
+      "value": "[kucoin](https://www.kucoin.com/)\n[binance](https://www.binance.com/)\n[poloniex](https://poloniex.com/)"
+    },
+    {
+      "title": "DEXes",
+      "value": "[uniswap](https://app.uniswap.org/#/swap)\n[kyber](https://kyberswap.com/)\n[dex.blue](https://dex.blue/)"
     }
   ],
   "footer": {}

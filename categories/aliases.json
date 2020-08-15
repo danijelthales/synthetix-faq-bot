@@ -36,10 +36,6 @@
     "alias": "inflation"
   },
   {
-    "number": 15,
-    "alias": "claim snx rewards"
-  },
-  {
     "number": 23,
     "alias": "expensive transactions"
   },
@@ -268,15 +264,15 @@
     "alias": "fluctuation"
   },
   {
-    "number": 62,
+    "number": 19,
     "alias": "scam"
   },  
   {
-    "number": 62,
+    "number": 19,
     "alias": "telegram"
   },
   {
-    "number": 63,
+    "number": 15,
     "alias": "conspiracy"
   },
   {
@@ -284,55 +280,79 @@
     "alias": "eth"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "when rewards"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "when rewards?"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "wen rewards"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "wen rewards?"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "next rewards"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "snapshot"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "when snapshot"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "wen snapshot"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "payday"
   },
   {
-    "number": 64,
+    "number": 13,
     "alias": "wen payday"
   },
   {
-    "number": 65,
+    "number": 12,
     "alias": "discord id"
   },
   {
-    "number": 65,
+    "number": 12,
     "alias": "id"
   },
   {
-    "number": 66,
+    "number": 4,
     "alias": "buy snx"
+  },
+  {
+    "number": 62,
+    "alias": "volume"
+  },
+  {
+    "number": 63,
+    "alias": "debt"
+  },
+  {
+    "number": 64,
+    "alias": "shillanthropist"
+  },
+  {
+    "number": 65,
+    "alias": "oracle list"
+  },
+  {
+    "number": 65,
+    "alias": "oracle"
+  },
+  {
+    "number": 65,
+    "alias": "sOracle"
   }
 ]
