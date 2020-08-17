@@ -751,13 +751,25 @@ client.on("message", msg => {
 
                 } else if (command == "66") {
 
-                    var synthsPrices = "";
+                    var synthsGainers = "";
+                    var synthsBreakEven = "";
+                    var synthsLosers = "";
                     synths.forEach(function (s) {
                         let arrow = (s.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (s.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
-                        synthsPrices += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                        if(arrow.includes("⤤")) {
+                            synthsGainers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                        }
+                        if(arrow.includes("⤥")) {
+                            synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                        }
+                        if(arrow.includes("-")) {
+                            synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                        }
                     });
 
-                    exampleEmbed.addField("Synth prices:", synthsPrices, false);
+                    exampleEmbed.addField("Synth gainers:", synthsGainers, false);
+                    exampleEmbed.addField("Synth no change:", synthsBreakEven, false);
+                    exampleEmbed.addField("Synth losers:", synthsLosers, false);
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {

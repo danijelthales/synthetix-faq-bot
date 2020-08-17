@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/answers/74.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/answers/75.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/questions/74.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/questions/75.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/categories/aliases.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/aliases.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,11 +18,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="559">
+              <caret line="371" column="22" selection-start-line="371" selection-start-column="14" selection-end-line="371" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="762" column="28" lean-forward="true" selection-start-line="762" selection-start-column="28" selection-end-line="762" selection-end-column="28" />
+            <state relative-caret-position="372">
+              <caret line="771" column="71" selection-start-line="771" selection-start-column="71" selection-end-line="771" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -256,12 +259,12 @@
       <workItem from="1597063077163" duration="9017000" />
       <workItem from="1597220402818" duration="1051000" />
       <workItem from="1597668713607" duration="650000" />
-      <workItem from="1597699849801" duration="5464000" />
+      <workItem from="1597699849801" duration="6849000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="165012000" />
+    <option name="totallyTimeSpent" value="166397000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -657,15 +660,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/categories/aliases.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="409" column="3" lean-forward="true" selection-start-line="409" selection-start-column="3" selection-end-line="409" selection-end-column="3" />
+        <state relative-caret-position="559">
+          <caret line="371" column="22" selection-start-line="371" selection-start-column="14" selection-end-line="371" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="762" column="28" lean-forward="true" selection-start-line="762" selection-start-column="28" selection-end-line="762" selection-end-column="28" />
+        <state relative-caret-position="372">
+          <caret line="771" column="71" selection-start-line="771" selection-start-column="71" selection-end-line="771" selection-end-column="71" />
         </state>
       </provider>
     </entry>
