@@ -402,5 +402,13 @@
   {
     "number": 73,
     "alias": "synthwave"
+  },
+  {
+    "number": 74,
+    "alias": "synth gainers"
+  },
+  {
+    "number": 75,
+    "alias": "synth losers"
   }
 ]

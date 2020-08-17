@@ -753,10 +753,39 @@ client.on("message", msg => {
 
                     var synthsPrices = "";
                     synths.forEach(function (s) {
-                        distribution += s.name + " " + s.price + "" + s.gain + "\n";
+                        let arrow = (s.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (s.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
+                        synthsPrices += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                     });
 
-                    exampleEmbed.addField("Debt distribution:", distribution, false);
+                    exampleEmbed.addField("Synth prices:", synthsPrices, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
+
+                } else if (command == "74") {
+
+                    var synthsPrices = "";
+                    for (var i = 0; i < 10; i++) {
+                        synthsPrices += synths[i].name + " " + synths[i].price + " " + synths[i].gain + " ⤤\n";
+                    }
+
+                    exampleEmbed.addField("Biggest gainers:", synthsPrices, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
+
+                } else if (command == "75") {
+
+                    var synthsPrices = "";
+                    for (var i = 1; i < 11; i++) {
+                        synthsPrices += synths[synths.length - i].name + " " + synths[synths.length - i].price + " " + synths[synths.length - i].gain + " ⤥\n";
+                    }
+
+                    exampleEmbed.addField("Biggest losers:", synthsPrices, false);
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
