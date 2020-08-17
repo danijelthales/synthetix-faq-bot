@@ -31,7 +31,21 @@ var coingeckoBtc;
 var binanceUsd;
 var kucoinUsd;
 
-var payday = new Date('2020-08-12 10:27');
+var payday = new Date('2020-08-12 10:37');
+
+const Synth = class {
+    constructor(name, price, gain) {
+        this.name = name;
+        this.price = price;
+        this.gain = gain;
+    }
+
+    name;
+    price;
+    gain;
+};
+
+var synths = new Array();
 
 let gasSubscribersMap = new Map();
 let gasSubscribersLastPushMap = new Map();
@@ -735,6 +749,20 @@ client.on("message", msg => {
                         msg.channel.send(exampleEmbed);
                     }
 
+                } else if (command == "66") {
+
+                    var synthsPrices = "";
+                    synths.forEach(function (s) {
+                        distribution += s.name + " " + s.price + "" + s.gain + "\n";
+                    });
+
+                    exampleEmbed.addField("Debt distribution:", distribution, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
+
                 } else {
 
                     answer.fields.forEach(function (field) {
@@ -983,13 +1011,61 @@ async function getDashboard() {
             return prices
         })
 
-        console.log("I got the prices:" + prices);
+        console.log("I got the dashboard prices:" + prices);
         currentFees = prices[13];
         unclaimedFees = prices[14];
         poolDistribution = prices.slice(27, prices.length);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from dashboard")
+    }
+}
+
+async function getExchange() {
+    try {
+        const browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
+        const page = await browser.newPage();
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://synthetix.exchange/#/synths", {waitUntil: 'networkidle2'});
+
+        /** @type {string[]} */
+        var prices = await page.evaluate(() => {
+            var div = document.querySelectorAll('.table-body-row span');
+
+            var prices = []
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
+
+            return prices
+        })
+
+        console.log("I got the synthetix exchange prices:" + prices);
+        var i = 0;
+        while (i < prices.length) {
+            let synthName = prices[i].substring(0, prices[i].lastIndexOf(prices[i + 1]));
+            let gain = prices[i + 3];
+            if (gain == "-") {
+                gain = "0%";
+            }
+            synths.push(new Synth(synthName, prices[i + 2], gain));
+            if (prices[i + 3] == "-") {
+                i = i + 5;
+            } else {
+                i = i + 4;
+            }
+        }
+        synths.sort(function (a, b) {
+            return b.gain.replace(/%/g, "") * 1.0 - a.gain.replace(/%/g, "") * 1.0;
+        });
+        browser.close()
+    } catch (e) {
+        console.log("Error happened on getting data from synthetix exchange")
     }
 }
 
@@ -1099,9 +1175,9 @@ setInterval(function () {
 }, 60 * 1000);
 
 function doCalculate(command, msg, gasPriceParam) {
-    var gasPriceToUse= gasPrice;
-    if(gasPriceParam){
-        gasPriceToUse=gasPriceParam;
+    var gasPriceToUse = gasPrice;
+    if (gasPriceParam) {
+        gasPriceToUse = gasPriceParam;
     }
     let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
     let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
@@ -1162,6 +1238,9 @@ setInterval(getSnxToolHome, 60 * 7 * 1000);
 
 setTimeout(getDashboard, 20 * 1000);
 setInterval(getDashboard, 60 * 13 * 1000);
+
+setTimeout(getExchange, 4 * 1000);
+setInterval(getExchange, 60 * 5 * 1000);
 
 
 client.login(process.env.BOT_TOKEN)

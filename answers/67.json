@@ -1,0 +1,13 @@
+{
+  "title": "Question 67:",
+  "description": "Why should I invest in Synthetix protocol by buying SNX tokens? What is the project's value proposition?",
+  "color": "0099ff",
+  "url": "https://www.synthetix.io",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "The Synthetix platform enables the creation of on-chain synthetic assets (Synths) that track the value of assets in the real world. Some examples of assets that the platform supports are synthetic fiat currencies (sUSD, sAUD, sKRW, etc.), synthetic commodities such as gold (sXAU), as well as more complex assets such as equity indices. \n\nThe SNX token is the core of the Synthetix protocol; it is what allows people to participate in minting Synths, and provides the collateral to back them. A decentralised system of synthetic assets will have huge benefits for users. Users will be willing to pay for this utility in the form of transaction fees when they transfer Synths. These fees are paid to SNX holders who have minted Synths and maintain a healthy collateralisation ratio. This feedback loop allows the value of the SNX token to grow as the network gains adoption, allowing more Synths to be minted and increasing adoption even further."
+    }
+  ],
+  "footer": {}
+}

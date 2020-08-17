@@ -32,6 +32,10 @@
     "alias": "havven"
   },
   {
+    "number": 6,
+    "alias": "haven"
+  },
+  {
     "number": 42,
     "alias": "inflation"
   },
@@ -266,7 +270,7 @@
   {
     "number": 19,
     "alias": "scam"
-  },  
+  },
   {
     "number": 19,
     "alias": "telegram"
@@ -354,5 +358,49 @@
   {
     "number": 65,
     "alias": "sOracle"
+  },
+  {
+    "number": 66,
+    "alias": "synths"
+  },
+  {
+    "number": 67,
+    "alias": "investment"
+  },
+  {
+    "number": 68,
+    "alias": "contract"
+  },
+  {
+    "number": 69,
+    "alias": "xsnx"
+  },
+  {
+    "number": 70,
+    "alias": "increase c ratio"
+  },
+  {
+    "number": 70,
+    "alias": "increase cRatio"
+  },
+  {
+    "number": 71,
+    "alias": "settle"
+  },
+  {
+    "number": 71,
+    "alias": "settling"
+  },
+  {
+    "number": 72,
+    "alias": "SNX Memes"
+  },
+  {
+    "number": 72,
+    "alias": "Memes"
+  },
+  {
+    "number": 73,
+    "alias": "synthwave"
   }
 ]

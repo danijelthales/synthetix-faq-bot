@@ -1,0 +1,16 @@
+{
+  "title": "Question 68:",
+  "description": "My wallet is still showing SNX from the old contract, how do I swap the old contract to the new one?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "You may have had SNX tokens which were previously showing in your wallet, for example when looking in Etherscan or Metamask, prior to May 10 2020. The probable reason you are not seeing them now is that you were affected by the 'proxy contract cutover' on that date. Your SNX are still in your wallet if that is the issue. If you want them to show up on that platform, you'll need to 'emit an event' with your SNX by interacting them in some way. The simplest way is by sending yourself (i.e. from your own wallet, to that same wallet) a transfer for 0 SNX.  Please note you'll need some ETH in your wallet to pay for gas. \n\nThe updated SNX token contract address is:\n0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F\nDecimals: 18\nYou may need to add this contract manually to Metamask or other platforms if it doesn't show up automatically."
+    },
+    {
+      "title": "\u200b",
+      "value": "One other possible reason is that your SNX is still escrowed from the Havven (HVN) token sale — they can be vested through Mintr in the ESCROW tab by clicking on the 'View Token Sale Escrow' button."
+    }
+  ],
+  "footer": {}
+}

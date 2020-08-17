@@ -1,0 +1,12 @@
+{
+  "title": "Question 71:",
+  "description": "How do I settle?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "To settle, you have to transfer to yourself via mintr. \n\nStep by step process below:\n- Go to mintr -> transfer. \n- Select the coin you want to settle.\n- Transfer an arbitrary amount (e.g. 0 ) to yourself (same address which coin you want to settle is held)"
+    }
+  ],
+  "footer": {}
+}

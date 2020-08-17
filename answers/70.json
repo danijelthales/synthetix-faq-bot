@@ -1,0 +1,12 @@
+{
+  "title": "Question 70:",
+  "description": "How to I calculate how much snx do I need to buy to fix my c ratio?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Check how much susd you need to burn with mintr (mintr -> burn). The amount required is shown under \"Fix your collaterisation ratio\"\n\nMultiply that amount by 7 and divide by the price of snx."
+    }
+  ],
+  "footer": {}
+}
