@@ -1,0 +1,13 @@
+{
+  "title": "Question 66:",
+  "description": "How to unwrap BPT claimed from sBTC pool?",
+  "color": "0099ff",
+  "url": "https://pools.balancer.exchange/#/pool/0x330416C863f2acCE7aF9C9314B422d24c672534a",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "To unwrap BPT rewards, go to: [Balancer](https://pools.balancer.exchange/#/pool/0x330416C863f2acCE7aF9C9314B422d24c672534a)"
+    }
+  ],
+  "footer": {}
+}
