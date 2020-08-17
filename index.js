@@ -760,10 +760,10 @@ client.on("message", msg => {
                             synthsGainers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                         }
                         if(arrow.includes("⤥")) {
-                            synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                            synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                         }
                         if(arrow.includes("-")) {
-                            synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                            synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                         }
                     });
 
