@@ -756,13 +756,13 @@ client.on("message", msg => {
                     var synthsLosers = "";
                     synths.forEach(function (s) {
                         let arrow = (s.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (s.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
-                        if(arrow.includes("⤤")) {
+                        if (arrow.includes("⤤")) {
                             synthsGainers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                         }
-                        if(arrow.includes("⤥")) {
+                        if (arrow.includes("⤥")) {
                             synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                         }
-                        if(arrow.includes("-")) {
+                        if (arrow.includes("-")) {
                             synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                         }
                     });
@@ -1096,7 +1096,7 @@ async function getExchange() {
                 gain = "0%";
             }
             synths.push(new Synth(synthName, prices[i + 2], gain));
-            if (prices[i + 3] == "-") {
+            if (prices[i + 3] == "-" && synthName.toLowerCase() != "susd") {
                 i = i + 5;
             } else {
                 i = i + 4;
