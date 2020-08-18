@@ -1088,6 +1088,7 @@ async function getExchange() {
 
         console.log("I got the synthetix exchange prices:" + prices);
         var i = 0;
+        synths = new Array();
         while (i < prices.length) {
             let synthName = prices[i].substring(0, prices[i].lastIndexOf(prices[i + 1]));
             let gain = prices[i + 3];
