@@ -1,0 +1,12 @@
+{
+  "title": "Question 79:",
+  "description": "Can my staked snx get liquidated?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Yes, you can get liquidated when your c ratio is less than or equal 200%. You will have 3 days to fix your c ratio if it drops below 200%."
+    }
+  ],
+  "footer": {}
+}

@@ -429,6 +429,14 @@
   },
   {
     "number": 78,
-    "alias": " LP rewards"
+    "alias": "LP rewards"
+  },
+  {
+    "number": 79,
+    "alias": "liquidated"
+  },
+  {
+    "number": 79,
+    "alias": "liquidation"
   }
 ]
