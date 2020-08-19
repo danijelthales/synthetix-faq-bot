@@ -1,6 +1,13 @@
 require("dotenv").config()
 const Discord = require("discord.js")
 const client = new Discord.Client();
+
+const clientFaqPrice = new Discord.Client();
+clientFaqPrice.login(process.env.BOT_TOKEN_SNX);
+
+const clientPegPrice = new Discord.Client();
+clientPegPrice.login(process.env.BOT_TOKEN_PEG);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -1188,13 +1195,22 @@ setInterval(function () {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             let result = JSON.parse(data);
-            binanceUsd = result.price;
+            binanceUsd = Math.round(((result.price * 1.0) + Number.EPSILON) * 100) / 100;
         });
 
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
 }, 60 * 1000);
+
+setInterval(function () {
+    clientFaqPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
+    });
+    clientPegPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("745786402817441854").setNickname("$" + ((usdcPeg + usdtPeg) / 2));
+    });
+}, 70 * 1000);
 
 setInterval(function () {
     https.get('https://trade.kucoin.com/_api/trade-front/market/getSymbolTick?symbols=SNX-USDT', (resp) => {
@@ -1293,4 +1309,4 @@ setTimeout(getExchange, 4 * 1000);
 setInterval(getExchange, 60 * 5 * 1000);
 
 
-client.login(process.env.BOT_TOKEN)
+client.login(process.env.BOT_TOKEN);
