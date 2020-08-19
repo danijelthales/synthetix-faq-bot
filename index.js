@@ -1225,6 +1225,7 @@ setInterval(function () {
         resp.on('end', () => {
             let result = JSON.parse(data);
             kucoinUsd = result.data[0].lastTradedPrice;
+            kucoinUsd = Math.round(((kucoinUsd * 1.0) + Number.EPSILON) * 100) / 100;
         });
 
     }).on("error", (err) => {
