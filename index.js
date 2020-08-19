@@ -1208,7 +1208,7 @@ setInterval(function () {
         value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
     });
     clientPegPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("745786402817441854").setNickname("$" + ((usdcPeg + usdtPeg) / 2));
+        value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
     });
 }, 70 * 1000);
 
