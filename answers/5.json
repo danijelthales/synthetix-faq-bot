@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "If you've got some escrowed SNX (formerly HAV) from the token sale in February 2018, then you'll need to vest (unlock) them.\n\n1. They can be vested through Mintr in the ESCROW tab by clicking on the 'View Token Sale Escrow' button. \n5. Please note that while your tokens were still escrowed, you were able to stake them and mint sUSD against them. If you did this, then you are likely to still have a 'debt' to pay back before you can transfer them."
+      "value": "If you've got some escrowed SNX (formerly HAV) from the token sale in February 2018, then you'll need to vest (unlock) them.\n\n1. They can be vested through [Mintr](https://mintr.synthetix.io/) in the ESCROW tab by clicking on the 'View Token Sale Escrow' button. \n2. Please note that while your tokens were still escrowed, you were able to stake them and mint sUSD against them. If you did this, then you are likely to still have a 'debt' to pay back before you can transfer them."
     },
     {
       "title": "For more details visit our help page:",

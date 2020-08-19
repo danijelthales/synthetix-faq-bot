@@ -1,0 +1,12 @@
+{
+  "title": "Question 78:",
+  "description": "What are the current yield farming opportunities subsidized by Synthetix?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "You can find all current yield farming opportunities in the LP rewards section of [Mintr](https://mintr.synthetix.io/)."
+    }
+  ],
+  "footer": {}
+}

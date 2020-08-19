@@ -109,14 +109,14 @@ client.on("message", msg => {
                             argsSecondPart.shift();
                             gas = argsSecondPart.shift().trim();
                         }
-                        doCalculate(command, msg, gas);
+                        doCalculate(command, msg, gas, false);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate susd rewards")) {
                     const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq calculate susd rewards".length).split(' ');
                     args.shift();
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
-                        doCalculateSusd(command, msg);
+                        doCalculateSusd(command, msg, false);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
@@ -232,7 +232,7 @@ client.on("message", msg => {
                                     argsSecondPart.shift();
                                     gas = argsSecondPart.shift().trim();
                                 }
-                                doCalculate(command, msg, gas);
+                                doCalculate(command, msg, gas, true);
                             }
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate susd rewards")) {
                             let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
@@ -246,7 +246,7 @@ client.on("message", msg => {
                                     argsSecondPart.shift();
                                     gas = argsSecondPart.shift().trim();
                                 }
-                                doCalculateSusd(command, msg, gas);
+                                doCalculateSusd(command, msg, true);
                             }
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -1216,7 +1216,7 @@ setInterval(function () {
     });
 }, 60 * 1000);
 
-function doCalculate(command, msg, gasPriceParam) {
+function doCalculate(command, msg, gasPriceParam, fromDM) {
     var gasPriceToUse = gasPrice;
     if (gasPriceParam) {
         gasPriceToUse = gasPriceParam;
@@ -1233,10 +1233,15 @@ function doCalculate(command, msg, gasPriceParam) {
     exampleEmbed.addField("Transaction costs", "With the gas price at **" + gasPriceToUse + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
         + claimPrice + "$**");
     exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n" + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
+    if (!fromDM) {
+        exampleEmbed.setFooter("By the way, you can calculate rewards in a private DM conversation with the bot" +
+            " if you don't want to reveal your very large (or very small!) amounts in a public forum." +
+            "  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate rewards [stakedSnxAmount]");
+    }
     msg.reply(exampleEmbed);
 }
 
-function doCalculateSusd(command, msg) {
+function doCalculateSusd(command, msg, fromDM) {
     var today = new Date();
     while (today > payday) {
         payday.setDate(payday.getDate() + 7);
@@ -1268,7 +1273,10 @@ function doCalculateSusd(command, msg) {
         + "Total debt:**" + totalDebt + "**\n"
         + "sUSD rewards per minted sUSD:**" + sUsdRewardPerMintedSusd + "**\n"
         + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
-
+    if (!fromDM) {
+        exampleEmbed.setFooter("By the way, you can calculate rewards in a private DM conversation with the bot if you don't want to reveal your very large (or very small!)" +
+            " amounts in a public forum.  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate susd rewards [stakedSnxAmount]");
+    }
     msg.reply(exampleEmbed);
 }
 

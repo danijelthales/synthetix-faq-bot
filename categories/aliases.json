@@ -414,5 +414,21 @@
   {
     "number": 76,
     "alias": "unwrap"
+  },
+  {
+    "number": 77,
+    "alias": "sending SNX"
+  },
+  {
+    "number": 77,
+    "alias": "transfer SNX"
+  },
+  {
+    "number": 78,
+    "alias": "yield farming"
+  },
+  {
+    "number": 78,
+    "alias": " LP rewards"
   }
 ]

@@ -1,0 +1,12 @@
+{
+  "title": "Question 77:",
+  "description": "Why is it so expensive to send SNX?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "If you are staking SNX the contract has to check how much of your SNX is unlocked and available to be transferred. "
+    }
+  ],
+  "footer": {}
+}
