@@ -8,6 +8,15 @@ clientFaqPrice.login(process.env.BOT_TOKEN_SNX);
 const clientPegPrice = new Discord.Client();
 clientPegPrice.login(process.env.BOT_TOKEN_PEG);
 
+const clientTknPrice = new Discord.Client();
+clientTknPrice.login(process.env.BOT_TOKEN_TKN);
+
+const clientEthPrice = new Discord.Client();
+clientEthPrice.login(process.env.BOT_TOKEN_ETH);
+
+const clientgasPrice = new Discord.Client();
+clientgasPrice.login(process.env.BOT_TOKEN_GAS);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -20,6 +29,7 @@ var snxRewardsThisPeriod = "940,415 SNX";
 var totalDebt = "$71,589,622";
 var gasPrice = 40;
 var ethPrice = 360;
+var tknPrice = 0.77;
 var snxPrice = 4;
 var mintGas = 993602;
 var claimGas = 1092941;
@@ -872,6 +882,29 @@ setInterval(function () {
 }, 60 * 1000);
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/tokencard', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            tknPrice = result.market_data.current_price.usd;
+            tknPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
         let data = '';
 
@@ -1209,6 +1242,15 @@ setInterval(function () {
     });
     clientPegPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
+    });
+    clientEthPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
+    });
+    clientgasPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
+    });
+    clientTknPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
     });
 }, 70 * 1000);
 
