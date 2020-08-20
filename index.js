@@ -17,6 +17,12 @@ clientEthPrice.login(process.env.BOT_TOKEN_ETH);
 const clientgasPrice = new Discord.Client();
 clientgasPrice.login(process.env.BOT_TOKEN_GAS);
 
+const clientCRVPrice = new Discord.Client();
+clientCRVPrice.login(process.env.BOT_TOKEN_CRV);
+
+const clientSWTHPrice = new Discord.Client();
+clientSWTHPrice.login(process.env.BOT_TOKEN_SWTH);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -30,6 +36,8 @@ var totalDebt = "$71,589,622";
 var gasPrice = 40;
 var ethPrice = 360;
 var tknPrice = 0.77;
+var swthPrice = 0.063;
+var crvPrice = 3.84;
 var snxPrice = 4;
 var mintGas = 993602;
 var claimGas = 1092941;
@@ -905,6 +913,52 @@ setInterval(function () {
 }, 60 * 1000);
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/switcheo', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            swthPrice = result.market_data.current_price.usd;
+            swthPrice = Math.round(((swthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/curve-dao-token', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            let result = JSON.parse(data);
+            crvPrice = result.market_data.current_price.usd;
+            crvPrice = Math.round(((crvPrice * 1.0) + Number.EPSILON) * 100) / 100;
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
         let data = '';
 
@@ -1251,6 +1305,12 @@ setInterval(function () {
     });
     clientTknPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
+    });
+    clientCRVPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("746121396396097587").setNickname("$" + crvPrice);
+    });
+    clientSWTHPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
     });
 }, 70 * 1000);
 
