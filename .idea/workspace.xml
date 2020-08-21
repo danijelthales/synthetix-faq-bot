@@ -22,33 +22,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="1310" column="7" lean-forward="true" selection-start-line="1310" selection-start-column="7" selection-end-line="1310" selection-end-column="7" />
+            <state relative-caret-position="121">
+              <caret line="284" column="41" lean-forward="true" selection-start-line="284" selection-start-column="41" selection-end-line="284" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="73" selection-start-line="7" selection-start-column="73" selection-end-line="7" selection-end-column="73" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/charts/chartALL.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>aliases</find>
-      <find>for ex</find>
-      <find>sDege</find>
-      <find>15</find>
-      <find>havve</find>
-      <find>class</find>
-      <find>64</find>
-      <find>-</find>
       <find>synths.pus</find>
       <find>4</find>
       <find>xxx</find>
@@ -71,10 +59,16 @@
       <find>clientPegPrice</find>
       <find>clientgasPrice</find>
       <find>tknPrice</find>
+      <find>padd</find>
+      <find>#onetrust-accept-btn-handler</find>
+      <find>answ</find>
+      <find>date-range-selector-module--menuSelected--1bt9r</find>
+      <find>date-range-selector-module--itemName--16HXJ</find>
+      <find>charts</find>
+      <find>getChart</find>
+      <find>doShowChart</find>
     </findStrings>
     <replaceStrings>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360020721094-Do-I-need-to-register-or-open-a-trading-account-to-use-Synthetix-Exchange-</replace>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360019874614-Why-are-my-transactions-failing-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020272513-Why-are-transactions-taking-so-long-to-process-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360037619914-Why-are-Synthetix-transactions-so-expensive-</replace>
@@ -103,6 +97,8 @@
       <replace>15</replace>
       <replace>13</replace>
       <replace>\n</replace>
+      <replace>.onetrust-close-btn-handler</replace>
+      <replace>date-range-selector-module--itemSymbol--1QTCg</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -176,34 +172,14 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="answers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="categories" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="questions" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -215,7 +191,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/answers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -264,12 +240,14 @@
       <workItem from="1597743583327" duration="95000" />
       <workItem from="1597745210646" duration="2931000" />
       <workItem from="1597876009507" duration="7144000" />
-      <workItem from="1597959402106" duration="617000" />
+      <workItem from="1597959402106" duration="2087000" />
+      <workItem from="1597966003088" duration="641000" />
+      <workItem from="1598046963882" duration="4602000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177254000" />
+    <option name="totallyTimeSpent" value="183967000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -280,7 +258,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.20309168" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.20735608" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -289,8 +267,8 @@
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.37594798" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" sideWeight="0.49946696" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.28169015" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -323,13 +301,19 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>778</line>
+          <line>790</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>794</line>
+          <line>806</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/index.js</url>
+          <line>1455</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -384,72 +368,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/questions/63.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/62.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/4.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="163" selection-start-line="11" selection-start-column="163" selection-end-line="11" selection-end-column="163" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/63.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="41" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/65.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="42" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/67.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="104" selection-start-column="104" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/67.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="122" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="122" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/61.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/62.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/64.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="43" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/answers/56.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -713,15 +631,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="73" selection-start-line="7" selection-start-column="73" selection-end-line="7" selection-end-column="73" />
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/chart.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chart1M.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chart3M.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chart6M.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chart7D.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/dayChart.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/weekChart.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chart24H.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chartYTD.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chartALL.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="1310" column="7" lean-forward="true" selection-start-line="1310" selection-start-column="7" selection-end-line="1310" selection-end-column="7" />
+        <state relative-caret-position="121">
+          <caret line="284" column="41" lean-forward="true" selection-start-line="284" selection-start-column="41" selection-end-line="284" selection-end-column="41" />
         </state>
       </provider>
     </entry>

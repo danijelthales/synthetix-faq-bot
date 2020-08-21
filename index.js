@@ -143,6 +143,12 @@ client.on("message", msg => {
                     if (command && !isNaN(command)) {
                         doCalculateSusd(command, msg, false);
                     }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
+                    let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                    const args = content.slice("!faq show chart".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    doShowChart(command, msg, false);
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
@@ -273,6 +279,12 @@ client.on("message", msg => {
                                 }
                                 doCalculateSusd(command, msg, true);
                             }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
+                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                            const args = content.slice("show chart".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            doShowChart(command, msg, true);
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
                                 if (msg.content.endsWith("?")) {
@@ -1398,6 +1410,103 @@ function doCalculateSusd(command, msg, fromDM) {
     }
     msg.reply(exampleEmbed);
 }
+
+function doShowChart(type, msg, fromDM) {
+
+    const exampleEmbed = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle(type + ' SNX price chart');
+    exampleEmbed.addField("Possible options:", "24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
+    exampleEmbed.attachFiles(['charts/chart' + type + '.png'])
+        .setImage('attachment://' + 'chart' + type + '.png');
+    msg.reply(exampleEmbed);
+}
+
+async function getChart(type) {
+    try {
+        const browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
+        const page = await browser.newPage();
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://coincodex.com/crypto/synthetix/?period=" + type, {waitUntil: 'networkidle2'});
+        await page.waitForSelector('.chart');
+
+        const rect = await page.evaluate(() => {
+            const element = document.querySelector('.chart');
+            const {x, y, width, height} = element.getBoundingClientRect();
+            return {left: x, top: y, width, height, id: element.id};
+        });
+
+        await page.screenshot({
+            path: 'charts/chart' + type + '.png',
+            clip: {
+                x: rect.left - 0,
+                y: rect.top - 0,
+                width: rect.width + 0 * 2,
+                height: rect.height + 0 * 2
+            }
+        });
+        console.log('chart' + type + '.png saved');
+        browser.close();
+    } catch (e) {
+        console.log("Error happened on getting chart.")
+    }
+}
+
+setTimeout(function () {
+    getChart('24H');
+}, 1 * 1000);
+setTimeout(function () {
+    getChart('7D');
+}, 10 * 1000);
+setTimeout(function () {
+    getChart('1M');
+}, 20 * 1000);
+setTimeout(function () {
+    getChart('3M');
+}, 30 * 1000);
+setTimeout(function () {
+    getChart('6M');
+}, 40 * 1000);
+setTimeout(function () {
+    getChart('YTD');
+}, 50 * 1000);
+setTimeout(function () {
+    getChart('1Y');
+}, 60 * 1000);
+setTimeout(function () {
+    getChart('ALL');
+}, 70 * 1000);
+
+
+setInterval(function () {
+    getChart('24H');
+}, 60 * 7 * 1000);
+setInterval(function () {
+    getChart('7D');
+}, 60 * 10 * 1000);
+setInterval(function () {
+    getChart('1M');
+}, 60 * 20 * 1000);
+setInterval(function () {
+    getChart('3M');
+}, 60 * 25 * 1000);
+setInterval(function () {
+    getChart('6M');
+}, 60 * 50 * 1000);
+setInterval(function () {
+    getChart('YTD');
+}, 60 * 50 * 1000);
+setInterval(function () {
+    getChart('1Y');
+}, 60 * 50 * 1000);
+setInterval(function () {
+    getChart('ALL');
+}, 60 * 100 * 1000);
 
 setTimeout(getSnxToolStaking, 10 * 1000);
 setInterval(getSnxToolStaking, 60 * 10 * 1000);
