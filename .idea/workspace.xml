@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/charts/chart1M.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1M.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart24H.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24H.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart3M.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3M.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart6M.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6M.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart7D.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7D.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartYTD.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartYTD.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,10 +27,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="1419" column="44" selection-start-line="1419" selection-start-column="44" selection-end-line="1419" selection-end-column="44" />
+            <state relative-caret-position="238">
+              <caret line="1467" column="14" lean-forward="true" selection-start-line="1467" selection-start-column="14" selection-end-line="1467" selection-end-column="14" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/charts/chartYTD.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/charts/chart24H.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
@@ -55,12 +71,12 @@
       <find>answ</find>
       <find>date-range-selector-module--menuSelected--1bt9r</find>
       <find>date-range-selector-module--itemName--16HXJ</find>
-      <find>charts</find>
       <find>getChart</find>
       <find>doShowChart</find>
-      <find>images</find>
       <find>charts/</find>
       <find>__dirname</find>
+      <find>images</find>
+      <find>charts</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-</replace>
@@ -175,6 +191,11 @@
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
+              <item name="charts" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -236,12 +257,12 @@
       <workItem from="1597876009507" duration="7144000" />
       <workItem from="1597959402106" duration="2087000" />
       <workItem from="1597966003088" duration="641000" />
-      <workItem from="1598046963882" duration="5775000" />
+      <workItem from="1598046963882" duration="6628000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185140000" />
+    <option name="totallyTimeSpent" value="185993000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -645,19 +666,19 @@
     <entry file="file://$PROJECT_DIR$/charts/weekChart.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/charts/chartALL.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/charts/chart24H.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/charts/chartYTD.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/charts/chartALL.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="1419" column="44" selection-start-line="1419" selection-start-column="44" selection-end-line="1419" selection-end-column="44" />
+        <state relative-caret-position="238">
+          <caret line="1467" column="14" lean-forward="true" selection-start-line="1467" selection-start-column="14" selection-end-line="1467" selection-end-column="14" />
         </state>
       </provider>
     </entry>
