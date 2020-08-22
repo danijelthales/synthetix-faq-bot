@@ -1441,6 +1441,12 @@ async function getChart(type) {
             return {left: x, top: y, width, height, id: element.id};
         });
 
+        var dir = '/charts';
+
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
+
         await page.screenshot({
             path: '/charts/chart' + type + '.png',
             clip: {
