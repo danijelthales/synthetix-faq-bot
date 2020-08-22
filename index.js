@@ -1417,7 +1417,7 @@ function doShowChart(type, msg, fromDM) {
         .setColor('#0099ff')
         .setTitle(type + ' SNX price chart');
     exampleEmbed.addField("Possible options:", "24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
-    exampleEmbed.attachFiles(['/charts/chart' + type + '.png'])
+    exampleEmbed.attachFiles([__dirname + '/charts/chart' + type + '.png'])
         .setImage('attachment://' + 'chart' + type + '.png');
     msg.reply(exampleEmbed);
 }
@@ -1441,14 +1441,8 @@ async function getChart(type) {
             return {left: x, top: y, width, height, id: element.id};
         });
 
-        var dir = '/charts';
-
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir);
-        }
-
         await page.screenshot({
-            path: '/charts/chart' + type + '.png',
+            path: __dirname + '/charts/chart' + type + '.png',
             clip: {
                 x: rect.left - 0,
                 y: rect.top - 0,

@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="1441" column="11" lean-forward="true" selection-start-line="1441" selection-start-column="11" selection-end-line="1441" selection-end-column="11" />
+            <state relative-caret-position="221">
+              <caret line="1421" column="28" lean-forward="true" selection-start-line="1421" selection-start-column="28" selection-end-line="1421" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -68,9 +68,9 @@
       <find>getChart</find>
       <find>doShowChart</find>
       <find>charts/</find>
-      <find>__dirname</find>
       <find>images</find>
       <find>charts</find>
+      <find>__dirname</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-</replace>
@@ -251,12 +251,12 @@
       <workItem from="1597876009507" duration="7144000" />
       <workItem from="1597959402106" duration="2087000" />
       <workItem from="1597966003088" duration="641000" />
-      <workItem from="1598046963882" duration="6712000" />
+      <workItem from="1598046963882" duration="6985000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="186077000" />
+    <option name="totallyTimeSpent" value="186350000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -320,7 +320,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>1461</line>
+          <line>1455</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
@@ -677,8 +677,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="1441" column="11" lean-forward="true" selection-start-line="1441" selection-start-column="11" selection-end-line="1441" selection-end-column="11" />
+        <state relative-caret-position="221">
+          <caret line="1421" column="28" lean-forward="true" selection-start-line="1421" selection-start-column="28" selection-end-line="1421" selection-end-column="28" />
         </state>
       </provider>
     </entry>
