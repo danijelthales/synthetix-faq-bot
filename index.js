@@ -1092,7 +1092,8 @@ async function getSnxToolStaking() {
         totalDebt = prices[6];
         browser.close()
     } catch (e) {
-        console.log("Error happened on getting data from SNX tools.")
+        console.log("Error happened on getting data from SNX tools.");
+        console.log("e");
     }
 }
 
@@ -1124,7 +1125,8 @@ async function getSnxToolHome() {
         periodVolume = prices[3];
         browser.close()
     } catch (e) {
-        console.log("Error happened on getting data from SNX tools home.")
+        console.log("Error happened on getting data from SNX tools home.");
+        console.log("e");
     }
 }
 
@@ -1412,14 +1414,18 @@ function doCalculateSusd(command, msg, fromDM) {
 }
 
 function doShowChart(type, msg, fromDM) {
-
-    const exampleEmbed = new Discord.MessageEmbed()
-        .setColor('#0099ff')
-        .setTitle(type + ' SNX price chart');
-    exampleEmbed.addField("Possible options:", "24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
-    exampleEmbed.attachFiles(['testcharts/chart' + type + '.png'])
-        .setImage('attachment://' + 'chart' + type + '.png');
-    msg.reply(exampleEmbed);
+    try {
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle(type + ' SNX price chart');
+        exampleEmbed.addField("Possible options:", "24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
+        exampleEmbed.attachFiles(['charts/chart' + type.toLowerCase() + '.png'])
+            .setImage('attachment://' + 'chart' + type.toLowerCase() + '.png');
+        msg.reply(exampleEmbed);
+    } catch (e) {
+        console.log("Exception happened when showing the chart");
+        console.log(e);
+    }
 }
 
 async function getChart(type) {
@@ -1442,7 +1448,7 @@ async function getChart(type) {
         });
 
         await page.screenshot({
-            path: 'charts/chart' + type + '.png',
+            path: 'charts/chart' + type.toLowerCase() + '.png',
             clip: {
                 x: rect.left - 0,
                 y: rect.top - 0,
@@ -1450,10 +1456,11 @@ async function getChart(type) {
                 height: rect.height + 0 * 2
             }
         });
-        console.log('chart' + type + '.png saved');
+        console.log('chart' + type.toLowerCase() + '.png saved');
         browser.close();
     } catch (e) {
         console.log("Error happened on getting chart.")
+        console.log("e")
     }
 }
 
