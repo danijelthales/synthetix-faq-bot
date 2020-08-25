@@ -1093,7 +1093,7 @@ async function getSnxToolStaking() {
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from SNX tools.");
-        console.log("e");
+        console.log(e);
     }
 }
 
@@ -1126,7 +1126,7 @@ async function getSnxToolHome() {
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from SNX tools home.");
-        console.log("e");
+        console.log(e);
     }
 }
 
@@ -1215,7 +1215,8 @@ async function getExchange() {
         });
         browser.close()
     } catch (e) {
-        console.log("Error happened on getting data from synthetix exchange")
+        console.log("Error happened on getting data from synthetix exchange");
+        console.log(e);
     }
 }
 
@@ -1459,8 +1460,8 @@ async function getChart(type) {
         console.log('chart' + type.toLowerCase() + '.png saved');
         browser.close();
     } catch (e) {
-        console.log("Error happened on getting chart.")
-        console.log("e")
+        console.log("Error happened on getting chart.");
+        console.log(e);
     }
 }
 
