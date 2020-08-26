@@ -1015,13 +1015,25 @@ setInterval(function () {
                             var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
                             var hours = Math.abs(curDate - lastNotification) / 36e5;
                             if (hours > 1) {
-                                client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
-                                gasSubscribersLastPushMap.set(key, new Date().getTime());
-                                if (process.env.REDIS_URL) {
-                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                    });
-                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                    });
+                                if (client.users.cache.get(key)) {
+                                    client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                                    gasSubscribersLastPushMap.set(key, new Date().getTime());
+                                    if (process.env.REDIS_URL) {
+                                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                        });
+                                        redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                        });
+                                    }
+                                } else {
+                                    console.log("User:" + key + " is no longer in this server");
+                                    gasSubscribersLastPushMap.delete(key);
+                                    gasSubscribersMap.delete(key);
+                                    if (process.env.REDIS_URL) {
+                                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                        });
+                                        redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                        });
+                                    }
                                 }
                             } else {
                                 console.log("Not sending a gas notification for: " + key + "because " + lastNotification + " was less than 1 h ago from current date:" + curDate);
