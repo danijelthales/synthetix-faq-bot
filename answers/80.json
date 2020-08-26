@@ -1,0 +1,13 @@
+{
+  "title": "Question 80:",
+  "description": "What is the Hobo song?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "A nice song written by Hobo Joe about dumping shitcoins on plebs."
+    }
+  ],
+  "image": "hobo-song.png",
+  "footer": {}
+}

@@ -10,7 +10,7 @@
     },
     {
       "title": "What if I don't have any sUSD in my wallet to burn?",
-      "value": "If you have an sUSD debt but you have no sUSD in your wallet then you must have done one of the following:\n\n1. Transferred it to another wallet\n 2. Transferred it to an exchange and sold it\n3. Sent it to the Depot to be purchased via Synthetix.Exchange\n 4. Exchanged it into another Synth on Synthetix.Exchange\n\nTo unlock your SNX, you must acquire the amount of sUSD under Debt in Mintr. If you transferred it to another wallet or an exchange, you will need to transfer it back into the wallet that contains your locked SNX. And if you sold the sUSD, you must buy it back. \n\nOnce you've paid back your sUSD debt, your SNX will be unlocked and able to be transferred. ",
+      "value": "If you have an sUSD debt but you have no sUSD in your wallet then you must have done one of the following:\n\n1. Transferred it to another wallet\n 2. Transferred it to an exchange and sold it\n3. Sent it to the Depot to be purchased via Synthetix.Exchange\n 4. Exchanged it into another Synth on Synthetix.Exchange\n 5. Deposited it to a liquidity pool such as Curve, to earn yields. \n\nTo unlock your SNX, you must acquire the amount of sUSD under Debt in Mintr. If you transferred it to another wallet or an exchange, you will need to transfer it back into the wallet that contains your locked SNX. And if you sold the sUSD, you must buy it back. If you deposited sUSD to a liquidity pool, you must unlock/vest it from there and withdraw it back to your wallet. \n\nOnce you've paid back your sUSD debt, your SNX will be unlocked and able to be transferred. ",
       "inline": true
     },
     {

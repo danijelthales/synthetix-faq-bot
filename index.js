@@ -1012,11 +1012,11 @@ setInterval(function () {
                     if (result.standard < value) {
                         if (gasSubscribersLastPushMap.has(key)) {
                             var curDate = new Date();
-                            var lastNotification = gasSubscribersLastPushMap.get(key);
+                            var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
                             var hours = Math.abs(curDate - lastNotification) / 36e5;
                             if (hours > 1) {
                                 client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
-                                gasSubscribersLastPushMap.set(key, new Date());
+                                gasSubscribersLastPushMap.set(key, new Date().getTime());
                                 if (process.env.REDIS_URL) {
                                     redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
                                     });
@@ -1024,7 +1024,7 @@ setInterval(function () {
                                     });
                                 }
                             } else {
-                                console.log("Not sending a gas notification for: " + key + "because " + lastNotification + " was less than 1 h ago ");
+                                console.log("Not sending a gas notification for: " + key + "because " + lastNotification + " was less than 1 h ago from current date:" + curDate);
                             }
                         } else {
                             if (client.users.cache.get(key)) {
@@ -1049,7 +1049,7 @@ setInterval(function () {
                             }
                         }
                     } else {
-                        console.log("Not sending a gas notification for: " + key + "because " + value + " is above gas " + result.standard);
+                        //console.log("Not sending a gas notification for: " + key + " because " + value + " is below gas " + result.standard);
                     }
                 } catch (e) {
                     console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);

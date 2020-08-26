@@ -136,5 +136,13 @@
       12,
       69
     ]
+  },
+  {
+    "name": "Fun.Stuff",
+    "desc": "Casual questions, jokes, memes",
+    "questions": [
+      80,
+      81
+    ]
   }
 ]
