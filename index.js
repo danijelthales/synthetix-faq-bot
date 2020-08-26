@@ -94,7 +94,7 @@ if (process.env.REDIS_URL) {
 
     redisClient.get("gasSubscribersLastPushMap", function (err, obj) {
         gasSubscribersLastPushMapRaw = obj;
-        console.log("gasSubscribersMapRaw:" + gasSubscribersLastPushMapRaw);
+        console.log("gasSubscribersLastPushMapRaw:" + gasSubscribersLastPushMapRaw);
         if (gasSubscribersLastPushMapRaw) {
             gasSubscribersLastPushMap = new Map(JSON.parse(gasSubscribersLastPushMapRaw));
             console.log("gasSubscribersLastPushMap:" + gasSubscribersLastPushMap);
@@ -1003,9 +1003,11 @@ setInterval(function () {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
+            console.log("Starting gas subscriptions");
             let result = JSON.parse(data);
             gasPrice = result.standard;
             gasSubscribersMap.forEach(function (value, key) {
+                console.log("Checking gas subscription for: " + key);
                 try {
                     if (result.standard < value) {
                         if (gasSubscribersLastPushMap.has(key)) {
@@ -1021,6 +1023,8 @@ setInterval(function () {
                                     redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
                                     });
                                 }
+                            } else {
+                                console.log("Not sending a gas notification for: " + key + "because " + lastNotification + " was less than 1 h ago ");
                             }
                         } else {
                             if (client.users.cache.get(key)) {
@@ -1044,6 +1048,8 @@ setInterval(function () {
                                 }
                             }
                         }
+                    } else {
+                        console.log("Not sending a gas notification for: " + key + "because " + value + " is above gas " + result.standard);
                     }
                 } catch (e) {
                     console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);

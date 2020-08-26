@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="1449" lean-forward="true" selection-start-line="1449" selection-end-line="1449" />
+            <state relative-caret-position="239">
+              <caret line="1004" column="30" lean-forward="true" selection-start-line="1004" selection-start-column="30" selection-end-line="1004" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -50,8 +46,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>\n\n</find>
-      <find>calculate rewa</find>
       <find>who are</find>
       <find>doCalculate</find>
       <find>doCalculateSusd</find>
@@ -79,6 +73,8 @@
       <find>__dirname</find>
       <find>attachFiles</find>
       <find>charts</find>
+      <find>gasSubscribersLastPushMap</find>
+      <find>gasSubscribersLastPushMapRaw</find>
       <find>gasSubscribersMap</find>
     </findStrings>
     <replaceStrings>
@@ -212,6 +208,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -262,12 +259,12 @@
       <workItem from="1597959402106" duration="2087000" />
       <workItem from="1597966003088" duration="641000" />
       <workItem from="1598046963882" duration="9504000" />
-      <workItem from="1598389431131" duration="2088000" />
+      <workItem from="1598389431131" duration="5131000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190957000" />
+    <option name="totallyTimeSpent" value="194000000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -676,8 +673,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="1449" lean-forward="true" selection-start-line="1449" selection-end-line="1449" />
+        <state relative-caret-position="239">
+          <caret line="1004" column="30" lean-forward="true" selection-start-line="1004" selection-start-column="30" selection-end-line="1004" selection-end-column="30" />
         </state>
       </provider>
     </entry>
