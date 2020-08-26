@@ -1009,7 +1009,7 @@ setInterval(function () {
             gasSubscribersMap.forEach(function (value, key) {
                 console.log("Checking gas subscription for: " + key);
                 try {
-                    if (result.standard < value) {
+                    if ((result.standard * 1.0) < (value * 1.0)) {
                         if (gasSubscribersLastPushMap.has(key)) {
                             var curDate = new Date();
                             var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
