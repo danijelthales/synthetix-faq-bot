@@ -185,6 +185,12 @@ client.on("message", msg => {
                             if (command && !isNaN(command)) {
                                 gasSubscribersMap.set(msg.author.id, command);
                                 gasSubscribersLastPushMap.delete(msg.author.id);
+                                if (process.env.REDIS_URL) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
+                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                    });
+                                }
                                 msg.reply(" I will send you a message once safe gas price is below " + command + " gwei , and every hour after that that it remains below that level. \nTo change the threshold level for gas price, send me a new subscribe message with the new amount.\n" +
                                     "To unsubscribe, send me another DM **unsubscribe**.");
                             } else {
@@ -992,7 +998,7 @@ setInterval(function () {
 }, 60 * 1000);
 
 
-setInterval(function () {
+function handleGasSubscription() {
     https.get('https://gasprice.poa.network/', (resp) => {
         let data = '';
 
@@ -1007,7 +1013,6 @@ setInterval(function () {
             let result = JSON.parse(data);
             gasPrice = result.standard;
             gasSubscribersMap.forEach(function (value, key) {
-                console.log("Checking gas subscription for: " + key);
                 try {
                     if ((result.standard * 1.0) < (value * 1.0)) {
                         if (gasSubscribersLastPushMap.has(key)) {
@@ -1074,7 +1079,9 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}
+
+setInterval(handleGasSubscription, 60 * 1000);
 
 
 const puppeteer = require('puppeteer');
