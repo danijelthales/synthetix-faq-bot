@@ -68,9 +68,11 @@ const Synth = class {
     name;
     price;
     gain;
+    description = '';
 };
 
 var synths = new Array();
+var synthsMap = new Map();
 
 let gasSubscribersMap = new Map();
 let gasSubscribersLastPushMap = new Map();
@@ -113,7 +115,7 @@ client.on("guildMemberAdd", function (member) {
 
 client.on("message", msg => {
 
-        if (msg.author.username != "FAQ") {
+        if (!msg.author.username.includes("FAQ")) {
             if (!(msg.channel.type == "dm")) {
                 // this is logic for channels
                 if (msg.content.toLowerCase().trim() == "!faq") {
@@ -142,6 +144,13 @@ client.on("message", msg => {
                     const command = args.shift().trim();
                     if (command && !isNaN(command)) {
                         doCalculateSusd(command, msg, false);
+                    }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth")) {
+                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq synth".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    if (command) {
+                        doShowSynth(command, msg, false);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
                     let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
@@ -284,6 +293,13 @@ client.on("message", msg => {
                                     gas = argsSecondPart.shift().trim();
                                 }
                                 doCalculateSusd(command, msg, true);
+                            }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command) {
+                                doShowSynth(command, msg, true);
                             }
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
                             let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
@@ -1009,7 +1025,6 @@ function handleGasSubscription() {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            console.log("Starting gas subscriptions");
             let result = JSON.parse(data);
             gasPrice = result.standard;
             gasSubscribersMap.forEach(function (value, key) {
@@ -1040,8 +1055,6 @@ function handleGasSubscription() {
                                         });
                                     }
                                 }
-                            } else {
-                                console.log("Not sending a gas notification for: " + key + "because " + lastNotification + " was less than 1 h ago from current date:" + curDate);
                             }
                         } else {
                             if (client.users.cache.get(key)) {
@@ -1228,16 +1241,57 @@ async function getExchange() {
             if (gain == "-") {
                 gain = "0%";
             }
-            synths.push(new Synth(synthName, prices[i + 2], gain));
+            let synth = new Synth(synthName, prices[i + 2], gain);
+            if (synthsMap.has(synthName.toLowerCase())) {
+                synth = synthsMap.get(synthName.toLowerCase());
+            }
+            synths.push(synth);
             if (prices[i + 3] == "-" && synthName.toLowerCase() != "susd") {
                 i = i + 5;
             } else {
                 i = i + 4;
             }
+            synthsMap.set(synthName.toLowerCase(), synth);
         }
         synths.sort(function (a, b) {
             return b.gain.replace(/%/g, "") * 1.0 - a.gain.replace(/%/g, "") * 1.0;
         });
+
+        browser.close()
+    } catch (e) {
+        console.log("Error happened on getting data from synthetix exchange");
+        console.log(e);
+    }
+}
+
+async function getSynthInfo(synth) {
+    try {
+        const browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
+        const page = await browser.newPage();
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
+
+        /** @type {string[]} */
+        var prices = await page.evaluate(() => {
+            var div = document.querySelectorAll('.isELEY');
+
+            var prices = []
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
+
+            return prices
+        })
+
+        var synthInfo = synthsMap.get(synth.toLowerCase());
+        synthInfo.description = prices[0];
+        synthsMap.set(synth.toLowerCase(), synthInfo);
+        console.log("Fetched info for: " + synth);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from synthetix exchange");
@@ -1439,6 +1493,34 @@ function doCalculateSusd(command, msg, fromDM) {
     msg.reply(exampleEmbed);
 }
 
+function doShowSynth(command, msg, fromDm) {
+
+    let synthInfo = synthsMap.get(command);
+    if (synthInfo) {
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Synth info:');
+
+
+        exampleEmbed.addField(command,
+            "Price:" + synthInfo.price + "\n"
+            + "Gain:" + synthInfo.gain + "\n"
+        );
+
+
+        exampleEmbed.addField("Description",
+            synthInfo.description);
+
+        if (fromDm) {
+            msg.reply(exampleEmbed);
+        } else {
+            msg.channel.send(exampleEmbed);
+        }
+    } else {
+        msg.reply("Synth not available");
+    }
+}
+
 function doShowChart(type, msg, fromDM) {
     try {
         const exampleEmbed = new Discord.MessageEmbed()
@@ -1489,6 +1571,27 @@ async function getChart(type) {
         console.log(e);
     }
 }
+
+setTimeout(function () {
+    var increment = 1;
+    synths.forEach(s => {
+        increment += 1;
+        setTimeout(function () {
+            getSynthInfo(s.name)
+        }, 1000 * 10 * increment);
+    });
+}, 20 * 1000);
+
+setInterval(function () {
+    var increment = 1;
+    synths.forEach(s => {
+        increment += 1;
+        setTimeout(function () {
+            getSynthInfo(s.name)
+        }, 1000 * 10 * increment);
+    });
+}, 1 * 60 * 60 * 1000);
+
 
 setTimeout(function () {
     getChart('realtime');
