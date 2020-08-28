@@ -1444,7 +1444,7 @@ function doShowChart(type, msg, fromDM) {
         const exampleEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle(type + ' SNX price chart');
-        exampleEmbed.addField("Possible options:", "24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
+        exampleEmbed.addField("Possible options:", "realtime, 24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
         exampleEmbed.attachFiles(['charts/chart' + type.toLowerCase() + '.png'])
             .setImage('attachment://' + 'chart' + type.toLowerCase() + '.png');
         msg.reply(exampleEmbed);
@@ -1492,7 +1492,10 @@ async function getChart(type) {
 
 setTimeout(function () {
     getChart('24H');
-}, 1 * 1000);
+}, 5 * 1000);
+setTimeout(function () {
+    getChart('24H');
+}, 8 * 1000);
 setTimeout(function () {
     getChart('7D');
 }, 10 * 1000);
@@ -1516,6 +1519,9 @@ setTimeout(function () {
 }, 70 * 1000);
 
 
+setInterval(function () {
+    getChart('realtime');
+}, 60 * 3 * 1000);
 setInterval(function () {
     getChart('24H');
 }, 60 * 7 * 1000);
