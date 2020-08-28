@@ -1491,7 +1491,7 @@ async function getChart(type) {
 }
 
 setTimeout(function () {
-    getChart('24H');
+    getChart('realtime');
 }, 5 * 1000);
 setTimeout(function () {
     getChart('24H');
@@ -1521,7 +1521,7 @@ setTimeout(function () {
 
 setInterval(function () {
     getChart('realtime');
-}, 60 * 3 * 1000);
+}, 60 * 1000);
 setInterval(function () {
     getChart('24H');
 }, 60 * 7 * 1000);
