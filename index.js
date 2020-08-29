@@ -1494,30 +1494,35 @@ function doCalculateSusd(command, msg, fromDM) {
 }
 
 function doShowSynth(command, msg, fromDm) {
-
-    let synthInfo = synthsMap.get(command);
-    if (synthInfo) {
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Synth info:');
-
-
-        exampleEmbed.addField(command,
-            "Price:" + synthInfo.price + "\n"
-            + "Gain:" + synthInfo.gain + "\n"
-        );
+    try {
+        let synthInfo = synthsMap.get(command);
+        if (synthInfo) {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Synth info:');
 
 
-        exampleEmbed.addField("Description",
-            synthInfo.description);
+            exampleEmbed.addField(command,
+                "Price:" + synthInfo.price + "\n"
+                + "Gain:" + synthInfo.gain + "\n"
+            );
 
-        if (fromDm) {
-            msg.reply(exampleEmbed);
+
+            if (synthInfo.description) {
+                exampleEmbed.addField("Description",
+                    synthInfo.description);
+            }
+
+            if (fromDm) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed);
+            }
         } else {
-            msg.channel.send(exampleEmbed);
+            msg.reply("Synth not available");
         }
-    } else {
-        msg.reply("Synth not available");
+    } catch (e) {
+        console.log("Error occurred on show synth");
     }
 }
 
