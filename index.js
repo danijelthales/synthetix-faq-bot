@@ -1490,9 +1490,7 @@ setInterval(function () {
     clientFaqPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
-            value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, {type: 'PLAYING'})
-                .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-                .catch(console.error);
+            value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -1500,9 +1498,7 @@ setInterval(function () {
     clientPegPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
-            value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'})
-                .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-                .catch(console.error);
+            value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -1513,9 +1509,7 @@ setInterval(function () {
     clientgasPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
-            value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, {type: 'PLAYING'})
-                .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-                .catch(console.error);
+            value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
