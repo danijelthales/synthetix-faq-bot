@@ -1486,25 +1486,37 @@ setInterval(function () {
 
 setInterval(function () {
     clientFaqPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
-        value.members.cache.get("745936096336019578").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, {type: 'PLAYING'})
-            .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-            .catch(console.error);
+        try {
+            value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
+            value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, {type: 'PLAYING'})
+                .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+                .catch(console.error);
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientPegPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
-        value.members.cache.get("745936096336019578").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'})
-            .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-            .catch(console.error);
+        try {
+            value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
+            value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'})
+                .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+                .catch(console.error);
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientEthPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
     });
     clientgasPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
-        value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, {type: 'PLAYING'})
-            .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
-            .catch(console.error);
+        try {
+            value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
+            value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, {type: 'PLAYING'})
+                .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+                .catch(console.error);
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientTknPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
