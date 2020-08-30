@@ -1304,8 +1304,13 @@ setInterval(function () {
 
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
-                    let result = JSON.parse(data);
-                    usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+                    try {
+                        let result = JSON.parse(data);
+                        usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+                    } catch
+                        (e) {
+                        console.log("Error on fetching 1inch peg: ", e);
+                    }
                 });
             } catch
                 (e) {
@@ -1335,8 +1340,13 @@ setInterval(function () {
 
             // The whole response has been received. Print out the result.
             resp.on('end', () => {
-                let result = JSON.parse(data);
-                usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+                try {
+                    let result = JSON.parse(data);
+                    usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+                } catch
+                    (e) {
+                    console.log("Error on fetching 1inch peg: ", e);
+                }
             });
 
         }).on("error", (err) => {
