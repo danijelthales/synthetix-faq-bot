@@ -1586,94 +1586,223 @@ async function getChart(type) {
 }
 
 setTimeout(function () {
-    var increment = 1;
-    synths.forEach(s => {
-        increment += 1;
-        setTimeout(function () {
-            getSynthInfo(s.name)
-        }, 1000 * 10 * increment);
-    });
+    try {
+        var increment = 1;
+        synths.forEach(s => {
+            increment += 1;
+            setTimeout(function () {
+                getSynthInfo(s.name)
+            }, 1000 * 10 * increment);
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }, 20 * 1000);
 
 setInterval(function () {
-    var increment = 1;
-    synths.forEach(s => {
-        increment += 1;
-        setTimeout(function () {
-            getSynthInfo(s.name)
-        }, 1000 * 10 * increment);
-    });
+    try {
+        var increment = 1;
+        synths.forEach(s => {
+            increment += 1;
+            setTimeout(function () {
+                getSynthInfo(s.name)
+            }, 1000 * 10 * increment);
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }, 1 * 60 * 60 * 1000);
 
 
 setTimeout(function () {
-    getChart('realtime');
+    try {
+        getChart('realtime');
+    } catch (e) {
+        console.log(e);
+    }
 }, 5 * 1000);
 setTimeout(function () {
-    getChart('24H');
+    try {
+        getChart('24H');
+    } catch (e) {
+        console.log(e);
+    }
 }, 8 * 1000);
 setTimeout(function () {
-    getChart('7D');
+    try {
+        getChart('7D');
+    } catch (e) {
+        console.log(e);
+    }
 }, 10 * 1000);
 setTimeout(function () {
-    getChart('1M');
+    try {
+        getChart('1M');
+    } catch (e) {
+        console.log(e);
+    }
 }, 20 * 1000);
 setTimeout(function () {
-    getChart('3M');
+    try {
+        getChart('3M');
+    } catch (e) {
+        console.log(e);
+    }
 }, 30 * 1000);
 setTimeout(function () {
-    getChart('6M');
+    try {
+        getChart('6M');
+    } catch (e) {
+        console.log(e);
+    }
 }, 40 * 1000);
+
 setTimeout(function () {
-    getChart('YTD');
+    try {
+        getChart('YTD');
+    } catch (e) {
+        console.log(e);
+    }
 }, 50 * 1000);
 setTimeout(function () {
-    getChart('1Y');
+    try {
+        getChart('1Y');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 1000);
 setTimeout(function () {
-    getChart('ALL');
+    try {
+        getChart('ALL');
+    } catch (e) {
+        console.log(e);
+    }
 }, 70 * 1000);
 
 
 setInterval(function () {
-    getChart('realtime');
+    try {
+        getChart('realtime');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 1000);
 setInterval(function () {
-    getChart('24H');
+    try {
+        getChart('24H');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 7 * 1000);
 setInterval(function () {
-    getChart('7D');
+    try {
+        getChart('7D');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 10 * 1000);
 setInterval(function () {
-    getChart('1M');
+    try {
+        getChart('1M');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 20 * 1000);
 setInterval(function () {
-    getChart('3M');
+    try {
+        getChart('3M');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 25 * 1000);
 setInterval(function () {
-    getChart('6M');
+    try {
+        getChart('6M');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 50 * 1000);
 setInterval(function () {
-    getChart('YTD');
+    try {
+        getChart('YTD');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 50 * 1000);
 setInterval(function () {
-    getChart('1Y');
+    try {
+        getChart('1Y');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 50 * 1000);
 setInterval(function () {
-    getChart('ALL');
+    try {
+        getChart('ALL');
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 100 * 1000);
 
-setTimeout(getSnxToolStaking, 10 * 1000);
-setInterval(getSnxToolStaking, 60 * 10 * 1000);
+setTimeout(function () {
+    try {
+        getSnxToolStaking();
+    } catch (e) {
+        console.log(e);
+    }
+}, 10 * 1000);
+setInterval(function () {
+    try {
+        getSnxToolStaking();
+    } catch (e) {
+        console.log(e);
+    }
+}, 60 * 10 * 1000);
 
-setTimeout(getSnxToolHome, 30 * 1000);
-setInterval(getSnxToolHome, 60 * 7 * 1000);
+setTimeout(function () {
+    try {
+        getSnxToolHome();
+    } catch (e) {
+        console.log(e);
+    }
+}, 30 * 1000);
+setInterval(function () {
+    try {
+        getSnxToolHome();
+    } catch (e) {
+        console.log(e);
+    }
+}, 60 * 7 * 1000);
 
-setTimeout(getDashboard, 20 * 1000);
-setInterval(getDashboard, 60 * 13 * 1000);
+setTimeout(function () {
+    try {
+        getDashboard();
+    } catch (e) {
+        console.log(e);
+    }
+}, 20 * 1000);
+setInterval(function () {
+    try {
+        getDashboard();
+    } catch (e) {
+        console.log(e);
+    }
+}, 60 * 13 * 1000);
 
-setTimeout(getExchange, 4 * 1000);
-setInterval(getExchange, 60 * 5 * 1000);
+setTimeout(function () {
+    try {
+        getExchange();
+    } catch (e) {
+        console.log(e);
+    }
+}, 40 * 1000);
+setInterval(function () {
+    try {
+        getExchange();
+    } catch (e) {
+        console.log(e);
+    }
+}, 60 * 5 * 1000);
 
 
 client.login(process.env.BOT_TOKEN);
