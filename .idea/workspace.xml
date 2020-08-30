@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="1795" column="18" lean-forward="true" selection-start-line="1795" selection-start-column="18" selection-end-line="1795" selection-end-column="18" />
+            <state relative-caret-position="919">
+              <caret line="1166" column="31" lean-forward="true" selection-start-line="1166" selection-start-column="31" selection-end-line="1166" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -31,7 +31,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>#onetrust-accept-btn-handler</find>
       <find>answ</find>
       <find>date-range-selector-module--menuSelected--1bt9r</find>
       <find>date-range-selector-module--itemName--16HXJ</find>
@@ -61,6 +60,7 @@
       <find>puppeteer</find>
       <find>console.log</find>
       <find>gasPri</find>
+      <find>gasPrice</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-</replace>
@@ -261,12 +261,12 @@
       <workItem from="1598046963882" duration="9504000" />
       <workItem from="1598389431131" duration="9634000" />
       <workItem from="1598563354675" duration="11726000" />
-      <workItem from="1598807589699" duration="1644000" />
+      <workItem from="1598807589699" duration="1927000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211873000" />
+    <option name="totallyTimeSpent" value="212156000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -330,7 +330,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>1510</line>
+          <line>1531</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
@@ -628,8 +628,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="1795" column="18" lean-forward="true" selection-start-line="1795" selection-start-column="18" selection-end-line="1795" selection-end-column="18" />
+        <state relative-caret-position="919">
+          <caret line="1166" column="31" lean-forward="true" selection-start-line="1166" selection-start-column="31" selection-end-line="1166" selection-end-column="31" />
         </state>
       </provider>
     </entry>

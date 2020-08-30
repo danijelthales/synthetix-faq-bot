@@ -1292,76 +1292,83 @@ async function getSynthInfo(synth) {
 }
 
 setInterval(function () {
-    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
-        let data = '';
+    try {
+        https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
+            let data = '';
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                let result = JSON.parse(data);
+                usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            let result = JSON.parse(data);
-            usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    } catch
+        (e) {
+        console.log("Error on fetching 1inch peg: ", e);
+    }
 
 }, 60 * 1000);
 
 
 setInterval(function () {
-        try {
-            https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
-                let data = '';
+    try {
+        https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
+            let data = '';
 
-                // A chunk of data has been recieved.
-                resp.on('data', (chunk) => {
-                    data += chunk;
-                });
-
-                // The whole response has been received. Print out the result.
-                resp.on('end', () => {
-                    let result = JSON.parse(data);
-                    usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
-                });
-
-            }).on("error", (err) => {
-                console.log("Error: " + err.message);
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
             });
-        } catch
-            (e) {
-            console.log("Error on fetching 1inch peg: ", e);
-        }
 
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                let result = JSON.parse(data);
+                usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    } catch
+        (e) {
+        console.log("Error on fetching 1inch peg: ", e);
     }
-    ,
-    60 * 1000
+
+}, 60 * 1000
 );
 
 setInterval(function () {
-    https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
-        let data = '';
+    try {
+        https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
+            let data = '';
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                let result = JSON.parse(data);
+                coingeckoUsd = result.market_data.current_price.usd;
+                coingeckoEth = result.market_data.current_price.eth;
+                coingeckoBtc = result.market_data.current_price.btc;
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            let result = JSON.parse(data);
-            coingeckoUsd = result.market_data.current_price.usd;
-            coingeckoEth = result.market_data.current_price.eth;
-            coingeckoBtc = result.market_data.current_price.btc;
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 1000);
 
 setInterval(function () {
@@ -1409,88 +1416,102 @@ setInterval(function () {
 }, 70 * 1000);
 
 setInterval(function () {
-    https.get('https://trade.kucoin.com/_api/trade-front/market/getSymbolTick?symbols=SNX-USDT', (resp) => {
-        let data = '';
+    try {
+        https.get('https://trade.kucoin.com/_api/trade-front/market/getSymbolTick?symbols=SNX-USDT', (resp) => {
+            let data = '';
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                let result = JSON.parse(data);
+                kucoinUsd = result.data[0].lastTradedPrice;
+                kucoinUsd = Math.round(((kucoinUsd * 1.0) + Number.EPSILON) * 100) / 100;
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            let result = JSON.parse(data);
-            kucoinUsd = result.data[0].lastTradedPrice;
-            kucoinUsd = Math.round(((kucoinUsd * 1.0) + Number.EPSILON) * 100) / 100;
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    } catch (e) {
+        console.log(e);
+    }
 }, 60 * 1000);
 
 function doCalculate(command, msg, gasPriceParam, fromDM) {
-    var gasPriceToUse = gasPrice;
-    if (gasPriceParam) {
-        gasPriceToUse = gasPriceParam;
+    try {
+        var gasPriceToUse = gasPrice;
+        if (gasPriceParam) {
+            gasPriceToUse = gasPriceParam;
+        }
+        let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+        let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
+        let mintingPrice = Math.round(((mintGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+        let claimPrice = Math.round(((claimGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Calculated rewards:');
+        exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
+            + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
+        exampleEmbed.addField("Transaction costs", "With the gas price at **" + gasPriceToUse + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
+            + claimPrice + "$**");
+        exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n" + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
+        if (!fromDM) {
+            exampleEmbed.setFooter("By the way, you can calculate rewards in a private DM conversation with the bot" +
+                " if you don't want to reveal your very large (or very small!) amounts in a public forum." +
+                "  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate rewards [stakedSnxAmount]");
+        }
+        msg.reply(exampleEmbed);
+    } catch
+        (e) {
+        console.log(e);
     }
-    let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
-    let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
-    let mintingPrice = Math.round(((mintGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-    let claimPrice = Math.round(((claimGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
-    const exampleEmbed = new Discord.MessageEmbed()
-        .setColor('#0099ff')
-        .setTitle('Calculated rewards:');
-    exampleEmbed.addField("SNX weekly rewards", "You are expected to receive **" + resRew + "** SNX per week for **" + command + "** staked SNX"
-        + "\n The estimated value of SNX rewards is: **" + resRewInSusd + "$**");
-    exampleEmbed.addField("Transaction costs", "With the gas price at **" + gasPriceToUse + " gwei** minting would cost **" + mintingPrice + "$** and claiming would cost **"
-        + claimPrice + "$**");
-    exampleEmbed.addField("General info", "Total SNX rewards this week:**" + snxRewardsThisPeriod + "**\n" + "Total Debt:**" + totalDebt + "**\n" + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
-    if (!fromDM) {
-        exampleEmbed.setFooter("By the way, you can calculate rewards in a private DM conversation with the bot" +
-            " if you don't want to reveal your very large (or very small!) amounts in a public forum." +
-            "  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate rewards [stakedSnxAmount]");
-    }
-    msg.reply(exampleEmbed);
 }
 
 function doCalculateSusd(command, msg, fromDM) {
-    var today = new Date();
-    while (today > payday) {
-        payday.setDate(payday.getDate() + 7);
+    try {
+        var today = new Date();
+        while (today > payday) {
+            payday.setDate(payday.getDate() + 7);
+        }
+        var difference = payday.getTime() - today.getTime();
+        var seconds = Math.floor(difference / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+
+        var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
+        var unclaimedFeesNumber = unclaimedFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
+        var feesPeriod = totalFeesNumber - unclaimedFeesNumber;
+        var percentagePassed = Math.round(((100 - (hours * 100) / (7 * 24)) + Number.EPSILON) * 100) / 100;
+        var scaledPeriod = feesPeriod * ((200 - percentagePassed) / 100);
+        scaledPeriod = Math.round((scaledPeriod + Number.EPSILON) * 100) / 100;
+
+        var totalDebtNumber = totalDebt.replace(/,/g, '').replace(/\$/g, '') * 1.0;
+        var sUsdRewardPerMintedSusd = scaledPeriod / totalDebtNumber;
+
+
+        let resRew = Math.round(((command * sUsdRewardPerMintedSusd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Calculated rewards:');
+        exampleEmbed.addField("sUSD weekly rewards", "You are expected to receive **" + resRew + "** sUSD per week for **" + command + "** staked SNX");
+        exampleEmbed.addField("General info", "sUSD fees in this period:**$" + feesPeriod + "**\n"
+            + "Percentage of the period passed:**" + percentagePassed + "%**\n"
+            + "sUSD fees scaled for whole period:**$" + scaledPeriod + "**\n"
+            + "Total debt:**" + totalDebt + "**\n"
+            + "sUSD rewards per minted sUSD:**" + sUsdRewardPerMintedSusd + "**\n"
+            + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
+        if (!fromDM) {
+            exampleEmbed.setFooter("By the way, you can calculate rewards in a private DM conversation with the bot if you don't want to reveal your very large (or very small!)" +
+                " amounts in a public forum.  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate susd rewards [stakedSnxAmount]");
+        }
+        msg.reply(exampleEmbed);
+    } catch
+        (e) {
+        console.log(e);
     }
-    var difference = payday.getTime() - today.getTime();
-    var seconds = Math.floor(difference / 1000);
-    var minutes = Math.floor(seconds / 60);
-    var hours = Math.floor(minutes / 60);
-
-    var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
-    var unclaimedFeesNumber = unclaimedFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
-    var feesPeriod = totalFeesNumber - unclaimedFeesNumber;
-    var percentagePassed = Math.round(((100 - (hours * 100) / (7 * 24)) + Number.EPSILON) * 100) / 100;
-    var scaledPeriod = feesPeriod * ((200 - percentagePassed) / 100);
-    scaledPeriod = Math.round((scaledPeriod + Number.EPSILON) * 100) / 100;
-
-    var totalDebtNumber = totalDebt.replace(/,/g, '').replace(/\$/g, '') * 1.0;
-    var sUsdRewardPerMintedSusd = scaledPeriod / totalDebtNumber;
-
-
-    let resRew = Math.round(((command * sUsdRewardPerMintedSusd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
-    const exampleEmbed = new Discord.MessageEmbed()
-        .setColor('#0099ff')
-        .setTitle('Calculated rewards:');
-    exampleEmbed.addField("sUSD weekly rewards", "You are expected to receive **" + resRew + "** sUSD per week for **" + command + "** staked SNX");
-    exampleEmbed.addField("General info", "sUSD fees in this period:**$" + feesPeriod + "**\n"
-        + "Percentage of the period passed:**" + percentagePassed + "%**\n"
-        + "sUSD fees scaled for whole period:**$" + scaledPeriod + "**\n"
-        + "Total debt:**" + totalDebt + "**\n"
-        + "sUSD rewards per minted sUSD:**" + sUsdRewardPerMintedSusd + "**\n"
-        + "SNX to mint 1 sUSD:**" + snxToMintUsd + "**\n");
-    if (!fromDM) {
-        exampleEmbed.setFooter("By the way, you can calculate rewards in a private DM conversation with the bot if you don't want to reveal your very large (or very small!)" +
-            " amounts in a public forum.  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate susd rewards [stakedSnxAmount]");
-    }
-    msg.reply(exampleEmbed);
 }
 
 function doShowSynth(command, msg, fromDm) {
