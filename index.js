@@ -36,6 +36,7 @@ var totalDebt = "$71,589,622";
 var gasPrice = 240;
 var fastGasPrice = 300;
 var lowGasPrice = 200;
+var instantGasPrice = 350;
 var ethPrice = 360;
 var tknPrice = 0.77;
 var swthPrice = 0.063;
@@ -669,31 +670,16 @@ client.on("message", msg => {
 
                 if (command == "7") {
 
-                    https.get('https://gasprice.poa.network/', (resp) => {
-                        let data = '';
+                    exampleEmbed.addField("Safe low gas price:", lowGasPrice + ' gwei', false);
+                    exampleEmbed.addField("Standard gas price:", gasPrice + ' gwei', false);
+                    exampleEmbed.addField("Fast gas price:", fastGasPrice + ' gwei', false);
+                    exampleEmbed.addField("Instant gas price:", instantGasPrice + ' gwei', false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed);
+                    }
 
-                        // A chunk of data has been recieved.
-                        resp.on('data', (chunk) => {
-                            data += chunk;
-                        });
-
-                        // The whole response has been received. Print out the result.
-                        resp.on('end', () => {
-                            let result = JSON.parse(data);
-                            exampleEmbed.addField("Safe low gas price:", result.slow + ' gwei', false);
-                            exampleEmbed.addField("Standard gas price:", result.standard + ' gwei', false);
-                            exampleEmbed.addField("Fast gas price:", result.fast + ' gwei', false);
-                            exampleEmbed.addField("Instant gas price:", result.instant + ' gwei', false);
-                            if (doReply) {
-                                msg.reply(exampleEmbed);
-                            } else {
-                                msg.channel.send(exampleEmbed);
-                            }
-                        });
-
-                    }).on("error", (err) => {
-                        console.log("Error: " + err.message);
-                    });
 
                 } else if (command == "9") {
 
@@ -1031,6 +1017,7 @@ function handleGasSubscription() {
             gasPrice = result.standard;
             fastGasPrice = result.fast;
             lowGasPrice = result.slow;
+            instantGasPrice = result.instant;
             gasSubscribersMap.forEach(function (value, key) {
                 try {
                     if ((result.standard * 1.0) < (value * 1.0)) {
