@@ -1322,29 +1322,33 @@ setInterval(function () {
 
 
 setInterval(function () {
-	try{
-    https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
-        let data = '';
+        try {
+            https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
+                let data = '';
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
 
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            let result = JSON.parse(data);
-            usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
-        });
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    let result = JSON.parse(data);
+                    usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+                });
 
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-	catch(e){
-		console.log("Error on fetching 1inch peg: ", e);
-	}
+            }).on("error", (err) => {
+                console.log("Error: " + err.message);
+            });
+        } catch
+            (e) {
+            console.log("Error on fetching 1inch peg: ", e);
+        }
 
-}, 60 * 1000);
+    }
+    ,
+    60 * 1000
+);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
