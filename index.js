@@ -34,6 +34,8 @@ var snxToMintUsd = 1.933;
 var snxRewardsThisPeriod = "940,415 SNX";
 var totalDebt = "$71,589,622";
 var gasPrice = 240;
+var fastGasPrice = 300;
+var lowGasPrice = 200;
 var ethPrice = 360;
 var tknPrice = 0.77;
 var swthPrice = 0.063;
@@ -1027,6 +1029,8 @@ function handleGasSubscription() {
         resp.on('end', () => {
             let result = JSON.parse(data);
             gasPrice = result.standard;
+            fastGasPrice = result.fast;
+            lowGasPrice = result.slow;
             gasSubscribersMap.forEach(function (value, key) {
                 try {
                     if ((result.standard * 1.0) < (value * 1.0)) {
@@ -1268,6 +1272,7 @@ async function getSynthInfo(synth) {
         const page = await browser.newPage();
         await page.setViewport({width: 1000, height: 926});
         await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
+        await page.waitForSelector('.isELEY');
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
@@ -1482,15 +1487,24 @@ setInterval(function () {
 setInterval(function () {
     clientFaqPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
+        value.members.cache.get("745936096336019578").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, {type: 'PLAYING'})
+            .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+            .catch(console.error);
     });
     clientPegPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
+        value.members.cache.get("745936096336019578").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'})
+            .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+            .catch(console.error);
     });
     clientEthPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
     });
     clientgasPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
+        value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, {type: 'PLAYING'})
+            .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+            .catch(console.error);
     });
     clientTknPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
