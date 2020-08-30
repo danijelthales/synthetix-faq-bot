@@ -1322,6 +1322,7 @@ setInterval(function () {
 
 
 setInterval(function () {
+	try{
     https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
         let data = '';
 
@@ -1339,6 +1340,9 @@ setInterval(function () {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
+	catch(e){
+		console.log("Error on fetching 1inch peg: ", e);
+	}
 
 }, 60 * 1000);
 
