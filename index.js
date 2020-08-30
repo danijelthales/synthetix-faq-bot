@@ -1291,9 +1291,10 @@ async function getSynthInfo(synth) {
     }
 }
 
+
 setInterval(function () {
     try {
-        https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
+        https.get('https://api-v2.dex.ag/price?from=sUSD&to=USDT&fromAmount=10000&dex=ag', (resp) => {
             try {
                 let data = '';
 
@@ -1306,7 +1307,7 @@ setInterval(function () {
                 resp.on('end', () => {
                     try {
                         let result = JSON.parse(data);
-                        usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+                        usdtPeg = Math.round(((result.price * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch
                         (e) {
                         console.log("Error on fetching 1inch peg: ", e);
@@ -1327,27 +1328,31 @@ setInterval(function () {
 
 }, 60 * 1000);
 
-
 setInterval(function () {
     try {
-        https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
-            let data = '';
+        https.get('https://api-v2.dex.ag/price?from=sUSD&to=USDC&fromAmount=10000&dex=ag', (resp) => {
+            try {
+                let data = '';
 
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
 
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-                    usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
-                } catch
-                    (e) {
-                    console.log("Error on fetching 1inch peg: ", e);
-                }
-            });
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    try {
+                        let result = JSON.parse(data);
+                        usdcPeg = Math.round(((result.price * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    } catch
+                        (e) {
+                        console.log("Error on fetching 1inch peg: ", e);
+                    }
+                });
+            } catch
+                (e) {
+                console.log("Error on fetching 1inch peg: ", e);
+            }
 
         }).on("error", (err) => {
             console.log("Error: " + err.message);
@@ -1357,8 +1362,76 @@ setInterval(function () {
         console.log("Error on fetching 1inch peg: ", e);
     }
 
-}, 60 * 1000
-);
+}, 60 * 1000);
+
+// setInterval(function () {
+//     try {
+//         https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
+//             try {
+//                 let data = '';
+//
+//                 // A chunk of data has been recieved.
+//                 resp.on('data', (chunk) => {
+//                     data += chunk;
+//                 });
+//
+//                 // The whole response has been received. Print out the result.
+//                 resp.on('end', () => {
+//                     try {
+//                         let result = JSON.parse(data);
+//                         usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+//                     } catch
+//                         (e) {
+//                         console.log("Error on fetching 1inch peg: ", e);
+//                     }
+//                 });
+//             } catch
+//                 (e) {
+//                 console.log("Error on fetching 1inch peg: ", e);
+//             }
+//
+//         }).on("error", (err) => {
+//             console.log("Error: " + err.message);
+//         });
+//     } catch
+//         (e) {
+//         console.log("Error on fetching 1inch peg: ", e);
+//     }
+//
+// }, 60 * 1000);
+
+
+// setInterval(function () {
+//     try {
+//         https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
+//             let data = '';
+//
+//             // A chunk of data has been recieved.
+//             resp.on('data', (chunk) => {
+//                 data += chunk;
+//             });
+//
+//             // The whole response has been received. Print out the result.
+//             resp.on('end', () => {
+//                 try {
+//                     let result = JSON.parse(data);
+//                     usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
+//                 } catch
+//                     (e) {
+//                     console.log("Error on fetching 1inch peg: ", e);
+//                 }
+//             });
+//
+//         }).on("error", (err) => {
+//             console.log("Error: " + err.message);
+//         });
+//     } catch
+//         (e) {
+//         console.log("Error on fetching 1inch peg: ", e);
+//     }
+//
+// }, 60 * 1000
+// );
 
 setInterval(function () {
     try {

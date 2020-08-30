@@ -21,8 +21,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="1331" column="9" lean-forward="true" selection-start-line="1331" selection-start-column="9" selection-end-line="1331" selection-end-column="9" />
+            <state relative-caret-position="221">
+              <caret line="1315" column="19" lean-forward="true" selection-start-line="1315" selection-start-column="19" selection-end-line="1315" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es2015.core.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="218" column="13" selection-start-line="218" selection-start-column="13" selection-end-line="218" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -31,7 +40,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getChart</find>
       <find>doShowChart</find>
       <find>charts/</find>
       <find>images</find>
@@ -61,6 +69,7 @@
       <find>gasprice</find>
       <find>https://gasprice.poa.network/</find>
       <find>handleGasSubscription</find>
+      <find>Math.round</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-</replace>
@@ -261,12 +270,12 @@
       <workItem from="1598046963882" duration="9504000" />
       <workItem from="1598389431131" duration="9634000" />
       <workItem from="1598563354675" duration="11726000" />
-      <workItem from="1598807589699" duration="3063000" />
+      <workItem from="1598807589699" duration="3814000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="213292000" />
+    <option name="totallyTimeSpent" value="214043000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -330,7 +339,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>1546</line>
+          <line>1619</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
@@ -386,13 +395,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/questions/76.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="83" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/77.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -626,10 +628,17 @@
     <entry file="file://$PROJECT_DIR$/questions/68.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es2015.core.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="218" column="13" selection-start-line="218" selection-start-column="13" selection-end-line="218" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="1331" column="9" lean-forward="true" selection-start-line="1331" selection-start-column="9" selection-end-line="1331" selection-end-column="9" />
+        <state relative-caret-position="221">
+          <caret line="1315" column="19" lean-forward="true" selection-start-line="1315" selection-start-column="19" selection-end-line="1315" selection-end-column="19" />
         </state>
       </provider>
     </entry>
