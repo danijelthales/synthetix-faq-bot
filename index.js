@@ -1123,7 +1123,6 @@ async function getSnxToolStaking() {
             return prices
         })
 
-        console.log("I got the prices:" + prices);
         snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
         snxToMintUsd = prices[4].split(' ')[0] * 1.0;
         snxRewardsThisPeriod = prices[5];
@@ -1159,7 +1158,6 @@ async function getSnxToolHome() {
             return prices
         })
 
-        console.log("I got the prices:" + prices);
         periodVolume = prices[3];
         browser.close()
     } catch (e) {
@@ -1198,7 +1196,6 @@ async function getDashboard() {
             return prices
         })
 
-        console.log("I got the dashboard prices:" + prices);
         currentFees = prices[13];
         unclaimedFees = prices[14];
         poolDistribution = prices.slice(27, prices.length);
@@ -1232,7 +1229,6 @@ async function getExchange() {
             return prices
         })
 
-        console.log("I got the synthetix exchange prices:" + prices);
         var i = 0;
         synths = new Array();
         while (i < prices.length) {
@@ -1291,7 +1287,6 @@ async function getSynthInfo(synth) {
         var synthInfo = synthsMap.get(synth.toLowerCase());
         synthInfo.description = prices[0];
         synthsMap.set(synth.toLowerCase(), synthInfo);
-        console.log("Fetched info for: " + synth);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from synthetix exchange");
@@ -1577,7 +1572,6 @@ async function getChart(type) {
                 height: rect.height + 0 * 2
             }
         });
-        console.log('chart' + type.toLowerCase() + '.png saved');
         browser.close();
     } catch (e) {
         console.log("Error happened on getting chart.");
