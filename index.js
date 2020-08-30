@@ -1455,7 +1455,7 @@ setInterval(function () {
                 coingeckoEth = result.market_data.current_price.eth;
                 coingeckoEth = Math.round(((coingeckoEth * 1.0) + Number.EPSILON) * 1000) / 1000;
                 coingeckoBtc = result.market_data.current_price.btc;
-                coingeckoBtc = Math.round(((coingeckoBtc * 1.0) + Number.EPSILON) * 100000) / 100000;
+                coingeckoBtc = Math.round(((coingeckoBtc * 1.0) + Number.EPSILON) * 1000000) / 1000000;
             });
 
         }).on("error", (err) => {
