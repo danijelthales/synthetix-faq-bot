@@ -1709,7 +1709,7 @@ setTimeout(function () {
     } catch (e) {
         console.log(e);
     }
-}, 20 * 1000);
+}, 2 * 60 * 1000);
 
 setInterval(function () {
     try {
@@ -1723,7 +1723,7 @@ setInterval(function () {
     } catch (e) {
         console.log(e);
     }
-}, 1 * 60 * 60 * 1000);
+}, 1 * 30 * 60 * 1000);
 
 
 setTimeout(function () {
