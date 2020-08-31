@@ -1229,7 +1229,7 @@ async function getExchange() {
             if (synthsMap.has(synthName.toLowerCase())) {
                 synth = synthsMap.get(synthName.toLowerCase());
                 synth.gain = gain;
-                synth.price = price;
+                synth.price = prices[i + 2];
             }
             synths.push(synth);
             if (prices[i + 3] == "-" && synthName.toLowerCase() != "susd") {
