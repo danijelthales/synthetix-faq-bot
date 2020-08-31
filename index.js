@@ -1228,6 +1228,8 @@ async function getExchange() {
             let synth = new Synth(synthName, prices[i + 2], gain);
             if (synthsMap.has(synthName.toLowerCase())) {
                 synth = synthsMap.get(synthName.toLowerCase());
+                synth.gain = gain;
+                synth.price = price;
             }
             synths.push(synth);
             if (prices[i + 3] == "-" && synthName.toLowerCase() != "susd") {
@@ -1259,11 +1261,11 @@ async function getSynthInfo(synth) {
         const page = await browser.newPage();
         await page.setViewport({width: 1000, height: 926});
         await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
-        await page.waitForSelector('.isELEY');
+        await page.waitForSelector('div.isELEY');
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('.isELEY');
+            var div = document.querySelectorAll('div.isELEY');
 
             var prices = []
             div.forEach(element => {
@@ -1614,6 +1616,7 @@ function doCalculateSusd(command, msg, fromDM) {
 function doShowSynth(command, msg, fromDm) {
     try {
         let synthInfo = synthsMap.get(command);
+        console.log("Showing synth: " + synthInfo);
         if (synthInfo) {
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
@@ -1697,10 +1700,10 @@ async function getChart(type) {
 setTimeout(function () {
     try {
         var increment = 1;
-        synths.forEach(s => {
+        synthsMap.forEach(function (value, key) {
             increment += 1;
             setTimeout(function () {
-                getSynthInfo(s.name)
+                getSynthInfo(value.name)
             }, 1000 * 10 * increment);
         });
     } catch (e) {
@@ -1711,10 +1714,10 @@ setTimeout(function () {
 setInterval(function () {
     try {
         var increment = 1;
-        synths.forEach(s => {
+        synthsMap.forEach(function (value, key) {
             increment += 1;
             setTimeout(function () {
-                getSynthInfo(s.name)
+                getSynthInfo(value.name)
             }, 1000 * 10 * increment);
         });
     } catch (e) {
