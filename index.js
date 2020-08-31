@@ -1278,6 +1278,7 @@ async function getSynthInfo(synth) {
         var synthInfo = synthsMap.get(synth.toLowerCase());
         synthInfo.description = prices[0];
         synthsMap.set(synth.toLowerCase(), synthInfo);
+        console.log("Fetched " + synth + " with description " + synthInfo.description);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from synthetix exchange");
@@ -1616,7 +1617,6 @@ function doCalculateSusd(command, msg, fromDM) {
 function doShowSynth(command, msg, fromDm) {
     try {
         let synthInfo = synthsMap.get(command);
-        console.log("Showing synth: " + synthInfo);
         if (synthInfo) {
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="1624" lean-forward="true" selection-start-line="1624" selection-end-line="1624" />
+            <state relative-caret-position="324">
+              <caret line="1619" column="24" lean-forward="true" selection-start-line="1619" selection-start-column="24" selection-end-line="1619" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -68,9 +67,9 @@
       <find>10000</find>
       <find>lowGasPrice</find>
       <find>fastGasPrice</find>
-      <find>synthsMap</find>
       <find>getSynthInfo</find>
       <find>handleg</find>
+      <find>synthsMap</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-</replace>
@@ -273,12 +272,12 @@
       <workItem from="1598563354675" duration="11726000" />
       <workItem from="1598807589699" duration="6773000" />
       <workItem from="1598831168071" duration="599000" />
-      <workItem from="1598878168514" duration="504000" />
+      <workItem from="1598878168514" duration="1012000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="218105000" />
+    <option name="totallyTimeSpent" value="218613000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -633,8 +632,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="1624" lean-forward="true" selection-start-line="1624" selection-end-line="1624" />
+        <state relative-caret-position="324">
+          <caret line="1619" column="24" lean-forward="true" selection-start-line="1619" selection-start-column="24" selection-end-line="1619" selection-end-column="24" />
         </state>
       </provider>
     </entry>
