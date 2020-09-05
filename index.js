@@ -148,7 +148,7 @@ client.on("message", msg => {
                     if (command && !isNaN(command)) {
                         doCalculateSusd(command, msg, false);
                     }
-                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth")) {
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth ")) {
                     const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq synth".length).split(' ');
                     args.shift();
                     const command = args.shift().trim();
@@ -297,7 +297,7 @@ client.on("message", msg => {
                                 }
                                 doCalculateSusd(command, msg, true);
                             }
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth")) {
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth ")) {
                             const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
                             args.shift();
                             const command = args.shift().trim();
