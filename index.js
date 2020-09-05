@@ -901,8 +901,12 @@ setInterval(function () {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            let result = JSON.parse(data);
-            ethPrice = result.market_data.current_price.usd;
+            try {
+                let result = JSON.parse(data);
+                ethPrice = result.market_data.current_price.usd;
+            } catch (e) {
+                console.log(e);
+            }
         });
 
     }).on("error", (err) => {
@@ -922,10 +926,13 @@ setInterval(function () {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            let result = JSON.parse(data);
-            tknPrice = result.market_data.current_price.usd;
-            tknPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
-
+            try {
+                let result = JSON.parse(data);
+                tknPrice = result.market_data.current_price.usd;
+                tknPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
+            } catch (e) {
+                console.log(e);
+            }
         });
 
     }).on("error", (err) => {
@@ -945,9 +952,13 @@ setInterval(function () {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            let result = JSON.parse(data);
-            swthPrice = result.market_data.current_price.usd;
-            swthPrice = Math.round(((swthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+            try {
+                let result = JSON.parse(data);
+                swthPrice = result.market_data.current_price.usd;
+                swthPrice = Math.round(((swthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+            } catch (e) {
+                console.log(e);
+            }
 
         });
 
@@ -968,10 +979,13 @@ setInterval(function () {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            let result = JSON.parse(data);
-            crvPrice = result.market_data.current_price.usd;
-            crvPrice = Math.round(((crvPrice * 1.0) + Number.EPSILON) * 100) / 100;
-
+            try {
+                let result = JSON.parse(data);
+                crvPrice = result.market_data.current_price.usd;
+                crvPrice = Math.round(((crvPrice * 1.0) + Number.EPSILON) * 100) / 100;
+            } catch (e) {
+                console.log(e);
+            }
         });
 
     }).on("error", (err) => {
@@ -991,8 +1005,12 @@ setInterval(function () {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            let result = JSON.parse(data);
-            snxPrice = result.market_data.current_price.usd;
+            try {
+                let result = JSON.parse(data);
+                snxPrice = result.market_data.current_price.usd;
+            } catch (e) {
+                console.log(e);
+            }
         });
 
     }).on("error", (err) => {
@@ -1013,22 +1031,45 @@ function handleGasSubscription() {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            let result = JSON.parse(data);
-            gasPrice = result.standard;
-            fastGasPrice = result.fast;
-            lowGasPrice = result.slow;
-            instantGasPrice = result.instant;
-            gasSubscribersMap.forEach(function (value, key) {
-                try {
-                    if ((result.standard * 1.0) < (value * 1.0)) {
-                        if (gasSubscribersLastPushMap.has(key)) {
-                            var curDate = new Date();
-                            var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
-                            var hours = Math.abs(curDate - lastNotification) / 36e5;
-                            if (hours > 1) {
+            try {
+                let result = JSON.parse(data);
+                gasPrice = result.standard;
+                fastGasPrice = result.fast;
+                lowGasPrice = result.slow;
+                instantGasPrice = result.instant;
+                gasSubscribersMap.forEach(function (value, key) {
+                    try {
+                        if ((result.standard * 1.0) < (value * 1.0)) {
+                            if (gasSubscribersLastPushMap.has(key)) {
+                                var curDate = new Date();
+                                var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
+                                var hours = Math.abs(curDate - lastNotification) / 36e5;
+                                if (hours > 1) {
+                                    if (client.users.cache.get(key)) {
+                                        client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                                        gasSubscribersLastPushMap.set(key, new Date().getTime());
+                                        if (process.env.REDIS_URL) {
+                                            redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                            });
+                                            redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                            });
+                                        }
+                                    } else {
+                                        console.log("User:" + key + " is no longer in this server");
+                                        gasSubscribersLastPushMap.delete(key);
+                                        gasSubscribersMap.delete(key);
+                                        if (process.env.REDIS_URL) {
+                                            redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                            });
+                                            redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                            });
+                                        }
+                                    }
+                                }
+                            } else {
                                 if (client.users.cache.get(key)) {
                                     client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
-                                    gasSubscribersLastPushMap.set(key, new Date().getTime());
+                                    gasSubscribersLastPushMap.set(key, new Date());
                                     if (process.env.REDIS_URL) {
                                         redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
                                         });
@@ -1048,34 +1089,15 @@ function handleGasSubscription() {
                                 }
                             }
                         } else {
-                            if (client.users.cache.get(key)) {
-                                client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
-                                gasSubscribersLastPushMap.set(key, new Date());
-                                if (process.env.REDIS_URL) {
-                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                    });
-                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                    });
-                                }
-                            } else {
-                                console.log("User:" + key + " is no longer in this server");
-                                gasSubscribersLastPushMap.delete(key);
-                                gasSubscribersMap.delete(key);
-                                if (process.env.REDIS_URL) {
-                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                    });
-                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                    });
-                                }
-                            }
+                            //console.log("Not sending a gas notification for: " + key + " because " + value + " is below gas " + result.standard);
                         }
-                    } else {
-                        //console.log("Not sending a gas notification for: " + key + " because " + value + " is below gas " + result.standard);
+                    } catch (e) {
+                        console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);
                     }
-                } catch (e) {
-                    console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);
-                }
-            });
+                });
+            } catch (e) {
+                console.log(e);
+            }
 
         });
 
@@ -1263,22 +1285,22 @@ async function getSynthInfo(synth) {
         await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
         await page.waitForSelector('div.isELEY');
 
-        /** @type {string[]} */
-        var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('div.isELEY');
+        const rect = await page.evaluate(() => {
+            const element = document.querySelector('div.isELEY');
+            const {x, y, width, height} = element.getBoundingClientRect();
+            return {left: x, top: y, width, height, id: element.id};
+        });
 
-            var prices = []
-            div.forEach(element => {
-                prices.push(element.textContent);
-            });
-
-            return prices
-        })
-
-        var synthInfo = synthsMap.get(synth.toLowerCase());
-        synthInfo.description = prices[0];
-        synthsMap.set(synth.toLowerCase(), synthInfo);
-        console.log("Fetched " + synth + " with description " + synthInfo.description);
+        await page.screenshot({
+            path: 'charts/chart' + synth.toLowerCase() + '.png',
+            clip: {
+                x: rect.left - 0,
+                y: rect.top - 0,
+                width: rect.width + 0 * 2,
+                height: rect.height + 0 * 2
+            }
+        });
+        console.log("Got screenshot for: " + synth);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from synthetix exchange");
@@ -1622,17 +1644,15 @@ function doShowSynth(command, msg, fromDm) {
                 .setColor('#0099ff')
                 .setTitle('Synth info:');
 
-
-            exampleEmbed.addField(command,
-                "Price:" + synthInfo.price + "\n"
-                + "Gain:" + synthInfo.gain + "\n"
+            let arrow = (synthInfo.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (synthInfo.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
+            exampleEmbed.addField(synthInfo.name,
+                "Price:**" + synthInfo.price + "**\n"
+                + "Gain:**" + synthInfo.gain + arrow + "**\n"
             );
 
 
-            if (synthInfo.description) {
-                exampleEmbed.addField("Description",
-                    synthInfo.description);
-            }
+            exampleEmbed.attachFiles(['charts/chart' + command.toLowerCase() + '.png'])
+                .setImage('attachment://' + 'chart' + command.toLowerCase() + '.png');
 
             if (fromDm) {
                 msg.reply(exampleEmbed);
@@ -1933,3 +1953,21 @@ setInterval(function () {
 
 
 client.login(process.env.BOT_TOKEN);
+
+
+// const ethers = require('ethers');
+// let contractRaw = fs.readFileSync('contracts/Synthetix.json');
+// let contract = JSON.parse(contractRaw);
+//
+// async function getMintrData() {
+//     const provider = ethers.getDefaultProvider("homestead");
+//     const synthetix = new ethers.Contract('0xC011A72400E58ecD99Ee497CF89E3775d4bd732F',
+//         contract, provider);
+//     const transferable = await synthetix.transferableSynthetix('0xa0c2d3ad9c5100a6a5daa03dc6bab01f0d54c361');
+//     console.log(transferable);
+//     let s = transferable.toString();
+//     let number = parseInt(Number(transferable._hex), 10) / 1e18;
+//     console.log(number);
+// }
+//
+// getMintrData();

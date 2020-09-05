@@ -405,11 +405,11 @@
   },
   {
     "number": 74,
-    "alias": "synth gainers"
+    "alias": "synths gainers"
   },
   {
     "number": 75,
-    "alias": "synth losers"
+    "alias": "synths losers"
   },
   {
     "number": 76,
