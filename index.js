@@ -59,7 +59,7 @@ var coingeckoBtc;
 var binanceUsd;
 var kucoinUsd;
 
-var payday = new Date('2020-08-12 10:37');
+var payday = new Date('2020-08-12 11:20');
 
 const Synth = class {
     constructor(name, price, gain) {
