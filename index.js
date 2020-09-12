@@ -39,7 +39,9 @@ var lowGasPrice = 200;
 var instantGasPrice = 350;
 var ethPrice = 360;
 var tknPrice = 0.77;
+var tknMarketCap = 19161119;
 var swthPrice = 0.063;
+var swthMarketCap = 35196236;
 var crvPrice = 3.84;
 var snxPrice = 6.9;
 var mintGas = 993602;
@@ -930,6 +932,7 @@ setInterval(function () {
                 let result = JSON.parse(data);
                 tknPrice = result.market_data.current_price.usd;
                 tknPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
+                tknMarketCap = result.market_data.market_cap.usd;
             } catch (e) {
                 console.log(e);
             }
@@ -956,6 +959,7 @@ setInterval(function () {
                 let result = JSON.parse(data);
                 swthPrice = result.market_data.current_price.usd;
                 swthPrice = Math.round(((swthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                swthMarketCap = result.market_data.market_cap.usd;
             } catch (e) {
                 console.log(e);
             }
@@ -1528,14 +1532,35 @@ setInterval(function () {
     });
     clientTknPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
+        value.members.cache.get("745936898870083614").user.setActivity("marketcap=$" + getNumberLabel(tknMarketCap), {type: 'PLAYING'});
     });
     clientCRVPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("746121396396097587").setNickname("$" + crvPrice);
     });
     clientSWTHPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
+        value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), {type: 'PLAYING'});
     });
 }, 70 * 1000);
+
+function getNumberLabel(labelValue) {
+
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e+9
+
+        ? Math.round(Math.abs(Number(labelValue)) / 1.0e+9) + "B"
+        // Six Zeroes for Millions
+        : Math.abs(Number(labelValue)) >= 1.0e+6
+
+            ? Math.round(Math.abs(Number(labelValue)) / 1.0e+6) + "M"
+            // Three Zeroes for Thousands
+            : Math.abs(Number(labelValue)) >= 1.0e+3
+
+                ? Math.round(Math.abs(Number(labelValue)) / 1.0e+3) + "K"
+
+                : Math.abs(Number(labelValue));
+
+}
 
 setInterval(function () {
     try {

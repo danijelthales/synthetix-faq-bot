@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/answers/79.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/79.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,35 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="299" column="110" selection-start-line="299" selection-start-column="110" selection-end-line="299" selection-end-column="110" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/categories/aliases.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="411" column="20" selection-start-line="411" selection-start-column="20" selection-end-line="411" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/contracts/Synthetix.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14841">
-              <caret line="873" column="5" selection-end-line="1683" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/@ethersproject/contracts/lib/index.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1411">
-              <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
+            <state relative-caret-position="222">
+              <caret line="1529" column="27" lean-forward="true" selection-start-line="1529" selection-start-column="27" selection-end-line="1529" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -59,13 +33,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>puppeteer</find>
-      <find>console.log</find>
-      <find>gasPri</find>
-      <find>gasPrice</find>
-      <find>gasprice</find>
-      <find>https://gasprice.poa.network/</find>
-      <find>handleGasSubscription</find>
       <find>Math.round</find>
       <find>selector</find>
       <find>gasPr</find>
@@ -89,6 +56,13 @@
       <find>dex</find>
       <find>gainers</find>
       <find>synth&quot;</find>
+      <find>clientTknPrice</find>
+      <find>with</find>
+      <find>clientFaqPrice</find>
+      <find>tknPrice</find>
+      <find>tknMarketCap</find>
+      <find>swthMarketCap</find>
+      <find>swthPrice</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360038366153-Why-am-I-blocked-from-claiming-rewards-</replace>
@@ -169,7 +143,6 @@
         <option value="$PROJECT_DIR$/answers/78.json" />
         <option value="$PROJECT_DIR$/answers/5.json" />
         <option value="$PROJECT_DIR$/questions/79.txt" />
-        <option value="$PROJECT_DIR$/answers/79.json" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/answers/80.json" />
         <option value="$PROJECT_DIR$/questions/80.txt" />
@@ -179,6 +152,7 @@
         <option value="$PROJECT_DIR$/answers/3.json" />
         <option value="$PROJECT_DIR$/answers/19.json" />
         <option value="$PROJECT_DIR$/categories/aliases.json" />
+        <option value="$PROJECT_DIR$/answers/79.json" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
@@ -194,13 +168,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
+              <item name="answers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
@@ -212,37 +190,12 @@
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
               <item name="contracts" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="@ethersproject" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="@ethersproject" type="462c0819:PsiDirectoryNode" />
-              <item name="contracts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="@ethersproject" type="462c0819:PsiDirectoryNode" />
-              <item name="contracts" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -311,12 +264,15 @@
       <workItem from="1598878168514" duration="3235000" />
       <workItem from="1598910607362" duration="2136000" />
       <workItem from="1598912975549" duration="3661000" />
-      <workItem from="1599312412074" duration="1099000" />
+      <workItem from="1599312412074" duration="3892000" />
+      <workItem from="1599489565739" duration="1326000" />
+      <workItem from="1599566960730" duration="533000" />
+      <workItem from="1599940627783" duration="2673000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="227732000" />
+    <option name="totallyTimeSpent" value="235057000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -327,7 +283,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.2867804" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.29584223" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -337,7 +293,7 @@
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.44203684" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.44203684" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -371,12 +327,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>800</line>
+          <line>802</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>816</line>
+          <line>818</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
@@ -456,13 +412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/answers/78.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="135" selection-start-line="7" selection-start-column="135" selection-end-line="7" selection-end-column="135" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -503,13 +452,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/79.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/questions/79.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -651,6 +593,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/answers/78.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="135" selection-start-line="7" selection-start-column="135" selection-end-line="7" selection-end-column="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6987">
+          <caret line="411" column="20" selection-start-line="411" selection-start-column="20" selection-end-line="411" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/contracts/Synthetix.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="14841">
@@ -665,17 +621,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+    <entry file="file://$PROJECT_DIR$/answers/79.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="411" column="20" selection-start-line="411" selection-start-column="20" selection-end-line="411" selection-end-column="20" />
+        <state relative-caret-position="119">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="299" column="110" selection-start-line="299" selection-start-column="110" selection-end-line="299" selection-end-column="110" />
+        <state relative-caret-position="222">
+          <caret line="1529" column="27" lean-forward="true" selection-start-line="1529" selection-start-column="27" selection-end-line="1529" selection-end-column="27" />
         </state>
       </provider>
     </entry>
