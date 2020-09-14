@@ -2008,29 +2008,29 @@ async function getMintrData(msg, address, isDM) {
         const provider = ethers.getDefaultProvider("homestead");
         const synthetix = new ethers.Contract('0xC011A72400E58ecD99Ee497CF89E3775d4bd732F',
             contract, provider);
-        const transferable = await synthetix.transferableSynthetix('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        const transferable = await synthetix.transferableSynthetix(address);
         let numberSNXTransferable = transferable.toString() / 1000000000000000000;
         console.log(numberSNXTransferable);
 
-        const debt = await synthetix.debtBalanceOf('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04', '0x7355534400000000000000000000000000000000000000000000000000000000');
+        const debt = await synthetix.debtBalanceOf(address, '0x7355534400000000000000000000000000000000000000000000000000000000');
         let numberDebt = debt.toString() / 1000000000000000000;
         console.log(numberDebt);
 
-        const cRatio = await synthetix.collateralisationRatio('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        const cRatio = await synthetix.collateralisationRatio(address);
         let numberCRatio = 100000000000000000000 / cRatio.toString();
         console.log(numberCRatio);
 
-        const balance = await synthetix.balanceOf('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        const balance = await synthetix.balanceOf(address);
         let notEscrowedSnx = balance.toString() / 1000000000000000000;
         console.log(notEscrowedSnx);
 
-        const maxIssuableSynths = await synthetix.maxIssuableSynths('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        const maxIssuableSynths = await synthetix.maxIssuableSynths(address);
         let maxIssuableSynthsNum = maxIssuableSynths.toString() / 1000000000000000000;
         console.log(maxIssuableSynthsNum);
 
         let mintableSusd = maxIssuableSynthsNum - numberDebt;
 
-        const totalSNX = await synthetix.collateral('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        const totalSNX = await synthetix.collateral(address);
         let totalSNXNum = totalSNX.toString() / 1000000000000000000;
         console.log(totalSNXNum);
 
