@@ -2043,6 +2043,7 @@ async function getMintrData(msg, address, isDM) {
         escrowedSNX = Math.round(((escrowedSNX * 1.0) + Number.EPSILON) * 100) / 100;
         mintableSusd = Math.round(((mintableSusd * 1.0) + Number.EPSILON) * 100) / 100;
         numberSNXTransferable = Math.round(((numberSNXTransferable * 1.0) + Number.EPSILON) * 100) / 100;
+        numberDebt = Math.round(((numberDebt * 1.0) + Number.EPSILON) * 100) / 100;
 
         var reply = "cRatio: **" + numberCRatio + "%**" + "\n";
         reply += "totalSNX: **" + totalSNXNum + "**\n";

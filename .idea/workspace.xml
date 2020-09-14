@@ -5,8 +5,10 @@
       <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="2020" column="34" lean-forward="true" selection-start-line="2020" selection-start-column="34" selection-end-line="2020" selection-end-column="34" />
+            <state relative-caret-position="206">
+              <caret line="2045" column="44" selection-start-line="2045" selection-start-column="44" selection-end-line="2045" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -324,12 +326,12 @@
       <workItem from="1599489565739" duration="1326000" />
       <workItem from="1599566960730" duration="533000" />
       <workItem from="1599940627783" duration="4473000" />
-      <workItem from="1600090595199" duration="4570000" />
+      <workItem from="1600090595199" duration="4640000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="241427000" />
+    <option name="totallyTimeSpent" value="241497000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -681,8 +683,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="2020" column="34" lean-forward="true" selection-start-line="2020" selection-start-column="34" selection-end-line="2020" selection-end-column="34" />
+        <state relative-caret-position="206">
+          <caret line="2045" column="44" selection-start-line="2045" selection-start-column="44" selection-end-line="2045" selection-end-column="44" />
         </state>
       </provider>
     </entry>
