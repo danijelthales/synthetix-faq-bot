@@ -150,6 +150,11 @@ client.on("message", msg => {
                     if (command && !isNaN(command)) {
                         doCalculateSusd(command, msg, false);
                     }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show wallet")) {
+                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq show wallet".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    getMintrData(msg, command, false);
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth ")) {
                     const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq synth".length).split(' ');
                     args.shift();
@@ -210,6 +215,11 @@ client.on("message", msg => {
                             } else {
                                 msg.reply(command + " is not a proper integer number.");
                             }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show wallet")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("show wallet".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            getMintrData(msg, command, true);
                         } else if (msg.content.toLowerCase().trim() == "aliases") {
                             showAllAliases(true);
                         } else if (msg.content.toLowerCase().trim() == "help") {
@@ -1285,7 +1295,7 @@ async function getSynthInfo(synth) {
             ],
         });
         const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 926});
+        await page.setViewport({width: 1000, height: 1226});
         await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
         await page.waitForSelector('div.isELEY');
 
@@ -1312,6 +1322,11 @@ async function getSynthInfo(synth) {
     }
 }
 
+function delay(time) {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, time)
+    });
+}
 
 setInterval(function () {
     try {
@@ -1980,19 +1995,66 @@ setInterval(function () {
 client.login(process.env.BOT_TOKEN);
 
 
-// const ethers = require('ethers');
-// let contractRaw = fs.readFileSync('contracts/Synthetix.json');
-// let contract = JSON.parse(contractRaw);
-//
-// async function getMintrData() {
-//     const provider = ethers.getDefaultProvider("homestead");
-//     const synthetix = new ethers.Contract('0xC011A72400E58ecD99Ee497CF89E3775d4bd732F',
-//         contract, provider);
-//     const transferable = await synthetix.transferableSynthetix('0xa0c2d3ad9c5100a6a5daa03dc6bab01f0d54c361');
-//     console.log(transferable);
-//     let s = transferable.toString();
-//     let number = parseInt(Number(transferable._hex), 10) / 1e18;
-//     console.log(number);
-// }
-//
-// getMintrData();
+const ethers = require('ethers');
+let contractRaw = fs.readFileSync('contracts/Synthetix.json');
+let contract = JSON.parse(contractRaw);
+
+async function getMintrData(msg, address, isDM) {
+    try {
+        const exampleEmbed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Wallet info');
+
+        const provider = ethers.getDefaultProvider("homestead");
+        const synthetix = new ethers.Contract('0xC011A72400E58ecD99Ee497CF89E3775d4bd732F',
+            contract, provider);
+        const transferable = await synthetix.transferableSynthetix('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        let numberSNXTransferable = transferable.toString() / 1000000000000000000;
+        console.log(numberSNXTransferable);
+
+        const debt = await synthetix.debtBalanceOf('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04', '0x7355534400000000000000000000000000000000000000000000000000000000');
+        let numberDebt = debt.toString() / 1000000000000000000;
+        console.log(numberDebt);
+
+        const cRatio = await synthetix.collateralisationRatio('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        let numberCRatio = 100000000000000000000 / cRatio.toString();
+        console.log(numberCRatio);
+
+        const balance = await synthetix.balanceOf('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        let notEscrowedSnx = balance.toString() / 1000000000000000000;
+        console.log(notEscrowedSnx);
+
+        const maxIssuableSynths = await synthetix.maxIssuableSynths('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        let maxIssuableSynthsNum = maxIssuableSynths.toString() / 1000000000000000000;
+        console.log(maxIssuableSynthsNum);
+
+        let mintableSusd = maxIssuableSynthsNum - numberDebt;
+
+        const totalSNX = await synthetix.collateral('0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04');
+        let totalSNXNum = totalSNX.toString() / 1000000000000000000;
+        console.log(totalSNXNum);
+
+        let escrowedSNX = totalSNXNum - notEscrowedSnx;
+
+
+        numberCRatio = Math.round(((numberCRatio * 1.0) + Number.EPSILON) * 100) / 100;
+        totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
+        notEscrowedSnx = Math.round(((notEscrowedSnx * 1.0) + Number.EPSILON) * 100) / 100;
+        escrowedSNX = Math.round(((escrowedSNX * 1.0) + Number.EPSILON) * 100) / 100;
+        mintableSusd = Math.round(((mintableSusd * 1.0) + Number.EPSILON) * 100) / 100;
+        numberSNXTransferable = Math.round(((numberSNXTransferable * 1.0) + Number.EPSILON) * 100) / 100;
+
+        var reply = "cRatio: **" + numberCRatio + "%**" + "\n";
+        reply += "totalSNX: **" + totalSNXNum + "**\n";
+        reply += "ownedSNX: **" + notEscrowedSnx + "**\n";
+        reply += "escrowedSNX: **" + escrowedSNX + "**\n";
+        reply += "transferableSNX: **" + numberSNXTransferable + "**\n";
+        reply += "debt: **" + numberDebt + "**\n";
+        reply += "mintableSusd: **" + mintableSusd + "**\n";
+
+        exampleEmbed.addField(address, reply);
+        msg.reply(exampleEmbed);
+    } catch (e) {
+        msg.reply("error occurred");
+    }
+}
