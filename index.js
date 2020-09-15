@@ -23,6 +23,9 @@ clientCRVPrice.login(process.env.BOT_TOKEN_CRV);
 const clientSWTHPrice = new Discord.Client();
 clientSWTHPrice.login(process.env.BOT_TOKEN_SWTH);
 
+const clientPicklePrice = new Discord.Client();
+clientPicklePrice.login(process.env.BOT_TOKEN_PICKLE);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -42,6 +45,8 @@ var tknPrice = 0.77;
 var tknMarketCap = 19161119;
 var swthPrice = 0.063;
 var swthMarketCap = 35196236;
+var picklePrice = 53;
+var pickleEthPrice = 0.14334229;
 var crvPrice = 3.84;
 var snxPrice = 6.9;
 var mintGas = 993602;
@@ -983,6 +988,35 @@ setInterval(function () {
 }, 60 * 1000);
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/pickle-finance', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                picklePrice = result.market_data.current_price.usd;
+                picklePrice = Math.round(((picklePrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                pickleEthPrice = result.market_data.current_price.eth;
+                pickleEthPrice = Math.round(((pickleEthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/curve-dao-token', (resp) => {
         let data = '';
 
@@ -1555,6 +1589,10 @@ setInterval(function () {
     clientSWTHPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
         value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), {type: 'PLAYING'});
+    });
+
+    clientPicklePrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, {type: 'WATCHING'});
     });
 }, 70 * 1000);
 
