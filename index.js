@@ -130,6 +130,12 @@ client.on("message", msg => {
                 // this is logic for channels
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
+                } else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
+                    msg.channel.send('It will be:', {
+                        files: [
+                            "images/soonthetix.gif"
+                        ]
+                    });
                 } else if (msg.content.toLowerCase().trim() == "!faq help") {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq question")) {

@@ -2,15 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/images/soonthetix.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/answers/17.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/17.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/answers/22.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/22.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/answers/3.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/3.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/answers/37.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/37.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/answers/39.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/39.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart1y.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1y.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartall.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartall.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,20 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="1594" column="94" selection-start-line="1594" selection-start-column="83" selection-end-line="1594" selection-end-column="94" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="16" selection-start-line="8" selection-end-line="8" selection-end-column="16" />
+            <state relative-caret-position="204">
+              <caret line="135" column="51" lean-forward="true" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -49,8 +43,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>synthsMap</find>
-      <find>async</find>
       <find>fs</find>
       <find>transferableSynthetix</find>
       <find>925</find>
@@ -79,9 +71,10 @@
       <find>swthMarketCap</find>
       <find>pickle-f</find>
       <find>picklePrice</find>
+      <find>750</find>
+      <find>image</find>
     </findStrings>
     <replaceStrings>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360037619914-Why-are-Synthetix-transactions-so-expensive-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020077234-I-am-not-able-to-burn-my-sUSD-because-the-transaction-keeps-failing-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360042212113-How-to-interact-with-a-Synthetix-contract-using-Metamask-Mobile-Wallet-Android-IOS-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020483513-How-often-are-prices-updated-And-where-is-the-price-feed-oracle-coming-from-</replace>
@@ -111,6 +104,7 @@
       <replace>date-range-selector-module--itemSymbol--1QTCg</replace>
       <replace>0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04</replace>
       <replace>address</replace>
+      <replace>600</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -119,10 +113,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/answers/11.json" />
-        <option value="$PROJECT_DIR$/answers/55.json" />
-        <option value="$PROJECT_DIR$/answers/65.json" />
-        <option value="$PROJECT_DIR$/questions/65.txt" />
         <option value="$PROJECT_DIR$/questions/62.txt" />
         <option value="$PROJECT_DIR$/questions/66.txt" />
         <option value="$PROJECT_DIR$/answers/66.json" />
@@ -163,19 +153,23 @@
         <option value="$PROJECT_DIR$/questions/81.txt" />
         <option value="$PROJECT_DIR$/answers/81.json" />
         <option value="$PROJECT_DIR$/categories/categories.json" />
-        <option value="$PROJECT_DIR$/answers/3.json" />
         <option value="$PROJECT_DIR$/answers/19.json" />
         <option value="$PROJECT_DIR$/categories/aliases.json" />
         <option value="$PROJECT_DIR$/answers/79.json" />
         <option value="$PROJECT_DIR$/answers/31.json" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/answers/17.json" />
+        <option value="$PROJECT_DIR$/answers/22.json" />
+        <option value="$PROJECT_DIR$/answers/37.json" />
+        <option value="$PROJECT_DIR$/answers/39.json" />
+        <option value="$PROJECT_DIR$/answers/3.json" />
+        <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-7" />
+    <option name="y" value="2" />
     <option name="width" value="1932" />
     <option name="height" value="1045" />
   </component>
@@ -185,18 +179,12 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="answers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
@@ -208,43 +196,18 @@
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
               <item name="contracts" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="@ethersproject" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="@ethersproject" type="462c0819:PsiDirectoryNode" />
-              <item name="contracts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="@ethersproject" type="462c0819:PsiDirectoryNode" />
-              <item name="contracts" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../swth-faq" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -252,8 +215,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\snx\synthetix-faq-bot\contracts" />
       <recent name="C:\snx\synthetix-faq-bot\images" />
+      <recent name="C:\snx\synthetix-faq-bot\contracts" />
       <recent name="C:\snx\synthetix-faq-bot\answers" />
       <recent name="C:\snx\synthetix-faq-bot\questions" />
       <recent name="C:\snx\synthetix-faq-bot" />
@@ -310,12 +273,13 @@
       <workItem from="1599489565739" duration="1326000" />
       <workItem from="1599566960730" duration="533000" />
       <workItem from="1599940627783" duration="4473000" />
-      <workItem from="1600090595199" duration="6711000" />
+      <workItem from="1600090595199" duration="7961000" />
+      <workItem from="1600280027070" duration="493000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="243568000" />
+    <option name="totallyTimeSpent" value="245311000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -326,7 +290,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.15724947" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.15831557" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -370,12 +334,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>817</line>
+          <line>823</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>833</line>
+          <line>839</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
@@ -431,26 +395,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/charts/chart1m.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57171">
-          <caret line="3376" column="4" selection-start-line="3376" selection-start-column="4" selection-end-line="3376" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/79.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="33" lean-forward="true" selection-start-column="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/80.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -481,13 +425,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/images/hobo-song.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/3.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/answers/19.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -655,6 +592,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/17.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="20" lean-forward="true" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/22.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="307" selection-start-line="8" selection-start-column="307" selection-end-line="8" selection-end-column="307" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/37.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="543" selection-start-line="8" selection-start-column="543" selection-end-line="8" selection-end-column="543" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/39.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="177" selection-start-line="8" selection-start-column="177" selection-end-line="8" selection-end-column="177" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/3.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/contracts/Synthetix.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -664,15 +643,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="1594" column="94" selection-start-line="1594" selection-start-column="83" selection-end-line="1594" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="16" selection-start-line="8" selection-end-line="8" selection-end-column="16" />
+        <state relative-caret-position="204">
+          <caret line="135" column="51" lean-forward="true" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
         </state>
       </provider>
     </entry>
