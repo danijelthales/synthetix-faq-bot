@@ -3,6 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart1y.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1y.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartall.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartall.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="1631" column="65" selection-start-line="1631" selection-start-column="65" selection-end-line="1631" selection-end-column="65" />
+            <state relative-caret-position="155">
+              <caret line="1731" column="7" lean-forward="true" selection-start-line="1731" selection-start-column="7" selection-end-line="1731" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -31,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="74" lean-forward="true" selection-start-line="9" selection-end-line="9" selection-end-column="74" />
+            <state relative-caret-position="187">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -41,19 +50,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>showSynt</find>
-      <find>synth gainer</find>
-      <find>losers</find>
-      <find>dex</find>
-      <find>gainers</find>
-      <find>synth&quot;</find>
-      <find>clientTknPrice</find>
-      <find>with</find>
-      <find>tknPrice</find>
-      <find>tknMarketCap</find>
-      <find>getChart</find>
-      <find>getSynthInfo</find>
-      <find>delay</find>
       <find>0xccC2a5A7911E26bE3861A806F7426475DD23e9E8</find>
       <find>sub</find>
       <find>!faq subscribe gas</find>
@@ -70,12 +66,22 @@
       <find>guilds</find>
       <find>results</find>
       <find>chunk</find>
+      <find>pickle</find>
+      <find>.sendse</find>
+      <find>.send</find>
+      <find>;</find>
+      <find>l.send</find>
+      <find>message.react</find>
+      <find>msg.react(&quot;❌&quot;);</find>
+      <find>msg.react</find>
+      <find>doShowChart</find>
+      <find>fromDM</find>
+      <find>synths</find>
+      <find>30 *</find>
       <find>swthPrice</find>
+      <find>swth</find>
     </findStrings>
     <replaceStrings>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360020077234-I-am-not-able-to-burn-my-sUSD-because-the-transaction-keeps-failing-</replace>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360042212113-How-to-interact-with-a-Synthetix-contract-using-Metamask-Mobile-Wallet-Android-IOS-</replace>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360020483513-How-often-are-prices-updated-And-where-is-the-price-feed-oracle-coming-from-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020088834-How-can-I-see-all-of-the-Synths-I-own-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019870934-Why-is-there-a-minimum-deposit-of-50-sUSD-into-the-Depot-</replace>
@@ -103,6 +109,9 @@
       <replace>0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04</replace>
       <replace>address</replace>
       <replace>600</replace>
+      <replace>msg</replace>
+      <replace>msg.react</replace>
+      <replace>message.react</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -160,14 +169,14 @@
         <option value="$PROJECT_DIR$/answers/37.json" />
         <option value="$PROJECT_DIR$/answers/39.json" />
         <option value="$PROJECT_DIR$/answers/3.json" />
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/.env" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="y" value="2" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1932" />
     <option name="height" value="1045" />
   </component>
@@ -197,8 +206,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -274,12 +283,14 @@
       <workItem from="1600090595199" duration="7961000" />
       <workItem from="1600280027070" duration="1713000" />
       <workItem from="1600342840002" duration="739000" />
-      <workItem from="1600469810813" duration="2691000" />
+      <workItem from="1600469810813" duration="3290000" />
+      <workItem from="1600686004094" duration="1367000" />
+      <workItem from="1600806435953" duration="3246000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="249961000" />
+    <option name="totallyTimeSpent" value="255173000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -290,7 +301,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.16151386" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.16471216" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -300,7 +311,7 @@
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.33044422" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.33044422" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -334,12 +345,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>830</line>
+          <line>888</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>846</line>
+          <line>904</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
@@ -636,15 +647,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="74" lean-forward="true" selection-start-line="9" selection-end-line="9" selection-end-column="74" />
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="1631" column="65" selection-start-line="1631" selection-start-column="65" selection-end-line="1631" selection-end-column="65" />
+        <state relative-caret-position="155">
+          <caret line="1731" column="7" lean-forward="true" selection-start-line="1731" selection-start-column="7" selection-end-line="1731" selection-end-column="7" />
         </state>
       </provider>
     </entry>

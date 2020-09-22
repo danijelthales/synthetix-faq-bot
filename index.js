@@ -29,6 +29,9 @@ clientPicklePrice.login(process.env.BOT_TOKEN_PICKLE);
 const clientMetaPrice = new Discord.Client();
 clientMetaPrice.login(process.env.BOT_TOKEN_META);
 
+const clientYUSDPrice = new Discord.Client();
+clientYUSDPrice.login(process.env.BOT_TOKEN_YUSD);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -52,6 +55,9 @@ var picklePrice = 53;
 var pickleEthPrice = 0.14334229;
 var crvPrice = 3.84;
 
+var yusdPrice = 1.14;
+var yusdMarketCap = 257668486;
+
 var metaPrice = 3.90;
 var metaMarketCap = 0.0105;
 
@@ -67,11 +73,11 @@ var poolDistribution = ["sUSD (51.1%)", "sETH (16.6%)", "sBTC (14.9%)", "iETH (8
 var usdtPeg = 1;
 var usdcPeg = 1;
 
-var coingeckoUsd;
-var coingeckoEth;
-var coingeckoBtc;
-var binanceUsd;
-var kucoinUsd;
+var coingeckoUsd = 3.74;
+var coingeckoEth = 0.01051993;
+var coingeckoBtc = 0.000351;
+var binanceUsd = 3.74;
+var kucoinUsd = 3.74;
 
 var payday = new Date('2020-08-12 11:20');
 
@@ -130,9 +136,21 @@ client.on("guildMemberAdd", function (member) {
     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
 });
 
+client.on('messageReactionAdd', (reaction, user) => {
+    let msg = reaction.message, emoji = reaction.emoji;
+    if (emoji.name == '❌') {
+        if (msg.author.username.includes("FAQ")) {
+            if (!user.username.includes("FAQ")) {
+                msg.delete({timeout: 300 /*time unitl delete in milliseconds*/});
+            }
+        }
+    }
+});
+
 client.on("message", msg => {
 
         if (!msg.author.username.includes("FAQ")) {
+
             if (!(msg.channel.type == "dm")) {
                 // this is logic for channels
                 if (msg.content.toLowerCase().trim() == "!faq") {
@@ -142,6 +160,10 @@ client.on("message", msg => {
                         files: [
                             "images/soonthetix.gif"
                         ]
+                    }).then(function (message) {
+                        message.react("❌");
+                    }).catch(function () {
+                        //Something
                     });
                 } else if (msg.content.toLowerCase().trim() == "!faq help") {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
@@ -396,7 +418,11 @@ client.on("message", msg => {
                     if (isDM) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
                     exampleEmbed = new Discord.MessageEmbed()
                         .setColor('#0099ff')
@@ -412,7 +438,11 @@ client.on("message", msg => {
             if (isDM) {
                 msg.reply(exampleEmbed);
             } else {
-                msg.channel.send(exampleEmbed);
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    msg("❌");
+                }).catch(function () {
+                    //Something
+                });
             }
         }
 
@@ -707,7 +737,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            msg("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
 
@@ -721,7 +755,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
                 } else if (command == "61") {
@@ -742,7 +780,11 @@ client.on("message", msg => {
                             if (doReply) {
                                 msg.reply(exampleEmbed);
                             } else {
-                                msg.channel.send(exampleEmbed);
+                                msg.channel.send(exampleEmbed).then(function (message) {
+                                    message.react("❌");
+                                }).catch(function () {
+                                    //Something
+                                });
                             }
                         });
 
@@ -773,7 +815,11 @@ client.on("message", msg => {
                             if (doReply) {
                                 msg.reply(exampleEmbed);
                             } else {
-                                msg.channel.send(exampleEmbed);
+                                msg.channel.send(exampleEmbed).then(function (message) {
+                                    message.react("❌");
+                                }).catch(function () {
+                                    //Something
+                                });
                             }
                         });
 
@@ -800,7 +846,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
                 } else if (command == "62") {
@@ -809,7 +859,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
                 } else if (command == "63") {
@@ -823,7 +877,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
                 } else if (command == "66") {
@@ -850,7 +908,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
                 } else if (command == "74") {
@@ -864,7 +926,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
                 } else if (command == "75") {
@@ -878,7 +944,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
 
                 } else {
@@ -905,7 +975,11 @@ client.on("message", msg => {
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
-                        msg.channel.send(exampleEmbed);
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
                 }
             } catch (e) {
@@ -988,6 +1062,34 @@ setInterval(function () {
                 swthPrice = result.market_data.current_price.usd;
                 swthPrice = Math.round(((swthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
                 swthMarketCap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/yvault-lp-ycurve', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                yusdPrice = result.market_data.current_price.usd;
+                yusdPrice = Math.round(((yusdPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                yusdMarketCap = result.market_data.market_cap.usd;
             } catch (e) {
                 console.log(e);
             }
@@ -1632,6 +1734,10 @@ setInterval(function () {
         value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
         value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), {type: 'PLAYING'});
     });
+    clientYUSDPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("758075102779932782").setNickname("$" + yusdPrice);
+        value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), {type: 'PLAYING'});
+    });
     clientMetaPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
         value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), {type: 'PLAYING'});
@@ -1709,7 +1815,15 @@ function doCalculate(command, msg, gasPriceParam, fromDM) {
                 " if you don't want to reveal your very large (or very small!) amounts in a public forum." +
                 "  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate rewards [stakedSnxAmount]");
         }
-        msg.reply(exampleEmbed);
+        if (fromDM) {
+            msg.reply(exampleEmbed);
+        } else {
+            msg.channel.send(exampleEmbed).then(function (message) {
+                message.react("❌");
+            }).catch(function () {
+                //Something
+            });
+        }
     } catch
         (e) {
         console.log(e);
@@ -1753,7 +1867,15 @@ function doCalculateSusd(command, msg, fromDM) {
             exampleEmbed.setFooter("By the way, you can calculate rewards in a private DM conversation with the bot if you don't want to reveal your very large (or very small!)" +
                 " amounts in a public forum.  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate susd rewards [stakedSnxAmount]");
         }
-        msg.reply(exampleEmbed);
+        if (fromDM) {
+            msg.reply(exampleEmbed);
+        } else {
+            msg.channel.send(exampleEmbed).then(function (message) {
+                message.react("❌");
+            }).catch(function () {
+                //Something
+            });
+        }
     } catch
         (e) {
         console.log(e);
@@ -1781,7 +1903,11 @@ function doShowSynth(command, msg, fromDm) {
             if (fromDm) {
                 msg.reply(exampleEmbed);
             } else {
-                msg.channel.send(exampleEmbed);
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
             }
         } else {
             msg.reply("Synth not available");
@@ -1799,7 +1925,15 @@ function doShowChart(type, msg, fromDM) {
         exampleEmbed.addField("Possible options:", "realtime, 24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
         exampleEmbed.attachFiles(['charts/chart' + type.toLowerCase() + '.png'])
             .setImage('attachment://' + 'chart' + type.toLowerCase() + '.png');
-        msg.reply(exampleEmbed);
+        if (fromDM) {
+            msg.reply(exampleEmbed);
+        } else {
+            msg.channel.send(exampleEmbed).then(function (message) {
+                message.react("❌");
+            }).catch(function () {
+                //Something
+            });
+        }
     } catch (e) {
         console.log("Exception happened when showing the chart");
         console.log(e);
