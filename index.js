@@ -211,7 +211,12 @@ client.on("message", msg => {
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
-                        msg.reply("Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases");
+                        let notFoundMessage = "Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases";
+                        msg.channel.send(notFoundMessage).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
                 }
             } else {
