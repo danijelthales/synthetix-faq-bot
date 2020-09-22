@@ -439,7 +439,7 @@ client.on("message", msg => {
                 msg.reply(exampleEmbed);
             } else {
                 msg.channel.send(exampleEmbed).then(function (message) {
-                    msg("❌");
+                    message.react("❌");
                 }).catch(function () {
                     //Something
                 });
@@ -738,7 +738,7 @@ client.on("message", msg => {
                         msg.reply(exampleEmbed);
                     } else {
                         msg.channel.send(exampleEmbed).then(function (message) {
-                            msg("❌");
+                            message.react("❌");
                         }).catch(function () {
                             //Something
                         });
