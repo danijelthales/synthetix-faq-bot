@@ -32,6 +32,9 @@ clientMetaPrice.login(process.env.BOT_TOKEN_META);
 const clientYUSDPrice = new Discord.Client();
 clientYUSDPrice.login(process.env.BOT_TOKEN_YUSD);
 
+const clientVIDYAPrice = new Discord.Client();
+clientVIDYAPrice.login(process.env.BOT_TOKEN_VIDYA);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -57,6 +60,10 @@ var crvPrice = 3.84;
 
 var yusdPrice = 1.14;
 var yusdMarketCap = 257668486;
+
+var vidyaPrice = 0.0298;
+var vidyaEthPrice = 0.00008887;
+
 
 var metaPrice = 3.90;
 var metaMarketCap = 0.0105;
@@ -1176,6 +1183,35 @@ setInterval(function () {
 }, 60 * 1000);
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/vidya', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                vidyaPrice = result.market_data.current_price.usd;
+                vidyaPrice = Math.round(((vidyaPrice * 1.0) + Number.EPSILON) * 10000) / 10000;
+                vidyaEthPrice = result.market_data.current_price.eth;
+                vidyaEthPrice = Math.round(((vidyaEthPrice * 1.0) + Number.EPSILON) * 100000) / 100000;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 60 * 1000);
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/curve-dao-token', (resp) => {
         let data = '';
 
@@ -1228,7 +1264,10 @@ setInterval(function () {
 
 
 function handleGasSubscription() {
-    https.get('https://www.gasnow.org/api/v3/gas/price', (resp) => {
+    //https://www.gasnow.org/api/v3/gas/price
+    //https://www.gasnow.org/api/v3/gas/price
+
+    https.get('https://gasprice.poa.network/', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -1240,10 +1279,10 @@ function handleGasSubscription() {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                gasPrice = result.data.standard / 1000000000;
-                fastGasPrice = result.data.fast / 1000000000;
-                lowGasPrice = result.data.slow / 1000000000;
-                instantGasPrice = result.data.rapid / 1000000000;
+                gasPrice = result.standard / 1000000000;
+                fastGasPrice = result.fast / 1000000000;
+                lowGasPrice = result.slow / 1000000000;
+                instantGasPrice = result.instant / 1000000000;
                 gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
@@ -1766,6 +1805,11 @@ setInterval(function () {
 
     clientPicklePrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, {type: 'WATCHING'});
+    });
+
+    clientVIDYAPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
+        value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, {type: 'PLAYING'});
     });
 }, 60 * 1000);
 
