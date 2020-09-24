@@ -1438,6 +1438,7 @@ async function getExchange() {
         const page = await browser.newPage();
         await page.setViewport({width: 1000, height: 926});
         await page.goto("https://synthetix.exchange/#/synths", {waitUntil: 'networkidle2'});
+        await delay(5000);
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
@@ -1454,24 +1455,20 @@ async function getExchange() {
         var i = 0;
         synths = new Array();
         while (i < prices.length) {
-            let synthName = prices[i].substring(0, prices[i].lastIndexOf(prices[i + 1]));
-            let gain = prices[i + 3];
+            let synthName = prices[i];
+            let gain = prices[i + 2];
             if (gain == "-") {
                 gain = "0%";
             }
-            let synth = new Synth(synthName, prices[i + 2], gain);
+            let synth = new Synth(synthName, prices[i + 1], gain);
             if (synthsMap.has(synthName.toLowerCase())) {
                 synth = synthsMap.get(synthName.toLowerCase());
                 synth.gain = gain;
-                synth.price = prices[i + 2];
+                synth.price = prices[i + 1];
             }
             synths.push(synth);
-            if (prices[i + 3] == "-" && synthName.toLowerCase() != "susd") {
-                i = i + 5;
-            } else {
-                i = i + 4;
-            }
             synthsMap.set(synthName.toLowerCase(), synth);
+            i = i + 3;
         }
         synths.sort(function (a, b) {
             return b.gain.replace(/%/g, "") * 1.0 - a.gain.replace(/%/g, "") * 1.0;
@@ -1496,6 +1493,7 @@ async function getSynthInfo(synth) {
         await page.setViewport({width: 1000, height: 1226});
         await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
         await page.waitForSelector('div.isELEY');
+        await delay(5000);
 
         const rect = await page.evaluate(() => {
             const element = document.querySelector('div.isELEY');
@@ -1766,7 +1764,7 @@ setInterval(function () {
     clientPicklePrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, {type: 'WATCHING'});
     });
-}, 60 * 1000);
+}, 60 * 1000 * 30);
 
 function getNumberLabel(labelValue) {
 
@@ -2205,7 +2203,7 @@ setTimeout(function () {
     } catch (e) {
         console.log(e);
     }
-}, 40 * 1000);
+}, 10 * 1000);
 setInterval(function () {
     try {
         getExchange();
