@@ -501,6 +501,16 @@ client.on("message", msg => {
                 "I will inform you the next time safe gas price is below your target gasPrice, e.g. **subscribe gas 30** will inform you if safe gas price is below 30 gwei");
             exampleEmbed.addField("calculate rewards snxStaked",
                 "Calculate weekly SNX rewards per staked snx amount, as well as minting and claiming transaction estimates at current gas price. E.g. *calculate rewards 1000*. \n You can optionally add the gas price as parameter, e.g *calculate rewards 1000 with 30 gwei*");
+            exampleEmbed.addField("calculate susd rewards snxStaked",
+                "Calculate weekly susd rewards per staked snx amount based on the fees in the pool and the percentage of period passed.");
+            exampleEmbed.addField("show chart 24H",
+                "Shows the SNX chart in the last 24h. Other options are shown in the response (7D, 1M, ....)");
+            exampleEmbed.addField("show wallet walletAddress",
+                "Prints the staking information for the provided wallet");
+            exampleEmbed.addField("synth synthName",
+                "Shows the synth last price as well as its description");
+            exampleEmbed.addField("synths gainers/losers",
+                "Shows the best/worse performing synths in the last 24h");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
             msg.reply(exampleEmbed);
@@ -1756,7 +1766,7 @@ setInterval(function () {
     clientPicklePrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, {type: 'WATCHING'});
     });
-}, 30 * 1000);
+}, 60 * 1000);
 
 function getNumberLabel(labelValue) {
 
