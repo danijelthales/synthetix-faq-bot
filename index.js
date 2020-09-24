@@ -1039,7 +1039,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/tokencard', (resp) => {
@@ -1066,7 +1066,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/switcheo', (resp) => {
@@ -1094,7 +1094,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/yvault-lp-ycurve', (resp) => {
@@ -1122,7 +1122,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 
 setInterval(function () {
@@ -1151,7 +1151,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/pickle-finance', (resp) => {
@@ -1180,7 +1180,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/vidya', (resp) => {
@@ -1209,7 +1209,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/curve-dao-token', (resp) => {
@@ -1235,7 +1235,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/havven', (resp) => {
@@ -1260,7 +1260,7 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 50 * 1000);
 
 
 function handleGasSubscription() {
@@ -1279,10 +1279,10 @@ function handleGasSubscription() {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                gasPrice = result.standard ;
-                fastGasPrice = result.fast ;
-                lowGasPrice = result.slow ;
-                instantGasPrice = result.instant ;
+                gasPrice = result.standard;
+                fastGasPrice = result.fast;
+                lowGasPrice = result.slow;
+                instantGasPrice = result.instant;
                 gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
@@ -1494,6 +1494,7 @@ async function getExchange() {
         var i = 0;
         synths = new Array();
         while (i < prices.length) {
+            if (prices[2] == '-') break;
             let synthName = prices[i].substring(0, prices[i].lastIndexOf(prices[i + 1]));
             let gain = prices[i + 3];
             if (gain == "-") {
@@ -1511,6 +1512,7 @@ async function getExchange() {
             } else {
                 i = i + 4;
             }
+            synthsMap.set(synthName.toLowerCase(), synth);
         }
         synths.sort(function (a, b) {
             return b.gain.replace(/%/g, "") * 1.0 - a.gain.replace(/%/g, "") * 1.0;
@@ -1637,75 +1639,6 @@ setInterval(function () {
     }
 
 }, 60 * 1000);
-
-// setInterval(function () {
-//     try {
-//         https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDC&amount=10000000000000000000000', (resp) => {
-//             try {
-//                 let data = '';
-//
-//                 // A chunk of data has been recieved.
-//                 resp.on('data', (chunk) => {
-//                     data += chunk;
-//                 });
-//
-//                 // The whole response has been received. Print out the result.
-//                 resp.on('end', () => {
-//                     try {
-//                         let result = JSON.parse(data);
-//                         usdcPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
-//                     } catch
-//                         (e) {
-//                         console.log("Error on fetching 1inch peg: ", e);
-//                     }
-//                 });
-//             } catch
-//                 (e) {
-//                 console.log("Error on fetching 1inch peg: ", e);
-//             }
-//
-//         }).on("error", (err) => {
-//             console.log("Error: " + err.message);
-//         });
-//     } catch
-//         (e) {
-//         console.log("Error on fetching 1inch peg: ", e);
-//     }
-//
-// }, 60 * 1000);
-
-
-// setInterval(function () {
-//     try {
-//         https.get('https://api.1inch.exchange/v1.1/quote?fromTokenSymbol=sUSD&toTokenSymbol=USDT&amount=10000000000000000000000', (resp) => {
-//             let data = '';
-//
-//             // A chunk of data has been recieved.
-//             resp.on('data', (chunk) => {
-//                 data += chunk;
-//             });
-//
-//             // The whole response has been received. Print out the result.
-//             resp.on('end', () => {
-//                 try {
-//                     let result = JSON.parse(data);
-//                     usdtPeg = Math.round(((result.toTokenAmount / 10000000000) + Number.EPSILON) * 100) / 100;
-//                 } catch
-//                     (e) {
-//                     console.log("Error on fetching 1inch peg: ", e);
-//                 }
-//             });
-//
-//         }).on("error", (err) => {
-//             console.log("Error: " + err.message);
-//         });
-//     } catch
-//         (e) {
-//         console.log("Error on fetching 1inch peg: ", e);
-//     }
-//
-// }, 60 * 1000
-// );
 
 setInterval(function () {
     try {
@@ -2066,7 +1999,7 @@ setInterval(function () {
     } catch (e) {
         console.log(e);
     }
-}, 1 * 30 * 60 * 1000);
+}, 30 * 60 * 1000);
 
 
 setTimeout(function () {
@@ -2257,7 +2190,7 @@ setInterval(function () {
     } catch (e) {
         console.log(e);
     }
-}, 60 * 5 * 1000);
+}, 60 * 3 * 1000);
 
 setTimeout(function () {
     try {
