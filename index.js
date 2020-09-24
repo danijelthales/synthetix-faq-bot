@@ -1241,14 +1241,14 @@ function handleGasSubscription() {
 
                 gasSubscribersMap.forEach(function (value, key) {
                     try {
-                        if ((result.standard * 1.0) < (value * 1.0)) {
+                        if ((gasPrice * 1.0) < (value * 1.0)) {
                             if (gasSubscribersLastPushMap.has(key)) {
                                 var curDate = new Date();
                                 var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
                                 var hours = Math.abs(curDate - lastNotification) / 36e5;
                                 if (hours > 1) {
                                     if (client.users.cache.get(key)) {
-                                        client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                                        client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
                                         gasSubscribersLastPushMap.set(key, new Date().getTime());
                                         if (process.env.REDIS_URL) {
                                             redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
@@ -1270,7 +1270,7 @@ function handleGasSubscription() {
                                 }
                             } else {
                                 if (client.users.cache.get(key)) {
-                                    client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + result.standard);
+                                    client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
                                     gasSubscribersLastPushMap.set(key, new Date());
                                     if (process.env.REDIS_URL) {
                                         redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
@@ -1291,7 +1291,7 @@ function handleGasSubscription() {
                                 }
                             }
                         } else {
-                            //console.log("Not sending a gas notification for: " + key + " because " + value + " is below gas " + result.standard);
+                            //console.log("Not sending a gas notification for: " + key + " because " + value + " is below gas " + gasPrice);
                         }
                     } catch (e) {
                         console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);
