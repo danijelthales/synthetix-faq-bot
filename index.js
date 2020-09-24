@@ -1279,10 +1279,10 @@ function handleGasSubscription() {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                gasPrice = result.standard / 1000000000;
-                fastGasPrice = result.fast / 1000000000;
-                lowGasPrice = result.slow / 1000000000;
-                instantGasPrice = result.instant / 1000000000;
+                gasPrice = result.standard ;
+                fastGasPrice = result.fast ;
+                lowGasPrice = result.slow ;
+                instantGasPrice = result.instant ;
                 gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;

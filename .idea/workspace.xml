@@ -18,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="50" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="50" />
+            <state relative-caret-position="545">
+              <caret line="1281" column="44" lean-forward="true" selection-start-line="1281" selection-start-column="44" selection-end-line="1281" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -42,11 +42,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="76" lean-forward="true" selection-start-line="8" selection-start-column="76" selection-end-line="8" selection-end-column="76" />
+            <state relative-caret-position="187">
+              <caret line="11" column="75" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -55,7 +55,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.send</find>
       <find>;</find>
       <find>l.send</find>
       <find>message.react</find>
@@ -85,6 +84,7 @@
       <find>picklePrice</find>
       <find>vidyaPrice</find>
       <find>BOT_TOKEN_VYDIA</find>
+      <find>clientVIDYAPrice</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -174,8 +174,8 @@
         <option value="$PROJECT_DIR$/answers/37.json" />
         <option value="$PROJECT_DIR$/answers/39.json" />
         <option value="$PROJECT_DIR$/answers/3.json" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
@@ -286,12 +286,12 @@
       <workItem from="1600941322223" duration="1267000" />
       <workItem from="1600945468365" duration="2477000" />
       <workItem from="1600948126142" duration="74000" />
-      <workItem from="1600951948223" duration="786000" />
+      <workItem from="1600951948223" duration="1185000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="263269000" />
+    <option name="totallyTimeSpent" value="263668000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -639,17 +639,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
+    <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="50" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="50" />
+        <state relative-caret-position="187">
+          <caret line="11" column="75" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="75" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="76" lean-forward="true" selection-start-line="8" selection-start-column="76" selection-end-line="8" selection-end-column="76" />
+        <state relative-caret-position="545">
+          <caret line="1281" column="44" lean-forward="true" selection-start-line="1281" selection-start-column="44" selection-end-line="1281" selection-end-column="44" />
         </state>
       </provider>
     </entry>
