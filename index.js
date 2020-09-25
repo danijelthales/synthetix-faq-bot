@@ -35,6 +35,9 @@ clientYUSDPrice.login(process.env.BOT_TOKEN_YUSD);
 const clientVIDYAPrice = new Discord.Client();
 clientVIDYAPrice.login(process.env.BOT_TOKEN_VIDYA);
 
+const clientYFVPrice = new Discord.Client();
+clientYFVPrice.login(process.env.BOT_TOKEN_YFV);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -60,6 +63,9 @@ var crvPrice = 3.84;
 
 var yusdPrice = 1.14;
 var yusdMarketCap = 257668486;
+
+var yfvPrice = 7.95;
+var yfvMarketCap = 29341110;
 
 var vidyaPrice = 0.0298;
 var vidyaEthPrice = 0.00008887;
@@ -1126,6 +1132,35 @@ setInterval(function () {
 
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/yfv-finance', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                yfvPrice = result.market_data.current_price.usd;
+                yfvPrice = Math.round(((yfvPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                yfvMarketCap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/meta', (resp) => {
         let data = '';
 
@@ -1263,11 +1298,8 @@ setInterval(function () {
 }, 50 * 1000);
 
 
-function handleGasSubscription() {
-    //https://www.gasnow.org/api/v3/gas/price
-    //https://www.gasnow.org/api/v3/gas/price
-
-    https.get('https://gasprice.poa.network/', (resp) => {
+setInterval(function () {
+    https.get('https://www.gasnow.org/api/v3/gas/price', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -1279,82 +1311,89 @@ function handleGasSubscription() {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                gasPrice = result.standard;
-                fastGasPrice = result.fast;
-                lowGasPrice = result.slow;
-                instantGasPrice = result.instant;
+                gasPrice = result.data.standard / 1000000000;
+                fastGasPrice = result.data.fast / 1000000000;
+                lowGasPrice = result.data.slow / 1000000000;
+                instantGasPrice = result.data.rapid / 1000000000;
                 gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-
-                gasSubscribersMap.forEach(function (value, key) {
-                    try {
-                        if ((gasPrice * 1.0) < (value * 1.0)) {
-                            if (gasSubscribersLastPushMap.has(key)) {
-                                var curDate = new Date();
-                                var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
-                                var hours = Math.abs(curDate - lastNotification) / 36e5;
-                                if (hours > 1) {
-                                    if (client.users.cache.get(key)) {
-                                        client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
-                                        gasSubscribersLastPushMap.set(key, new Date().getTime());
-                                        if (process.env.REDIS_URL) {
-                                            redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                            });
-                                            redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                            });
-                                        }
-                                    } else {
-                                        console.log("User:" + key + " is no longer in this server");
-                                        gasSubscribersLastPushMap.delete(key);
-                                        gasSubscribersMap.delete(key);
-                                        if (process.env.REDIS_URL) {
-                                            redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                            });
-                                            redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                            });
-                                        }
-                                    }
-                                }
-                            } else {
-                                if (client.users.cache.get(key)) {
-                                    client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
-                                    gasSubscribersLastPushMap.set(key, new Date());
-                                    if (process.env.REDIS_URL) {
-                                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                        });
-                                        redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                        });
-                                    }
-                                } else {
-                                    console.log("User:" + key + " is no longer in this server");
-                                    gasSubscribersLastPushMap.delete(key);
-                                    gasSubscribersMap.delete(key);
-                                    if (process.env.REDIS_URL) {
-                                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                        });
-                                        redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                        });
-                                    }
-                                }
-                            }
-                        } else {
-                            //console.log("Not sending a gas notification for: " + key + " because " + value + " is below gas " + gasPrice);
-                        }
-                    } catch (e) {
-                        console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);
-                    }
-                });
             } catch (e) {
                 console.log(e);
             }
-
         });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
     });
+
+}, 30 * 1000);
+
+
+function handleGasSubscription() {
+    //https://www.gasnow.org/api/v3/gas/price
+    //https://www.gasnow.org/api/v3/gas/price
+    try {
+
+        gasSubscribersMap.forEach(function (value, key) {
+            try {
+                if ((gasPrice * 1.0) < (value * 1.0)) {
+                    if (gasSubscribersLastPushMap.has(key)) {
+                        var curDate = new Date();
+                        var lastNotification = new Date(gasSubscribersLastPushMap.get(key));
+                        var hours = Math.abs(curDate - lastNotification) / 36e5;
+                        if (hours > 1) {
+                            if (client.users.cache.get(key)) {
+                                client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
+                                gasSubscribersLastPushMap.set(key, new Date().getTime());
+                                if (process.env.REDIS_URL) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
+                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                    });
+                                }
+                            } else {
+                                console.log("User:" + key + " is no longer in this server");
+                                gasSubscribersLastPushMap.delete(key);
+                                gasSubscribersMap.delete(key);
+                                if (process.env.REDIS_URL) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
+                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                    });
+                                }
+                            }
+                        }
+                    } else {
+                        if (client.users.cache.get(key)) {
+                            client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
+                            gasSubscribersLastPushMap.set(key, new Date());
+                            if (process.env.REDIS_URL) {
+                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                });
+                                redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                });
+                            }
+                        } else {
+                            console.log("User:" + key + " is no longer in this server");
+                            gasSubscribersLastPushMap.delete(key);
+                            gasSubscribersMap.delete(key);
+                            if (process.env.REDIS_URL) {
+                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                });
+                                redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    //console.log("Not sending a gas notification for: " + key + " because " + value + " is below gas " + gasPrice);
+                }
+            } catch (e) {
+                console.log("Error occured when going through subscriptions for key: " + key + "and value " + value + " " + e);
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
 }
 
@@ -1731,6 +1770,10 @@ setInterval(function () {
         value.members.cache.get("758075102779932782").setNickname("$" + yusdPrice);
         value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), {type: 'PLAYING'});
     });
+    clientYFVPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
+        value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), {type: 'PLAYING'});
+    });
     clientMetaPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
         value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), {type: 'PLAYING'});
@@ -1744,7 +1787,7 @@ setInterval(function () {
         value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
         value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, {type: 'PLAYING'});
     });
-}, 60 * 1000);
+}, 45 * 1000);
 
 function getNumberLabel(labelValue) {
 
@@ -2192,13 +2235,6 @@ setInterval(function () {
     }
 }, 60 * 3 * 1000);
 
-setTimeout(function () {
-    try {
-        handleGasSubscription();
-    } catch (e) {
-        console.log(e);
-    }
-}, 10 * 1000);
 setInterval(function () {
     try {
         handleGasSubscription();
