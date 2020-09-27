@@ -224,7 +224,7 @@ client.on("message", msg => {
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
-                        let notFoundMessage = "Oops, I don't know that one. You can get all aliases if you send me a DM **aliases** \n You can check out https://github.com/dgornjakovic/synthetix-faq-bot for list of known questions and aliases";
+                        let notFoundMessage = "Oops, I don't know that one. You can check out my user guide: https://www.notion.so/Synthetix-Discord-FAQ-Bot-bb9f93cd2d1148ba86c0abbc58b06da0";
                         msg.channel.send(notFoundMessage).then(function (message) {
                             message.react("❌");
                         }).catch(function () {
@@ -1705,7 +1705,7 @@ setInterval(function () {
     } catch (e) {
         console.log(e);
     }
-}, 60 * 1000);
+}, 30 * 1000);
 
 setInterval(function () {
     https.get('https://api.binance.com/api/v1/ticker/price?symbol=SNXUSDT', (resp) => {
@@ -1725,7 +1725,7 @@ setInterval(function () {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
-}, 60 * 1000);
+}, 30 * 1000);
 
 setInterval(function () {
     clientFaqPrice.guilds.cache.forEach(function (value, key) {
