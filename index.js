@@ -1747,74 +1747,64 @@ setInterval(function () {
         }
     });
 
-    // clientFaqPrice.guilds.cache.forEach(function (value, key) {
-    //     try {
-    //         value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
-    //         value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, { type: 'PLAYING' });
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // });
-    // clientPegPrice.guilds.cache.forEach(function (value, key) {
-    //     try {
-    //         value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
-    //         value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, { type: 'PLAYING' });
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // });
-    // clientEthPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
-    // });
-    // clientgasPrice.guilds.cache.forEach(function (value, key) {
-    //     try {
-    //         value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
-    //         value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, { type: 'PLAYING' });
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // });
+    clientFaqPrice.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
+            value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, { type: 'PLAYING' });
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    clientPegPrice.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
+            value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, { type: 'PLAYING' });
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    clientEthPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
+    });
+    clientgasPrice.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
+            value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, { type: 'PLAYING' });
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    clientTknPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
+        value.members.cache.get("745936898870083614").user.setActivity("marketcap=$" + getNumberLabel(tknMarketCap), { type: 'PLAYING' });
+    });
+    clientCRVPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("746121396396097587").setNickname("$" + crvPrice);
+    });
+    clientSWTHPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
+        value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), { type: 'PLAYING' });
+    });
+    clientYUSDPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("758075102779932782").setNickname("$" + yusdPrice);
+        value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), { type: 'PLAYING' });
+    });
+    clientYFVPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
+        value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), { type: 'PLAYING' });
+    });
+    clientMetaPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
+        value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), { type: 'PLAYING' });
+    });
 
-    // clientFaqPrice.guilds.cache.forEach(function (value, key) {
-    //     try {
-    //         value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
-    //         value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, { type: 'PLAYING' });
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // });
-    // clientTknPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
-    //     value.members.cache.get("745936898870083614").user.setActivity("marketcap=$" + getNumberLabel(tknMarketCap), { type: 'PLAYING' });
-    // });
-    // clientCRVPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("746121396396097587").setNickname("$" + crvPrice);
-    // });
-    // clientSWTHPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
-    //     value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), { type: 'PLAYING' });
-    // });
-    // clientYUSDPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("758075102779932782").setNickname("$" + yusdPrice);
-    //     value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), { type: 'PLAYING' });
-    // });
-    // clientYFVPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
-    //     value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), { type: 'PLAYING' });
-    // });
-    // clientMetaPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
-    //     value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), { type: 'PLAYING' });
-    // });
+    clientPicklePrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, { type: 'WATCHING' });
+    });
 
-    // clientPicklePrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, { type: 'WATCHING' });
-    // });
-
-    // clientVIDYAPrice.guilds.cache.forEach(function (value, key) {
-    //     value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
-    //     value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, { type: 'PLAYING' });
-    // });
+    clientVIDYAPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
+        value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, { type: 'PLAYING' });
 }, 45 * 1000);
 
 function getNumberLabel(labelValue) {
