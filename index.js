@@ -1805,6 +1805,7 @@ setInterval(function () {
     clientVIDYAPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
         value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, { type: 'PLAYING' });
+    });
 }, 45 * 1000);
 
 function getNumberLabel(labelValue) {
