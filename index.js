@@ -1,6 +1,6 @@
 require("dotenv").config()
 
-const { ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token } = require('@uniswap/sdk');
+const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = require('@uniswap/sdk');
 var yaxis = null;
 var pair = null;
 
@@ -83,6 +83,8 @@ var metaPrice = 3.90;
 var metaMarketCap = 0.0105;
 
 var yaxisPrice = 4.72;
+var yaxisEth = 0.006;
+var yaxisMarketCap = 860000;
 
 var snxPrice = 6.9;
 var mintGas = 993602;
@@ -164,7 +166,7 @@ client.on('messageReactionAdd', (reaction, user) => {
     if (emoji.name == '❌') {
         if (msg.author.username.includes("FAQ")) {
             if (!user.username.includes("FAQ")) {
-                msg.delete({ timeout: 300 /*time unitl delete in milliseconds*/ });
+                msg.delete({timeout: 300 /*time unitl delete in milliseconds*/});
             }
         }
     }
@@ -172,105 +174,91 @@ client.on('messageReactionAdd', (reaction, user) => {
 
 client.on("message", msg => {
 
-    if (!msg.author.username.includes("FAQ")) {
+        if (!msg.author.username.includes("FAQ")) {
 
-        if (!(msg.channel.type == "dm")) {
-            // this is logic for channels
-            if (msg.content.toLowerCase().trim() == "!faq") {
-                msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
-            } else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
-                msg.channel.send('It will be:', {
-                    files: [
-                        "images/soonthetix.gif"
-                    ]
-                }).then(function (message) {
-                    message.react("❌");
-                }).catch(function () {
-                    //Something
-                });
-            } else if (msg.content.toLowerCase().trim() == "!faq help") {
-                msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
-            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq question")) {
-                doQuestion(msg, "!faq question", false);
-            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate rewards")) {
-                let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                const args = content.slice("faq calculate rewards".length).split(' ');
-                args.shift();
-                const command = args.shift().trim();
-                if (command && !isNaN(command)) {
-                    var gas = false;
-                    if (content.includes("with")) {
-                        var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
-                        argsSecondPart.shift();
-                        gas = argsSecondPart.shift().trim();
-                    }
-                    doCalculate(command, msg, gas, false);
-                }
-            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate susd rewards")) {
-                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq calculate susd rewards".length).split(' ');
-                args.shift();
-                const command = args.shift().trim();
-                if (command && !isNaN(command)) {
-                    doCalculateSusd(command, msg, false);
-                }
-            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show wallet")) {
-                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq show wallet".length).split(' ');
-                args.shift();
-                const command = args.shift().trim();
-                getMintrData(msg, command, false);
-            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth ")) {
-                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq synth".length).split(' ');
-                args.shift();
-                const command = args.shift().trim();
-                if (command) {
-                    doShowSynth(command, msg, false);
-                }
-            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
-                let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                const args = content.slice("!faq show chart".length).split(' ');
-                args.shift();
-                const command = args.shift().trim();
-                doShowChart(command, msg, false);
-            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
-                let found = checkAliasMatching(false);
-                if (!found) {
-                    let notFoundMessage = "Oops, I don't know that one. You can check out my user guide: https://www.notion.so/Synthetix-Discord-FAQ-Bot-bb9f93cd2d1148ba86c0abbc58b06da0";
-                    msg.channel.send(notFoundMessage).then(function (message) {
+            if (!(msg.channel.type == "dm")) {
+                // this is logic for channels
+                if (msg.content.toLowerCase().trim() == "!faq") {
+                    msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
+                } else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
+                    msg.channel.send('It will be:', {
+                        files: [
+                            "images/soonthetix.gif"
+                        ]
+                    }).then(function (message) {
                         message.react("❌");
                     }).catch(function () {
                         //Something
                     });
-                }
-            }
-        } else {
-            try {
-
-                // this is the logic for DM
-                console.log("I got sent a DM:" + msg.content);
-
-                let found = checkAliasMatching(true);
-                // if alias is found, just reply to it, otherwise continue
-
-                if (!found) {
-                    let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
-                    if (checkIfUltimateQuestion(encodedForm)) {
-                        answerUltimateQuestion();
-                    } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("unsubscribe")) {
-                        gasSubscribersMap.delete(msg.author.id);
-                        gasSubscribersLastPushMap.delete(msg.author.id);
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                            });
-                            redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                            });
+                } else if (msg.content.toLowerCase().trim() == "!faq help") {
+                    msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq question")) {
+                    doQuestion(msg, "!faq question", false);
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate rewards")) {
+                    let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                    const args = content.slice("faq calculate rewards".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    if (command && !isNaN(command)) {
+                        var gas = false;
+                        if (content.includes("with")) {
+                            var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                            argsSecondPart.shift();
+                            gas = argsSecondPart.shift().trim();
                         }
-                        msg.reply("You are now unsubscribed from gas updates");
-                    } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
-                        const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
-                        args.shift();
-                        const command = args.shift().trim();
-                        if (command && !isNaN(command)) {
-                            gasSubscribersMap.set(msg.author.id, command);
+                        doCalculate(command, msg, gas, false);
+                    }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate susd rewards")) {
+                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq calculate susd rewards".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    if (command && !isNaN(command)) {
+                        doCalculateSusd(command, msg, false);
+                    }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show wallet")) {
+                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq show wallet".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    getMintrData(msg, command, false);
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth ")) {
+                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq synth".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    if (command) {
+                        doShowSynth(command, msg, false);
+                    }
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
+                    let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                    const args = content.slice("!faq show chart".length).split(' ');
+                    args.shift();
+                    const command = args.shift().trim();
+                    doShowChart(command, msg, false);
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
+                    let found = checkAliasMatching(false);
+                    if (!found) {
+                        let notFoundMessage = "Oops, I don't know that one. You can check out my user guide: https://www.notion.so/Synthetix-Discord-FAQ-Bot-bb9f93cd2d1148ba86c0abbc58b06da0";
+                        msg.channel.send(notFoundMessage).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+                }
+            } else {
+                try {
+
+                    // this is the logic for DM
+                    console.log("I got sent a DM:" + msg.content);
+
+                    let found = checkAliasMatching(true);
+                    // if alias is found, just reply to it, otherwise continue
+
+                    if (!found) {
+                        let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
+                        if (checkIfUltimateQuestion(encodedForm)) {
+                            answerUltimateQuestion();
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("unsubscribe")) {
+                            gasSubscribersMap.delete(msg.author.id);
                             gasSubscribersLastPushMap.delete(msg.author.id);
                             if (process.env.REDIS_URL) {
                                 redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
@@ -278,758 +266,772 @@ client.on("message", msg => {
                                 redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
                                 });
                             }
-                            msg.reply(" I will send you a message once safe gas price is below " + command + " gwei , and every hour after that that it remains below that level. \nTo change the threshold level for gas price, send me a new subscribe message with the new amount.\n" +
-                                "To unsubscribe, send me another DM **unsubscribe**.");
+                            msg.reply("You are now unsubscribed from gas updates");
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command && !isNaN(command)) {
+                                gasSubscribersMap.set(msg.author.id, command);
+                                gasSubscribersLastPushMap.delete(msg.author.id);
+                                if (process.env.REDIS_URL) {
+                                    redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                    });
+                                    redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                    });
+                                }
+                                msg.reply(" I will send you a message once safe gas price is below " + command + " gwei , and every hour after that that it remains below that level. \nTo change the threshold level for gas price, send me a new subscribe message with the new amount.\n" +
+                                    "To unsubscribe, send me another DM **unsubscribe**.");
+                            } else {
+                                msg.reply(command + " is not a proper integer number.");
+                            }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show wallet")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("show wallet".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            getMintrData(msg, command, true);
+                        } else if (msg.content.toLowerCase().trim() == "aliases") {
+                            showAllAliases(true);
+                        } else if (msg.content.toLowerCase().trim() == "help") {
+                            doFaqHelp();
+                        } else if (msg.content.startsWith("help ")) {
+                            const args = msg.content.slice("help".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command == "question") {
+                                msg.reply("Choose your question with ***question questionNumber***, e.g. ***question 1***\nYou can get the question number via **list** command");
+                            } else if (command == "category") {
+                                msg.reply("Choose your category with ***category categoryName***, e.g. ***category SNX-Rewards***\nCategory name is fetched from **categories** command");
+                            } else if (command == "search") {
+                                msg.reply("Search for questions with ***search searchTerm***, e.g. ***search failing transactions***");
+                            } else {
+                                msg.reply("I don't know that one. Try just **help** for known commands");
+                            }
+                        } else if (msg.content.toLowerCase().trim() == "list" || msg.content.toLowerCase().trim() == "questions") {
+                            listQuestions();
+                        } else if (msg.content.toLowerCase().startsWith("question ")) {
+                            console.log("question asked:" + msg.content);
+                            doQuestion(msg, "question", true);
+                        } else if (msg.content == "categories") {
+                            listCategories();
+                        } else if (msg.content.toLowerCase().startsWith("category")) {
+
+                            const args = msg.content.slice("category".length).split(' ');
+                            args.shift();
+                            const command = args.shift();
+
+                            let rawdata = fs.readFileSync('categories/categories.json');
+                            let categories = JSON.parse(rawdata);
+
+                            const exampleEmbed = new Discord.MessageEmbed()
+                                .setColor('#0099ff')
+                                .setTitle('Questions in category ' + command + ':');
+
+                            let found = false;
+                            categories.forEach(function (category) {
+                                if (category.name == command) {
+                                    found = true;
+                                    category.questions.forEach(function (question) {
+                                        rawdata = fs.readFileSync('questions/' + question + ".txt", "utf8");
+                                        exampleEmbed.addField(question, rawdata, false);
+                                    });
+                                }
+                            });
+
+                            if (!found) {
+                                exampleEmbed.addField('\u200b', "That doesn't look like a known category. Use a category name from **categories** command, e.g. **category Staking&Minting**");
+                            } else {
+                                exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                            }
+                            msg.reply(exampleEmbed);
+
+                        } else if (msg.content.toLowerCase().startsWith("search ")) {
+
+                            const args = msg.content.slice("search".length).split(' ').slice(1);
+                            const searchWord = msg.content.substring("search".length + 1);
+                            doSearch(searchWord, args);
+
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate rewards")) {
+                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                            const args = content.slice("calculate rewards".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command && !isNaN(command)) {
+                                var gas = false;
+                                if (content.includes("with")) {
+                                    var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                                    argsSecondPart.shift();
+                                    gas = argsSecondPart.shift().trim();
+                                }
+                                doCalculate(command, msg, gas, true);
+                            }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate susd rewards")) {
+                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                            const args = content.slice("calculate susd rewards".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command && !isNaN(command)) {
+                                var gas = false;
+                                if (content.includes("with")) {
+                                    var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                                    argsSecondPart.shift();
+                                    gas = argsSecondPart.shift().trim();
+                                }
+                                doCalculateSusd(command, msg, true);
+                            }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth ")) {
+                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            if (command) {
+                                doShowSynth(command, msg, true);
+                            }
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
+                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                            const args = content.slice("show chart".length).split(' ');
+                            args.shift();
+                            const command = args.shift().trim();
+                            doShowChart(command, msg, true);
                         } else {
-                            msg.reply(command + " is not a proper integer number.");
+                            if (!msg.author.username.toLowerCase().includes("faq")) {
+                                if (msg.content.endsWith("?")) {
+                                    const args = msg.content.substring(0, msg.content.length - 1).split(' ');
+                                    const searchWord = msg.content;
+                                    doCustomQuestion(searchWord, args);
+                                } else {
+                                    msg.reply("Oops, I don't know that one. Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
+                                }
+                            }
                         }
-                    } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show wallet")) {
-                        const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("show wallet".length).split(' ');
-                        args.shift();
-                        const command = args.shift().trim();
-                        getMintrData(msg, command, true);
-                    } else if (msg.content.toLowerCase().trim() == "aliases") {
-                        showAllAliases(true);
-                    } else if (msg.content.toLowerCase().trim() == "help") {
-                        doFaqHelp();
-                    } else if (msg.content.startsWith("help ")) {
-                        const args = msg.content.slice("help".length).split(' ');
-                        args.shift();
-                        const command = args.shift().trim();
-                        if (command == "question") {
-                            msg.reply("Choose your question with ***question questionNumber***, e.g. ***question 1***\nYou can get the question number via **list** command");
-                        } else if (command == "category") {
-                            msg.reply("Choose your category with ***category categoryName***, e.g. ***category SNX-Rewards***\nCategory name is fetched from **categories** command");
-                        } else if (command == "search") {
-                            msg.reply("Search for questions with ***search searchTerm***, e.g. ***search failing transactions***");
+                    }
+                } catch (e) {
+                    msg.reply("Unknown error ocurred.  Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
+                }
+            }
+        }
+
+        function showAllAliases(isDM) {
+            let rawdata = fs.readFileSync('categories/aliases.json');
+            let aliases = JSON.parse(rawdata);
+            let questionMap = new Map();
+            aliases.forEach(function (alias) {
+                let aliasQuestion = questionMap.get(alias.number);
+                if (aliasQuestion) {
+                    aliasQuestion.push(alias.alias);
+                    questionMap.set(alias.number, aliasQuestion);
+                } else {
+                    let aliasQuestion = new Array();
+                    aliasQuestion.push(alias.alias);
+                    questionMap.set(alias.number, aliasQuestion);
+                }
+            });
+
+            let exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Known aliases')
+                .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
+            exampleEmbed.setDescription('Hello, here are the aliases I know:');
+
+            let counter = 0;
+            let pagenumber = 2;
+            for (let [questionNumber, questions] of questionMap) {
+                let questionsString = "";
+                questions.forEach(function (q) {
+                    questionsString += (isDM ? "" : "!faq ") + q + "\n";
+                })
+                let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
+                let answer = JSON.parse(rawdata);
+                exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
+
+                counter++;
+                if (counter == 10) {
+                    if (isDM) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+                    exampleEmbed = new Discord.MessageEmbed()
+                        .setColor('#0099ff')
+                        .setTitle('Known aliases page ' + pagenumber)
+                        .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
+                    exampleEmbed.setDescription('Hello, here are the aliases I know:');
+                    pagenumber++;
+                    counter = 0;
+                }
+
+            }
+
+            if (isDM) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+        }
+
+        function answerUltimateQuestion() {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Bravo, you found the ultimate question!');
+
+            exampleEmbed.setDescription(Buffer.from("d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==", 'base64').toString('utf-8'));
+            exampleEmbed.addField("The answer is:", Buffer.from("NDI=", 'base64').toString('utf-8'));
+
+            msg.reply(exampleEmbed);
+        }
+
+        function checkIfUltimateQuestion(encodedForm) {
+            return encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==" ||
+                encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/" ||
+                encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw==" ||
+                encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==";
+        }
+
+        function checkAliasMatching(doReply) {
+            let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
+            let rawdata = fs.readFileSync('categories/aliases.json');
+            let aliases = JSON.parse(rawdata);
+            let found = false;
+            aliases.forEach(function (alias) {
+                if (alias.alias.toLowerCase().trim() == potentialAlias) {
+                    found = true;
+                    msg.content = "!faq question " + alias.number;
+                    doQuestion(msg, "!faq question", doReply);
+                }
+            });
+            return found;
+        }
+
+        function doFaqHelp() {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Synthetix Frequently Asked Questions')
+                .setURL('https://help.synthetix.io/hc/en-us');
+
+            exampleEmbed.setDescription('Hello, here is list of commands I know:');
+            exampleEmbed.addField("list", "Lists all known questions");
+            exampleEmbed.addField("categories", "Lists all categories of known questions");
+            exampleEmbed.addField("category categoryName", "Lists all known questions for a given category name, e.g. ** category *Staking&Minting* **");
+            exampleEmbed.addField("question questionNumber", "Shows the answer to the question defined by its number, e.g. ** question *7* **");
+            exampleEmbed.addField("search searchTerm", "Search all known questions by given search term, e.g. ** search *SNX price* **");
+            exampleEmbed.addField("aliases", "List all known aliases");
+            exampleEmbed.addField("subscribe gas gasPrice",
+                "I will inform you the next time safe gas price is below your target gasPrice, e.g. **subscribe gas 30** will inform you if safe gas price is below 30 gwei");
+            exampleEmbed.addField("calculate rewards snxStaked",
+                "Calculate weekly SNX rewards per staked snx amount, as well as minting and claiming transaction estimates at current gas price. E.g. *calculate rewards 1000*. \n You can optionally add the gas price as parameter, e.g *calculate rewards 1000 with 30 gwei*");
+            exampleEmbed.addField("calculate susd rewards snxStaked",
+                "Calculate weekly susd rewards per staked snx amount based on the fees in the pool and the percentage of period passed.");
+            exampleEmbed.addField("show chart 24H",
+                "Shows the SNX chart in the last 24h. Other options are shown in the response (7D, 1M, ....)");
+            exampleEmbed.addField("show wallet walletAddress",
+                "Prints the staking information for the provided wallet");
+            exampleEmbed.addField("synth synthName",
+                "Shows the synth last price as well as its description");
+            exampleEmbed.addField("synths gainers/losers",
+                "Shows the best/worse performing synths in the last 24h");
+            exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
+
+            msg.reply(exampleEmbed);
+        }
+
+        function listQuestions() {
+            let exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Frequently Asked Questions')
+                .setURL('https://help.synthetix.io/hc/en-us');
+
+            fs.readdir('questions', function (err, files) {
+                if (err) {
+                    console.log("Error getting directory information.")
+                } else {
+                    let counter = 0;
+                    let pagenumber = 2;
+                    files.sort(function (a, b) {
+                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
+                    });
+                    files.forEach(function (file) {
+                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
+                        exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false)
+                        counter++;
+                        if (counter == 20) {
+                            msg.reply(exampleEmbed);
+                            exampleEmbed = new Discord.MessageEmbed()
+                                .setColor('#0099ff')
+                                .setTitle('Frequently Asked Questions page ' + pagenumber)
+                                .setURL('https://help.synthetix.io/hc/en-us');
+                            pagenumber++;
+                            counter = 0;
+                        }
+                    })
+                }
+                exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                msg.reply(exampleEmbed);
+            })
+        }
+
+        function listCategories() {
+            let rawdata = fs.readFileSync('categories/categories.json');
+            let categories = JSON.parse(rawdata);
+
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Categories');
+
+            categories.forEach(function (category) {
+                exampleEmbed.addField(category.name, category.desc, false);
+            });
+
+            exampleEmbed.addField('\u200b', "Choose the category with **category categoryName**, e.g. **category SNX**, or **category Synthetix.Exchange**");
+            msg.reply(exampleEmbed);
+        }
+
+        function doSearch(searchWord, args) {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Questions found for ***' + searchWord + '***:');
+
+            const Match = class {
+                constructor(title, value) {
+                    this.title = title;
+                    this.value = value;
+                }
+
+                matchedCount = 0;
+                title;
+                value;
+            };
+
+            const fullMatches = [];
+            const partialMatches = [];
+            fs.readdir('questions', function (err, files) {
+                if (err) {
+                    console.log("Error getting directory information.")
+                } else {
+                    files.sort(function (a, b) {
+                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
+                    });
+                    files.forEach(function (file) {
+                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
+                        if (rawdata.includes(searchWord)) {
+                            rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
+                            fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
                         } else {
-                            msg.reply("I don't know that one. Try just **help** for known commands");
+                            let matchedCount = 0;
+                            args.sort(function (a, b) {
+                                return a.length - b.length;
+                            });
+                            args.forEach(function (arg) {
+                                if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
+                                    rawdata = replaceString(rawdata, arg, '**' + arg + '**');
+                                    rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
+                                    rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
+                                    matchedCount++;
+                                }
+                            });
+                            if (matchedCount > 0) {
+                                let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
+                                match.matchedCount = matchedCount;
+                                partialMatches.push(match);
+                            }
                         }
-                    } else if (msg.content.toLowerCase().trim() == "list" || msg.content.toLowerCase().trim() == "questions") {
-                        listQuestions();
-                    } else if (msg.content.toLowerCase().startsWith("question ")) {
-                        console.log("question asked:" + msg.content);
-                        doQuestion(msg, "question", true);
-                    } else if (msg.content == "categories") {
-                        listCategories();
-                    } else if (msg.content.toLowerCase().startsWith("category")) {
+                    })
+                }
 
-                        const args = msg.content.slice("category".length).split(' ');
-                        args.shift();
-                        const command = args.shift();
+                if (fullMatches.length == 0 && partialMatches.length == 0) {
+                    exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
+                } else {
 
-                        let rawdata = fs.readFileSync('categories/categories.json');
-                        let categories = JSON.parse(rawdata);
+                    let counter = 0;
+                    fullMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 6) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
 
-                        const exampleEmbed = new Discord.MessageEmbed()
-                            .setColor('#0099ff')
-                            .setTitle('Questions in category ' + command + ':');
+                    partialMatches.sort(function (a, b) {
+                        return b.matchedCount - a.matchedCount;
+                    });
+                    partialMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 6) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
 
-                        let found = false;
-                        categories.forEach(function (category) {
-                            if (category.name == command) {
-                                found = true;
-                                category.questions.forEach(function (question) {
-                                    rawdata = fs.readFileSync('questions/' + question + ".txt", "utf8");
-                                    exampleEmbed.addField(question, rawdata, false);
+                    exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                }
+                msg.reply(exampleEmbed);
+            })
+        }
+
+        function doCustomQuestion(searchWord, args) {
+            const exampleEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Looks like you asked a custom question. This is the best I could find for your query:');
+
+            const Match = class {
+                constructor(title, value) {
+                    this.title = title;
+                    this.value = value;
+                }
+
+                matchedCount = 0;
+                title;
+                value;
+            };
+
+            const fullMatches = [];
+            const partialMatches = [];
+            fs.readdir('questions', function (err, files) {
+                if (err) {
+                    console.log("Error getting directory information.")
+                } else {
+                    files.sort(function (a, b) {
+                        return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
+                    });
+                    files.forEach(function (file) {
+                        let rawdata = fs.readFileSync('questions/' + file, "utf8");
+                        if (rawdata.includes(searchWord)) {
+                            rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
+                            fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
+                        } else {
+                            args.sort(function (a, b) {
+                                return a.length - b.length;
+                            });
+                            let matchedCount = 0;
+                            args.forEach(function (arg) {
+                                if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
+                                    rawdata = replaceString(rawdata, arg, '**' + arg + '**');
+                                    rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
+                                    rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
+                                    matchedCount++;
+                                }
+                            });
+                            if (matchedCount > 0) {
+                                let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
+                                match.matchedCount = matchedCount;
+                                partialMatches.push(match);
+                            }
+                        }
+                    })
+                }
+
+                if (fullMatches.length == 0 && partialMatches.length == 0) {
+                    exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
+                } else {
+
+                    let counter = 0;
+                    fullMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 4) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
+
+                    partialMatches.sort(function (a, b) {
+                        return b.matchedCount - a.matchedCount;
+                    });
+                    partialMatches.forEach(function (match) {
+                        counter++;
+                        if (counter < 4) {
+                            exampleEmbed.addField(match.title, match.value, false);
+                        }
+                    });
+
+                    exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                }
+                msg.reply(exampleEmbed);
+            })
+        }
+
+
+        function doQuestion(msg, toSlice, doReply) {
+            const args = msg.content.slice(toSlice.length).split(' ');
+            args.shift();
+            const command = args.shift();
+
+            try {
+                let rawdata = fs.readFileSync('answers/' + command + '.json');
+                let answer = JSON.parse(rawdata);
+
+                const exampleEmbed = new Discord.MessageEmbed();
+                exampleEmbed.setColor(answer.color);
+                exampleEmbed.setTitle(answer.title);
+                exampleEmbed.setDescription(answer.description);
+                exampleEmbed.setURL(answer.url);
+
+                if (command == "7") {
+
+                    exampleEmbed.addField("Safe low gas price:", lowGasPrice + ' gwei', false);
+                    exampleEmbed.addField("Standard gas price:", gasPrice + ' gwei', false);
+                    exampleEmbed.addField("Fast gas price:", fastGasPrice + ' gwei', false);
+                    exampleEmbed.addField("Instant gas price:", instantGasPrice + ' gwei', false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+
+                } else if (command == "9") {
+
+                    exampleEmbed.addField("USD (binance)", binanceUsd, false);
+                    exampleEmbed.addField("USD (kucoin)", kucoinUsd, false);
+                    exampleEmbed.addField("USD (coingecko)", coingeckoUsd, false);
+                    exampleEmbed.addField("ETH (coingecko):", coingeckoEth, false);
+                    exampleEmbed.addField("BTC (coingecko):", coingeckoBtc, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+                } else if (command == "61") {
+
+                    https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
+                        let data = '';
+
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
+                            exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
+                            if (doReply) {
+                                msg.reply(exampleEmbed);
+                            } else {
+                                msg.channel.send(exampleEmbed).then(function (message) {
+                                    message.react("❌");
+                                }).catch(function () {
+                                    //Something
                                 });
                             }
                         });
 
-                        if (!found) {
-                            exampleEmbed.addField('\u200b', "That doesn't look like a known category. Use a category name from **categories** command, e.g. **category Staking&Minting**");
-                        } else {
-                            exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-                        }
-                        msg.reply(exampleEmbed);
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
 
-                    } else if (msg.content.toLowerCase().startsWith("search ")) {
+                } else if (command == "8") {
 
-                        const args = msg.content.slice("search".length).split(' ').slice(1);
-                        const searchWord = msg.content.substring("search".length + 1);
-                        doSearch(searchWord, args);
+                    https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
+                        let data = '';
 
-                    } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate rewards")) {
-                        let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                        const args = content.slice("calculate rewards".length).split(' ');
-                        args.shift();
-                        const command = args.shift().trim();
-                        if (command && !isNaN(command)) {
-                            var gas = false;
-                            if (content.includes("with")) {
-                                var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
-                                argsSecondPart.shift();
-                                gas = argsSecondPart.shift().trim();
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            exampleEmbed.addField("USD (coingecko)", result.market_data.current_price.usd, false);
+                            exampleEmbed.addField("USDC (1inch)", usdcPeg, false);
+                            exampleEmbed.addField("USDT (1inch)", usdtPeg, false);
+                            if (result.market_data.current_price.usd == 1 && usdcPeg == 1 && usdtPeg == 1) {
+                                exampleEmbed.attachFiles(['images/perfect.jpg'])
+                                    .setImage('attachment://perfect.jpg');
                             }
-                            doCalculate(command, msg, gas, true);
-                        }
-                    } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate susd rewards")) {
-                        let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                        const args = content.slice("calculate susd rewards".length).split(' ');
-                        args.shift();
-                        const command = args.shift().trim();
-                        if (command && !isNaN(command)) {
-                            var gas = false;
-                            if (content.includes("with")) {
-                                var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
-                                argsSecondPart.shift();
-                                gas = argsSecondPart.shift().trim();
-                            }
-                            doCalculateSusd(command, msg, true);
-                        }
-                    } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth ")) {
-                        const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
-                        args.shift();
-                        const command = args.shift().trim();
-                        if (command) {
-                            doShowSynth(command, msg, true);
-                        }
-                    } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
-                        let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                        const args = content.slice("show chart".length).split(' ');
-                        args.shift();
-                        const command = args.shift().trim();
-                        doShowChart(command, msg, true);
-                    } else {
-                        if (!msg.author.username.toLowerCase().includes("faq")) {
-                            if (msg.content.endsWith("?")) {
-                                const args = msg.content.substring(0, msg.content.length - 1).split(' ');
-                                const searchWord = msg.content;
-                                doCustomQuestion(searchWord, args);
+                            if (doReply) {
+                                msg.reply(exampleEmbed);
                             } else {
-                                msg.reply("Oops, I don't know that one. Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
+                                msg.channel.send(exampleEmbed).then(function (message) {
+                                    message.react("❌");
+                                }).catch(function () {
+                                    //Something
+                                });
                             }
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                } else if (command == "13") {
+
+                    var today = new Date();
+                    while (today > payday) {
+                        payday.setDate(payday.getDate() + 7);
+                    }
+                    var difference = payday.getTime() - today.getTime();
+                    var seconds = Math.floor(difference / 1000);
+                    var minutes = Math.floor(seconds / 60);
+                    var hours = Math.floor(minutes / 60);
+                    var days = Math.floor(hours / 24);
+                    hours %= 24;
+                    minutes %= 60;
+                    seconds %= 60;
+
+                    exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+                } else if (command == "62") {
+
+                    exampleEmbed.addField("Volume in this period:", periodVolume, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+                } else if (command == "63") {
+
+                    var distribution = "";
+                    poolDistribution.forEach(function (d) {
+                        distribution += d + "\n";
+                    });
+
+                    exampleEmbed.addField("Debt distribution:", distribution, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+                } else if (command == "66") {
+
+                    var synthsGainers = "";
+                    var synthsBreakEven = "";
+                    var synthsLosers = "";
+                    synths.forEach(function (s) {
+                        let arrow = (s.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (s.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
+                        if (arrow.includes("⤤")) {
+                            synthsGainers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
                         }
+                        if (arrow.includes("⤥")) {
+                            synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                        }
+                        if (arrow.includes("-")) {
+                            synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                        }
+                    });
+
+                    exampleEmbed.addField("Synth gainers:", synthsGainers, false);
+                    exampleEmbed.addField("Synth no change:", synthsBreakEven, false);
+                    exampleEmbed.addField("Synth losers:", synthsLosers, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+                } else if (command == "74") {
+
+                    var synthsPrices = "";
+                    for (var i = 0; i < 10; i++) {
+                        synthsPrices += synths[i].name + " " + synths[i].price + " " + synths[i].gain + " ⤤\n";
+                    }
+
+                    exampleEmbed.addField("Biggest gainers:", synthsPrices, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+                } else if (command == "75") {
+
+                    var synthsPrices = "";
+                    for (var i = 1; i < 11; i++) {
+                        synthsPrices += synths[synths.length - i].name + " " + synths[synths.length - i].price + " " + synths[synths.length - i].gain + " ⤥\n";
+                    }
+
+                    exampleEmbed.addField("Biggest losers:", synthsPrices, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
+                } else {
+
+                    answer.fields.forEach(function (field) {
+                        exampleEmbed.addField(field.title, field.value, field.inline);
+                    });
+
+                    if (answer.footer.title) {
+                        exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
+
+                    }
+
+                    if (answer.image) {
+                        exampleEmbed.attachFiles(['images/' + answer.image])
+                            .setImage('attachment://' + answer.image);
+                    }
+
+                    if (answer.thumbnail) {
+                        exampleEmbed.attachFiles(['images/' + answer.thumbnail])
+                            .setThumbnail('attachment://' + answer.thumbnail);
+                    }
+
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
                     }
                 }
             } catch (e) {
-                msg.reply("Unknown error ocurred.  Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
+                if (doReply) {
+                    msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
+                } else {
+                    msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***!FAQ question questionNumber***, e.g. **question 1**\nYou can get the question number if you send me **list** in DM");
+                }
             }
         }
+
     }
-
-    function showAllAliases(isDM) {
-        let rawdata = fs.readFileSync('categories/aliases.json');
-        let aliases = JSON.parse(rawdata);
-        let questionMap = new Map();
-        aliases.forEach(function (alias) {
-            let aliasQuestion = questionMap.get(alias.number);
-            if (aliasQuestion) {
-                aliasQuestion.push(alias.alias);
-                questionMap.set(alias.number, aliasQuestion);
-            } else {
-                let aliasQuestion = new Array();
-                aliasQuestion.push(alias.alias);
-                questionMap.set(alias.number, aliasQuestion);
-            }
-        });
-
-        let exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Known aliases')
-            .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
-        exampleEmbed.setDescription('Hello, here are the aliases I know:');
-
-        let counter = 0;
-        let pagenumber = 2;
-        for (let [questionNumber, questions] of questionMap) {
-            let questionsString = "";
-            questions.forEach(function (q) {
-                questionsString += (isDM ? "" : "!faq ") + q + "\n";
-            })
-            let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
-            let answer = JSON.parse(rawdata);
-            exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
-
-            counter++;
-            if (counter == 10) {
-                if (isDM) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-                exampleEmbed = new Discord.MessageEmbed()
-                    .setColor('#0099ff')
-                    .setTitle('Known aliases page ' + pagenumber)
-                    .setURL('https://github.com/dgornjakovic/synthetix-faq-bot');
-                exampleEmbed.setDescription('Hello, here are the aliases I know:');
-                pagenumber++;
-                counter = 0;
-            }
-
-        }
-
-        if (isDM) {
-            msg.reply(exampleEmbed);
-        } else {
-            msg.channel.send(exampleEmbed).then(function (message) {
-                message.react("❌");
-            }).catch(function () {
-                //Something
-            });
-        }
-    }
-
-    function answerUltimateQuestion() {
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Bravo, you found the ultimate question!');
-
-        exampleEmbed.setDescription(Buffer.from("d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==", 'base64').toString('utf-8'));
-        exampleEmbed.addField("The answer is:", Buffer.from("NDI=", 'base64').toString('utf-8'));
-
-        msg.reply(exampleEmbed);
-    }
-
-    function checkIfUltimateQuestion(encodedForm) {
-        return encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==" ||
-            encodedForm == "d2hhdCdzIHRoZSBhbnN3ZXIgdG8gbGlmZSB0aGUgdW5pdmVyc2UgYW5kIGV2ZXJ5dGhpbmc/" ||
-            encodedForm == "dGhlIGFuc3dlciB0byBsaWZlIHRoZSB1bml2ZXJzZSBhbmQgZXZlcnl0aGluZw==" ||
-            encodedForm == "d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==";
-    }
-
-    function checkAliasMatching(doReply) {
-        let potentialAlias = msg.content.toLowerCase().replace("!faq", "").trim();
-        let rawdata = fs.readFileSync('categories/aliases.json');
-        let aliases = JSON.parse(rawdata);
-        let found = false;
-        aliases.forEach(function (alias) {
-            if (alias.alias.toLowerCase().trim() == potentialAlias) {
-                found = true;
-                msg.content = "!faq question " + alias.number;
-                doQuestion(msg, "!faq question", doReply);
-            }
-        });
-        return found;
-    }
-
-    function doFaqHelp() {
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Synthetix Frequently Asked Questions')
-            .setURL('https://help.synthetix.io/hc/en-us');
-
-        exampleEmbed.setDescription('Hello, here is list of commands I know:');
-        exampleEmbed.addField("list", "Lists all known questions");
-        exampleEmbed.addField("categories", "Lists all categories of known questions");
-        exampleEmbed.addField("category categoryName", "Lists all known questions for a given category name, e.g. ** category *Staking&Minting* **");
-        exampleEmbed.addField("question questionNumber", "Shows the answer to the question defined by its number, e.g. ** question *7* **");
-        exampleEmbed.addField("search searchTerm", "Search all known questions by given search term, e.g. ** search *SNX price* **");
-        exampleEmbed.addField("aliases", "List all known aliases");
-        exampleEmbed.addField("subscribe gas gasPrice",
-            "I will inform you the next time safe gas price is below your target gasPrice, e.g. **subscribe gas 30** will inform you if safe gas price is below 30 gwei");
-        exampleEmbed.addField("calculate rewards snxStaked",
-            "Calculate weekly SNX rewards per staked snx amount, as well as minting and claiming transaction estimates at current gas price. E.g. *calculate rewards 1000*. \n You can optionally add the gas price as parameter, e.g *calculate rewards 1000 with 30 gwei*");
-        exampleEmbed.addField("calculate susd rewards snxStaked",
-            "Calculate weekly susd rewards per staked snx amount based on the fees in the pool and the percentage of period passed.");
-        exampleEmbed.addField("show chart 24H",
-            "Shows the SNX chart in the last 24h. Other options are shown in the response (7D, 1M, ....)");
-        exampleEmbed.addField("show wallet walletAddress",
-            "Prints the staking information for the provided wallet");
-        exampleEmbed.addField("synth synthName",
-            "Shows the synth last price as well as its description");
-        exampleEmbed.addField("synths gainers/losers",
-            "Shows the best/worse performing synths in the last 24h");
-        exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
-
-        msg.reply(exampleEmbed);
-    }
-
-    function listQuestions() {
-        let exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Frequently Asked Questions')
-            .setURL('https://help.synthetix.io/hc/en-us');
-
-        fs.readdir('questions', function (err, files) {
-            if (err) {
-                console.log("Error getting directory information.")
-            } else {
-                let counter = 0;
-                let pagenumber = 2;
-                files.sort(function (a, b) {
-                    return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
-                });
-                files.forEach(function (file) {
-                    let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                    exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false)
-                    counter++;
-                    if (counter == 20) {
-                        msg.reply(exampleEmbed);
-                        exampleEmbed = new Discord.MessageEmbed()
-                            .setColor('#0099ff')
-                            .setTitle('Frequently Asked Questions page ' + pagenumber)
-                            .setURL('https://help.synthetix.io/hc/en-us');
-                        pagenumber++;
-                        counter = 0;
-                    }
-                })
-            }
-            exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-            msg.reply(exampleEmbed);
-        })
-    }
-
-    function listCategories() {
-        let rawdata = fs.readFileSync('categories/categories.json');
-        let categories = JSON.parse(rawdata);
-
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Categories');
-
-        categories.forEach(function (category) {
-            exampleEmbed.addField(category.name, category.desc, false);
-        });
-
-        exampleEmbed.addField('\u200b', "Choose the category with **category categoryName**, e.g. **category SNX**, or **category Synthetix.Exchange**");
-        msg.reply(exampleEmbed);
-    }
-
-    function doSearch(searchWord, args) {
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Questions found for ***' + searchWord + '***:');
-
-        const Match = class {
-            constructor(title, value) {
-                this.title = title;
-                this.value = value;
-            }
-
-            matchedCount = 0;
-            title;
-            value;
-        };
-
-        const fullMatches = [];
-        const partialMatches = [];
-        fs.readdir('questions', function (err, files) {
-            if (err) {
-                console.log("Error getting directory information.")
-            } else {
-                files.sort(function (a, b) {
-                    return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
-                });
-                files.forEach(function (file) {
-                    let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                    if (rawdata.includes(searchWord)) {
-                        rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
-                        fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
-                    } else {
-                        let matchedCount = 0;
-                        args.sort(function (a, b) {
-                            return a.length - b.length;
-                        });
-                        args.forEach(function (arg) {
-                            if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
-                                rawdata = replaceString(rawdata, arg, '**' + arg + '**');
-                                rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
-                                rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
-                                matchedCount++;
-                            }
-                        });
-                        if (matchedCount > 0) {
-                            let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
-                            match.matchedCount = matchedCount;
-                            partialMatches.push(match);
-                        }
-                    }
-                })
-            }
-
-            if (fullMatches.length == 0 && partialMatches.length == 0) {
-                exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
-            } else {
-
-                let counter = 0;
-                fullMatches.forEach(function (match) {
-                    counter++;
-                    if (counter < 6) {
-                        exampleEmbed.addField(match.title, match.value, false);
-                    }
-                });
-
-                partialMatches.sort(function (a, b) {
-                    return b.matchedCount - a.matchedCount;
-                });
-                partialMatches.forEach(function (match) {
-                    counter++;
-                    if (counter < 6) {
-                        exampleEmbed.addField(match.title, match.value, false);
-                    }
-                });
-
-                exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-            }
-            msg.reply(exampleEmbed);
-        })
-    }
-
-    function doCustomQuestion(searchWord, args) {
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Looks like you asked a custom question. This is the best I could find for your query:');
-
-        const Match = class {
-            constructor(title, value) {
-                this.title = title;
-                this.value = value;
-            }
-
-            matchedCount = 0;
-            title;
-            value;
-        };
-
-        const fullMatches = [];
-        const partialMatches = [];
-        fs.readdir('questions', function (err, files) {
-            if (err) {
-                console.log("Error getting directory information.")
-            } else {
-                files.sort(function (a, b) {
-                    return a.substring(0, a.lastIndexOf(".")) * 1.0 - b.substring(0, b.lastIndexOf(".")) * 1.0;
-                });
-                files.forEach(function (file) {
-                    let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                    if (rawdata.includes(searchWord)) {
-                        rawdata = replaceString(rawdata, searchWord, '**' + searchWord + '**');
-                        fullMatches.push(new Match(file.substring(0, file.lastIndexOf(".")), rawdata));
-                    } else {
-                        args.sort(function (a, b) {
-                            return a.length - b.length;
-                        });
-                        let matchedCount = 0;
-                        args.forEach(function (arg) {
-                            if (rawdata.toLowerCase().includes(arg.toLowerCase())) {
-                                rawdata = replaceString(rawdata, arg, '**' + arg + '**');
-                                rawdata = replaceString(rawdata, arg.toLowerCase(), '**' + arg.toLowerCase() + '**');
-                                rawdata = replaceString(rawdata, arg.toUpperCase(), '**' + arg.toUpperCase() + '**');
-                                matchedCount++;
-                            }
-                        });
-                        if (matchedCount > 0) {
-                            let match = new Match(file.substring(0, file.lastIndexOf(".")), rawdata);
-                            match.matchedCount = matchedCount;
-                            partialMatches.push(match);
-                        }
-                    }
-                })
-            }
-
-            if (fullMatches.length == 0 && partialMatches.length == 0) {
-                exampleEmbed.setTitle('No questions found for ***' + searchWord + '***. Please refine your search.');
-            } else {
-
-                let counter = 0;
-                fullMatches.forEach(function (match) {
-                    counter++;
-                    if (counter < 4) {
-                        exampleEmbed.addField(match.title, match.value, false);
-                    }
-                });
-
-                partialMatches.sort(function (a, b) {
-                    return b.matchedCount - a.matchedCount;
-                });
-                partialMatches.forEach(function (match) {
-                    counter++;
-                    if (counter < 4) {
-                        exampleEmbed.addField(match.title, match.value, false);
-                    }
-                });
-
-                exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-            }
-            msg.reply(exampleEmbed);
-        })
-    }
-
-
-    function doQuestion(msg, toSlice, doReply) {
-        const args = msg.content.slice(toSlice.length).split(' ');
-        args.shift();
-        const command = args.shift();
-
-        try {
-            let rawdata = fs.readFileSync('answers/' + command + '.json');
-            let answer = JSON.parse(rawdata);
-
-            const exampleEmbed = new Discord.MessageEmbed();
-            exampleEmbed.setColor(answer.color);
-            exampleEmbed.setTitle(answer.title);
-            exampleEmbed.setDescription(answer.description);
-            exampleEmbed.setURL(answer.url);
-
-            if (command == "7") {
-
-                exampleEmbed.addField("Safe low gas price:", lowGasPrice + ' gwei', false);
-                exampleEmbed.addField("Standard gas price:", gasPrice + ' gwei', false);
-                exampleEmbed.addField("Fast gas price:", fastGasPrice + ' gwei', false);
-                exampleEmbed.addField("Instant gas price:", instantGasPrice + ' gwei', false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-
-            } else if (command == "9") {
-
-                exampleEmbed.addField("USD (binance)", binanceUsd, false);
-                exampleEmbed.addField("USD (kucoin)", kucoinUsd, false);
-                exampleEmbed.addField("USD (coingecko)", coingeckoUsd, false);
-                exampleEmbed.addField("ETH (coingecko):", coingeckoEth, false);
-                exampleEmbed.addField("BTC (coingecko):", coingeckoBtc, false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-            } else if (command == "61") {
-
-                https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
-                    let data = '';
-
-                    // A chunk of data has been recieved.
-                    resp.on('data', (chunk) => {
-                        data += chunk;
-                    });
-
-                    // The whole response has been received. Print out the result.
-                    resp.on('end', () => {
-                        let result = JSON.parse(data);
-                        exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                        exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
-                        if (doReply) {
-                            msg.reply(exampleEmbed);
-                        } else {
-                            msg.channel.send(exampleEmbed).then(function (message) {
-                                message.react("❌");
-                            }).catch(function () {
-                                //Something
-                            });
-                        }
-                    });
-
-                }).on("error", (err) => {
-                    console.log("Error: " + err.message);
-                });
-
-            } else if (command == "8") {
-
-                https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
-                    let data = '';
-
-                    // A chunk of data has been recieved.
-                    resp.on('data', (chunk) => {
-                        data += chunk;
-                    });
-
-                    // The whole response has been received. Print out the result.
-                    resp.on('end', () => {
-                        let result = JSON.parse(data);
-                        exampleEmbed.addField("USD (coingecko)", result.market_data.current_price.usd, false);
-                        exampleEmbed.addField("USDC (1inch)", usdcPeg, false);
-                        exampleEmbed.addField("USDT (1inch)", usdtPeg, false);
-                        if (result.market_data.current_price.usd == 1 && usdcPeg == 1 && usdtPeg == 1) {
-                            exampleEmbed.attachFiles(['images/perfect.jpg'])
-                                .setImage('attachment://perfect.jpg');
-                        }
-                        if (doReply) {
-                            msg.reply(exampleEmbed);
-                        } else {
-                            msg.channel.send(exampleEmbed).then(function (message) {
-                                message.react("❌");
-                            }).catch(function () {
-                                //Something
-                            });
-                        }
-                    });
-
-                }).on("error", (err) => {
-                    console.log("Error: " + err.message);
-                });
-
-            } else if (command == "13") {
-
-                var today = new Date();
-                while (today > payday) {
-                    payday.setDate(payday.getDate() + 7);
-                }
-                var difference = payday.getTime() - today.getTime();
-                var seconds = Math.floor(difference / 1000);
-                var minutes = Math.floor(seconds / 60);
-                var hours = Math.floor(minutes / 60);
-                var days = Math.floor(hours / 24);
-                hours %= 24;
-                minutes %= 60;
-                seconds %= 60;
-
-                exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-            } else if (command == "62") {
-
-                exampleEmbed.addField("Volume in this period:", periodVolume, false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-            } else if (command == "63") {
-
-                var distribution = "";
-                poolDistribution.forEach(function (d) {
-                    distribution += d + "\n";
-                });
-
-                exampleEmbed.addField("Debt distribution:", distribution, false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-            } else if (command == "66") {
-
-                var synthsGainers = "";
-                var synthsBreakEven = "";
-                var synthsLosers = "";
-                synths.forEach(function (s) {
-                    let arrow = (s.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (s.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
-                    if (arrow.includes("⤤")) {
-                        synthsGainers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
-                    }
-                    if (arrow.includes("⤥")) {
-                        synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
-                    }
-                    if (arrow.includes("-")) {
-                        synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
-                    }
-                });
-
-                exampleEmbed.addField("Synth gainers:", synthsGainers, false);
-                exampleEmbed.addField("Synth no change:", synthsBreakEven, false);
-                exampleEmbed.addField("Synth losers:", synthsLosers, false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-            } else if (command == "74") {
-
-                var synthsPrices = "";
-                for (var i = 0; i < 10; i++) {
-                    synthsPrices += synths[i].name + " " + synths[i].price + " " + synths[i].gain + " ⤤\n";
-                }
-
-                exampleEmbed.addField("Biggest gainers:", synthsPrices, false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-            } else if (command == "75") {
-
-                var synthsPrices = "";
-                for (var i = 1; i < 11; i++) {
-                    synthsPrices += synths[synths.length - i].name + " " + synths[synths.length - i].price + " " + synths[synths.length - i].gain + " ⤥\n";
-                }
-
-                exampleEmbed.addField("Biggest losers:", synthsPrices, false);
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-
-            } else {
-
-                answer.fields.forEach(function (field) {
-                    exampleEmbed.addField(field.title, field.value, field.inline);
-                });
-
-                if (answer.footer.title) {
-                    exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
-
-                }
-
-                if (answer.image) {
-                    exampleEmbed.attachFiles(['images/' + answer.image])
-                        .setImage('attachment://' + answer.image);
-                }
-
-                if (answer.thumbnail) {
-                    exampleEmbed.attachFiles(['images/' + answer.thumbnail])
-                        .setThumbnail('attachment://' + answer.thumbnail);
-                }
-
-                if (doReply) {
-                    msg.reply(exampleEmbed);
-                } else {
-                    msg.channel.send(exampleEmbed).then(function (message) {
-                        message.react("❌");
-                    }).catch(function () {
-                        //Something
-                    });
-                }
-            }
-        } catch (e) {
-            if (doReply) {
-                msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
-            } else {
-                msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***!FAQ question questionNumber***, e.g. **question 1**\nYou can get the question number if you send me **list** in DM");
-            }
-        }
-    }
-
-}
 )
 
 setInterval(function () {
@@ -1073,6 +1075,34 @@ setInterval(function () {
                 tknPrice = result.market_data.current_price.usd;
                 tknPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
                 tknMarketCap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/yaxis', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                yaxisEth = result.market_data.current_price.eth;
+                yaxisEth = Math.round(((yaxisEth * 1.0) + Number.EPSILON) * 10000) / 10000;
+                yaxisMarketCap = result.market_data.total_supply * yaxisPrice;
+                yaxisMarketCap = Math.round(((yaxisMarketCap * 1.0) + Number.EPSILON) * 100) / 100;
             } catch (e) {
                 console.log(e);
             }
@@ -1418,8 +1448,8 @@ async function getSnxToolStaking() {
             ],
         });
         const page = await browser.newPage();
-        await page.setViewport({ width: 1000, height: 926 });
-        await page.goto("https://snx.tools/calculator/staking/", { waitUntil: 'networkidle2' });
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://snx.tools/calculator/staking/", {waitUntil: 'networkidle2'});
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
@@ -1453,8 +1483,8 @@ async function getSnxToolHome() {
             ],
         });
         const page = await browser.newPage();
-        await page.setViewport({ width: 1000, height: 926 });
-        await page.goto("https://snx.tools/home", { waitUntil: 'networkidle2' });
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://snx.tools/home", {waitUntil: 'networkidle2'});
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
@@ -1486,8 +1516,8 @@ async function getDashboard() {
             ],
         });
         const page = await browser.newPage();
-        await page.setViewport({ width: 1000, height: 926 });
-        await page.goto("https://dashboard.synthetix.io/", { waitUntil: 'networkidle2' });
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://dashboard.synthetix.io/", {waitUntil: 'networkidle2'});
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
@@ -1524,8 +1554,8 @@ async function getExchange() {
             ],
         });
         const page = await browser.newPage();
-        await page.setViewport({ width: 1000, height: 926 });
-        await page.goto("https://synthetix.exchange/#/synths", { waitUntil: 'networkidle2' });
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://synthetix.exchange/#/synths", {waitUntil: 'networkidle2'});
         await delay(5000);
 
         /** @type {string[]} */
@@ -1583,15 +1613,15 @@ async function getSynthInfo(synth) {
             ],
         });
         const page = await browser.newPage();
-        await page.setViewport({ width: 1000, height: 1226 });
-        await page.goto("https://synthetix.exchange/#/synths/" + synth, { waitUntil: 'networkidle2' });
+        await page.setViewport({width: 1000, height: 1226});
+        await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
         await page.waitForSelector('div.isELEY');
         await delay(5000);
 
         const rect = await page.evaluate(() => {
             const element = document.querySelector('div.isELEY');
-            const { x, y, width, height } = element.getBoundingClientRect();
-            return { left: x, top: y, width, height, id: element.id };
+            const {x, y, width, height} = element.getBoundingClientRect();
+            return {left: x, top: y, width, height, id: element.id};
         });
 
         await page.screenshot({
@@ -1634,12 +1664,12 @@ setInterval(function () {
                         let result = JSON.parse(data);
                         usdtPeg = Math.round(((result.price * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch
-                    (e) {
+                        (e) {
                         console.log("Error on fetching 1inch peg: ", e);
                     }
                 });
             } catch
-            (e) {
+                (e) {
                 console.log("Error on fetching 1inch peg: ", e);
             }
 
@@ -1647,7 +1677,7 @@ setInterval(function () {
             console.log("Error: " + err.message);
         });
     } catch
-    (e) {
+        (e) {
         console.log("Error on fetching 1inch peg: ", e);
     }
 
@@ -1670,12 +1700,12 @@ setInterval(function () {
                         let result = JSON.parse(data);
                         usdcPeg = Math.round(((result.price * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch
-                    (e) {
+                        (e) {
                         console.log("Error on fetching 1inch peg: ", e);
                     }
                 });
             } catch
-            (e) {
+                (e) {
                 console.log("Error on fetching 1inch peg: ", e);
             }
 
@@ -1683,7 +1713,7 @@ setInterval(function () {
             console.log("Error: " + err.message);
         });
     } catch
-    (e) {
+        (e) {
         console.log("Error on fetching 1inch peg: ", e);
     }
 
@@ -1741,7 +1771,8 @@ setInterval(function () {
 
     clientYaxisPrice.guilds.cache.forEach(function (value, key) {
         try {
-            value.members.cache.get("759905699232481280").setNickname("$"  + yaxisPrice);
+            value.members.cache.get("759905699232481280").setNickname("$" + yaxisPrice);
+            value.members.cache.get("759905699232481280").user.setActivity("Ξ=" + coingeckoEth + " marketcap=" + yaxisMarketCap, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -1750,7 +1781,7 @@ setInterval(function () {
     clientFaqPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
-            value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, { type: 'PLAYING' });
+            value.members.cache.get("745782311382941787").user.setActivity("eth=" + coingeckoEth + " btc=" + coingeckoBtc, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -1758,7 +1789,7 @@ setInterval(function () {
     clientPegPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
-            value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, { type: 'PLAYING' });
+            value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -1769,42 +1800,42 @@ setInterval(function () {
     clientgasPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
-            value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, { type: 'PLAYING' });
+            value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
     });
     clientTknPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
-        value.members.cache.get("745936898870083614").user.setActivity("marketcap=$" + getNumberLabel(tknMarketCap), { type: 'PLAYING' });
+        value.members.cache.get("745936898870083614").user.setActivity("marketcap=$" + getNumberLabel(tknMarketCap), {type: 'PLAYING'});
     });
     clientCRVPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("746121396396097587").setNickname("$" + crvPrice);
     });
     clientSWTHPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
-        value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), { type: 'PLAYING' });
+        value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), {type: 'PLAYING'});
     });
     clientYUSDPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("758075102779932782").setNickname("$" + yusdPrice);
-        value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), { type: 'PLAYING' });
+        value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), {type: 'PLAYING'});
     });
     clientYFVPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
-        value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), { type: 'PLAYING' });
+        value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), {type: 'PLAYING'});
     });
     clientMetaPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
-        value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), { type: 'PLAYING' });
+        value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), {type: 'PLAYING'});
     });
 
     clientPicklePrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, { type: 'WATCHING' });
+        value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, {type: 'WATCHING'});
     });
 
     clientVIDYAPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
-        value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, { type: 'PLAYING' });
+        value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, {type: 'PLAYING'});
     });
 }, 45 * 1000);
 
@@ -1835,10 +1866,10 @@ setInterval(async function () {
         // note that you may want/need to handle this async code differently,
         // for example if top-level await is not an option
         pair = await Fetcher.fetchPairData(yaxis, WETH[yaxis.chainId])
-    
+
         var route = new Route([pair], WETH[yaxis.chainId])
-    
-        yaxisPrice = route.midPrice.invert().toSignificant(6)*ethPrice;
+
+        yaxisPrice = route.midPrice.invert().toSignificant(6) * ethPrice;
         yaxisPrice = Math.round(((yaxisPrice * 1.0) + Number.EPSILON) * 100) / 100;
     } catch (e) {
         console.log(e);
@@ -1903,7 +1934,7 @@ function doCalculate(command, msg, gasPriceParam, fromDM) {
             });
         }
     } catch
-    (e) {
+        (e) {
         console.log(e);
     }
 }
@@ -1955,7 +1986,7 @@ function doCalculateSusd(command, msg, fromDM) {
             });
         }
     } catch
-    (e) {
+        (e) {
         console.log(e);
     }
 }
@@ -2027,14 +2058,14 @@ async function getChart(type) {
             ],
         });
         const page = await browser.newPage();
-        await page.setViewport({ width: 1000, height: 926 });
-        await page.goto("https://coincodex.com/crypto/synthetix/?period=" + type, { waitUntil: 'networkidle2' });
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://coincodex.com/crypto/synthetix/?period=" + type, {waitUntil: 'networkidle2'});
         await page.waitForSelector('.chart');
 
         const rect = await page.evaluate(() => {
             const element = document.querySelector('.chart');
-            const { x, y, width, height } = element.getBoundingClientRect();
-            return { left: x, top: y, width, height, id: element.id };
+            const {x, y, width, height} = element.getBoundingClientRect();
+            return {left: x, top: y, width, height, id: element.id};
         });
 
         await page.screenshot({
