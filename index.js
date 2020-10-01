@@ -1772,7 +1772,7 @@ setInterval(function () {
     clientYaxisPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("759905699232481280").setNickname("$" + yaxisPrice);
-            value.members.cache.get("759905699232481280").user.setActivity("Ξ=" + coingeckoEth + " marketcap=$" +  getNumberLabel(yaxisPrice), {type: 'PLAYING'});
+            value.members.cache.get("759905699232481280").user.setActivity("Ξ=" + coingeckoEth + " marketcap=$" +  getNumberLabel(yaxisMarketCap), {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
