@@ -1341,7 +1341,7 @@ setInterval(function () {
 setInterval(function () {
     //'https://gasprice.poa.network/
     //https://www.gasnow.org/api/v3/gas/price
-    https.get('https://gasprice.poa.network/', (resp) => {
+    https.get('https://www.gasnow.org/api/v3/gas/price', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -1353,18 +1353,18 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                // gasPrice = result.data.standard / 1000000000;
-                // fastGasPrice = result.data.fast / 1000000000;
-                // lowGasPrice = result.data.slow / 1000000000;
-                // instantGasPrice = result.data.rapid / 1000000000;
-                // gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                // fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                // lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                // instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                gasPrice = result.standard;
-                fastGasPrice = result.fast;
-                lowGasPrice = result.slow;
-                instantGasPrice = result.instant;
+                gasPrice = result.data.standard / 1000000000;
+                fastGasPrice = result.data.fast / 1000000000;
+                lowGasPrice = result.data.slow / 1000000000;
+                instantGasPrice = result.data.rapid / 1000000000;
+                gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                // gasPrice = result.standard;
+                // fastGasPrice = result.fast;
+                // lowGasPrice = result.slow;
+                // instantGasPrice = result.instant;
             } catch (e) {
                 console.log(e);
             }
