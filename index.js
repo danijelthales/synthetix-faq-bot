@@ -181,7 +181,7 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 } else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                    msg.reply("I've called for the master, he will be with you shortly.");
+                    msg.reply("I've called for master, he will be with you shortly.");
                 } else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
                         files: [
