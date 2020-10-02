@@ -1339,7 +1339,9 @@ setInterval(function () {
 
 
 setInterval(function () {
-    https.get('https://www.gasnow.org/api/v3/gas/price', (resp) => {
+    //'https://gasprice.poa.network/
+    //https://www.gasnow.org/api/v3/gas/price
+    https.get('https://gasprice.poa.network/', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -1351,14 +1353,18 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                gasPrice = result.data.standard / 1000000000;
-                fastGasPrice = result.data.fast / 1000000000;
-                lowGasPrice = result.data.slow / 1000000000;
-                instantGasPrice = result.data.rapid / 1000000000;
-                gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                // gasPrice = result.data.standard / 1000000000;
+                // fastGasPrice = result.data.fast / 1000000000;
+                // lowGasPrice = result.data.slow / 1000000000;
+                // instantGasPrice = result.data.rapid / 1000000000;
+                // gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                // fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                // lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                // instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                gasPrice = result.standard;
+                fastGasPrice = result.fast;
+                lowGasPrice = result.slow;
+                instantGasPrice = result.instant;
             } catch (e) {
                 console.log(e);
             }
@@ -1772,7 +1778,7 @@ setInterval(function () {
     clientYaxisPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("759905699232481280").setNickname("$" + yaxisPrice);
-            value.members.cache.get("759905699232481280").user.setActivity("Ξ=" + coingeckoEth + " marketcap=$" +  getNumberLabel(yaxisMarketCap), {type: 'PLAYING'});
+            value.members.cache.get("759905699232481280").user.setActivity("Ξ=" + coingeckoEth + " marketcap=$" + getNumberLabel(yaxisMarketCap), {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }

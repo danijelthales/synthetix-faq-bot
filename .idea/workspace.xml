@@ -22,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="1774" column="144" selection-start-line="1774" selection-start-column="144" selection-end-line="1774" selection-end-column="144" />
+            <state relative-caret-position="273">
+              <caret line="1348" column="26" lean-forward="true" selection-start-line="1348" selection-start-column="26" selection-end-line="1348" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -31,8 +31,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/contracts/Synthetix.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12833">
-              <caret line="26" column="33" lean-forward="true" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+            <state relative-caret-position="442">
+              <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -70,7 +70,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>30 * 30</find>
       <find>30 *</find>
       <find>* 30</find>
       <find>nicname</find>
@@ -100,6 +99,7 @@
       <find>tkn</find>
       <find>yaxisMarketCap</find>
       <find>yaxis</find>
+      <find>fastga</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -205,7 +205,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -223,6 +222,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -311,12 +311,13 @@
       <workItem from="1601158038525" duration="2076000" />
       <workItem from="1601220247369" duration="1322000" />
       <workItem from="1601586428404" duration="1090000" />
-      <workItem from="1601590921429" duration="952000" />
+      <workItem from="1601590921429" duration="1095000" />
+      <workItem from="1601635596222" duration="107000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="274924000" />
+    <option name="totallyTimeSpent" value="275174000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -327,8 +328,9 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.18230277" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.18443497" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="GraphQL" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Database Changes" order="2" />
@@ -627,8 +629,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/contracts/Synthetix.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -648,17 +654,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/contracts/Synthetix.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12833">
-          <caret line="26" column="33" lean-forward="true" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="1774" column="144" selection-start-line="1774" selection-start-column="144" selection-end-line="1774" selection-end-column="144" />
+        <state relative-caret-position="273">
+          <caret line="1348" column="26" lean-forward="true" selection-start-line="1348" selection-start-column="26" selection-end-line="1348" selection-end-column="26" />
         </state>
       </provider>
     </entry>
