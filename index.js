@@ -46,6 +46,9 @@ clientYFVPrice.login(process.env.BOT_TOKEN_YFV);
 const clientYaxisPrice = new Discord.Client();
 clientYaxisPrice.login(process.env.BOT_TOKEN_YAXIS);
 
+const clientYaxisSupply = new Discord.Client();
+clientYaxisSupply.login(process.env.BOT_TOKEN_YAXIS_SUPPLY);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -68,6 +71,9 @@ var swthMarketCap = 35196236;
 var picklePrice = 53;
 var pickleEthPrice = 0.14334229;
 var crvPrice = 3.84;
+
+var yaxisCircSupply = 246040.59;
+var yaxisTotalSuuply = 445188.84;
 
 var yusdPrice = 1.14;
 var yusdMarketCap = 257668486;
@@ -1786,6 +1792,15 @@ setInterval(function () {
         }
     });
 
+    clientYaxisSupply.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("762450845312745482").setNickname("circSupply=" + yaxisCircSupply);
+            value.members.cache.get("762450845312745482").user.setActivity("totalSupply=" + yaxisTotalSuuply, {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
     clientFaqPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745782311382941787").setNickname("$" + binanceUsd);
@@ -1908,6 +1923,51 @@ setInterval(function () {
         console.log(e);
     }
 }, 60 * 1000);
+
+
+setInterval(function () {
+    try {
+        https.get('https://yaxis.io/api/circulatingSupply', (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                let result = JSON.parse(data);
+                yaxisCircSupply = result;
+                yaxisCircSupply = Math.round(((yaxisCircSupply * 1.0) + Number.EPSILON) * 100) / 100;
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+
+        https.get('https://yaxis.io/api/totalSupply', (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                let result = JSON.parse(data);
+                yaxisTotalSuuply = result;
+                yaxisTotalSuuply = Math.round(((yaxisTotalSuuply * 1.0) + Number.EPSILON) * 100) / 100;
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}, 30 * 1000);
 
 function doCalculate(command, msg, gasPriceParam, fromDM) {
     try {
