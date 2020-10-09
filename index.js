@@ -917,9 +917,10 @@ client.on("message", msg => {
                 } else if (command == "63") {
 
                     var distribution = "";
-                    poolDistribution.forEach(function (d) {
-                        distribution += d + "\n";
-                    });
+                    for (var i = 0; i < poolDistribution.length; i++) {
+                        distribution += poolDistribution[i] + " " + poolDistribution[i+1] + "\n";
+                        i++;
+                    }
 
                     exampleEmbed.addField("Debt distribution:", distribution, false);
                     if (doReply) {
@@ -1535,24 +1536,24 @@ async function getDashboard() {
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('h2');
+            var div = document.querySelectorAll('.iDnUTE div');
 
             var prices = []
             div.forEach(element => {
                 prices.push(element.textContent);
             });
 
-            div = document.querySelectorAll('.pieLegendElement');
-            div.forEach(element => {
-                prices.push(element.textContent);
-            });
+            // div = document.querySelectorAll('.pieLegendElement');
+            // div.forEach(element => {
+            //     prices.push(element.textContent);
+            // });
 
             return prices
         })
 
-        currentFees = prices[13];
-        unclaimedFees = prices[14];
-        poolDistribution = prices.slice(27, prices.length);
+        // currentFees = prices[13];
+        // unclaimedFees = prices[14];
+        poolDistribution = prices.slice(0, 10);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from dashboard")
@@ -2347,7 +2348,7 @@ setTimeout(function () {
     } catch (e) {
         console.log(e);
     }
-}, 20 * 1000);
+}, 2 * 1000);
 setInterval(function () {
     try {
         getDashboard();
