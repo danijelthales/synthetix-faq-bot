@@ -93,8 +93,9 @@ var yaxisEth = 0.006;
 var yaxisMarketCap = 860000;
 
 var snxPrice = 6.9;
-var mintGas = 320000;
+var mintGas = 415000;
 var claimGas = 380000;
+var burnGas = 420000;
 var periodVolume = "$33,026,800";
 
 var currentFees = "$159,604";
