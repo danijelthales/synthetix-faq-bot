@@ -93,8 +93,8 @@ var yaxisEth = 0.006;
 var yaxisMarketCap = 860000;
 
 var snxPrice = 6.9;
-var mintGas = 993602;
-var claimGas = 1092941;
+var mintGas = 320000;
+var claimGas = 380000;
 var periodVolume = "$33,026,800";
 
 var currentFees = "$159,604";
@@ -2395,15 +2395,17 @@ const ethers = require('ethers');
 let contractRaw = fs.readFileSync('contracts/Synthetix.json');
 let contract = JSON.parse(contractRaw);
 
+
+const provider = ethers.getDefaultProvider("homestead");
+const synthetix = new ethers.Contract('0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F',
+    contract, provider);
+
 async function getMintrData(msg, address, isDM) {
     try {
         const exampleEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Wallet info');
 
-        const provider = ethers.getDefaultProvider("homestead");
-        const synthetix = new ethers.Contract('0xC011A72400E58ecD99Ee497CF89E3775d4bd732F',
-            contract, provider);
         const transferable = await synthetix.transferableSynthetix(address);
         let numberSNXTransferable = transferable.toString() / 1000000000000000000;
         console.log(numberSNXTransferable);
@@ -2453,5 +2455,53 @@ async function getMintrData(msg, address, isDM) {
         msg.reply(exampleEmbed);
     } catch (e) {
         msg.reply("error occurred");
+    }
+}
+
+
+const snxData = require('synthetix-data');
+
+setTimeout(function () {
+    getAllWallets();
+}, 1000 * 2
+)
+
+function getAllWallets() {
+    snxData.synths.issuers({max: 1}).then(result => {
+        result.forEach(r => {
+            getWalletInfo(r);
+        })
+    });
+}
+
+
+class WalletInfo {
+
+    constructor(cRatio, snxCount) {
+        this.cRatio = cRatio;
+        this.snxCount = snxCount;
+    }
+
+    cRatio;
+    snxCount;
+}
+
+var wallets = [];
+
+async function getWalletInfo(address) {
+    try {
+
+        const cRatio = await synthetix.collateralisationRatio(address);
+        let numberCRatio = 100000000000000000000 / cRatio.toString();
+        console.log(numberCRatio);
+
+
+        const totalSNX = await synthetix.collateral(address);
+        let totalSNXNum = totalSNX.toString() / 1000000000000000000;
+        console.log(totalSNXNum);
+
+        wallets.push(new WalletInfo(numberCRatio, totalSNXNum));
+    } catch (e) {
+        console.log(e);
     }
 }

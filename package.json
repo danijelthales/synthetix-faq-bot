@@ -14,10 +14,11 @@
     "@uniswap/sdk": "^3.0.3",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "ethers": "^5.0.9",
+    "ethers": "^5.0.17",
     "puppeteer": "^5.2.1",
     "redis": "^3.0.2",
-    "replace-string": "^3.1.0"
+    "replace-string": "^3.1.0",
+    "synthetix-data": "^2.1.33"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
