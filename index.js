@@ -918,7 +918,7 @@ client.on("message", msg => {
 
                     var distribution = "";
                     for (var i = 0; i < poolDistribution.length; i++) {
-                        distribution += poolDistribution[i] + " " + poolDistribution[i+1] + "\n";
+                        distribution += poolDistribution[i] + " " + poolDistribution[i + 1] + "\n";
                         i++;
                     }
 
@@ -1536,24 +1536,25 @@ async function getDashboard() {
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('.iDnUTE div');
+
 
             var prices = []
+
+            var div = document.querySelectorAll('.cpEXSW');
             div.forEach(element => {
                 prices.push(element.textContent);
             });
 
-            // div = document.querySelectorAll('.pieLegendElement');
-            // div.forEach(element => {
-            //     prices.push(element.textContent);
-            // });
+            div = document.querySelectorAll('.iDnUTE div');
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
 
             return prices
         })
 
-        // currentFees = prices[13];
-        // unclaimedFees = prices[14];
-        poolDistribution = prices.slice(0, 10);
+        currentFees = prices[5];
+        poolDistribution = prices.slice(11, 21);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from dashboard")
@@ -2020,8 +2021,7 @@ function doCalculateSusd(command, msg, fromDM) {
         var hours = Math.floor(minutes / 60);
 
         var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
-        var unclaimedFeesNumber = unclaimedFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
-        var feesPeriod = totalFeesNumber - unclaimedFeesNumber;
+        var feesPeriod = totalFeesNumber;
         var percentagePassed = Math.round(((100 - (hours * 100) / (7 * 24)) + Number.EPSILON) * 100) / 100;
         var scaledPeriod = feesPeriod * ((200 - percentagePassed) / 100);
         scaledPeriod = Math.round((scaledPeriod + Number.EPSILON) * 100) / 100;
@@ -2348,7 +2348,14 @@ setTimeout(function () {
     } catch (e) {
         console.log(e);
     }
-}, 2 * 1000);
+}, 20 * 1000);
+setTimeout(function () {
+    try {
+        getDashboard();
+    } catch (e) {
+        console.log(e);
+    }
+}, 100 * 1000);
 setInterval(function () {
     try {
         getDashboard();

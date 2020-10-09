@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart1y.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1y.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartall.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartall.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="921" column="28" selection-start-line="921" selection-start-column="28" selection-end-line="921" selection-end-column="28" />
+            <state relative-caret-position="223">
+              <caret line="2350" column="14" lean-forward="true" selection-start-line="2350" selection-start-column="14" selection-end-line="2350" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -59,10 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>vidyaPrice</find>
-      <find>BOT_TOKEN_VYDIA</find>
-      <find>clientVIDYAPrice</find>
-      <find>8</find>
       <find>800</find>
       <find>snxPrice</find>
       <find>dhedge-da</find>
@@ -87,8 +77,12 @@
       <find>handleGasSubscription</find>
       <find>debt</find>
       <find>63&quot;</find>
-      <find>getDashboard</find>
+      <find>swthPr</find>
+      <find>setInterval</find>
       <find>poolDistribution</find>
+      <find>currentFees</find>
+      <find>pooldi</find>
+      <find>getDashboard</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -311,12 +305,12 @@
       <workItem from="1601847232604" duration="2752000" />
       <workItem from="1601909252124" duration="1223000" />
       <workItem from="1601996538522" duration="1321000" />
-      <workItem from="1602256496043" duration="1307000" />
+      <workItem from="1602256496043" duration="2195000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="285430000" />
+    <option name="totallyTimeSpent" value="286318000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -658,8 +652,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="921" column="28" selection-start-line="921" selection-start-column="28" selection-end-line="921" selection-end-column="28" />
+        <state relative-caret-position="223">
+          <caret line="2350" column="14" lean-forward="true" selection-start-line="2350" selection-start-column="14" selection-end-line="2350" selection-end-column="14" />
         </state>
       </provider>
     </entry>
