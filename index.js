@@ -2488,6 +2488,7 @@ setTimeout(function () {
 )
 
 setInterval(function () {
+    wallets = [];
     snxData.synths.issuers({max: 10000}).then(result => {
         getAllWallets(result);
     });
@@ -2548,9 +2549,14 @@ async function getWalletInfo(address) {
 
 
 function sortWallets() {
-    wallets.sort(function (a, b) {
-        return a.cRatio - b.cRatio;
-    });
+    try {
+        console.log("wallets count is: " + wallets.length);
+        wallets.sort(function (a, b) {
+            return a.cRatio - b.cRatio;
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 setInterval(function () {
