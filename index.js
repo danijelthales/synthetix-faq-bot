@@ -1003,14 +1003,12 @@ client.on("message", msg => {
 
                 } else if (command == "82") {
 
-                    let liqWallets = "";
                     for (var i = 0; i < 10; i++) {
                         exampleEmbed.addField(wallets[i].address,
-                            "[address](https://etherscan.io/address/" + wallets[i].address + "): " + wallets[i].cRatio + "%,  snxBalance:" + wallets[i].snxCount
+                            "[etherscan](https://etherscan.io/address/" + wallets[i].address + "): " + wallets[i].cRatio + "%,  snxBalance:" + wallets[i].snxCount
                             , false);
                     }
 
-                    exampleEmbed.addField("Lowest cRatio wallets:", liqWallets, false);
                     if (doReply) {
                         msg.reply(exampleEmbed);
                     } else {
@@ -2535,10 +2533,12 @@ async function getWalletInfo(address) {
         if (numberCRatio == Infinity) {
             return;
         }
+        numberCRatio = Math.round(((numberCRatio * 1.0) + Number.EPSILON) * 100) / 100;
 
 
         const totalSNX = await synthetix.collateral(address);
         let totalSNXNum = totalSNX.toString() / 1000000000000000000;
+        totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
 
         wallets.push(new WalletInfo(numberCRatio, totalSNXNum, address));
     } catch (e) {
