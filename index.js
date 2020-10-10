@@ -1001,6 +1001,26 @@ client.on("message", msg => {
                         });
                     }
 
+                } else if (command == "82") {
+
+                    let liqWallets = "";
+                    for (var i = 0; i < 10; i++) {
+                        exampleEmbed.addField(wallets[i].address,
+                            "[address](https://etherscan.io/address/" + wallets[i].address + "): " + wallets[i].cRatio + "%,  snxBalance:" + wallets[i].snxCount
+                            , false);
+                    }
+
+                    exampleEmbed.addField("Lowest cRatio wallets:", liqWallets, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+
                 } else {
 
                     answer.fields.forEach(function (field) {
@@ -1797,8 +1817,8 @@ setInterval(function () {
 
     clientYaxisSupply.guilds.cache.forEach(function (value, key) {
         try {
-            value.members.cache.get("762450845312745482").setNickname("circSupply=" + yaxisCircSupply);
-            value.members.cache.get("762450845312745482").user.setActivity("totalSupply=" + yaxisTotalSuuply, {type: 'PLAYING'});
+            value.members.cache.get("762450845312745482").setNickname("c.supply=" + yaxisTotalSuuply);
+            value.members.cache.get("762450845312745482").user.setActivity("totalSupply=" + 1000000, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -2463,28 +2483,46 @@ async function getMintrData(msg, address, isDM) {
 const snxData = require('synthetix-data');
 
 setTimeout(function () {
-    getAllWallets();
-}, 1000 * 2
+    snxData.synths.issuers({max: 10000}).then(result => {
+        getAllWallets(result);
+    });
+}, 1000 * 20
 )
 
-function getAllWallets() {
-    snxData.synths.issuers({max: 1}).then(result => {
-        result.forEach(r => {
-            getWalletInfo(r);
-        })
+setInterval(function () {
+    snxData.synths.issuers({max: 10000}).then(result => {
+        getAllWallets(result);
     });
+}, 1000 * 60 * 60 * 7
+)
+
+async function getAllWallets(results) {
+    try {
+        for (let i = 0; i < results.length; i++) {
+            try {
+                getWalletInfo(results[i]);
+                await delay(500);
+            } catch (e) {
+                //console.log(e);
+            }
+        }
+    } catch (e) {
+        //console.log(e);
+    }
 }
 
 
 class WalletInfo {
 
-    constructor(cRatio, snxCount) {
+    constructor(cRatio, snxCount, address) {
         this.cRatio = cRatio;
         this.snxCount = snxCount;
+        this.address = address;
     }
 
     cRatio;
     snxCount;
+    address;
 }
 
 var wallets = [];
@@ -2494,15 +2532,28 @@ async function getWalletInfo(address) {
 
         const cRatio = await synthetix.collateralisationRatio(address);
         let numberCRatio = 100000000000000000000 / cRatio.toString();
-        console.log(numberCRatio);
+        if (numberCRatio == Infinity) {
+            return;
+        }
 
 
         const totalSNX = await synthetix.collateral(address);
         let totalSNXNum = totalSNX.toString() / 1000000000000000000;
-        console.log(totalSNXNum);
 
-        wallets.push(new WalletInfo(numberCRatio, totalSNXNum));
+        wallets.push(new WalletInfo(numberCRatio, totalSNXNum, address));
     } catch (e) {
-        console.log(e);
+        //console.log(e);
     }
 }
+
+
+function sortWallets() {
+    wallets.sort(function (a, b) {
+        return a.cRatio - b.cRatio;
+    });
+}
+
+setInterval(function () {
+    sortWallets();
+}, 1000 * 100
+)
