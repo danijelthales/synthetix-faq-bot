@@ -49,6 +49,12 @@ clientYaxisPrice.login(process.env.BOT_TOKEN_YAXIS);
 const clientYaxisSupply = new Discord.Client();
 clientYaxisSupply.login(process.env.BOT_TOKEN_YAXIS_SUPPLY);
 
+const clientSwervePrice = new Discord.Client();
+clientSwervePrice.login(process.env.BOT_TOKEN_SWERVE);
+
+const clientDodoPrice = new Discord.Client();
+clientDodoPrice.login(process.env.BOT_TOKEN_DODO);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -71,6 +77,12 @@ var swthMarketCap = 35196236;
 var picklePrice = 53;
 var pickleEthPrice = 0.14334229;
 var crvPrice = 3.84;
+
+var swervePrice = 0.668;
+var swerveMarketcap = 5242720;
+
+var dodoPrice = 0.53;
+var dodoMarketcap = 6384478;
 
 var yaxisCircSupply = 246040.59;
 var yaxisTotalSuuply = 445188.84;
@@ -1227,6 +1239,62 @@ setInterval(function () {
 
 }, 50 * 1000);
 
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/swerve-dao', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                swervePrice = result.market_data.current_price.usd;
+                swervePrice = Math.round(((swervePrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                swerveMarketcap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/dodo', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                dodoPrice = result.market_data.current_price.usd;
+                dodoPrice = Math.round(((dodoPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                dodoMarketcap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/meta', (resp) => {
@@ -1867,6 +1935,14 @@ setInterval(function () {
     clientYFVPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
         value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), {type: 'PLAYING'});
+    });
+    clientSwervePrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("766063695037333514").setNickname("$" + swervePrice);
+        value.members.cache.get("766063695037333514").user.setActivity("marketcap=$" + getNumberLabel(swerveMarketcap), {type: 'PLAYING'});
+    });
+    clientDodoPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("766064081483726909").setNickname("$" + dodoPrice);
+        value.members.cache.get("766064081483726909").user.setActivity("marketcap=$" + getNumberLabel(dodoMarketcap), {type: 'PLAYING'});
     });
     clientMetaPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);

@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart1y.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1y.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartall.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartall.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="2496" lean-forward="true" selection-start-line="2496" selection-end-line="2496" />
+            <state relative-caret-position="307">
+              <caret line="1938" column="66" lean-forward="true" selection-start-line="1938" selection-start-column="66" selection-end-line="1938" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -50,7 +41,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>❌</find>
       <find>oops</find>
       <find>yaxisPrice</find>
       <find>tkn</find>
@@ -80,6 +70,7 @@
       <find>yaxisTotalSuuply</find>
       <find>sortw</find>
       <find>&quot;82&quot;</find>
+      <find>yaxisma</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -313,12 +304,13 @@
       <workItem from="1601909252124" duration="1223000" />
       <workItem from="1601996538522" duration="1321000" />
       <workItem from="1602256496043" duration="9961000" />
-      <workItem from="1602363981123" duration="735000" />
+      <workItem from="1602363981123" duration="1335000" />
+      <workItem from="1602714097613" duration="1860000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="294819000" />
+    <option name="totallyTimeSpent" value="297279000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -329,7 +321,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.19402985" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.195629" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -657,8 +649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="2496" lean-forward="true" selection-start-line="2496" selection-end-line="2496" />
+        <state relative-caret-position="307">
+          <caret line="1938" column="66" lean-forward="true" selection-start-line="1938" selection-start-column="66" selection-end-line="1938" selection-end-column="66" />
         </state>
       </provider>
     </entry>
