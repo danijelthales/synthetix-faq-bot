@@ -1212,7 +1212,7 @@ setInterval(function () {
 
 
 setInterval(function () {
-    https.get('https://api.coingecko.com/api/v3/coins/value-liquidity', (resp) => {
+    https.get('https://api.coingecko.com/api/v3/coins/yfv-finance', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
