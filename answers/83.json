@@ -1,0 +1,13 @@
+{
+  "title": "Question 83:",
+  "description": "Who is Garth?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Garth is the Communications Manager at Synthetix."
+    }
+  ],
+  "image": "garthwave.gif",
+  "footer": {}
+}
