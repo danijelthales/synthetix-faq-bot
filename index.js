@@ -191,6 +191,299 @@ client.on('messageReactionAdd', (reaction, user) => {
     }
 });
 
+function doInnerQuestion(command, doReply, msg) {
+    try {
+        let rawdata = fs.readFileSync('answers/' + command + '.json');
+        let answer = JSON.parse(rawdata);
+
+        const exampleEmbed = new Discord.MessageEmbed();
+        exampleEmbed.setColor(answer.color);
+        exampleEmbed.setTitle(answer.title);
+        exampleEmbed.setDescription(answer.description);
+        exampleEmbed.setURL(answer.url);
+
+        if (command == "7") {
+
+            exampleEmbed.addField("Safe low gas price:", lowGasPrice + ' gwei', false);
+            exampleEmbed.addField("Standard gas price:", gasPrice + ' gwei', false);
+            exampleEmbed.addField("Fast gas price:", fastGasPrice + ' gwei', false);
+            exampleEmbed.addField("Instant gas price:", instantGasPrice + ' gwei', false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+
+        } else if (command == "9") {
+
+            exampleEmbed.addField("USD (binance)", binanceUsd, false);
+            exampleEmbed.addField("USD (kucoin)", kucoinUsd, false);
+            exampleEmbed.addField("USD (coingecko)", coingeckoUsd, false);
+            exampleEmbed.addField("ETH (coingecko):", coingeckoEth, false);
+            exampleEmbed.addField("BTC (coingecko):", coingeckoBtc, false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "61") {
+
+            https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
+                let data = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    let result = JSON.parse(data);
+                    exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
+                    exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+                });
+
+            }).on("error", (err) => {
+                console.log("Error: " + err.message);
+            });
+
+        } else if (command == "8") {
+
+            https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
+                let data = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    let result = JSON.parse(data);
+                    exampleEmbed.addField("USD (coingecko)", result.market_data.current_price.usd, false);
+                    exampleEmbed.addField("USDC (1inch)", usdcPeg, false);
+                    exampleEmbed.addField("USDT (1inch)", usdtPeg, false);
+                    if (result.market_data.current_price.usd == 1 && usdcPeg == 1 && usdtPeg == 1) {
+                        exampleEmbed.attachFiles(['images/perfect.jpg'])
+                            .setImage('attachment://perfect.jpg');
+                    }
+                    if (doReply) {
+                        msg.reply(exampleEmbed);
+                    } else {
+                        msg.channel.send(exampleEmbed).then(function (message) {
+                            message.react("❌");
+                        }).catch(function () {
+                            //Something
+                        });
+                    }
+                });
+
+            }).on("error", (err) => {
+                console.log("Error: " + err.message);
+            });
+
+        } else if (command == "13") {
+
+            var today = new Date();
+            while (today > payday) {
+                payday.setDate(payday.getDate() + 7);
+            }
+            var difference = payday.getTime() - today.getTime();
+            var seconds = Math.floor(difference / 1000);
+            var minutes = Math.floor(seconds / 60);
+            var hours = Math.floor(minutes / 60);
+            var days = Math.floor(hours / 24);
+            hours %= 24;
+            minutes %= 60;
+            seconds %= 60;
+
+            exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "62") {
+
+            exampleEmbed.addField("Volume in this period:", periodVolume, false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "63") {
+
+            var distribution = "";
+            for (var i = 0; i < poolDistribution.length; i++) {
+                distribution += poolDistribution[i] + " " + poolDistribution[i + 1] + "\n";
+                i++;
+            }
+
+            exampleEmbed.addField("Debt distribution:", distribution, false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "66") {
+
+            var synthsGainers = "";
+            var synthsBreakEven = "";
+            var synthsLosers = "";
+            synths.forEach(function (s) {
+                let arrow = (s.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (s.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
+                if (arrow.includes("⤤")) {
+                    synthsGainers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                }
+                if (arrow.includes("⤥")) {
+                    synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                }
+                if (arrow.includes("-")) {
+                    synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
+                }
+            });
+
+            exampleEmbed.addField("Synth gainers:", synthsGainers, false);
+            exampleEmbed.addField("Synth no change:", synthsBreakEven, false);
+            exampleEmbed.addField("Synth losers:", synthsLosers, false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "74") {
+
+            var synthsPrices = "";
+            for (var i = 0; i < 10; i++) {
+                synthsPrices += synths[i].name + " " + synths[i].price + " " + synths[i].gain + " ⤤\n";
+            }
+
+            exampleEmbed.addField("Biggest gainers:", synthsPrices, false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "75") {
+
+            var synthsPrices = "";
+            for (var i = 1; i < 11; i++) {
+                synthsPrices += synths[synths.length - i].name + " " + synths[synths.length - i].price + " " + synths[synths.length - i].gain + " ⤥\n";
+            }
+
+            exampleEmbed.addField("Biggest losers:", synthsPrices, false);
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "82") {
+
+            for (var i = 0; i < 10; i++) {
+                exampleEmbed.addField(wallets[i].address,
+                    "[etherscan](https://etherscan.io/address/" + wallets[i].address + "): " + wallets[i].cRatio + "%,  snxBalance:" + wallets[i].snxCount
+                    , false);
+            }
+
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else {
+
+            answer.fields.forEach(function (field) {
+                exampleEmbed.addField(field.title, field.value, field.inline);
+            });
+
+            if (answer.footer.title) {
+                exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
+
+            }
+
+            if (answer.image) {
+                exampleEmbed.attachFiles(['images/' + answer.image])
+                    .setImage('attachment://' + answer.image);
+            }
+
+            if (answer.thumbnail) {
+                exampleEmbed.attachFiles(['images/' + answer.thumbnail])
+                    .setThumbnail('attachment://' + answer.thumbnail);
+            }
+
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+        }
+    } catch (e) {
+        if (doReply) {
+            msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
+        } else {
+            msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***!FAQ question questionNumber***, e.g. **question 1**\nYou can get the question number if you send me **list** in DM");
+        }
+    }
+}
+
 client.on("message", msg => {
 
         if (!msg.author.username.includes("FAQ")) {
@@ -215,6 +508,13 @@ client.on("message", msg => {
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq q ")) {
+                    doQuestion(msg, "!faq q", false);
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq q")) {
+                    const args = msg.content.slice('!faq q'.length);
+                    if (!isNaN(args)) {
+                        doInnerQuestion(args, false, msg);
+                    }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq calculate rewards")) {
                     let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
                     const args = content.slice("faq calculate rewards".length).split(' ');
@@ -333,6 +633,14 @@ client.on("message", msg => {
                         } else if (msg.content.toLowerCase().startsWith("question ")) {
                             console.log("question asked:" + msg.content);
                             doQuestion(msg, "question", true);
+                        } else if (msg.content.toLowerCase().startsWith("q ")) {
+                            console.log("question asked:" + msg.content);
+                            doQuestion(msg, "q", true);
+                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("q")) {
+                            const args = msg.content.slice('q'.length);
+                            if (!isNaN(args)) {
+                                doInnerQuestion(args, true, msg);
+                            }
                         } else if (msg.content == "categories") {
                             listCategories();
                         } else if (msg.content.toLowerCase().startsWith("category")) {
@@ -778,297 +1086,7 @@ client.on("message", msg => {
             const args = msg.content.slice(toSlice.length).split(' ');
             args.shift();
             const command = args.shift();
-
-            try {
-                let rawdata = fs.readFileSync('answers/' + command + '.json');
-                let answer = JSON.parse(rawdata);
-
-                const exampleEmbed = new Discord.MessageEmbed();
-                exampleEmbed.setColor(answer.color);
-                exampleEmbed.setTitle(answer.title);
-                exampleEmbed.setDescription(answer.description);
-                exampleEmbed.setURL(answer.url);
-
-                if (command == "7") {
-
-                    exampleEmbed.addField("Safe low gas price:", lowGasPrice + ' gwei', false);
-                    exampleEmbed.addField("Standard gas price:", gasPrice + ' gwei', false);
-                    exampleEmbed.addField("Fast gas price:", fastGasPrice + ' gwei', false);
-                    exampleEmbed.addField("Instant gas price:", instantGasPrice + ' gwei', false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-
-                } else if (command == "9") {
-
-                    exampleEmbed.addField("USD (binance)", binanceUsd, false);
-                    exampleEmbed.addField("USD (kucoin)", kucoinUsd, false);
-                    exampleEmbed.addField("USD (coingecko)", coingeckoUsd, false);
-                    exampleEmbed.addField("ETH (coingecko):", coingeckoEth, false);
-                    exampleEmbed.addField("BTC (coingecko):", coingeckoBtc, false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else if (command == "61") {
-
-                    https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
-                        let data = '';
-
-                        // A chunk of data has been recieved.
-                        resp.on('data', (chunk) => {
-                            data += chunk;
-                        });
-
-                        // The whole response has been received. Print out the result.
-                        resp.on('end', () => {
-                            let result = JSON.parse(data);
-                            exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
-                            exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
-                            if (doReply) {
-                                msg.reply(exampleEmbed);
-                            } else {
-                                msg.channel.send(exampleEmbed).then(function (message) {
-                                    message.react("❌");
-                                }).catch(function () {
-                                    //Something
-                                });
-                            }
-                        });
-
-                    }).on("error", (err) => {
-                        console.log("Error: " + err.message);
-                    });
-
-                } else if (command == "8") {
-
-                    https.get('https://api.coingecko.com/api/v3/coins/nusd', (resp) => {
-                        let data = '';
-
-                        // A chunk of data has been recieved.
-                        resp.on('data', (chunk) => {
-                            data += chunk;
-                        });
-
-                        // The whole response has been received. Print out the result.
-                        resp.on('end', () => {
-                            let result = JSON.parse(data);
-                            exampleEmbed.addField("USD (coingecko)", result.market_data.current_price.usd, false);
-                            exampleEmbed.addField("USDC (1inch)", usdcPeg, false);
-                            exampleEmbed.addField("USDT (1inch)", usdtPeg, false);
-                            if (result.market_data.current_price.usd == 1 && usdcPeg == 1 && usdtPeg == 1) {
-                                exampleEmbed.attachFiles(['images/perfect.jpg'])
-                                    .setImage('attachment://perfect.jpg');
-                            }
-                            if (doReply) {
-                                msg.reply(exampleEmbed);
-                            } else {
-                                msg.channel.send(exampleEmbed).then(function (message) {
-                                    message.react("❌");
-                                }).catch(function () {
-                                    //Something
-                                });
-                            }
-                        });
-
-                    }).on("error", (err) => {
-                        console.log("Error: " + err.message);
-                    });
-
-                } else if (command == "13") {
-
-                    var today = new Date();
-                    while (today > payday) {
-                        payday.setDate(payday.getDate() + 7);
-                    }
-                    var difference = payday.getTime() - today.getTime();
-                    var seconds = Math.floor(difference / 1000);
-                    var minutes = Math.floor(seconds / 60);
-                    var hours = Math.floor(minutes / 60);
-                    var days = Math.floor(hours / 24);
-                    hours %= 24;
-                    minutes %= 60;
-                    seconds %= 60;
-
-                    exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else if (command == "62") {
-
-                    exampleEmbed.addField("Volume in this period:", periodVolume, false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else if (command == "63") {
-
-                    var distribution = "";
-                    for (var i = 0; i < poolDistribution.length; i++) {
-                        distribution += poolDistribution[i] + " " + poolDistribution[i + 1] + "\n";
-                        i++;
-                    }
-
-                    exampleEmbed.addField("Debt distribution:", distribution, false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else if (command == "66") {
-
-                    var synthsGainers = "";
-                    var synthsBreakEven = "";
-                    var synthsLosers = "";
-                    synths.forEach(function (s) {
-                        let arrow = (s.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (s.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
-                        if (arrow.includes("⤤")) {
-                            synthsGainers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
-                        }
-                        if (arrow.includes("⤥")) {
-                            synthsLosers += s.name + " " + s.price + " " + s.gain + arrow + "\n";
-                        }
-                        if (arrow.includes("-")) {
-                            synthsBreakEven += s.name + " " + s.price + " " + s.gain + arrow + "\n";
-                        }
-                    });
-
-                    exampleEmbed.addField("Synth gainers:", synthsGainers, false);
-                    exampleEmbed.addField("Synth no change:", synthsBreakEven, false);
-                    exampleEmbed.addField("Synth losers:", synthsLosers, false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else if (command == "74") {
-
-                    var synthsPrices = "";
-                    for (var i = 0; i < 10; i++) {
-                        synthsPrices += synths[i].name + " " + synths[i].price + " " + synths[i].gain + " ⤤\n";
-                    }
-
-                    exampleEmbed.addField("Biggest gainers:", synthsPrices, false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else if (command == "75") {
-
-                    var synthsPrices = "";
-                    for (var i = 1; i < 11; i++) {
-                        synthsPrices += synths[synths.length - i].name + " " + synths[synths.length - i].price + " " + synths[synths.length - i].gain + " ⤥\n";
-                    }
-
-                    exampleEmbed.addField("Biggest losers:", synthsPrices, false);
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else if (command == "82") {
-
-                    for (var i = 0; i < 10; i++) {
-                        exampleEmbed.addField(wallets[i].address,
-                            "[etherscan](https://etherscan.io/address/" + wallets[i].address + "): " + wallets[i].cRatio + "%,  snxBalance:" + wallets[i].snxCount
-                            , false);
-                    }
-
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-
-                } else {
-
-                    answer.fields.forEach(function (field) {
-                        exampleEmbed.addField(field.title, field.value, field.inline);
-                    });
-
-                    if (answer.footer.title) {
-                        exampleEmbed.setFooter(answer.footer.title, answer.footer.value);
-
-                    }
-
-                    if (answer.image) {
-                        exampleEmbed.attachFiles(['images/' + answer.image])
-                            .setImage('attachment://' + answer.image);
-                    }
-
-                    if (answer.thumbnail) {
-                        exampleEmbed.attachFiles(['images/' + answer.thumbnail])
-                            .setThumbnail('attachment://' + answer.thumbnail);
-                    }
-
-                    if (doReply) {
-                        msg.reply(exampleEmbed);
-                    } else {
-                        msg.channel.send(exampleEmbed).then(function (message) {
-                            message.react("❌");
-                        }).catch(function () {
-                            //Something
-                        });
-                    }
-                }
-            } catch (e) {
-                if (doReply) {
-                    msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
-                } else {
-                    msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***!FAQ question questionNumber***, e.g. **question 1**\nYou can get the question number if you send me **list** in DM");
-                }
-            }
+            doInnerQuestion(command, doReply, msg);
         }
 
     }
