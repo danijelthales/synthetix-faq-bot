@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "Accessing the Ecosystem\nThere are four ways to acquire the assets needed to trade on Synthetix Exchange:\n\n[Stake SNX](https://synthetix.community/docs/staking-snx-overview) and mint sUSD to trade\nUse Curve.fi or 1inch.exchange to exchange a stable coin such as USDC for sUSD to trade on the Exchange\nUse You can also take out a sETH loan against ETH Collateral [loan](https://synthetix.exchange/loans) on Synthetix Exchange"
+      "value": "Accessing the Ecosystem\nThere are three ways to acquire the assets (sUSD or sETH) needed to trade on Synthetix Exchange:\n\n1) Use Curve.fi or 1inch.exchange to exchange your ETH or stable coin such as USDC for sUSD, to trade on the Exchange\n2) Borrow sETH against ETH Collateral on Synthetix Exchange\n3) Stake SNX on Synthetix Mintr, and mint sUSD to trade (skill level required: high)"
     },
     {
       "title": "Executing a Trade",

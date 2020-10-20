@@ -431,6 +431,7 @@ function doInnerQuestion(command, doReply, msg) {
             for (var i = 0; i < 10; i++) {
                 exampleEmbed.addField(wallets[i].address,
                     "[etherscan](https://etherscan.io/address/" + wallets[i].address + "): " + wallets[i].cRatio + "%,  snxBalance:" + wallets[i].snxCount
+                    + " escrowedSnxCount:" + wallets[i].escrowedSnxCount
                     , false);
             }
 
@@ -2607,14 +2608,16 @@ async function getAllWallets(results) {
 
 class WalletInfo {
 
-    constructor(cRatio, snxCount, address) {
+    constructor(cRatio, snxCount, address, escrowedSnxCount) {
         this.cRatio = cRatio;
         this.snxCount = snxCount;
         this.address = address;
+        this.escrowedSnxCount = escrowedSnxCount;
     }
 
     cRatio;
     snxCount;
+    escrowedSnxCount;
     address;
 }
 
@@ -2635,7 +2638,13 @@ async function getWalletInfo(address) {
         let totalSNXNum = totalSNX.toString() / 1000000000000000000;
         totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
 
-        wallets.push(new WalletInfo(numberCRatio, totalSNXNum, address));
+        const balance = await synthetix.balanceOf(address);
+        let notEscrowedSnx = balance.toString() / 1000000000000000000;
+
+        let escrowedSNX = totalSNXNum - notEscrowedSnx;
+        escrowedSNX = Math.round(((escrowedSNX * 1.0) + Number.EPSILON) * 100) / 100;
+
+        wallets.push(new WalletInfo(numberCRatio, totalSNXNum, address, escrowedSNX));
     } catch (e) {
         //console.log(e);
     }

@@ -1,0 +1,12 @@
+{
+  "title": "Question 85:",
+  "description": "How do I stake SNX?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Please read these resources before staking SNX:\n\n[How to Stake - Synthetix Community Docs](https://synthetix.community/docs/how-to-stake)\n\n[What you need to know before staking SNX for the first time - Synthetix Blog](https://blog.synthetix.io/what-you-need-to-know-before-staking-snx-for-the-first-time/)"
+    }
+  ],
+  "footer": {}
+}

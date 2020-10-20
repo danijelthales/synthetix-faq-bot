@@ -1,0 +1,12 @@
+{
+  "title": "Question 90:",
+  "description": "Where can I buy sUSD to fix my C-ratio?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "There are several places you can buy sUSD, for example if you need some to burn in Mintr to fix your C-ratio.\n\nYou can buy with ETH at:\ndex:\n[1inch.exchange](https://1inch.exchange/#/ETH/sUSD)\n[Uniswap](https://app.uniswap.org/#/swap?outputCurrency=0x57ab1ec28d129707052df4df418d58a2d46d5f51)\n[Balancer](https://balancer.exchange/#/swap/0x57ab1ec28d129707052df4df418d58a2d46d5f51)\n[Mooniswap][https://mooniswap.exchange/#/swap?outputCurrency=0x57ab1ec28d129707052df4df418d58a2d46d5f51)\ncex:\n[Kucoin](https://www.kucoin.com/trade/SUSD-ETH?rcode=e21sNJ)\n\nYou can buy with DAI, USDT, USDC or other stable coins at:\ndex:\n[Curve Finance](https://www.curve.fi/)\ncex: \n[Kucoin](https://www.kucoin.com/trade/SUSD-USDT?rcode=e21sNJ)\n\nYou can buy with BTC at:\n[Kucoin](https://www.kucoin.com/trade/SUSD-BTC?rcode=e21sNJ)"
+    }
+  ],
+  "footer": {}
+}

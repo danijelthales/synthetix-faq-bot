@@ -1,0 +1,12 @@
+{
+  "title": "Question 87:",
+  "description": "The fee to claim is more expensive than my staking reward is worth. What can I do?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "The high fees are a consequence of high gas fees on the Ethereum network due to increased demand. \n\nSolutions that are live or under development:\n\n1. #xsnx \n2. #layer-2\n3. [yEarn](https://yearn.finance/) ySNX Vault\n4. [Debt Pool Snapshots](https://sips.synthetix.io/sips/sip-83)\n\nTips for saving money on gas fees:\n\n1. Claim on the weekends.\n2. Set Gas Price alerts with the @FAQ bot.\n3. Loan your SNX on [Aave](https://aave.com/) in lieu of staking."
+    }
+  ],
+  "footer": {}
+}

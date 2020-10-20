@@ -2,13 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/answers/84.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/84.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/answers/85.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/answers/86.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/answers/87.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/answers/88.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/answers/89.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/answers/90.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/questions/85.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/questions/86.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/questions/87.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/questions/88.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/questions/89.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/questions/90.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/answers/50.json" beforeDir="false" afterPath="$PROJECT_DIR$/answers/50.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/categories/aliases.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/aliases.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/categories/categories.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/categories.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chart1y.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1y.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartall.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartall.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/charticex.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/charticex.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartitrx.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartitrx.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartixmr.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartixmr.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartsdefi.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartsdefi.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,87 +48,91 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="641" column="58" selection-start-line="641" selection-start-column="58" selection-end-line="641" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/questions/82.txt">
+        <entry file="file://$PROJECT_DIR$/questions/90.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="44" selection-end-column="44" />
+              <caret column="39" lean-forward="true" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/questions/83.txt">
+        <entry file="file://$PROJECT_DIR$/questions/85.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="13" selection-start-column="13" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/questions/84.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="8" selection-start-column="8" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/answers/82.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/answers/81.json">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/answers/83.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="5" lean-forward="true" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+              <caret column="19" selection-start-column="19" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/answers/84.json">
+        <entry file="file://$PROJECT_DIR$/questions/88.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+            <state>
+              <caret column="64" lean-forward="true" selection-start-column="64" selection-end-column="64" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TODO.txt">
+        <entry file="file://$PROJECT_DIR$/questions/87.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state>
+              <caret column="82" selection-start-column="82" selection-end-column="82" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+        <entry file="file://$PROJECT_DIR$/answers/89.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="463" column="20" selection-start-line="463" selection-start-column="20" selection-end-line="463" selection-end-column="20" />
+            <state relative-caret-position="34">
+              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answers/85.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answers/88.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="82" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answers/86.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="114" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/questions/89.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="28" selection-start-column="28" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/questions/86.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="94" selection-start-column="94" selection-end-column="94" />
             </state>
           </provider>
         </entry>
@@ -114,15 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.bot</find>
-      <find>clientYaxisPrice</find>
-      <find>handleGasSubscription</find>
-      <find>debt</find>
-      <find>swthPr</find>
-      <find>setInterval</find>
-      <find>poolDistribution</find>
-      <find>currentFees</find>
-      <find>pooldi</find>
       <find>getDashboard</find>
       <find>iss</find>
       <find>collat</find>
@@ -144,6 +162,15 @@
       <find>yfvPrice</find>
       <find>doQuestion</find>
       <find>doInnerQuestion</find>
+      <find>coingeckoEth</find>
+      <find>wallets</find>
+      <find>11</find>
+      <find>63</find>
+      <find>how do i sta</find>
+      <find>stakin</find>
+      <find>how to</find>
+      <find>dev</find>
+      <find>sta</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -184,19 +211,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/answers/69.json" />
-        <option value="$PROJECT_DIR$/questions/69.txt" />
-        <option value="$PROJECT_DIR$/answers/70.json" />
-        <option value="$PROJECT_DIR$/answers/59.json" />
-        <option value="$PROJECT_DIR$/answers/60.json" />
-        <option value="$PROJECT_DIR$/questions/70.txt" />
-        <option value="$PROJECT_DIR$/questions/71.txt" />
-        <option value="$PROJECT_DIR$/answers/71.json" />
-        <option value="$PROJECT_DIR$/answers/72.json" />
-        <option value="$PROJECT_DIR$/questions/72.txt" />
-        <option value="$PROJECT_DIR$/questions/73.txt" />
-        <option value="$PROJECT_DIR$/answers/73.json" />
-        <option value="$PROJECT_DIR$/questions/74.txt" />
         <option value="$PROJECT_DIR$/answers/75.json" />
         <option value="$PROJECT_DIR$/answers/74.json" />
         <option value="$PROJECT_DIR$/answers/53.json" />
@@ -215,7 +229,6 @@
         <option value="$PROJECT_DIR$/questions/80.txt" />
         <option value="$PROJECT_DIR$/questions/81.txt" />
         <option value="$PROJECT_DIR$/answers/81.json" />
-        <option value="$PROJECT_DIR$/categories/categories.json" />
         <option value="$PROJECT_DIR$/answers/19.json" />
         <option value="$PROJECT_DIR$/answers/79.json" />
         <option value="$PROJECT_DIR$/answers/31.json" />
@@ -229,12 +242,26 @@
         <option value="$PROJECT_DIR$/contracts/Synthetix.json" />
         <option value="$PROJECT_DIR$/questions/82.txt" />
         <option value="$PROJECT_DIR$/answers/82.json" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/questions/83.txt" />
         <option value="$PROJECT_DIR$/questions/84.txt" />
         <option value="$PROJECT_DIR$/answers/83.json" />
-        <option value="$PROJECT_DIR$/categories/aliases.json" />
         <option value="$PROJECT_DIR$/answers/84.json" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/answers/50.json" />
+        <option value="$PROJECT_DIR$/answers/86.json" />
+        <option value="$PROJECT_DIR$/answers/85.json" />
+        <option value="$PROJECT_DIR$/answers/87.json" />
+        <option value="$PROJECT_DIR$/answers/88.json" />
+        <option value="$PROJECT_DIR$/answers/89.json" />
+        <option value="$PROJECT_DIR$/categories/aliases.json" />
+        <option value="$PROJECT_DIR$/categories/categories.json" />
+        <option value="$PROJECT_DIR$/answers/90.json" />
+        <option value="$PROJECT_DIR$/questions/90.txt" />
+        <option value="$PROJECT_DIR$/questions/89.txt" />
+        <option value="$PROJECT_DIR$/questions/88.txt" />
+        <option value="$PROJECT_DIR$/questions/87.txt" />
+        <option value="$PROJECT_DIR$/questions/86.txt" />
+        <option value="$PROJECT_DIR$/questions/85.txt" />
       </list>
     </option>
   </component>
@@ -280,15 +307,15 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/questions" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -296,9 +323,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\snx\synthetix-faq-bot\images" />
-      <recent name="C:\snx\synthetix-faq-bot\answers" />
       <recent name="C:\snx\synthetix-faq-bot\questions" />
+      <recent name="C:\snx\synthetix-faq-bot\answers" />
+      <recent name="C:\snx\synthetix-faq-bot\images" />
       <recent name="C:\snx\synthetix-faq-bot\contracts" />
       <recent name="C:\snx\synthetix-faq-bot" />
     </key>
@@ -380,12 +407,15 @@
       <workItem from="1602363981123" duration="1335000" />
       <workItem from="1602714097613" duration="3828000" />
       <workItem from="1602767430765" duration="1277000" />
-      <workItem from="1602941990582" duration="1380000" />
+      <workItem from="1602941990582" duration="2584000" />
+      <workItem from="1603020832483" duration="740000" />
+      <workItem from="1603231070326" duration="2983000" />
+      <workItem from="1603235728911" duration="1239000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="301904000" />
+    <option name="totallyTimeSpent" value="308070000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -396,7 +426,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.19936034" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.20522387" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -406,7 +436,7 @@
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.3846154" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.3846154" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -486,86 +516,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/answers/62.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/61.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="1" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/69.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/71.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/70.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/69.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/67.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/68.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/68.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es2015.core.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3485">
-          <caret line="218" column="13" selection-start-line="218" selection-start-column="13" selection-end-line="218" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/78.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="135" selection-start-line="7" selection-start-column="135" selection-end-line="7" selection-end-column="135" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/79.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/categories/categories.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="145" column="5" lean-forward="true" selection-start-line="145" selection-start-column="5" selection-end-line="145" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/charts/chartytd.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/charts/chartsxrp.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/charts/chartsxag.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/charts/chartsltc.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -692,15 +642,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="641" column="58" selection-start-line="641" selection-start-column="58" selection-end-line="641" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TODO.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="579">
+          <caret line="2636" column="61" lean-forward="true" selection-start-line="2636" selection-start-column="61" selection-end-line="2636" selection-end-column="61" />
         </state>
       </provider>
     </entry>
@@ -718,13 +661,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/84.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/answers/82.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -738,21 +674,139 @@
     <entry file="file://$PROJECT_DIR$/answers/83.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="5" lean-forward="true" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+    <entry file="file://$PROJECT_DIR$/TODO.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="463" column="20" selection-start-line="463" selection-start-column="20" selection-end-line="463" selection-end-column="20" />
+        <state relative-caret-position="306">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/11.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/51.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/50.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/answers/84.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        <state relative-caret-position="221">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="787">
+          <caret line="511" column="22" selection-start-line="511" selection-start-column="22" selection-end-line="511" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/categories/categories.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="579">
+          <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/84.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" selection-start-column="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/90.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" lean-forward="true" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/87.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/88.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/86.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="114" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/89.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/89.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/85.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/90.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="39" lean-forward="true" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/85.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/86.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="94" selection-start-column="94" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/87.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="82" selection-start-column="82" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questions/88.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="64" lean-forward="true" selection-start-column="64" selection-end-column="64" />
         </state>
       </provider>
     </entry>

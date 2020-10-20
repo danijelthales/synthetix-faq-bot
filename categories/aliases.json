@@ -144,10 +144,6 @@
     "alias": "iSynths"
   },
   {
-    "number": 11,
-    "alias": "failing transactions"
-  },
-  {
     "number": 26,
     "alias": "fee reclamation"
   },
@@ -462,5 +458,57 @@
   {
     "number": 84,
     "alias": "igarth"
+  },
+  {
+    "number": 85,
+    "alias": "how to stake"
+  },
+  {
+    "number": 85,
+    "alias": "stake"
+  },
+  {
+    "number": 85,
+    "alias": "staking"
+  },
+  {
+    "number": 87,
+    "alias": "expensive to claim"
+  },
+  {
+    "number": 87,
+    "alias": "expensive claim"
+  },
+  {
+    "number": 86,
+    "alias": "waiting period"
+  },
+  {
+    "number": 86,
+    "alias": "time lock"
+  },
+  {
+    "number": 88,
+    "alias": "buy SNX to fix c-ratio"
+  },
+  {
+    "number": 88,
+    "alias": "buy SNX instead of burning sUSD"
+  },
+  {
+    "number": 89,
+    "alias": "sUSD"
+  },
+  {
+    "number": 89,
+    "alias": "sUSD peg"
+  },
+  {
+    "number": 89,
+    "alias": "sUSD soft-peg"
+  },
+  {
+    "number": 90,
+    "alias": "buy susd"
   }
 ]

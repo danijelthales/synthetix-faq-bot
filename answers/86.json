@@ -1,0 +1,12 @@
+{
+  "title": "Question 86:",
+  "description": "I'm getting the error message: \"Waiting period to burn is still ongoing\". What does this mean?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "There is a [time lock](https://sips.synthetix.io/sips/sip-40) on burning after minting. \n\nThe current waiting period is **24 hours**."
+    }
+  ],
+  "footer": {}
+}

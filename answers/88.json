@@ -1,0 +1,12 @@
+{
+  "title": "Question 88:",
+  "description": "How many SNX do I need to buy to fix my collateralization ratio?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Go to [Mintr](https://mintr.synthetix.io/), click Burn, find the sUSD value under \"Fix your Collateralization Ratio\".\n\nMultiply that sUSD value by **6** and the resulting number is the dollar value of the SNX you need to buy to fix your collateralization ratio."
+    }
+  ],
+  "footer": {}
+}

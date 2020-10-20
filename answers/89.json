@@ -1,0 +1,12 @@
+{
+  "title": "Question 89:",
+  "description": "How does sUSD keep it's peg?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "sUSD is a \"soft-peg\" meaning the peg is determined by supply/demand on the open market. Synthetix has various lever to pull in case in the peg breaks in either direction."
+    }
+  ],
+  "footer": {}
+}
