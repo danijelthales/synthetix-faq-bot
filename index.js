@@ -43,6 +43,9 @@ clientVIDYAPrice.login(process.env.BOT_TOKEN_VIDYA);
 const clientYFVPrice = new Discord.Client();
 clientYFVPrice.login(process.env.BOT_TOKEN_YFV);
 
+const clientYFVOldPrice = new Discord.Client();
+clientYFVOldPrice.login(process.env.BOT_TOKEN_YFV_OLD);
+
 const clientYaxisPrice = new Discord.Client();
 clientYaxisPrice.login(process.env.BOT_TOKEN_YAXIS);
 
@@ -92,6 +95,9 @@ var yusdMarketCap = 257668486;
 
 var yfvPrice = 7.95;
 var yfvMarketCap = 29341110;
+
+var yfvOldPrice = 7.95;
+var yfvOldMarketCap = 29341110;
 
 var vidyaPrice = 0.0298;
 var vidyaEthPrice = 0.00008887;
@@ -1233,7 +1239,7 @@ setInterval(function () {
 
 
 setInterval(function () {
-    https.get('https://api.coingecko.com/api/v3/coins/yfv-finance', (resp) => {
+    https.get('https://api.coingecko.com/api/v3/coins/value-liquidity', (resp) => {
         let data = '';
 
         // A chunk of data has been recieved.
@@ -1248,6 +1254,34 @@ setInterval(function () {
                 yfvPrice = result.market_data.current_price.usd;
                 yfvPrice = Math.round(((yfvPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
                 yfvMarketCap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/yfv-finance', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                yfvOldPrice = result.market_data.current_price.usd;
+                yfvOldPrice = Math.round(((yfvOldPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                yfvOldMarketCap = result.market_data.market_cap.usd;
             } catch (e) {
                 console.log(e);
             }
@@ -1956,6 +1990,10 @@ setInterval(function () {
     clientYFVPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
         value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), {type: 'PLAYING'});
+    });
+    clientYFVOldPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("768480537630343179").setNickname("$" + yfvOldPrice);
+        value.members.cache.get("768480537630343179").user.setActivity("marketcap=$" + getNumberLabel(yfvOldMarketCap), {type: 'PLAYING'});
     });
     clientSwervePrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("766063695037333514").setNickname("$" + swervePrice);
