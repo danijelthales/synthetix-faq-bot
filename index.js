@@ -2706,3 +2706,33 @@ setInterval(function () {
     sortWallets();
 }, 1000 * 100
 )
+
+const clientPayday = new Discord.Client();
+clientPayday.login(process.env.BOT_TOKEN_PAYDAY);
+
+setInterval(function () {
+
+    clientPayday.guilds.cache.forEach(function (value, key) {
+        try {
+
+            var today = new Date();
+            while (today > payday) {
+                payday.setDate(payday.getDate() + 7);
+            }
+            var difference = payday.getTime() - today.getTime();
+            var seconds = Math.floor(difference / 1000);
+            var minutes = Math.floor(seconds / 60);
+            var hours = Math.floor(minutes / 60);
+            var days = Math.floor(hours / 24);
+            hours %= 24;
+            minutes %= 60;
+            seconds %= 60;
+
+            value.members.cache.get("769312697610928158").setNickname(days + " days " + hours + " hours " + minutes + " minutes ");
+            value.members.cache.get("769312697610928158").user.setActivity("🌜⌛💲💲💲⌛🌛", {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+}, 30 * 1000);
