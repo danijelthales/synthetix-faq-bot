@@ -55,6 +55,9 @@ clientYaxisSupply.login(process.env.BOT_TOKEN_YAXIS_SUPPLY);
 const clientSwervePrice = new Discord.Client();
 clientSwervePrice.login(process.env.BOT_TOKEN_SWERVE);
 
+const clientHegicPrice = new Discord.Client();
+clientHegicPrice.login(process.env.BOT_TOKEN_HEGIC);
+
 const clientDodoPrice = new Discord.Client();
 clientDodoPrice.login(process.env.BOT_TOKEN_DODO);
 
@@ -86,6 +89,9 @@ var swerveMarketcap = 5242720;
 
 var dodoPrice = 0.53;
 var dodoMarketcap = 6384478;
+
+var hegicPrice = 0.122;
+var hegicMarketcap = 25416960;
 
 var yaxisCircSupply = 246040.59;
 var yaxisTotalSuuply = 445188.84;
@@ -1352,6 +1358,35 @@ setInterval(function () {
 
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/hegic', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                hegicPrice = result.market_data.current_price.usd;
+                hegicPrice = Math.round(((hegicPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                hegicMarketcap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/meta', (resp) => {
         let data = '';
 
@@ -2002,6 +2037,10 @@ setInterval(function () {
     clientDodoPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("766064081483726909").setNickname("$" + dodoPrice);
         value.members.cache.get("766064081483726909").user.setActivity("marketcap=$" + getNumberLabel(dodoMarketcap), {type: 'PLAYING'});
+    });
+    clientHegicPrice.guilds.cache.forEach(function (value, key) {
+        value.members.cache.get("770275139291185233").setNickname("$" + hegicPrice);
+        value.members.cache.get("770275139291185233").user.setActivity("marketcap=$" + getNumberLabel(hegicMarketcap), {type: 'PLAYING'});
     });
     clientMetaPrice.guilds.cache.forEach(function (value, key) {
         value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
