@@ -1861,8 +1861,7 @@ setInterval(function () {
                         console.log("Error on fetching 1inch peg: ", e);
                     }
                 });
-            } catch
-                (e) {
+            } catch (e) {
                 console.log("Error on fetching 1inch peg: ", e);
             }
 
@@ -1892,9 +1891,8 @@ setInterval(function () {
                     try {
                         let result = JSON.parse(data);
                         usdcPeg = Math.round(((result.price * 1.0) + Number.EPSILON) * 1000) / 1000;
-                    } catch
-                        (e) {
-                        console.log("Error on fetching 1inch peg: ", e);
+                    } catch (e) {
+                        console.log("Error: ", e);
                     }
                 });
             } catch
@@ -1924,12 +1922,16 @@ setInterval(function () {
 
             // The whole response has been received. Print out the result.
             resp.on('end', () => {
-                let result = JSON.parse(data);
-                coingeckoUsd = result.market_data.current_price.usd;
-                coingeckoEth = result.market_data.current_price.eth;
-                coingeckoEth = Math.round(((coingeckoEth * 1.0) + Number.EPSILON) * 1000) / 1000;
-                coingeckoBtc = result.market_data.current_price.btc;
-                coingeckoBtc = Math.round(((coingeckoBtc * 1.0) + Number.EPSILON) * 1000000) / 1000000;
+                try {
+                    let result = JSON.parse(data);
+                    coingeckoUsd = result.market_data.current_price.usd;
+                    coingeckoEth = result.market_data.current_price.eth;
+                    coingeckoEth = Math.round(((coingeckoEth * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    coingeckoBtc = result.market_data.current_price.btc;
+                    coingeckoBtc = Math.round(((coingeckoBtc * 1.0) + Number.EPSILON) * 1000000) / 1000000;
+                } catch (e) {
+                    console.log(e);
+                }
             });
 
         }).on("error", (err) => {
@@ -1951,8 +1953,12 @@ setInterval(function () {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            let result = JSON.parse(data);
-            binanceUsd = Math.round(((result.price * 1.0) + Number.EPSILON) * 100) / 100;
+            try {
+                let result = JSON.parse(data);
+                binanceUsd = Math.round(((result.price * 1.0) + Number.EPSILON) * 100) / 100;
+            } catch (e) {
+                console.log(e);
+            }
         });
 
     }).on("error", (err) => {
@@ -1997,7 +2003,11 @@ setInterval(function () {
         }
     });
     clientEthPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
+        try {
+            value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientgasPrice.guilds.cache.forEach(function (value, key) {
         try {
@@ -2008,52 +2018,100 @@ setInterval(function () {
         }
     });
     clientTknPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
-        value.members.cache.get("745936898870083614").user.setActivity("marketcap=$" + getNumberLabel(tknMarketCap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("745936898870083614").setNickname("$" + tknPrice);
+            value.members.cache.get("745936898870083614").user.setActivity("marketcap=$" + getNumberLabel(tknMarketCap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientCRVPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("746121396396097587").setNickname("$" + crvPrice);
+        try {
+            value.members.cache.get("746121396396097587").setNickname("$" + crvPrice);
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientSWTHPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
-        value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("746120731204649050").setNickname("$" + swthPrice);
+            value.members.cache.get("746120731204649050").user.setActivity("marketcap=$" + getNumberLabel(swthMarketCap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientYUSDPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("758075102779932782").setNickname("$" + yusdPrice);
-        value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("758075102779932782").setNickname("$" + yusdPrice);
+            value.members.cache.get("758075102779932782").user.setActivity("marketcap=$" + getNumberLabel(yusdMarketCap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientYFVPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
-        value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("759166562589868054").setNickname("$" + yfvPrice);
+            value.members.cache.get("759166562589868054").user.setActivity("marketcap=$" + getNumberLabel(yfvMarketCap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientYFVOldPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("768480537630343179").setNickname("$" + yfvOldPrice);
-        value.members.cache.get("768480537630343179").user.setActivity("marketcap=$" + getNumberLabel(yfvOldMarketCap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("768480537630343179").setNickname("$" + yfvOldPrice);
+            value.members.cache.get("768480537630343179").user.setActivity("marketcap=$" + getNumberLabel(yfvOldMarketCap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientSwervePrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("766063695037333514").setNickname("$" + swervePrice);
-        value.members.cache.get("766063695037333514").user.setActivity("marketcap=$" + getNumberLabel(swerveMarketcap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("766063695037333514").setNickname("$" + swervePrice);
+            value.members.cache.get("766063695037333514").user.setActivity("marketcap=$" + getNumberLabel(swerveMarketcap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientDodoPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("766064081483726909").setNickname("$" + dodoPrice);
-        value.members.cache.get("766064081483726909").user.setActivity("marketcap=$" + getNumberLabel(dodoMarketcap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("766064081483726909").setNickname("$" + dodoPrice);
+            value.members.cache.get("766064081483726909").user.setActivity("marketcap=$" + getNumberLabel(dodoMarketcap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientHegicPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("770275139291185233").setNickname("$" + hegicPrice);
-        value.members.cache.get("770275139291185233").user.setActivity("marketcap=$" + getNumberLabel(hegicMarketcap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("770275139291185233").setNickname("$" + hegicPrice);
+            value.members.cache.get("770275139291185233").user.setActivity("marketcap=$" + getNumberLabel(hegicMarketcap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
     clientMetaPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
-        value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), {type: 'PLAYING'});
+        try {
+            value.members.cache.get("757338136039653558").setNickname("$" + metaPrice);
+            value.members.cache.get("757338136039653558").user.setActivity("marketcap=$" + getNumberLabel(metaMarketCap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
 
     clientPicklePrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, {type: 'WATCHING'});
+        try {
+            value.members.cache.get("755401176656379924").user.setActivity("price=$" + picklePrice + " Ξ" + pickleEthPrice, {type: 'WATCHING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
 
     clientVIDYAPrice.guilds.cache.forEach(function (value, key) {
-        value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
-        value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, {type: 'PLAYING'});
+        try {
+            value.members.cache.get("758674094022590525").setNickname("$" + vidyaPrice);
+            value.members.cache.get("758674094022590525").user.setActivity("Ξ" + vidyaEthPrice, {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
     });
 }, 45 * 1000);
 
@@ -2106,9 +2164,13 @@ setInterval(function () {
 
             // The whole response has been received. Print out the result.
             resp.on('end', () => {
-                let result = JSON.parse(data);
-                kucoinUsd = result.data[0].lastTradedPrice;
-                kucoinUsd = Math.round(((kucoinUsd * 1.0) + Number.EPSILON) * 100) / 100;
+                try {
+                    let result = JSON.parse(data);
+                    kucoinUsd = result.data[0].lastTradedPrice;
+                    kucoinUsd = Math.round(((kucoinUsd * 1.0) + Number.EPSILON) * 100) / 100;
+                } catch (e) {
+                    console.log(e);
+                }
             });
 
         }).on("error", (err) => {
@@ -2132,9 +2194,13 @@ setInterval(function () {
 
             // The whole response has been received. Print out the result.
             resp.on('end', () => {
-                let result = JSON.parse(data);
-                yaxisCircSupply = result;
-                yaxisCircSupply = Math.round(((yaxisCircSupply * 1.0) + Number.EPSILON) * 100) / 100;
+                try {
+                    let result = JSON.parse(data);
+                    yaxisCircSupply = result;
+                    yaxisCircSupply = Math.round(((yaxisCircSupply * 1.0) + Number.EPSILON) * 100) / 100;
+                } catch (e) {
+                    console.log(e);
+                }
             });
 
         }).on("error", (err) => {
@@ -2151,9 +2217,13 @@ setInterval(function () {
 
             // The whole response has been received. Print out the result.
             resp.on('end', () => {
-                let result = JSON.parse(data);
-                yaxisTotalSuuply = result;
-                yaxisTotalSuuply = Math.round(((yaxisTotalSuuply * 1.0) + Number.EPSILON) * 100) / 100;
+                try {
+                    let result = JSON.parse(data);
+                    yaxisTotalSuuply = result;
+                    yaxisTotalSuuply = Math.round(((yaxisTotalSuuply * 1.0) + Number.EPSILON) * 100) / 100;
+                } catch (e) {
+                    console.log(e);
+                }
             });
 
         }).on("error", (err) => {
