@@ -62,7 +62,7 @@ const clientDodoPrice = new Discord.Client();
 clientDodoPrice.login(process.env.BOT_TOKEN_DODO);
 
 const clientDrcPrice = new Discord.Client();
-clientDrcPrice.login(process.env.BOT_TOKEN_DODO);
+clientDrcPrice.login(process.env.BOT_TOKEN_DRC);
 
 const replaceString = require('replace-string');
 const https = require('https');
