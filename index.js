@@ -61,6 +61,9 @@ clientHegicPrice.login(process.env.BOT_TOKEN_HEGIC);
 const clientDodoPrice = new Discord.Client();
 clientDodoPrice.login(process.env.BOT_TOKEN_DODO);
 
+const clientDrcPrice = new Discord.Client();
+clientDrcPrice.login(process.env.BOT_TOKEN_DODO);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const redis = require("redis");
@@ -89,6 +92,9 @@ var swerveMarketcap = 5242720;
 
 var dodoPrice = 0.53;
 var dodoMarketcap = 6384478;
+
+var drcPrice = 0.052;
+var drcMarketcap = 501271;
 
 var hegicPrice = 0.122;
 var hegicMarketcap = 25416960;
@@ -1356,6 +1362,34 @@ setInterval(function () {
 
 }, 50 * 1000);
 
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/dracula-token', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                drcPrice = result.market_data.current_price.usd;
+                drcPrice = Math.round(((drcPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                drcMarketcap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/hegic', (resp) => {
@@ -2076,6 +2110,14 @@ setInterval(function () {
         try {
             value.members.cache.get("766064081483726909").setNickname("$" + dodoPrice);
             value.members.cache.get("766064081483726909").user.setActivity("marketcap=$" + getNumberLabel(dodoMarketcap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    clientDrcPrice.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("772406482184175636").setNickname("$" + drcPrice);
+            value.members.cache.get("772406482184175636").user.setActivity("marketcap=$" + getNumberLabel(drcMarketcap), {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
