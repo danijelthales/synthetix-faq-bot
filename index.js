@@ -2778,7 +2778,7 @@ setInterval(function () {
     snxData.synths.issuers({max: 10000}).then(result => {
         getAllWallets(result);
     });
-}, 1000 * 60 * 60 * 1
+}, 1000 * 60 * 60 * 2
 )
 
 async function getAllWallets(results) {
