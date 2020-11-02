@@ -2774,11 +2774,17 @@ setTimeout(function () {
 )
 
 setInterval(function () {
-    wallets = [];
-    snxData.synths.issuers({max: 10000}).then(result => {
-        getAllWallets(result);
-    });
-}, 1000 * 60 * 60 * 2
+    try {
+        var tempWallets = [];
+        for (i = 0; i < (wallets.length > 200 ? 200 : wallets.length); i++) {
+            tempWallets.push(wallets[i]);
+        }
+        wallets = [];
+        getAllWallets(tempWallets);
+    } catch (e) {
+        console.log(e);
+    }
+}, 1000 * 60 * 60 * 1
 )
 
 async function getAllWallets(results) {
