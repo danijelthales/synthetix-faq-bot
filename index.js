@@ -2773,19 +2773,28 @@ setTimeout(function () {
 }, 1000 * 20
 )
 
-setInterval(function () {
-    wallets = [];
-    snxData.synths.issuers({max: 10000}).then(result => {
-        getAllWallets(result);
-    });
-}, 1000 * 60 * 100 * 1
+
+setTimeout(function () {
+    setInterval(function () {
+        wallets = [];
+        snxData.synths.issuers({max: 10000}).then(result => {
+            getAllWallets(result);
+        });
+    }, 1000 * 60 * 10
+    )
+}, 1000 * 60 * 60
 )
+
+
+var ignoreAddresses = new Set();
 
 async function getAllWallets(results) {
     try {
         for (let i = 0; i < results.length; i++) {
             try {
-                getWalletInfo(results[i]);
+                if (!ignoreAddresses.has(results[i])) {
+                    getWalletInfo(results[i]);
+                }
                 await delay(500);
             } catch (e) {
                 //console.log(e);
@@ -2820,14 +2829,22 @@ async function getWalletInfo(address) {
         const cRatio = await synthetix.collateralisationRatio(address);
         let numberCRatio = 100000000000000000000 / cRatio.toString();
         if (numberCRatio == Infinity) {
+            ignoreAddresses.add(address);
             return;
         }
         numberCRatio = Math.round(((numberCRatio * 1.0) + Number.EPSILON) * 100) / 100;
-
+        if (numberCRatio > 300) {
+            ignoreAddresses.add(address);
+            return;
+        }
 
         const totalSNX = await synthetix.collateral(address);
         let totalSNXNum = totalSNX.toString() / 1000000000000000000;
         totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
+        if (totalSNXNum < 1000 && numberCRatio > 250) {
+            ignoreAddresses.add(address);
+            return;
+        }
 
         const balance = await synthetix.balanceOf(address);
         let notEscrowedSnx = balance.toString() / 1000000000000000000;
@@ -2848,6 +2865,9 @@ function sortWallets() {
         wallets.sort(function (a, b) {
             return a.cRatio - b.cRatio;
         });
+        if (wallets.length > 20) {
+            wallets = wallets.slice(0, 20);
+        }
     } catch (e) {
         console.log(e);
     }

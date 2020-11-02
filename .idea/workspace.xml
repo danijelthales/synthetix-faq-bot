@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="2780" column="19" selection-start-line="2780" selection-start-column="19" selection-end-line="2780" selection-end-column="19" />
+            <state relative-caret-position="280">
+              <caret line="2773" column="1" lean-forward="true" selection-start-line="2773" selection-start-column="1" selection-end-line="2773" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -30,7 +31,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
+            <state relative-caret-position="20315">
               <caret line="1208" column="4" selection-start-line="1208" selection-start-column="4" selection-end-line="1208" selection-end-column="4" />
             </state>
           </provider>
@@ -184,6 +185,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -216,7 +218,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -328,12 +329,13 @@
       <workItem from="1603979351133" duration="1918000" />
       <workItem from="1604016831408" duration="2287000" />
       <workItem from="1604226159684" duration="2954000" />
-      <workItem from="1604321547670" duration="2288000" />
+      <workItem from="1604321547670" duration="2902000" />
+      <workItem from="1604357743611" duration="1155000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="330883000" />
+    <option name="totallyTimeSpent" value="332652000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -344,7 +346,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.22547974" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.22761194" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -727,24 +729,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="73" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="73" />
+        <state relative-caret-position="280">
+          <caret line="2773" column="1" lean-forward="true" selection-start-line="2773" selection-start-column="1" selection-end-line="2773" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
+        <state relative-caret-position="20315">
           <caret line="1208" column="4" selection-start-line="1208" selection-start-column="4" selection-end-line="1208" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
+    <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="2780" column="19" selection-start-line="2780" selection-start-column="19" selection-end-line="2780" selection-end-column="19" />
+        <state relative-caret-position="272">
+          <caret line="16" column="73" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="73" />
         </state>
       </provider>
     </entry>
