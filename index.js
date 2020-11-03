@@ -446,10 +446,10 @@ function doInnerQuestion(command, doReply, msg) {
 
         } else if (command == "82") {
 
-            for (var i = 0; i < 10; i++) {
-                exampleEmbed.addField(wallets[i].address,
-                    "[etherscan](https://etherscan.io/address/" + wallets[i].address + "): " + wallets[i].cRatio + "%,  snxBalance:" + wallets[i].snxCount
-                    + " escrowedSnxCount:" + wallets[i].escrowedSnxCount
+            for (var i = 0; i < (walletsToReturn.length > 20 ? 20 : walletsToReturn.length); i++) {
+                exampleEmbed.addField(walletsToReturn[i].address,
+                    "[etherscan](https://etherscan.io/address/" + walletsToReturn[i].address + "): " + walletsToReturn[i].cRatio + "%,  snxBalance:" + walletsToReturn[i].snxCount
+                    + " escrowedSnxCount:" + walletsToReturn[i].escrowedSnxCount
                     , false);
             }
 
@@ -2822,6 +2822,9 @@ class WalletInfo {
 }
 
 var wallets = [];
+var mapToReturn = new Map();
+var walletsToReturn = [];
+
 
 async function getWalletInfo(address) {
     try {
@@ -2865,6 +2868,9 @@ function sortWallets() {
         wallets.sort(function (a, b) {
             return a.cRatio - b.cRatio;
         });
+        wallets.forEach(w => {
+            mapToReturn.set(w.address, w);
+        });
         if (wallets.length > 20) {
             wallets = wallets.slice(0, 20);
         }
@@ -2875,8 +2881,29 @@ function sortWallets() {
 
 setInterval(function () {
     sortWallets();
-}, 1000 * 100
+}, 1000 * 55
 )
+
+setInterval(function () {
+    sortWalletsToReturn();
+}, 1000 * 60
+)
+
+function sortWalletsToReturn() {
+    try {
+        for (const [key, value] of mapToReturn.entries()) {
+            walletsToReturn.push(value);
+        }
+        walletsToReturn.sort(function (a, b) {
+            return a.cRatio - b.cRatio;
+        });
+        if (walletsToReturn.length > 20) {
+            walletsToReturn = walletsToReturn.slice(0, 20);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 const clientPayday = new Discord.Client();
 clientPayday.login(process.env.BOT_TOKEN_PAYDAY);
