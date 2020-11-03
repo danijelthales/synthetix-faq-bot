@@ -2891,6 +2891,7 @@ setInterval(function () {
 
 function sortWalletsToReturn() {
     try {
+        walletsToReturn = [];
         for (const [key, value] of mapToReturn.entries()) {
             walletsToReturn.push(value);
         }
