@@ -526,5 +526,9 @@
   {
     "number": 91,
     "alias": "simp posting"
+  },
+  {
+    "number": 92,
+    "alias": "flagged wallets"
   }
 ]

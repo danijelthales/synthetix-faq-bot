@@ -66,6 +66,7 @@ clientDrcPrice.login(process.env.BOT_TOKEN_DRC);
 
 const replaceString = require('replace-string');
 const https = require('https');
+const http = require('http');
 const redis = require("redis");
 let redisClient = null;
 
@@ -450,6 +451,26 @@ function doInnerQuestion(command, doReply, msg) {
                 exampleEmbed.addField(walletsToReturn[i].address,
                     "[etherscan](https://etherscan.io/address/" + walletsToReturn[i].address + "): " + walletsToReturn[i].cRatio + "%,  snxBalance:" + walletsToReturn[i].snxCount
                     + " escrowedSnxCount:" + walletsToReturn[i].escrowedSnxCount
+                    , false);
+            }
+
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
+        } else if (command == "92") {
+
+            for (const [key, value] of flaggedAccountsMap.entries()) {
+                exampleEmbed.addField(key,
+                    "[etherscan](https://etherscan.io/address/" + key + "): " + value.cRatio + "%,  snxBalance:" + value.snxCount
+                    + " escrowedSnxCount:" + value.escrowedSnxCount + " flaggedTime:" + value.flaggedTime +
+                    "\nETA to liquidation:" + value.etaToLiquidation
                     , false);
             }
 
@@ -2819,6 +2840,8 @@ class WalletInfo {
     snxCount;
     escrowedSnxCount;
     address;
+    flaggedTime;
+    etaToLiquidation;
 }
 
 var wallets = [];
@@ -2935,3 +2958,120 @@ setInterval(function () {
     });
 
 }, 30 * 1000);
+
+
+var flaggedAccountsMap = new Map();
+
+setInterval(function () {
+    try {
+        http.get('http://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=1&toBlock=latest&topic0=0xc77e4625de0c70adaf3bd1aabb5f22f9eae8f565367c706fc209030c13857996', (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                try {
+                    let result = JSON.parse(data);
+                    var results = result.result;
+                    var flaggedWallet = new Object();
+                    var tempFlaggedAccountsMap = new Map();
+                    results.forEach(fl => {
+                        var address = fl.topics[1];
+                        address = address.substring(26, address.length);
+                        var flaggedTime = fl.timeStamp;
+                        flaggedTime = parseInt(flaggedTime, 16);
+                        var w = new WalletInfo();
+                        w.flaggedTime = new Date(flaggedTime * 1000);
+                        tempFlaggedAccountsMap.set(address, w);
+                    });
+                    for (const [key, value] of tempFlaggedAccountsMap.entries()) {
+                        if (!flaggedAccountsMap.get(key)) {
+                            flaggedAccountsMap.set(key, value);
+                        }
+                    }
+                    for (const [key, value] of flaggedAccountsMap.entries()) {
+                        if (!tempFlaggedAccountsMap.get(key)) {
+                            flaggedAccountsMap.delete(key);
+                        }
+                    }
+
+                } catch (e) {
+                    console.log(e);
+                }
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}, 50 * 1000);
+
+
+setInterval(function () {
+    try {
+        for (const [key, value] of flaggedAccountsMap.entries()) {
+            getFlaggedWalletInfo(key);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}, 65 * 1000);
+
+
+async function getFlaggedWalletInfo(address) {
+    try {
+
+        const cRatio = await synthetix.collateralisationRatio(address);
+        let numberCRatio = 100000000000000000000 / cRatio.toString();
+        if (numberCRatio == Infinity) {
+            ignoreAddresses.add(address);
+            return;
+        }
+        numberCRatio = Math.round(((numberCRatio * 1.0) + Number.EPSILON) * 100) / 100;
+        if (numberCRatio > 300) {
+            ignoreAddresses.add(address);
+            return;
+        }
+
+        const totalSNX = await synthetix.collateral(address);
+        let totalSNXNum = totalSNX.toString() / 1000000000000000000;
+        totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
+        if (totalSNXNum < 1000 && numberCRatio > 250) {
+            ignoreAddresses.add(address);
+            return;
+        }
+
+        const balance = await synthetix.balanceOf(address);
+        let notEscrowedSnx = balance.toString() / 1000000000000000000;
+
+        let escrowedSNX = totalSNXNum - notEscrowedSnx;
+        escrowedSNX = Math.round(((escrowedSNX * 1.0) + Number.EPSILON) * 100) / 100;
+
+        var w = new WalletInfo(numberCRatio, totalSNXNum, address, escrowedSNX);
+        w.flaggedTime = flaggedAccountsMap.get(address).flaggedTime;
+        var liquidationDate = new Date(w.flaggedTime);
+        liquidationDate.setDate(liquidationDate.getDate() + 3);
+        var difference = liquidationDate.getTime() - (new Date()).getTime();
+        if (difference > 0) {
+            var seconds = Math.floor(difference / 1000);
+            var minutes = Math.floor(seconds / 60);
+            var hours = Math.floor(minutes / 60);
+            var days = Math.floor(hours / 24);
+            hours %= 24;
+            minutes %= 60;
+            seconds %= 60;
+            w.etaToLiquidation = days + " days " + hours + " hours " + minutes + " minutes ";
+        } else {
+            w.etaToLiquidation = "0";
+        }
+        flaggedAccountsMap.set(address, w);
+    } catch (e) {
+        //console.log(e);
+    }
+}
