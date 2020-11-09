@@ -64,6 +64,9 @@ clientDodoPrice.login(process.env.BOT_TOKEN_DODO);
 const clientDrcPrice = new Discord.Client();
 clientDrcPrice.login(process.env.BOT_TOKEN_DRC);
 
+const clientPerpPrice = new Discord.Client();
+clientPerpPrice.login(process.env.BOT_TOKEN_PERP);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const http = require('http');
@@ -93,6 +96,9 @@ var swerveMarketcap = 5242720;
 
 var dodoPrice = 0.53;
 var dodoMarketcap = 6384478;
+
+var perpPrice = 0.89;
+var perpMarketcap = 13626611;
 
 var drcPrice = 0.052;
 var drcMarketcap = 501271;
@@ -1413,6 +1419,35 @@ setInterval(function () {
 
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/perpetual-protocol', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                perpPrice = result.market_data.current_price.usd;
+                perpPrice = Math.round(((perpPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                perpMarketcap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/hegic', (resp) => {
         let data = '';
 
@@ -2139,6 +2174,14 @@ setInterval(function () {
         try {
             value.members.cache.get("772406482184175636").setNickname("$" + drcPrice);
             value.members.cache.get("772406482184175636").user.setActivity("marketcap=$" + getNumberLabel(drcMarketcap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    clientPerpPrice.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("775312068106125343").setNickname("$" + perpPrice);
+            value.members.cache.get("775312068106125343").user.setActivity("marketcap=$" + getNumberLabel(perpMarketcap), {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
