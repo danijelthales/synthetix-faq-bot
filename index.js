@@ -67,6 +67,9 @@ clientDrcPrice.login(process.env.BOT_TOKEN_DRC);
 const clientPerpPrice = new Discord.Client();
 clientPerpPrice.login(process.env.BOT_TOKEN_PERP);
 
+const clientNecPrice = new Discord.Client();
+clientNecPrice.login(process.env.BOT_TOKEN_NEC);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const http = require('http');
@@ -93,6 +96,9 @@ var crvPrice = 3.84;
 
 var swervePrice = 0.668;
 var swerveMarketcap = 5242720;
+
+var necPrice = 0.159;
+var necMarketcap = 25318817;
 
 var dodoPrice = 0.53;
 var dodoMarketcap = 6384478;
@@ -1390,6 +1396,34 @@ setInterval(function () {
 }, 50 * 1000);
 
 setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/nectar-token', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                necPrice = result.market_data.current_price.usd;
+                necPrice = Math.round(((necPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                necMarketcap = result.market_data.market_cap.usd;
+            } catch (e) {
+                console.log(e);
+            }
+
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/dracula-token', (resp) => {
         let data = '';
 
@@ -2182,6 +2216,14 @@ setInterval(function () {
         try {
             value.members.cache.get("775312068106125343").setNickname("$" + perpPrice);
             value.members.cache.get("775312068106125343").user.setActivity("marketcap=$" + getNumberLabel(perpMarketcap), {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    clientNecPrice.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("776881969450582026").setNickname("$" + necPrice);
+            value.members.cache.get("776881969450582026").user.setActivity("marketcap=$" + getNumberLabel(necMarketcap), {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -3054,6 +3096,43 @@ setInterval(function () {
         console.log(e);
     }
 }, 50 * 1000);
+
+// setInterval(function () {
+//     try {
+//         http.get('http://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=1&toBlock=latest&topic0=0xaadb11d74982254be0fa96d24a08db29d68f446bc96b3092a9c9120b5c89caf2', (resp) => {
+//             let data = '';
+//
+//             // A chunk of data has been recieved.
+//             resp.on('data', (chunk) => {
+//                 data += chunk;
+//             });
+//
+//             // The whole response has been received. Print out the result.
+//             resp.on('end', () => {
+//                 try {
+//                     let result = JSON.parse(data);
+//                     var results = result.result;
+//                     var sum = 0
+//                     results.forEach(fl => {
+//                         var dat = fl.data;
+//                         dat = dat.substring(2, 66);
+//                         var dec= parseInt(dat, 16)/1000000000000000000;
+//                         sum=sum+dec;
+//                     });
+//                     console.log("Total liquidated SNX:" + sum);
+//
+//                 } catch (e) {
+//                     console.log(e);
+//                 }
+//             });
+//
+//         }).on("error", (err) => {
+//             console.log("Error: " + err.message);
+//         });
+//     } catch (e) {
+//         console.log(e);
+//     }
+// }, 10 * 1000);
 
 
 setInterval(function () {
