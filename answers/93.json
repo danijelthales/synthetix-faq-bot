@@ -1,0 +1,12 @@
+{
+  "title": "Question 93:",
+  "description": "What is the APY for staking SNX?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "View the current APY here: [stats.synthetix.io](https://stats.synthetix.io/#staking)."
+    }
+  ],
+  "footer": {}
+}

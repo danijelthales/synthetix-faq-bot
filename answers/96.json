@@ -1,0 +1,12 @@
+{
+  "title": "Question 96:",
+  "description": "What is dHedge?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "dHedge is a decentralized asset management protocol, connecting investment managers with investors on the Ethereum blockchain in a permissionless, non-custodial, trustless fashion. It is powered by Synthetix Protocol. Users can put their capital to work in different strategies based on a transparent track record of the various traders.\n\n[dHEDGE website](https://www.dhedge.org)\n[What is dHEDGE - Docs](https://docs.dhedge.org)\n\nThe best way to keep track of dHedge developments is through their [Discord](https://discord.gg/BAWTbRA)  channel."
+    }
+  ],
+  "footer": {}
+}

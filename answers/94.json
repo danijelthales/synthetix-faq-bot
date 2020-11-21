@@ -1,0 +1,12 @@
+{
+  "title": "Question 94:",
+  "description": "What are the incentives of the Synthetix system?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Synthetix has a number of different ways to incentivise participants to create a healthy platform. You may for example have heard about rewards for holding certain inverse synths like iBTC or iETH.\n\nYou can read about the current incentives here: [Incentives - Synthetix System Documentation](https://docs.synthetix.io/incentives/)"
+    }
+  ],
+  "footer": {}
+}

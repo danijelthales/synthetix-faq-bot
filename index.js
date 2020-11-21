@@ -154,7 +154,7 @@ var coingeckoBtc = 0.000351;
 var binanceUsd = 3.74;
 var kucoinUsd = 3.74;
 
-var payday = new Date('2020-08-12 11:23');
+var payday = new Date('2020-08-12 11:53');
 
 const Synth = class {
     constructor(name, price, gain) {

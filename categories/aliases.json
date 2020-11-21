@@ -530,5 +530,33 @@
   {
     "number": 92,
     "alias": "flagged wallets"
+  },
+  {
+    "number": 93,
+    "alias": "APY"
+  },
+  {
+    "number": 94,
+    "alias": "incentives"
+  },
+  {
+    "number": 95,
+    "alias": "binary options"
+  },
+  {
+    "number": 95,
+    "alias": "bos"
+  },
+  {
+    "number": 95,
+    "alias": "binary"
+  },
+  {
+    "number": 96,
+    "alias": "dhedge"
+  },
+  {
+    "number": 97,
+    "alias": "kwenta"
   }
 ]

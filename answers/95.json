@@ -1,0 +1,12 @@
+{
+  "title": "Question 95:",
+  "description": "What are Binary Options?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Binary options are a type of options contract that provides a fixed return based on a binary (either one or another) outcome in the future. They pay out on a certain date if the price of a chosen asset is above (or below) a level specified at the creation of the option.\n\n[How binary options work](https://blog.synthetix.io/how-binary-options-work/)\n\nCurrently there is the ability to purchase options on the price of popular cryptocurrencies, commodities, indices, and equities over various timeframes. More options will be added in the future. \n\nBinary Options are currently in beta on Synthetix Exchange: [Synthetix Exchange - Options](https://synthetix.exchange/#/options), give them a try. You can even create your own binary options trade for others to participate in."
+    }
+  ],
+  "footer": {}
+}
