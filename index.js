@@ -204,6 +204,7 @@ if (process.env.REDIS_URL) {
 
 }
 
+let channel = null;
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
@@ -1671,10 +1672,6 @@ setInterval(function () {
                 fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
                 instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                // gasPrice = result.standard;
-                // fastGasPrice = result.fast;
-                // lowGasPrice = result.slow;
-                // instantGasPrice = result.instant;
             } catch (e) {
                 console.log(e);
             }
@@ -2129,14 +2126,6 @@ setInterval(function () {
     clientEthPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745936624935895071").setNickname("$" + ethPrice);
-        } catch (e) {
-            console.log(e);
-        }
-    });
-    clientgasPrice.guilds.cache.forEach(function (value, key) {
-        try {
-            value.members.cache.get("745936096336019578").setNickname(gasPrice + " gwei");
-            value.members.cache.get("745936096336019578").user.setActivity("fast=" + fastGasPrice + " slow=" + lowGasPrice, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -3197,3 +3186,39 @@ async function getFlaggedWalletInfo(address) {
         //console.log(e);
     }
 }
+
+
+setInterval(function () {
+    try {
+        https.get('https://api.etherscan.io/api?module=account&action=balance&address=0xac63b3a69604925dadf2abd13877d7a4a7113308&tag=latest', (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                try {
+                    let result = JSON.parse(data);
+
+                    let ethBalance = result.result / 1e18;
+
+                    if (ethBalance < 0.5) {
+                        client.channels.fetch('705191770903806022').then(c => {
+                            c.send("https://etherscan.io/address/0xac63b3a69604925dadf2abd13877d7a4a7113308 has less than 0.5 ETH")
+                        });
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}, 60 * 1000 * 60);
