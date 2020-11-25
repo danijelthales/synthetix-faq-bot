@@ -19,9 +19,6 @@ clientTknPrice.login(process.env.BOT_TOKEN_TKN);
 const clientEthPrice = new Discord.Client();
 clientEthPrice.login(process.env.BOT_TOKEN_ETH);
 
-const clientgasPrice = new Discord.Client();
-clientgasPrice.login(process.env.BOT_TOKEN_GAS);
-
 const clientCRVPrice = new Discord.Client();
 clientCRVPrice.login(process.env.BOT_TOKEN_CRV);
 
