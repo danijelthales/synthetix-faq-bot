@@ -558,5 +558,21 @@
   {
     "number": 97,
     "alias": "kwenta"
+  },
+  {
+    "number": 98,
+    "alias": "L2 rewards"
+  },
+  {
+    "number": 98,
+    "alias": "L2 reward"
+  },
+  {
+    "number": 99,
+    "alias": "hedge debt"
+  },
+  {
+    "number": 99,
+    "alias": "hedge"
   }
 ]

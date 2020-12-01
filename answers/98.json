@@ -1,0 +1,12 @@
+{
+  "title": "Question 98:",
+  "description": "I'm not getting as much SNX rewards on L2 as I did before, how can this be?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "There was a fixed amount of SNX added to the reward pool on L2. This pool was created to simulate the rewards pool (just like on L1). During the this test phase, users could burn, mint and claim SNX/sUSD. Rewards claimed on L2 come from that fixed rewards pool. Since there's currently no way to fill the rewards pool, this pool will drain. This amount has already been rewarded in the first 4 weeks of testing (by claiming weekly on L2). What you're claiming now is merely the residuals of the rewards pool that is not being claimed by others (and are rolled over to the next claiming period, just like on L1). You're basically scrapping the bottom of the barrel."
+    }
+  ],
+  "footer": {}
+}

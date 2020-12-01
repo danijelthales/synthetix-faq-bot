@@ -1,0 +1,12 @@
+{
+  "title": "Question 99:",
+  "description": "How can I hedge my debt?",
+  "color": "0099ff",
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "Dhedge has sponsored a pool as a gift to SNX community that tracks the synths distribution in debt. You can invest your minted susd to track debt [here](https://app.dhedge.org/pool/0x3a4851597f36f459b58e65c55c8f3a8710313fc7)"
+    }
+  ],
+  "footer": {}
+}
