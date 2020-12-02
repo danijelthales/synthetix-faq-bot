@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/answers/98.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/answers/99.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/questions/98.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/questions/99.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/categories/aliases.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/aliases.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/categories/categories.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/categories.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +19,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="153" column="39" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questions/98.txt">
           <provider selected="true" editor-type-id="text-editor">
@@ -55,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/answers/99.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
-              <caret line="2" column="18" lean-forward="true" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="42" />
+              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -69,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/categories/aliases.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="623">
-              <caret line="569" column="3" lean-forward="true" selection-start-line="569" selection-start-column="3" selection-end-line="569" selection-end-column="3" />
+              <caret line="569" column="3" selection-start-line="569" selection-start-column="3" selection-end-line="569" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -91,7 +95,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getAllWallets</find>
       <find>lowest wallet</find>
       <find>lowest wall</find>
       <find>sortWalletsToReturn</find>
@@ -121,6 +124,7 @@
       <find>ethers</find>
       <find>laye</find>
       <find>hedge</find>
+      <find>payda</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -205,13 +209,13 @@
         <option value="$PROJECT_DIR$/questions/96.txt" />
         <option value="$PROJECT_DIR$/answers/95.json" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/questions/98.txt" />
         <option value="$PROJECT_DIR$/answers/98.json" />
         <option value="$PROJECT_DIR$/categories/categories.json" />
         <option value="$PROJECT_DIR$/answers/99.json" />
         <option value="$PROJECT_DIR$/questions/99.txt" />
         <option value="$PROJECT_DIR$/categories/aliases.json" />
+        <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
@@ -227,17 +231,13 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="answers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
@@ -249,16 +249,10 @@
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
               <item name="contracts" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
-              <item name="questions" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,12 +377,13 @@
       <workItem from="1605979295366" duration="3155000" />
       <workItem from="1606262410742" duration="3091000" />
       <workItem from="1606410215549" duration="3435000" />
-      <workItem from="1606785632572" duration="583000" />
+      <workItem from="1606785632572" duration="1183000" />
+      <workItem from="1606909564867" duration="53000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="363739000" />
+    <option name="totallyTimeSpent" value="364392000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -399,7 +394,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.25708178" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.25975415" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
@@ -760,13 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="2790" selection-start-line="2790" selection-end-line="2790" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -781,17 +769,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/questions/98.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="75" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/answers/97.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/categories/categories.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -802,17 +790,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questions/98.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="75" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/answers/99.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="18" lean-forward="true" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="42" />
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -823,10 +804,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/categories/categories.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/categories/aliases.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="623">
-          <caret line="569" column="3" lean-forward="true" selection-start-line="569" selection-start-column="3" selection-end-line="569" selection-end-column="3" />
+          <caret line="569" column="3" selection-start-line="569" selection-start-column="3" selection-end-line="569" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="153" column="39" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
         </state>
       </provider>
     </entry>
