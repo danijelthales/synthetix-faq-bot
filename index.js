@@ -3295,7 +3295,7 @@ setInterval(getCouncil, 1000 * 60 * 2);
 
 setInterval(function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 180}).then(result => {
+        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 300}).then(result => {
             console.log("Fetching exchanges in last 5 min");
             result.forEach(r => {
                 try {
@@ -3316,5 +3316,28 @@ setInterval(function () {
         console.log(e);
     }
 }, 1000 * 60 * 5);
+
+
+setInterval(function () {
+    try {
+        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 60}).then(result => {
+            console.log("Fetching exchanges in last minute");
+            result.forEach(r => {
+                try {
+                    console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
+                    console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
+                    client.channels.fetch('705191770903806022').then(c => {
+                        c.send("Trade made:" + " Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey + "."
+                            + "Trx: https://etherscan.io/tx/" + r.hash);
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
+            })
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}, 1000 * 60);
 
 
