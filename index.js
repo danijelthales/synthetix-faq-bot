@@ -3276,7 +3276,7 @@ setInterval(function () {
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD > 100000) {
                         client.channels.fetch('736134573691371654').then(c => {
-                            c.send("Large trade made:" + " Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey + "."
+                            c.send("Large trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
                                 + "Trx: https://etherscan.io/tx/" + r.hash);
                         });
                     }
@@ -3300,7 +3300,7 @@ setInterval(function () {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     client.channels.fetch('705191770903806022').then(c => {
-                        c.send("Trade made:" + " Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey + "."
+                        c.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
                             + "Trx: https://etherscan.io/tx/" + r.hash);
                     });
                 } catch (e) {
@@ -3312,5 +3312,48 @@ setInterval(function () {
         console.log(e);
     }
 }, 1000 * 60);
+
+let volume = 100000;
+let distinctTraders = new Set();
+
+function getVolume() {
+    volume = 0;
+    distinctTraders = new Set();
+    try {
+        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 3600 * 24}).then(result => {
+            console.log("Fetching exchanges in last minute");
+            result.forEach(r => {
+                try {
+                    volume += r.toAmountInUSD;
+                    distinctTraders.add(r.fromAddress)
+                } catch (e) {
+                    console.log(e);
+                }
+            })
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+getVolume();
+setInterval(function () {
+    getVolume();
+}, 1000 * 60 * 30);
+
+const clientKwenta = new Discord.Client();
+clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
+setInterval(function () {
+
+    clientKwenta.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get("784489616781869067").setNickname("24h=$" + getNumberLabel(volume));
+            value.members.cache.get("784489616781869067").user.setActivity("Traders=" + distinctTraders.size, {type: 'PLAYING'});
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+}, 60 * 1000)
 
 
