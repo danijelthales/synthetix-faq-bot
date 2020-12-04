@@ -494,6 +494,35 @@ function doInnerQuestion(command, doReply, msg) {
                 });
             }
 
+        } else if (command == "100") {
+
+            let counter = 1;
+            for (c of council) {
+                exampleEmbed.addField(counter++, c, false);
+            }
+
+            var today = new Date();
+            var difference = voteDay.getTime() - today.getTime();
+            var seconds = Math.floor(difference / 1000);
+            var minutes = Math.floor(seconds / 60);
+            var hours = Math.floor(minutes / 60);
+            var days = Math.floor(hours / 24);
+            hours %= 24;
+            minutes %= 60;
+            seconds %= 60;
+
+            exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
+
+            if (doReply) {
+                msg.reply(exampleEmbed);
+            } else {
+                msg.channel.send(exampleEmbed).then(function (message) {
+                    message.react("❌");
+                }).catch(function () {
+                    //Something
+                });
+            }
+
         } else {
 
             answer.fields.forEach(function (field) {
@@ -2249,6 +2278,8 @@ setInterval(function () {
     });
 }, 45 * 1000);
 
+//FIXME: dont forget
+
 function getNumberLabel(labelValue) {
 
     // Nine Zeroes for Billions
@@ -3219,3 +3250,45 @@ setInterval(function () {
         console.log(e);
     }
 }, 60 * 1000 * 60);
+
+
+let council = [];
+let voteDay = new Date('2020-12-08 00:00');
+
+async function getCouncil() {
+    try {
+        const browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
+        const page = await browser.newPage();
+        await page.setViewport({width: 1000, height: 926});
+        await page.goto("https://council.synthetix.io/#/synthetixcouncil/proposal/QmQREHVu11dognYVbHhNSHrxeiMAzoChAsqvD68VtqAo69", {waitUntil: 'networkidle2'});
+
+        await delay(10000);
+
+        /** @type {string[]} */
+        var prices = await page.evaluate(() => {
+            var div = document.querySelectorAll('div.p-4 .mb-1');
+
+            var prices = []
+            div.forEach(element => {
+                prices.push(element.textContent);
+            });
+
+            return prices
+        })
+
+        council = [];
+        council = council.concat(prices.slice(6, 13));
+        browser.close()
+    } catch (e) {
+        console.log("Error happened on getting data from SNX tools.");
+        console.log(e);
+    }
+}
+
+setTimeout(getCouncil, 1000 * 30);
+setInterval(getCouncil, 1000 * 60 * 2);
