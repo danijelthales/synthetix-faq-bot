@@ -1338,33 +1338,6 @@ setInterval(function () {
 
 }, 50 * 1000);
 
-setInterval(function () {
-    https.get('https://api.coingecko.com/api/v3/coins/yfv-finance', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            try {
-                let result = JSON.parse(data);
-                yfvOldPrice = result.market_data.current_price.usd;
-                yfvOldPrice = Math.round(((yfvOldPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                yfvOldMarketCap = result.market_data.market_cap.usd;
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 50 * 1000);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/swerve-dao', (resp) => {
