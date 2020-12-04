@@ -3292,3 +3292,29 @@ async function getCouncil() {
 
 setTimeout(getCouncil, 1000 * 30);
 setInterval(getCouncil, 1000 * 60 * 2);
+
+setInterval(function () {
+    try {
+        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 180}).then(result => {
+            console.log("Fetching exchanges in last 5 min");
+            result.forEach(r => {
+                try {
+                    console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
+                    console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
+                    if (r.toAmountInUSD > 100000) {
+                        client.channels.fetch('736134573691371654').then(c => {
+                            c.send("Large trade made:" + " Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey + "."
+                                + "Trx: https://etherscan.io/tx/" + r.hash);
+                        });
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            })
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}, 1000 * 60 * 5);
+
+

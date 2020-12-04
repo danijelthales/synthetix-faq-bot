@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/answers/100.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/questions/100.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/categories/aliases.json" beforeDir="false" afterPath="$PROJECT_DIR$/categories/aliases.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart1y.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1y.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/charts/chartall.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartall.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
@@ -30,56 +27,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="2281" lean-forward="true" selection-start-line="2281" selection-end-line="2281" />
+            <state relative-caret-position="128">
+              <caret line="2279" lean-forward="true" selection-start-line="2279" selection-end-line="2279" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/answers/99.json">
+        <entry file="file://$PROJECT_DIR$/new.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="42" />
+            <state relative-caret-position="51">
+              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/answers/100.json">
+        <entry file="file://$PROJECT_DIR$/node_modules/synthetix-data/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="37" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="37" />
+            <state relative-caret-position="-238">
+              <caret line="256" column="8" selection-start-line="256" selection-start-column="8" selection-end-line="256" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/questions/99.txt">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/questions/100.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="20" selection-start-column="20" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/categories/aliases.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="583" column="21" selection-start-line="583" selection-start-column="21" selection-end-line="583" selection-end-column="21" />
+            <state relative-caret-position="340">
+              <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -88,13 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>45*</find>
-      <find>4500</find>
-      <find>drcPrice</find>
-      <find>clientTknPrice</find>
-      <find>'http://api.etherscan.i</find>
-      <find>clientDodoPrice</find>
-      <find>dodoPrice</find>
       <find>100000</find>
       <find>env</find>
       <find>gasPrice</find>
@@ -104,7 +76,6 @@
       <find>necMarketcap</find>
       <find>paydat</find>
       <find>staking</find>
-      <find>channel</find>
       <find>gas</find>
       <find>clientgasPrice</find>
       <find>fastGasPrice</find>
@@ -118,6 +89,14 @@
       <find>&quot;100&quot;</find>
       <find>100&quot;</find>
       <find>fixme</find>
+      <find>ethersca</find>
+      <find>fixm</find>
+      <find>snxDa</find>
+      <find>channel</find>
+      <find>channel =</find>
+      <find>0.5</find>
+      <find>client.channels.fetch</find>
+      <find>client</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -158,7 +137,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/answers/31.json" />
         <option value="$PROJECT_DIR$/answers/17.json" />
         <option value="$PROJECT_DIR$/answers/22.json" />
         <option value="$PROJECT_DIR$/answers/37.json" />
@@ -207,8 +185,9 @@
         <option value="$PROJECT_DIR$/questions/99.txt" />
         <option value="$PROJECT_DIR$/answers/100.json" />
         <option value="$PROJECT_DIR$/questions/100.txt" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/categories/aliases.json" />
+        <option value="$PROJECT_DIR$/new.js" />
+        <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
@@ -249,6 +228,17 @@
             <path>
               <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="synthetix-data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="synthetix-faq-bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="synthetix-faq-bot" type="462c0819:PsiDirectoryNode" />
               <item name="questions" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -262,7 +252,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/questions" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/index.js" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -270,11 +260,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\snx\synthetix-faq-bot" />
       <recent name="C:\snx\synthetix-faq-bot\questions" />
       <recent name="C:\snx\synthetix-faq-bot\answers" />
       <recent name="C:\snx\synthetix-faq-bot\images" />
       <recent name="C:\snx\synthetix-faq-bot\contracts" />
-      <recent name="C:\snx\synthetix-faq-bot" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -289,10 +279,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Node.js.index.js">
     <configuration name="index.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="index.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
+    <configuration name="new.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="new.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.new.js" />
+      <item itemvalue="Node.js.index.js" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -382,12 +379,12 @@
       <workItem from="1606410215549" duration="3435000" />
       <workItem from="1606785632572" duration="1183000" />
       <workItem from="1606909564867" duration="652000" />
-      <workItem from="1607100533078" duration="1595000" />
+      <workItem from="1607100533078" duration="4848000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="366586000" />
+    <option name="totallyTimeSpent" value="369839000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -398,8 +395,9 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.2624265" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.2624265" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Database Changes" order="2" />
@@ -408,7 +406,7 @@
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.38377193" />
+      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.41118422" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -496,20 +494,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/answers/84.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/questions/84.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/89.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -661,13 +645,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/questions/92.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -815,17 +792,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
+    <entry file="file://$PROJECT_DIR$/categories/aliases.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="2281" lean-forward="true" selection-start-line="2281" selection-end-line="2281" />
+        <state relative-caret-position="290">
+          <caret line="573" column="3" lean-forward="true" selection-start-line="573" selection-start-column="3" selection-end-line="573" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/categories/aliases.json">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="583" column="21" selection-start-line="583" selection-start-column="21" selection-end-line="583" selection-end-column="21" />
+        <state relative-caret-position="340">
+          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/synthetix-data/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-238">
+          <caret line="256" column="8" selection-start-line="256" selection-start-column="8" selection-end-line="256" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="2279" lean-forward="true" selection-start-line="2279" selection-end-line="2279" />
         </state>
       </provider>
     </entry>
