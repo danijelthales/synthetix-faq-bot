@@ -3277,7 +3277,7 @@ setInterval(function () {
                     if (r.toAmountInUSD >= 100000) {
                         client.channels.fetch('785321056197935124').then(c => {
                             c.send("Large trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
-                                + "Trx: https://etherscan.io/tx/" + r.hash);
+                                + " https://etherscan.io/tx/" + r.hash);
                         });
                     }
                 } catch (e) {
@@ -3302,7 +3302,7 @@ setInterval(function () {
                     if (r.toAmountInUSD < 100000) {
                         client.channels.fetch('785320922278133800').then(c => {
                             c.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
-                                + "Trx: https://etherscan.io/tx/" + r.hash);
+                                + " https://etherscan.io/tx/" + r.hash);
                         });
                     }
                 } catch (e) {
