@@ -3349,7 +3349,7 @@ setInterval(function () {
 
     clientKwenta.guilds.cache.forEach(function (value, key) {
         try {
-            value.members.cache.get("784489616781869067").setNickname("24h=$" + getNumberLabel(volume));
+            value.members.cache.get("784489616781869067").setNickname("24h = $" + getNumberLabel(volume));
             value.members.cache.get("784489616781869067").user.setActivity("Traders=" + distinctTraders.size, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
