@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="524">
-              <caret line="3351" column="77" selection-start-line="3351" selection-start-column="77" selection-end-line="3351" selection-end-column="77" />
+            <state relative-caret-position="236">
+              <caret line="334" column="35" lean-forward="true" selection-start-line="334" selection-start-column="35" selection-end-line="334" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -103,9 +103,9 @@
       <find>0.5</find>
       <find>client.channels.fetch</find>
       <find>client</find>
-      <find>client.channels.fetch</find>
       <find>3</find>
       <find>setn</find>
+      <find>days&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -389,12 +389,12 @@
       <workItem from="1606785632572" duration="1183000" />
       <workItem from="1606909564867" duration="652000" />
       <workItem from="1607100533078" duration="7115000" />
-      <workItem from="1607341905159" duration="2094000" />
+      <workItem from="1607341905159" duration="2807000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="374200000" />
+    <option name="totallyTimeSpent" value="374913000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -808,8 +808,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="3351" column="77" selection-start-line="3351" selection-start-column="77" selection-end-line="3351" selection-end-column="77" />
+        <state relative-caret-position="236">
+          <caret line="334" column="35" lean-forward="true" selection-start-line="334" selection-start-column="35" selection-end-line="334" selection-end-column="35" />
         </state>
       </provider>
     </entry>

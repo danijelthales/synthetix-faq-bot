@@ -345,7 +345,7 @@ function doInnerQuestion(command, doReply, msg) {
             minutes %= 60;
             seconds %= 60;
 
-            exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
+            exampleEmbed.addField("Countdown:", days + "D:" + hours + "H:" + minutes + "M", false);
             if (doReply) {
                 msg.reply(exampleEmbed);
             } else {
