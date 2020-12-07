@@ -3274,8 +3274,8 @@ setInterval(function () {
                 try {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    if (r.toAmountInUSD > 100000) {
-                        client.channels.fetch('736134573691371654').then(c => {
+                    if (r.toAmountInUSD >= 100000) {
+                        client.channels.fetch('785321056197935124').then(c => {
                             c.send("Large trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
                                 + "Trx: https://etherscan.io/tx/" + r.hash);
                         });
@@ -3293,16 +3293,18 @@ setInterval(function () {
 
 setInterval(function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 60}).then(result => {
-            console.log("Fetching exchanges in last minute");
+        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 120}).then(result => {
+            console.log("Fetching exchanges in last two minutes");
             result.forEach(r => {
                 try {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    client.channels.fetch('705191770903806022').then(c => {
-                        c.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
-                            + "Trx: https://etherscan.io/tx/" + r.hash);
-                    });
+                    if (r.toAmountInUSD < 100000) {
+                        client.channels.fetch('785320922278133800').then(c => {
+                            c.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
+                                + "Trx: https://etherscan.io/tx/" + r.hash);
+                        });
+                    }
                 } catch (e) {
                     console.log(e);
                 }
@@ -3311,7 +3313,7 @@ setInterval(function () {
     } catch (e) {
         console.log(e);
     }
-}, 1000 * 60);
+}, 1000 * 60 * 2);
 
 let volume = 100000;
 let distinctTraders = new Set();
