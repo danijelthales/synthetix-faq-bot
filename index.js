@@ -345,7 +345,7 @@ function doInnerQuestion(command, doReply, msg) {
             minutes %= 60;
             seconds %= 60;
 
-            exampleEmbed.addField("Countdown:", days + "D:" + hours + "H:" + minutes + "M", false);
+            exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
             if (doReply) {
                 msg.reply(exampleEmbed);
             } else {
@@ -3025,7 +3025,7 @@ setInterval(function () {
             minutes %= 60;
             seconds %= 60;
 
-            value.members.cache.get("769312697610928158").setNickname(days + " days " + hours + " hours " + minutes + " minutes ");
+            value.members.cache.get("769312697610928158").setNickname(days + "D:" + hours + "H:" + minutes + "M");
             value.members.cache.get("769312697610928158").user.setActivity("🌜⌛💲💲💲⌛🌛", {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
