@@ -3226,7 +3226,7 @@ setInterval(function () {
 
 
 let council = [];
-let voteDay = new Date('2020-12-08 00:00');
+let voteDay = new Date('2021-01-01 00:00');
 
 async function getCouncil() {
     try {
@@ -3323,7 +3323,7 @@ function getVolume() {
     distinctTraders = new Set();
     try {
         snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 3600 * 24}).then(result => {
-            console.log("Fetching exchanges in last minute");
+            console.log("Fetching exchanges in last day");
             result.forEach(r => {
                 try {
                     volume += r.toAmountInUSD;
