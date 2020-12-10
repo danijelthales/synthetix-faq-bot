@@ -2934,7 +2934,7 @@ async function getWalletInfo(address) {
             return;
         }
         numberCRatio = Math.round(((numberCRatio * 1.0) + Number.EPSILON) * 100) / 100;
-        if (numberCRatio > 300) {
+        if (numberCRatio > 400) {
             ignoreAddresses.add(address);
             return;
         }
@@ -2942,7 +2942,7 @@ async function getWalletInfo(address) {
         const totalSNX = await synthetix.collateral(address);
         let totalSNXNum = totalSNX.toString() / 1000000000000000000;
         totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
-        if (totalSNXNum < 1000 && numberCRatio > 250) {
+        if (totalSNXNum < 1000 && numberCRatio > 350) {
             ignoreAddresses.add(address);
             return;
         }
