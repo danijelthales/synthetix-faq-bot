@@ -3276,18 +3276,20 @@ setInterval(function () {
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD >= 100000) {
                         client.channels.fetch('785321056197935124').then(c => {
-                            const exampleEmbed = new Discord.MessageEmbed();
-                            exampleEmbed.setColor("ff0000");
-                            exampleEmbed.setTitle("New trade");
-                            exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
-                            exampleEmbed.addField("Wallet",
-                                '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
-                            exampleEmbed.addField("From",
-                                r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
-                            exampleEmbed.addField("To",
-                                r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-
-                            c.send(exampleEmbed);
+                            // const exampleEmbed = new Discord.MessageEmbed();
+                            // exampleEmbed.setColor("ff0000");
+                            // exampleEmbed.setTitle("New trade");
+                            // exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                            // exampleEmbed.addField("Wallet",
+                            //     '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
+                            // exampleEmbed.addField("From",
+                            //     r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                            // exampleEmbed.addField("To",
+                            //     r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                            //
+                            // c.send(exampleEmbed);
+                            c.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
+                                + " https://etherscan.io/tx/" + r.hash);
                         });
                     }
                 } catch (e) {
@@ -3311,17 +3313,19 @@ setInterval(function () {
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD < 100000) {
                         client.channels.fetch('785320922278133800').then(c => {
-                            const exampleEmbed = new Discord.MessageEmbed();
-                            exampleEmbed.setColor("00770f");
-                            exampleEmbed.setTitle("New trade");
-                            exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
-                            exampleEmbed.addField("Wallet",
-                                '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
-                            exampleEmbed.addField("From",
-                                r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
-                            exampleEmbed.addField("To",
-                                r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-                            c.send(exampleEmbed);
+                            // const exampleEmbed = new Discord.MessageEmbed();
+                            // exampleEmbed.setColor("00770f");
+                            // exampleEmbed.setTitle("New trade");
+                            // exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                            // exampleEmbed.addField("Wallet",
+                            //     '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
+                            // exampleEmbed.addField("From",
+                            //     r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                            // exampleEmbed.addField("To",
+                            //     r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                            // c.send(exampleEmbed);
+                            c.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
+                                + " https://etherscan.io/tx/" + r.hash);
                         });
                     }
                 } catch (e) {
