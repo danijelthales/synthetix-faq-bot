@@ -2876,7 +2876,7 @@ setTimeout(function () {
     snxData.synths.issuers({max: 10000}).then(result => {
         getAllWallets(result);
     });
-}, 1000 * 20
+}, 1000 * 60 * 5
 )
 
 

@@ -2,20 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/charts/chart1m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart1y.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart1y.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart3m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart3m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart6m.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart6m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartall.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartall.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartibtc.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartibtc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartidash.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartidash.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartidefi.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartidefi.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartiltc.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartiltc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartixrp.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartixrp.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartytd.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartytd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="3338" column="23" lean-forward="true" selection-start-line="3338" selection-start-column="23" selection-end-line="3338" selection-end-column="23" />
+            <state relative-caret-position="171">
+              <caret line="2877" column="7" lean-forward="true" selection-start-line="2877" selection-start-column="7" selection-end-line="2877" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -54,8 +40,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>clientgasPrice</find>
-      <find>fastGasPrice</find>
       <find>ethers</find>
       <find>laye</find>
       <find>hedge</find>
@@ -84,6 +68,8 @@
       <find>Fetching exchanges in last day</find>
       <find>getVolume</find>
       <find>c.send</find>
+      <find>getWalletInfo</find>
+      <find>getAllWallets</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -370,12 +356,12 @@
       <workItem from="1607341905159" duration="4945000" />
       <workItem from="1607515019380" duration="1240000" />
       <workItem from="1607609671423" duration="3131000" />
-      <workItem from="1607943232186" duration="2949000" />
+      <workItem from="1607943232186" duration="3517000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="385028000" />
+    <option name="totallyTimeSpent" value="385596000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -848,8 +834,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="3338" column="23" lean-forward="true" selection-start-line="3338" selection-start-column="23" selection-end-line="3338" selection-end-column="23" />
+        <state relative-caret-position="171">
+          <caret line="2877" column="7" lean-forward="true" selection-start-line="2877" selection-start-column="7" selection-end-line="2877" selection-end-column="7" />
         </state>
       </provider>
     </entry>
