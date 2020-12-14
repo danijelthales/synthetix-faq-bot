@@ -3308,7 +3308,7 @@ setInterval(function () {
 }, 1000 * 60 * 5);
 
 
-setTimeout(function () {
+setInterval(function () {
     try {
         snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 12000}).then(result => {
             console.log("Fetching exchanges in last two minutes");
