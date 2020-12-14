@@ -206,13 +206,11 @@ let trades = null;
 let trades100 = null;
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    client.channels.cache.forEach(function (value, key) {
-        if (value.key == '785320922278133800') {
-            trades = value;
-        }
-        if (value.key == '785321056197935124') {
-            trades100 = value;
-        }
+    client.channels.fetch('785320922278133800').then(c => {
+        trades = c
+    });
+    client.channels.fetch('785321056197935124').then(c => {
+        trades100 = c
     });
 })
 client.on("guildMemberAdd", function (member) {
@@ -3295,8 +3293,9 @@ setInterval(function () {
                             r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
                             r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-
-                        trades100.send(exampleEmbed);
+                        //trades100.send(exampleEmbed);
+                        trades100.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
+                            + " https://etherscan.io/tx/" + r.hash);
                     }
                 } catch (e) {
                     console.log(e);
@@ -3309,9 +3308,9 @@ setInterval(function () {
 }, 1000 * 60 * 5);
 
 
-setInterval(function () {
+setTimeout(function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 120}).then(result => {
+        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 12000}).then(result => {
             console.log("Fetching exchanges in last two minutes");
             result.forEach(r => {
                 try {
@@ -3328,7 +3327,9 @@ setInterval(function () {
                             r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
                             r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-                        trades.send(exampleEmbed);
+                        //trades.send(exampleEmbed);
+                        trades.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
+                            + " https://etherscan.io/tx/" + r.hash);
                     }
                 } catch (e) {
                     console.log(e);
