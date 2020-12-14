@@ -3288,7 +3288,7 @@ setInterval(function () {
                         exampleEmbed.setTitle("New trade");
                         exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
                         exampleEmbed.addField("Wallet",
-                            '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
                         exampleEmbed.addField("From",
                             r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
@@ -3320,7 +3320,7 @@ setInterval(function () {
                         exampleEmbed.setTitle("New trade");
                         exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
                         exampleEmbed.addField("Wallet",
-                            '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
                         exampleEmbed.addField("From",
                             r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
