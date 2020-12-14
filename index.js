@@ -202,8 +202,18 @@ if (process.env.REDIS_URL) {
 }
 
 let channel = null;
+let trades = null;
+let trades100 = null;
 client.on("ready", () => {
-    console.log(`Logged in as ${client.user.tag}!`)
+    console.log(`Logged in as ${client.user.tag}!`);
+    client.channels.cache.forEach(function (value, key) {
+        if (value.key == '785320922278133800') {
+            trades = value;
+        }
+        if (value.key == '785321056197935124') {
+            trades100 = value;
+        }
+    });
 })
 client.on("guildMemberAdd", function (member) {
     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
@@ -3275,20 +3285,18 @@ setInterval(function () {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD >= 100000) {
-                        client.channels.fetch('785321056197935124').then(c => {
-                            const exampleEmbed = new Discord.MessageEmbed();
-                            exampleEmbed.setColor("ff0000");
-                            exampleEmbed.setTitle("New trade");
-                            exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
-                            exampleEmbed.addField("Wallet",
-                                '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
-                            exampleEmbed.addField("From",
-                                r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
-                            exampleEmbed.addField("To",
-                                r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                        const exampleEmbed = new Discord.MessageEmbed();
+                        exampleEmbed.setColor("ff0000");
+                        exampleEmbed.setTitle("New trade");
+                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.addField("Wallet",
+                            '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
+                        exampleEmbed.addField("From",
+                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                        exampleEmbed.addField("To",
+                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
 
-                            c.send(exampleEmbed);
-                        });
+                        trades100.send(exampleEmbed);
                     }
                 } catch (e) {
                     console.log(e);
@@ -3310,19 +3318,17 @@ setInterval(function () {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD < 100000) {
-                        client.channels.fetch('785320922278133800').then(c => {
-                            const exampleEmbed = new Discord.MessageEmbed();
-                            exampleEmbed.setColor("00770f");
-                            exampleEmbed.setTitle("New trade");
-                            exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
-                            exampleEmbed.addField("Wallet",
-                                '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
-                            exampleEmbed.addField("From",
-                                r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
-                            exampleEmbed.addField("To",
-                                r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-                            c.send(exampleEmbed);
-                        });
+                        const exampleEmbed = new Discord.MessageEmbed();
+                        exampleEmbed.setColor("00770f");
+                        exampleEmbed.setTitle("New trade");
+                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.addField("Wallet",
+                            '[0xeed09cc4ebf3fa599eb9ffd7a280e7b944b436b7](https://etherscan.io/address/' + r.fromAddress + ')');
+                        exampleEmbed.addField("From",
+                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                        exampleEmbed.addField("To",
+                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                        trades.send(exampleEmbed);
                     }
                 } catch (e) {
                     console.log(e);
@@ -3358,7 +3364,7 @@ function getVolume() {
     }
 }
 
-getVolume();
+setTimeout(getVolume, 1000 * 60 * 1);
 setInterval(function () {
     getVolume();
 }, 1000 * 60 * 30);
