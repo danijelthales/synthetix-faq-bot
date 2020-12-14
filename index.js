@@ -3293,9 +3293,7 @@ setInterval(function () {
                             r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
                             r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-                        //trades100.send(exampleEmbed);
-                        trades100.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
-                            + " https://etherscan.io/tx/" + r.hash);
+                        trades100.send(exampleEmbed);
                     }
                 } catch (e) {
                     console.log(e);
@@ -3327,9 +3325,7 @@ setInterval(function () {
                             r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
                             r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-                        //trades.send(exampleEmbed);
-                        trades.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
-                            + " https://etherscan.io/tx/" + r.hash);
+                        trades.send(exampleEmbed);
                     }
                 } catch (e) {
                     console.log(e);

@@ -1,7 +1,9 @@
 require("dotenv").config()
 
 const snxData = require('synthetix-data');
-
+const Discord = require("discord.js")
+const client = new Discord.Client();
+client.login(process.env.BOT_TOKEN);
 
 let trades = null;
 let trades100 = null;
@@ -15,18 +17,17 @@ client.on("ready", () => {
     });
 })
 
-const client = new Discord.Client();
-client.login(process.env.BOT_TOKEN);
+
 
 setTimeout(function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 12000}).then(result => {
+        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 120000}).then(result => {
             console.log("Fetching exchanges in last two minutes");
             result.forEach(r => {
                 try {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    if (r.toAmountInUSD < 100000) {
+                    if (r.toAmountInUSD > 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("00770f");
                         exampleEmbed.setTitle("New trade");
@@ -37,9 +38,9 @@ setTimeout(function () {
                             r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
                             r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-                        //trades.send(exampleEmbed);
-                        trades.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
-                            + " https://etherscan.io/tx/" + r.hash);
+                        trades100.send(exampleEmbed);
+                        //trades.send("Trade made:" + " Exchanged " + r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey + " to " + r.toAmount.toFixed(3) + " " + r.toCurrencyKey + "."
+                          //  + " https://etherscan.io/tx/" + r.hash);
                     }
                 } catch (e) {
                     console.log(e);
