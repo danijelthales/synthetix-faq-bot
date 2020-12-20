@@ -3263,7 +3263,7 @@ async function getCouncil() {
         })
 
         council = [];
-        council = council.concat(prices.slice(6, 13));
+        council = council.concat(prices.slice(6, 14));
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from SNX tools.");
