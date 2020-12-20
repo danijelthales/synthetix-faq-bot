@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="729">
-              <caret line="3265" column="51" selection-start-line="3265" selection-start-column="51" selection-end-line="3265" selection-end-column="51" />
+            <state relative-caret-position="168">
+              <caret line="3293" column="55" lean-forward="true" selection-start-line="3293" selection-start-column="55" selection-end-line="3293" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -50,7 +49,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>100&quot;</find>
       <find>fixme</find>
       <find>ethersca</find>
       <find>fixm</find>
@@ -80,6 +78,7 @@
       <find>format</find>
       <find>date</find>
       <find>council</find>
+      <find>trades100</find>
     </findStrings>
     <replaceStrings>
       <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
@@ -367,12 +366,12 @@
       <workItem from="1607515019380" duration="1240000" />
       <workItem from="1607609671423" duration="3131000" />
       <workItem from="1607943232186" duration="12023000" />
-      <workItem from="1608391276292" duration="1294000" />
+      <workItem from="1608391276292" duration="1950000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="395396000" />
+    <option name="totallyTimeSpent" value="396052000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -437,17 +436,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>3327</line>
+          <line>3343</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>209</line>
+          <line>210</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>212</line>
+          <line>213</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -822,8 +821,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="3265" column="51" selection-start-line="3265" selection-start-column="51" selection-end-line="3265" selection-end-column="51" />
+        <state relative-caret-position="168">
+          <caret line="3293" column="55" lean-forward="true" selection-start-line="3293" selection-start-column="55" selection-end-line="3293" selection-end-column="55" />
         </state>
       </provider>
     </entry>

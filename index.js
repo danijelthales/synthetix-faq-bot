@@ -204,6 +204,7 @@ if (process.env.REDIS_URL) {
 let channel = null;
 let trades = null;
 let trades100 = null;
+let trades1000 = null;
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.channels.fetch('785320922278133800').then(c => {
@@ -211,6 +212,9 @@ client.on("ready", () => {
     });
     client.channels.fetch('785321056197935124').then(c => {
         trades100 = c
+    });
+    client.channels.fetch('790349176289624084').then(c => {
+        trades1000 = c
     });
 })
 client.on("guildMemberAdd", function (member) {
@@ -3282,7 +3286,19 @@ setInterval(function () {
                 try {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    if (r.toAmountInUSD >= 100000) {
+                    if (r.toAmountInUSD >= 1000000) {
+                        const exampleEmbed = new Discord.MessageEmbed();
+                        exampleEmbed.setColor("ff0000");
+                        exampleEmbed.setTitle("New trade");
+                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.addField("Wallet",
+                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                        exampleEmbed.addField("From",
+                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                        exampleEmbed.addField("To",
+                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                        trades1000.send(exampleEmbed);
+                    } else if (r.toAmountInUSD >= 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
