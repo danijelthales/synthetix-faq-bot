@@ -1787,8 +1787,12 @@ async function getSnxToolStaking() {
             return prices
         })
 
-        snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
-        snxToMintUsd = prices[4].split(' ')[0] * 1.0;
+        if (!isNaN(prices[3].split(' ')[0] * 1.0)) {
+            snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
+        }
+        if (!isNaN(prices[4].split(' ')[0] * 1.0)) {
+            snxToMintUsd = prices[4].split(' ')[0] * 1.0;
+        }
         snxRewardsThisPeriod = prices[5];
         totalDebt = prices[6];
         browser.close()
