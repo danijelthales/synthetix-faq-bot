@@ -219,8 +219,6 @@ client.on("ready", () => {
     });
     client.channels.fetch('413890591840272398').then(c => {
         general = c;
-        general.send("Happy New Year, friends! May I serve you well in 2021. Stay safe!");
-
     });
 })
 client.on("guildMemberAdd", function (member) {
