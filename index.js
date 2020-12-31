@@ -205,6 +205,7 @@ let channel = null;
 let trades = null;
 let trades100 = null;
 let trades1000 = null;
+let general = null;
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.channels.fetch('785320922278133800').then(c => {
@@ -215,6 +216,11 @@ client.on("ready", () => {
     });
     client.channels.fetch('790349176289624084').then(c => {
         trades1000 = c
+    });
+    client.channels.fetch('413890591840272398').then(c => {
+        general = c;
+        general.send("Happy New Year, friends! May I serve you well in 2021. Stay safe!");
+
     });
 })
 client.on("guildMemberAdd", function (member) {
