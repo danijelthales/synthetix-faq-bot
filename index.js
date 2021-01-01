@@ -3459,41 +3459,39 @@ setInterval(function () {
                 let results = JSON.parse(data);
                 let print = false;
                 for (const result in results) {
-                    if (!votes.has(result)) {
-                        let vote = results[result];
-                        let voter = vote.address;
-                        if (votes.has(voter)) {
-                            let choice = votes.get(voter);
-                            if (choice != vote.msg.payload.choice) {
-                                const exampleEmbed = new Discord.MessageEmbed();
-                                exampleEmbed.setColor("00770f");
-                                exampleEmbed.setTitle("Vote Changed");
-                                exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
-                                exampleEmbed.addField("From",
-                                    choices.get(choice));
-                                exampleEmbed.addField("To",
-                                    choices.get(vote.msg.payload.choice));
-                                exampleEmbed.addField("Voter",
-                                    voter);
-                                councilChannel.send(exampleEmbed);
-                            }
-                        } else {
+                    let vote = results[result];
+                    let voter = vote.address;
+                    if (votes.has(voter)) {
+                        let choice = votes.get(voter);
+                        if (choice != vote.msg.payload.choice) {
                             const exampleEmbed = new Discord.MessageEmbed();
                             exampleEmbed.setColor("00770f");
-                            exampleEmbed.setTitle("New Vote");
+                            exampleEmbed.setTitle("Vote Changed");
                             exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
-                            exampleEmbed.addField("For",
+                            exampleEmbed.addField("From",
+                                choices.get(choice));
+                            exampleEmbed.addField("To",
                                 choices.get(vote.msg.payload.choice));
                             exampleEmbed.addField("Voter",
                                 voter);
                             councilChannel.send(exampleEmbed);
                         }
-                        votes.set(voter, vote.msg.payload.choice);
+                    } else {
+                        const exampleEmbed = new Discord.MessageEmbed();
+                        exampleEmbed.setColor("00770f");
+                        exampleEmbed.setTitle("New Vote");
+                        exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
+                        exampleEmbed.addField("For",
+                            choices.get(vote.msg.payload.choice));
+                        exampleEmbed.addField("Voter",
+                            voter);
+                        councilChannel.send(exampleEmbed);
+                    }
+                    votes.set(voter, vote.msg.payload.choice);
 
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("votes", JSON.stringify([...votes]), function () {
-                            });
-                        }
+                    if (process.env.REDIS_URL) {
+                        redisClient.set("votes", JSON.stringify([...votes]), function () {
+                        });
                     }
                 }
             } catch (e) {
