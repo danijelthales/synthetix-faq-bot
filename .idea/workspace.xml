@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new.js" beforeDir="false" afterPath="$PROJECT_DIR$/new.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="221" selection-start-line="221" selection-end-line="221" />
+            <state relative-caret-position="205">
+              <caret line="3267" column="19" lean-forward="true" selection-start-line="3267" selection-start-column="19" selection-end-line="3267" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -30,8 +31,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="47" column="14" lean-forward="true" selection-start-line="47" selection-start-column="14" selection-end-line="47" selection-end-column="14" />
+            <state relative-caret-position="839">
+              <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,9 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>client.channels.fetch</find>
-      <find>3</find>
-      <find>setn</find>
       <find>days&quot;</find>
       <find>hours</find>
       <find>embeds</find>
@@ -70,18 +71,20 @@
       <find>setActivity</find>
       <find>format</find>
       <find>date</find>
-      <find>council</find>
       <find>trades100</find>
       <find>snxRewardsPerMinterUsd</find>
       <find>snxRewardsThisPeriod</find>
       <find>payday</find>
       <find>send</find>
       <find>trades1000</find>
-      <find>general</find>
       <find>exchanged</find>
+      <find>REDIS_URL</find>
+      <find>propo</find>
+      <find>general</find>
+      <find>proposals</find>
+      <find>council</find>
     </findStrings>
     <replaceStrings>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360020282633-Where-can-I-find-a-list-of-all-the-contracts-</replace>
       <replace>https://help.synthetix.io/hc/en-us/articles/360019870934-Why-is-there-a-minimum-deposit-of-50-sUSD-into-the-Depot-</replace>
       <replace>https://synthetix.community/docs/staking</replace>
       <replace>https://synthetix.community/docs/stablecoin-pool</replace>
@@ -111,6 +114,7 @@
       <replace>msg.react</replace>
       <replace>message.react</replace>
       <replace>message.react(&quot;❌&quot;);</replace>
+      <replace>votes</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -167,8 +171,8 @@
         <option value="$PROJECT_DIR$/questions/100.txt" />
         <option value="$PROJECT_DIR$/categories/aliases.json" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/new.js" />
         <option value="$PROJECT_DIR$/answers/31.json" />
+        <option value="$PROJECT_DIR$/new.js" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
@@ -261,7 +265,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.new.js">
+  <component name="RunManager" selected="Node.js.index.js">
     <configuration name="index.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="index.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
@@ -369,12 +373,12 @@
       <workItem from="1608391276292" duration="3150000" />
       <workItem from="1608727957957" duration="315000" />
       <workItem from="1609331634274" duration="1864000" />
-      <workItem from="1609455099759" duration="1540000" />
+      <workItem from="1609455099759" duration="3973000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="400971000" />
+    <option name="totallyTimeSpent" value="403404000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -439,24 +443,40 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>3352</line>
+          <line>3365</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/index.js</url>
-          <line>211</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/index.js</url>
-          <line>214</line>
-          <option name="timeStamp" value="29" />
+          <url>file://$PROJECT_DIR$/new.js</url>
+          <line>97</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>choices.get(vote.msg.payload.choice+&quot;&quot;)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>choices.get(&quot;3&quot;)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>choices.get(3)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>choices.get(vote.msg.payload.choice)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>prices.slice(6, 13)</expression-string>
         <language-id>JavaScript</language-id>
@@ -479,26 +499,6 @@
       </expression>
       <expression>
         <expression-string>snxData.synths.issuers(1000)</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>msg.content</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>prices[i].lastIndexOf(prices[i + 1])</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>balance.toString()/1000000000000000000</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>balance.toString()</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -826,15 +826,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="47" column="14" lean-forward="true" selection-start-line="47" selection-start-column="14" selection-end-line="47" selection-end-column="14" />
+        <state relative-caret-position="839">
+          <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="221" selection-start-line="221" selection-end-line="221" />
+        <state relative-caret-position="205">
+          <caret line="3267" column="19" lean-forward="true" selection-start-line="3267" selection-start-column="19" selection-end-line="3267" selection-end-column="19" />
         </state>
       </provider>
     </entry>
