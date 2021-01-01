@@ -202,6 +202,7 @@ if (process.env.REDIS_URL) {
 
     redisClient.get("votes", function (err, obj) {
         votesRaw = obj;
+        console.log("votesRaw:" + votesRaw);
         if (votesRaw) {
             votes = new Map(JSON.parse(votesRaw));
             console.log("votes:" + votes);
@@ -3445,6 +3446,7 @@ choices.set(19, "larpras");
 
 
 setInterval(function () {
+    console.log("Getting votes");
     https.get('https://hub.snapshot.page/api/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6', (resp) => {
         let data = '';
 
@@ -3458,10 +3460,12 @@ setInterval(function () {
             try {
                 let results = JSON.parse(data);
                 let print = false;
+                console.log("Votes " + results);
                 for (const result in results) {
                     let vote = results[result];
                     let voter = vote.address;
                     if (votes.has(voter)) {
+                        console.log("Vote change");
                         let choice = votes.get(voter);
                         if (choice != vote.msg.payload.choice) {
                             const exampleEmbed = new Discord.MessageEmbed();
@@ -3477,6 +3481,8 @@ setInterval(function () {
                             councilChannel.send(exampleEmbed);
                         }
                     } else {
+                        console.log("New Vote" + vote.msg.payload.choice);
+                        console.log("New Voter" + voter);
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("00770f");
                         exampleEmbed.setTitle("New Vote");
