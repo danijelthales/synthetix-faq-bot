@@ -3465,9 +3465,9 @@ setInterval(function () {
                     let vote = results[result];
                     let voter = vote.address;
                     if (votesMap.has(voter)) {
-                        console.log("Vote change");
                         let choice = votesMap.get(voter);
                         if (choice != vote.msg.payload.choice) {
+                            console.log("Vote change");
                             const exampleEmbed = new Discord.MessageEmbed();
                             exampleEmbed.setColor("00770f");
                             exampleEmbed.setTitle("Vote Changed");
