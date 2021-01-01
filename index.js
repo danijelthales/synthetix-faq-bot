@@ -3458,9 +3458,6 @@ setInterval(function () {
             try {
                 let results = JSON.parse(data);
                 let print = false;
-                if (votes.size > 0) {
-                    print = true;
-                }
                 for (const result in results) {
                     if (!votes.has(result)) {
                         let vote = results[result];
@@ -3478,9 +3475,7 @@ setInterval(function () {
                                     choices.get(vote.msg.payload.choice));
                                 exampleEmbed.addField("Voter",
                                     voter);
-                                if (print) {
-                                    councilChannel.send(exampleEmbed);
-                                }
+                                councilChannel.send(exampleEmbed);
                             }
                         } else {
                             const exampleEmbed = new Discord.MessageEmbed();
@@ -3491,9 +3486,7 @@ setInterval(function () {
                                 choices.get(vote.msg.payload.choice));
                             exampleEmbed.addField("Voter",
                                 voter);
-                            if (print) {
-                                councilChannel.send(exampleEmbed);
-                            }
+                            councilChannel.send(exampleEmbed);
                         }
                         votes.set(voter, vote.msg.payload.choice);
 
