@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart24h.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart24h.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chart7d.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chart7d.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartrealtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartrealtime.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="3495" column="62" lean-forward="true" selection-start-line="3495" selection-start-column="62" selection-end-line="3495" selection-end-column="62" />
+            <state relative-caret-position="154">
+              <caret line="3498" column="46" selection-start-line="3498" selection-start-column="41" selection-end-line="3498" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -97,7 +93,6 @@
       <find>votes</find>
     </findStrings>
     <replaceStrings>
-      <replace>https://help.synthetix.io/hc/en-us/articles/360019870934-Why-is-there-a-minimum-deposit-of-50-sUSD-into-the-Depot-</replace>
       <replace>https://synthetix.community/docs/staking</replace>
       <replace>https://synthetix.community/docs/stablecoin-pool</replace>
       <replace>https://synthetix.community/docs/transferring</replace>
@@ -127,6 +122,7 @@
       <replace>message.react</replace>
       <replace>message.react(&quot;❌&quot;);</replace>
       <replace>votes</replace>
+      <replace>votesMap</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -385,12 +381,12 @@
       <workItem from="1608391276292" duration="3150000" />
       <workItem from="1608727957957" duration="315000" />
       <workItem from="1609331634274" duration="1864000" />
-      <workItem from="1609455099759" duration="5437000" />
+      <workItem from="1609455099759" duration="5784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="404868000" />
+    <option name="totallyTimeSpent" value="405215000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -848,8 +844,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="3495" column="62" lean-forward="true" selection-start-line="3495" selection-start-column="62" selection-end-line="3495" selection-end-column="62" />
+        <state relative-caret-position="154">
+          <caret line="3498" column="46" selection-start-line="3498" selection-start-column="41" selection-end-line="3498" selection-end-column="46" />
         </state>
       </provider>
     </entry>

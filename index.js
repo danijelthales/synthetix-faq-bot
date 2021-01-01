@@ -172,7 +172,7 @@ var synthsMap = new Map();
 let gasSubscribersMap = new Map();
 let gasSubscribersLastPushMap = new Map();
 
-let votes = new Map();
+let votesMap = new Map();
 
 console.log("Redis URL:" + process.env.REDIS_URL);
 
@@ -200,12 +200,12 @@ if (process.env.REDIS_URL) {
         }
     });
 
-    redisClient.get("votes", function (err, obj) {
-        votesRaw = obj;
-        console.log("votesRaw:" + votesRaw);
-        if (votesRaw) {
-            votes = new Map(JSON.parse(votesRaw));
-            console.log("votes:" + votes);
+    redisClient.get("votesMap", function (err, obj) {
+        votesMapRaw = obj;
+        console.log("votesMapRaw:" + votesMapRaw);
+        if (votesMapRaw) {
+            votesMap = new Map(JSON.parse(votesMapRaw));
+            console.log("votesMap:" + votesMap);
         }
     });
 
@@ -3464,9 +3464,9 @@ setInterval(function () {
                 for (const result in results) {
                     let vote = results[result];
                     let voter = vote.address;
-                    if (votes.has(voter)) {
+                    if (votesMap.has(voter)) {
                         console.log("Vote change");
-                        let choice = votes.get(voter);
+                        let choice = votesMap.get(voter);
                         if (choice != vote.msg.payload.choice) {
                             const exampleEmbed = new Discord.MessageEmbed();
                             exampleEmbed.setColor("00770f");
@@ -3493,10 +3493,10 @@ setInterval(function () {
                             voter);
                         councilChannel.send(exampleEmbed);
                     }
-                    votes.set(voter, vote.msg.payload.choice);
+                    votesMap.set(voter, vote.msg.payload.choice);
 
                     if (process.env.REDIS_URL) {
-                        redisClient.set("votes", JSON.stringify([...votes]), function () {
+                        redisClient.set("votesMap", JSON.stringify([...votesMap]), function () {
                         });
                     }
                 }
