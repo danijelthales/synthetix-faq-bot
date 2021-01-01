@@ -172,7 +172,7 @@ var synthsMap = new Map();
 let gasSubscribersMap = new Map();
 let gasSubscribersLastPushMap = new Map();
 
-let votesMap = new Map();
+let votesMapNew = new Map();
 
 console.log("Redis URL:" + process.env.REDIS_URL);
 
@@ -200,12 +200,12 @@ if (process.env.REDIS_URL) {
         }
     });
 
-    redisClient.get("votesMap", function (err, obj) {
+    redisClient.get("votesMapNew", function (err, obj) {
         votesMapRaw = obj;
         console.log("votesMapRaw:" + votesMapRaw);
         if (votesMapRaw) {
-            votesMap = new Map(JSON.parse(votesMapRaw));
-            console.log("votesMap:" + votesMap);
+            votesMapNew = new Map(JSON.parse(votesMapRaw));
+            console.log("votesMapNew:" + votesMapNew);
         }
     });
 
@@ -3464,8 +3464,8 @@ setInterval(function () {
                 for (const result in results) {
                     let vote = results[result];
                     let voter = vote.address;
-                    if (votesMap.has(voter)) {
-                        let choice = votesMap.get(voter);
+                    if (votesMapNew.has(voter)) {
+                        let choice = votesMapNew.get(voter);
                         if (choice != vote.msg.payload.choice) {
                             console.log("Vote change");
                             const exampleEmbed = new Discord.MessageEmbed();
@@ -3493,10 +3493,10 @@ setInterval(function () {
                             voter);
                         councilChannel.send(exampleEmbed);
                     }
-                    votesMap.set(voter, vote.msg.payload.choice);
+                    votesMapNew.set(voter, vote.msg.payload.choice);
 
                     if (process.env.REDIS_URL) {
-                        redisClient.set("votesMap", JSON.stringify([...votesMap]), function () {
+                        redisClient.set("votesMapNew", JSON.stringify([...votesMapNew]), function () {
                         });
                     }
                 }
@@ -3510,6 +3510,6 @@ setInterval(function () {
         console.log("Error: " + err.message);
     });
 
-}, 60 * 1000);
+}, 60 * 1000 * 3);
 
 

@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="3469" column="55" selection-start-line="3469" selection-start-column="55" selection-end-line="3469" selection-end-column="55" />
+            <state relative-caret-position="205">
+              <caret line="3501" column="17" lean-forward="true" selection-start-line="3501" selection-start-column="17" selection-end-line="3501" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -89,8 +89,8 @@
       <find>general</find>
       <find>proposals</find>
       <find>council</find>
-      <find>councilChannel</find>
       <find>votes</find>
+      <find>councilChannel</find>
     </findStrings>
     <replaceStrings>
       <replace>https://synthetix.community/docs/staking</replace>
@@ -381,12 +381,12 @@
       <workItem from="1608391276292" duration="3150000" />
       <workItem from="1608727957957" duration="315000" />
       <workItem from="1609331634274" duration="1864000" />
-      <workItem from="1609455099759" duration="5809000" />
+      <workItem from="1609455099759" duration="6212000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="405240000" />
+    <option name="totallyTimeSpent" value="405643000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -451,7 +451,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.js</url>
-          <line>3366</line>
+          <line>3347</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -844,8 +844,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="3469" column="55" selection-start-line="3469" selection-start-column="55" selection-end-line="3469" selection-end-column="55" />
+        <state relative-caret-position="205">
+          <caret line="3501" column="17" lean-forward="true" selection-start-line="3501" selection-start-column="17" selection-end-line="3501" selection-end-column="17" />
         </state>
       </provider>
     </entry>
