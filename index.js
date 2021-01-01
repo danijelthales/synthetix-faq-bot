@@ -3444,7 +3444,7 @@ choices.set(18, "TerraBellus");
 choices.set(19, "larpras");
 
 
-setTimeout(function () {
+setInterval(function () {
     https.get('https://hub.snapshot.page/api/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6', (resp) => {
         let data = '';
 

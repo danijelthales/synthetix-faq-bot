@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new.js" beforeDir="false" afterPath="$PROJECT_DIR$/new.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="3267" column="19" lean-forward="true" selection-start-line="3267" selection-start-column="19" selection-end-line="3267" selection-end-column="19" />
+            <state relative-caret-position="278">
+              <caret line="3514" lean-forward="true" selection-start-line="3514" selection-end-line="3514" />
             </state>
           </provider>
         </entry>
@@ -36,6 +35,15 @@
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="18234" column="17" selection-start-line="18234" selection-start-column="17" selection-end-line="18234" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -373,12 +381,12 @@
       <workItem from="1608391276292" duration="3150000" />
       <workItem from="1608727957957" duration="315000" />
       <workItem from="1609331634274" duration="1864000" />
-      <workItem from="1609455099759" duration="3973000" />
+      <workItem from="1609455099759" duration="4253000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="403404000" />
+    <option name="totallyTimeSpent" value="403684000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
@@ -505,13 +513,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/answers/88.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/answers/87.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -834,10 +835,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="18234" column="17" selection-start-line="18234" selection-start-column="17" selection-end-line="18234" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="3267" column="19" lean-forward="true" selection-start-line="3267" selection-start-column="19" selection-end-line="3267" selection-end-column="19" />
+        <state relative-caret-position="278">
+          <caret line="3514" lean-forward="true" selection-start-line="3514" selection-end-line="3514" />
         </state>
       </provider>
     </entry>
