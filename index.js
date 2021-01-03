@@ -232,7 +232,7 @@ client.on("ready", () => {
     client.channels.fetch('413890591840272398').then(c => {
         general = c;
     });
-    client.channels.fetch('778445461135687733').then(c => {
+    client.channels.fetch('794935827436011531').then(c => {
         councilChannel = c;
     });
 })
@@ -3477,7 +3477,7 @@ setInterval(function () {
                             exampleEmbed.addField("To",
                                 choices.get(vote.msg.payload.choice));
                             exampleEmbed.addField("Voter",
-                                voter);
+                                "[" + voter + "](https://etherscan.io/address/" + voter + ")");
                             councilChannel.send(exampleEmbed);
                         }
                     } else {
@@ -3490,7 +3490,7 @@ setInterval(function () {
                         exampleEmbed.addField("For",
                             choices.get(vote.msg.payload.choice));
                         exampleEmbed.addField("Voter",
-                            voter);
+                            "[" + voter + "](https://etherscan.io/address/" + voter + ")");
                         councilChannel.send(exampleEmbed);
                     }
                     votesMapNew.set(voter, vote.msg.payload.choice);
