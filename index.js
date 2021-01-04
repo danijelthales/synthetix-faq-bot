@@ -3447,68 +3447,72 @@ choices.set(19, "larpras");
 
 setInterval(function () {
     console.log("Getting votes");
-    https.get('https://hub.snapshot.page/api/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6', (resp) => {
-        let data = '';
+    try {
+        https.get('https://hub.snapshot.page/api/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6', (resp) => {
+            let data = '';
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
 
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            try {
-                let results = JSON.parse(data);
-                let print = false;
-                console.log("Votes " + results);
-                for (const result in results) {
-                    let vote = results[result];
-                    let voter = vote.address;
-                    if (votesMapNew.has(voter)) {
-                        let choice = votesMapNew.get(voter);
-                        if (choice != vote.msg.payload.choice) {
-                            console.log("Vote change");
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                try {
+                    let results = JSON.parse(data);
+                    let print = false;
+                    console.log("Votes " + results);
+                    for (const result in results) {
+                        let vote = results[result];
+                        let voter = vote.address;
+                        if (votesMapNew.has(voter)) {
+                            let choice = votesMapNew.get(voter);
+                            if (choice != vote.msg.payload.choice) {
+                                console.log("Vote change");
+                                const exampleEmbed = new Discord.MessageEmbed();
+                                exampleEmbed.setColor("00770f");
+                                exampleEmbed.setTitle("Vote Changed");
+                                exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
+                                exampleEmbed.addField("From",
+                                    choices.get(choice));
+                                exampleEmbed.addField("To",
+                                    choices.get(vote.msg.payload.choice));
+                                exampleEmbed.addField("Voter",
+                                    "[" + voter + "](https://etherscan.io/address/" + voter + ")");
+                                councilChannel.send(exampleEmbed);
+                            }
+                        } else {
+                            console.log("New Vote" + vote.msg.payload.choice);
+                            console.log("New Voter" + voter);
                             const exampleEmbed = new Discord.MessageEmbed();
                             exampleEmbed.setColor("00770f");
-                            exampleEmbed.setTitle("Vote Changed");
+                            exampleEmbed.setTitle("New Vote");
                             exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
-                            exampleEmbed.addField("From",
-                                choices.get(choice));
-                            exampleEmbed.addField("To",
+                            exampleEmbed.addField("For",
                                 choices.get(vote.msg.payload.choice));
                             exampleEmbed.addField("Voter",
                                 "[" + voter + "](https://etherscan.io/address/" + voter + ")");
                             councilChannel.send(exampleEmbed);
                         }
-                    } else {
-                        console.log("New Vote" + vote.msg.payload.choice);
-                        console.log("New Voter" + voter);
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New Vote");
-                        exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
-                        exampleEmbed.addField("For",
-                            choices.get(vote.msg.payload.choice));
-                        exampleEmbed.addField("Voter",
-                            "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                        councilChannel.send(exampleEmbed);
-                    }
-                    votesMapNew.set(voter, vote.msg.payload.choice);
+                        votesMapNew.set(voter, vote.msg.payload.choice);
 
-                    if (process.env.REDIS_URL) {
-                        redisClient.set("votesMapNew", JSON.stringify([...votesMapNew]), function () {
-                        });
+                        if (process.env.REDIS_URL) {
+                            redisClient.set("votesMapNew", JSON.stringify([...votesMapNew]), function () {
+                            });
+                        }
                     }
+                } catch (e) {
+                    console.log(e);
                 }
-            } catch (e) {
-                console.log(e);
-            }
 
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    } catch (e) {
+        console.log(e);
+    }
 
 }, 60 * 1000 * 3);
 
