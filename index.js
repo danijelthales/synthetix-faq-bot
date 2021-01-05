@@ -661,11 +661,7 @@ client.on("message", msg => {
                         doShowSynth(command, msg, false);
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
-                    let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                    const args = content.slice("!faq show chart".length).split(' ');
-                    args.shift();
-                    const command = args.shift().trim();
-                    doShowChart(command, msg, false);
+                    msg.reply("No longer supported. Use $ticker snx");
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
@@ -828,11 +824,7 @@ client.on("message", msg => {
                                 doShowSynth(command, msg, true);
                             }
                         } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
-                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                            const args = content.slice("show chart".length).split(' ');
-                            args.shift();
-                            const command = args.shift().trim();
-                            doShowChart(command, msg, true);
+                            msg.reply("No longer supported. Use $ticker snx")
                         } else {
                             if (!msg.author.username.toLowerCase().includes("faq")) {
                                 if (msg.content.endsWith("?")) {
@@ -969,8 +961,6 @@ client.on("message", msg => {
                 "Calculate weekly SNX rewards per staked snx amount, as well as minting and claiming transaction estimates at current gas price. E.g. *calculate rewards 1000*. \n You can optionally add the gas price as parameter, e.g *calculate rewards 1000 with 30 gwei*");
             exampleEmbed.addField("calculate susd rewards snxStaked",
                 "Calculate weekly susd rewards per staked snx amount based on the fees in the pool and the percentage of period passed.");
-            exampleEmbed.addField("show chart 24H",
-                "Shows the SNX chart in the last 24h. Other options are shown in the response (7D, 1M, ....)");
             exampleEmbed.addField("show wallet walletAddress",
                 "Prints the staking information for the provided wallet");
             exampleEmbed.addField("synth synthName",
@@ -1682,31 +1672,37 @@ setInterval(function () {
 setInterval(function () {
     //'https://gasprice.poa.network/
     //https://www.gasnow.org/api/v3/gas/price
-    https.get('https://www.gasnow.org/api/v3/gas/price', (resp) => {
-        let data = '';
+    try {
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
 
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            try {
-                let result = JSON.parse(data);
-                gasPrice = result.data.standard / 1000000000;
-                fastGasPrice = result.data.fast / 1000000000;
-                lowGasPrice = result.data.slow / 1000000000;
-                instantGasPrice = result.data.rapid / 1000000000;
-                gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-                instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
-            } catch (e) {
-                console.log(e);
-            }
+        https.get('https://www.gasnow.org/api/v3/gas/price', (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                try {
+                    let result = JSON.parse(data);
+                    gasPrice = result.data.standard / 1000000000;
+                    fastGasPrice = result.data.fast / 1000000000;
+                    lowGasPrice = result.data.slow / 1000000000;
+                    instantGasPrice = result.data.rapid / 1000000000;
+                    gasPrice = Math.round(((gasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                    fastGasPrice = Math.round(((fastGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                    lowGasPrice = Math.round(((lowGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                    instantGasPrice = Math.round(((instantGasPrice * 1.0) + Number.EPSILON) * 10) / 10;
+                } catch (e) {
+                    console.log(e);
+                }
+            });
         });
-    });
+    } catch (e) {
+        console.log(e);
+    }
 
 }, 30 * 1000);
 
@@ -2554,41 +2550,6 @@ function doShowChart(type, msg, fromDM) {
     }
 }
 
-async function getChart(type) {
-    try {
-        const browser = await puppeteer.launch({
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ],
-        });
-        const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 926});
-        await page.goto("https://coincodex.com/crypto/synthetix/?period=" + type, {waitUntil: 'networkidle2'});
-        await page.waitForSelector('.chart');
-
-        const rect = await page.evaluate(() => {
-            const element = document.querySelector('.chart');
-            const {x, y, width, height} = element.getBoundingClientRect();
-            return {left: x, top: y, width, height, id: element.id};
-        });
-
-        await page.screenshot({
-            path: 'charts/chart' + type.toLowerCase() + '.png',
-            clip: {
-                x: rect.left - 0,
-                y: rect.top - 0,
-                width: rect.width + 0 * 2,
-                height: rect.height + 0 * 2
-            }
-        });
-        browser.close();
-    } catch (e) {
-        console.log("Error happened on getting chart.");
-        console.log(e);
-    }
-}
-
 setTimeout(function () {
     try {
         var increment = 1;
@@ -2596,7 +2557,7 @@ setTimeout(function () {
             increment += 1;
             setTimeout(function () {
                 getSynthInfo(value.name)
-            }, 1000 * 10 * increment);
+            }, 1000 * 30 * increment);
         });
     } catch (e) {
         console.log(e);
@@ -2610,7 +2571,7 @@ setInterval(function () {
             increment += 1;
             setTimeout(function () {
                 getSynthInfo(value.name)
-            }, 1000 * 10 * increment);
+            }, 1000 * 30 * increment);
         });
     } catch (e) {
         console.log(e);
@@ -2620,141 +2581,11 @@ setInterval(function () {
 
 setTimeout(function () {
     try {
-        getChart('realtime');
-    } catch (e) {
-        console.log(e);
-    }
-}, 5 * 1000);
-setTimeout(function () {
-    try {
-        getChart('24H');
-    } catch (e) {
-        console.log(e);
-    }
-}, 8 * 1000);
-setTimeout(function () {
-    try {
-        getChart('7D');
-    } catch (e) {
-        console.log(e);
-    }
-}, 10 * 1000);
-setTimeout(function () {
-    try {
-        getChart('1M');
-    } catch (e) {
-        console.log(e);
-    }
-}, 20 * 1000);
-setTimeout(function () {
-    try {
-        getChart('3M');
-    } catch (e) {
-        console.log(e);
-    }
-}, 30 * 1000);
-setTimeout(function () {
-    try {
-        getChart('6M');
-    } catch (e) {
-        console.log(e);
-    }
-}, 40 * 1000);
-
-setTimeout(function () {
-    try {
-        getChart('YTD');
-    } catch (e) {
-        console.log(e);
-    }
-}, 50 * 1000);
-setTimeout(function () {
-    try {
-        getChart('1Y');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 1000);
-setTimeout(function () {
-    try {
-        getChart('ALL');
-    } catch (e) {
-        console.log(e);
-    }
-}, 70 * 1000);
-
-
-setInterval(function () {
-    try {
-        getChart('realtime');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 1000);
-setInterval(function () {
-    try {
-        getChart('24H');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 7 * 1000);
-setInterval(function () {
-    try {
-        getChart('7D');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 10 * 1000);
-setInterval(function () {
-    try {
-        getChart('1M');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 20 * 1000);
-setInterval(function () {
-    try {
-        getChart('3M');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 25 * 1000);
-setInterval(function () {
-    try {
-        getChart('6M');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 50 * 1000);
-setInterval(function () {
-    try {
-        getChart('YTD');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 50 * 1000);
-setInterval(function () {
-    try {
-        getChart('1Y');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 50 * 1000);
-setInterval(function () {
-    try {
-        getChart('ALL');
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 100 * 1000);
-
-setTimeout(function () {
-    try {
         getSnxToolStaking();
     } catch (e) {
         console.log(e);
     }
-}, 10 * 1000);
+}, 20 * 1000);
 setInterval(function () {
     try {
         getSnxToolStaking();
@@ -2807,13 +2638,21 @@ setTimeout(function () {
         console.log(e);
     }
 }, 40 * 1000);
+
+setTimeout(function () {
+    try {
+        getExchange();
+    } catch (e) {
+        console.log(e);
+    }
+}, 60 * 1000 * 3);
 setInterval(function () {
     try {
         getExchange();
     } catch (e) {
         console.log(e);
     }
-}, 60 * 3 * 1000);
+}, 60 * 10 * 1000);
 
 setInterval(function () {
     try {
