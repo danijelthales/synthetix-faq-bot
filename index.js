@@ -218,6 +218,8 @@ let trades100 = null;
 let trades1000 = null;
 let general = null;
 let councilChannel = null;
+let fundChannel = null;
+let testChannel = null;
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.channels.fetch('785320922278133800').then(c => {
@@ -234,6 +236,12 @@ client.on("ready", () => {
     });
     client.channels.fetch('794935827436011531').then(c => {
         councilChannel = c;
+    });
+    client.channels.fetch('791459254862086155').then(c => {
+        fundChannel = c;
+    });
+    client.channels.fetch('705191770903806022').then(c => {
+        testChannel = c;
     });
 })
 client.on("guildMemberAdd", function (member) {
@@ -3355,4 +3363,75 @@ setInterval(function () {
 
 }, 60 * 1000 * 3);
 
+const {request, gql} = require('graphql-request');
+const queryPerformanceHistory = gql`
+    {
+        performanceHistory(address: "0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed", period:"week") {
+            day
+            week
+        }
+    }
+`
 
+let performance = null;
+setInterval(function () {
+    request('https://api.dhedge.org/graphql', queryPerformanceHistory).then((data) => {
+            console.log(data);
+            performance = data.performanceHistory;
+        }
+    );
+}, 1000 * 60)
+
+const fundInfo = gql`
+    {
+        fund(address: "0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed") {
+            fundComposition{
+                tokenName
+                amount
+                rate
+            }
+            totalValue
+        }
+    }
+`
+
+
+let fund = null;
+setInterval(function () {
+    request('https://api.dhedge.org/graphql', fundInfo).then((data) => {
+            console.log(data);
+            fund = data.fund;
+        }
+    );
+}, 1000 * 60)
+
+
+function printFund() {
+    const exampleEmbed = new Discord.MessageEmbed();
+    exampleEmbed.setColor("00770f");
+    exampleEmbed.setTitle("Synthetix Community Pool Daily digest");
+    exampleEmbed.setURL("https://app.dhedge.org/pool/0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed");
+    exampleEmbed.addField("Performance",
+        "Day: " + (performance.day * 1.0).toFixed(2) + "%\n Week: " + (performance.week * 1.0).toFixed(2) + "%");
+    let composition = "";
+    fund.fundComposition.forEach(c => {
+        if ((c.amount * 1.0) > 0) {
+            composition += "Token: " + c.tokenName;
+            composition += " Amount: " + (c.amount / 1e18).toFixed(2);
+            composition += " Value: $" + (c.amount / 1e18 * c.rate / 1e18).toFixed(2);
+            composition += "\n";
+        }
+    })
+    exampleEmbed.addField("Composition",
+        composition);
+    exampleEmbed.addField("Total value",
+        "$" + getNumberLabel(fund.totalValue / 1e18));
+    fundChannel.send(exampleEmbed);
+}
+
+
+var schedule = require('node-schedule');
+
+schedule.scheduleJob('0 1 * * *', function () {
+    printFund();
+});
