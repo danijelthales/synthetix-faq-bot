@@ -220,6 +220,8 @@ let general = null;
 let councilChannel = null;
 let fundChannel = null;
 let testChannel = null;
+
+let guild = null;
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.channels.fetch('785320922278133800').then(c => {
@@ -242,6 +244,12 @@ client.on("ready", () => {
     });
     client.channels.fetch('705191770903806022').then(c => {
         testChannel = c;
+    });
+
+    client.guilds.cache.forEach(function (value, key) {
+        if (value.name.toLowerCase().includes('synthetix')) {
+            guild = value;
+        }
     });
 })
 client.on("guildMemberAdd", function (member) {
@@ -3435,3 +3443,90 @@ var schedule = require('node-schedule');
 schedule.scheduleJob('0 1 * * *', function () {
     printFund();
 });
+
+
+var express = require("express");
+var app = express();
+var cors = require('cors');
+app.use(cors());
+const bodyParser = require("body-parser");
+app.listen(process.env.PORT || 3000, () => {
+    console.log("Server running on port " + (process.env.PORT || 3000));
+});
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+
+var allMembers = [];
+setTimeout(function () {
+    guild.members.fetch().then(fetchedMembers => {
+        allMembers = fetchedMembers;
+    });
+}, 6 * 1000);
+
+setInterval(function () {
+    guild.members.fetch().then(fetchedMembers => {
+        allMembers = fetchedMembers;
+    });
+}, 60 * 1000);
+
+app.post("/verify", async (req, res) => {
+        try {
+            let address = req.body.value.address + "";
+            let sig = req.body.value.sig;
+            let msg = req.body.value.msg;
+            let username = req.body.value.username;
+
+            const sigUtil = require('eth-sig-util')
+
+            const recovered = sigUtil.recoverPersonalSignature({
+                data: msg,
+                sig: sig
+            });
+            if (recovered.toLowerCase() === address.toLowerCase()) {
+                var roleToAssign = null;
+                guild.roles.cache.forEach(function (value, key) {
+                    console.log(value.name);
+                    if (value.name.toLowerCase().includes("chess")) {
+                        roleToAssign = value;
+                    }
+                });
+
+                var url = 'https://api.etherscan.io/api' +
+                    '?module=account&action=tokenbalance&contractaddress=0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f&address=AddressToReplace&tag=latest&apikey=YourApiKeyToken';
+                url = url.replace("AddressToReplace", address.toString());
+                https.get(url, (resp) => {
+                    let data = '';
+
+                    // A chunk of data has been recieved.
+                    resp.on('data', (chunk) => {
+                        data += chunk;
+                    });
+
+                    // The whole response has been received. Print out the result.
+                    resp.on('end', () => {
+                        let result = JSON.parse(data);
+                        let amount = result.result / 1e18;
+                        if (amount > 10) {
+                            allMembers.forEach(m => {
+                                var usernameDiscriminator = m.user.username + '#' + m.user.discriminator;
+                                if (usernameDiscriminator.toLowerCase() === username.toLowerCase()) {
+                                    m.roles.add(roleToAssign);
+                                }
+                            })
+                        }
+                    });
+
+                }).on("error", (err) => {
+                    console.log("Error: " + err.message);
+                });
+
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+)
+

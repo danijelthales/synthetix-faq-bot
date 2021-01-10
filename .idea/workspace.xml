@@ -4,7 +4,6 @@
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/charts/chartieth.png" beforeDir="false" afterPath="$PROJECT_DIR$/charts/chartieth.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
@@ -26,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-45">
-              <caret line="3411" column="67" lean-forward="true" selection-start-line="3411" selection-start-column="67" selection-end-line="3411" selection-end-column="67" />
+            <state relative-caret-position="100">
+              <caret line="3449" column="27" lean-forward="true" selection-start-line="3449" selection-start-column="27" selection-end-line="3449" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -35,7 +34,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/graphql-request/dist/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
+            <state relative-caret-position="4930">
               <caret line="290" column="9" selection-start-line="290" selection-start-column="9" selection-end-line="290" selection-end-column="9" />
             </state>
           </provider>
@@ -44,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+            <state relative-caret-position="425">
+              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -71,8 +70,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="442">
+              <caret line="26" column="11" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -81,11 +80,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>12000</find>
-      <find>setActivity</find>
-      <find>format</find>
-      <find>date</find>
-      <find>trades100</find>
       <find>snxRewardsPerMinterUsd</find>
       <find>snxRewardsThisPeriod</find>
       <find>payday</find>
@@ -109,8 +103,13 @@
       <find>governance</find>
       <find>councilchan</find>
       <find>deb</find>
-      <find>councilChannel</find>
       <find>fundChannel</find>
+      <find>guild</find>
+      <find>toLowerCase</find>
+      <find>allMembers</find>
+      <find>https</find>
+      <find>api.etherscan</find>
+      <find>councilChannel</find>
     </findStrings>
     <replaceStrings>
       <replace>https://synthetix.community/docs/staking</replace>
@@ -199,8 +198,8 @@
         <option value="$PROJECT_DIR$/answers/31.json" />
         <option value="$PROJECT_DIR$/new.js" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
@@ -216,8 +215,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -261,6 +258,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -405,21 +404,25 @@
       <workItem from="1609455099759" duration="6929000" />
       <workItem from="1609632258964" duration="775000" />
       <workItem from="1609768493250" duration="18214000" />
+      <workItem from="1609984320597" duration="891000" />
+      <workItem from="1610148588790" duration="1118000" />
+      <workItem from="1610296063779" duration="3304000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="425349000" />
+    <option name="totallyTimeSpent" value="430662000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1931" height="1045" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
-      <window_info id="Favorites" order="3" sideWeight="0.5016779" side_tool="true" weight="0.18230277" />
+      <window_info id="Favorites" order="3" sideWeight="0.5040783" side_tool="true" weight="0.30197755" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.49832216" visible="true" weight="0.29235703" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.30197755" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32894737" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49946696" weight="0.3366228" />
@@ -428,8 +431,8 @@
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.38157895" />
+      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32894737" />
+      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.39035088" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -480,49 +483,70 @@
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>'https://api.etherscan.io/api?module=account&amp;action=tokenbalance&amp;contractaddress=0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f&amp;address=' +
+                    +address.toString() + '&amp;tag=latest&amp;apikey=YourApiKeyToken'</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>'https://api.etherscan.io/api?module=account&amp;action=tokenbalance&amp;contractaddress=0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f&amp;address=' +
+                    +address + '&amp;tag=latest&amp;apikey=YourApiKeyToken'</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>'https://api.etherscan.io/api?module=account&amp;action=tokenbalance&amp;contractaddress=0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f&amp;address=' +
+                    +address + '&amp;tag=latest&amp;apikey=YourApiKeyToken'https://api.etherscan.io/api?module=account&amp;action=tokenbalance&amp;contractaddress=0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f&amp;address=' +
+    +address + '&amp;tag=latest&amp;apikey=YourApiKeyToken</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>results</expression-string>
+        <expression-string>url</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>results.</expression-string>
+        <expression-string>url.toString()</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choices.get(vote.msg.payload.choice+&quot;&quot;)</expression-string>
+        <expression-string>address</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choices.get(&quot;3&quot;)</expression-string>
+        <expression-string>&quot;&amp;=&quot;+address+&quot;&quot;</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choices.get(3)</expression-string>
+        <expression-string>&quot;=&quot;+address+&quot;&quot;</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choices.get(vote.msg.payload.choice)</expression-string>
+        <expression-string>address+&quot;&quot;</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>prices.slice(6, 13)</expression-string>
+        <expression-string>roleToAssign</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>synthetix.collateralisationRatio(address).then(console.log(&quot;here&quot;))</expression-string>
+        <expression-string>req.body.value.msg</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>synthetix.collateralisationRatio(address)</expression-string>
+        <expression-string>req.body.msg</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -823,17 +847,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/node_modules/graphql-request/dist/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="4930">
+          <caret line="290" column="9" selection-start-line="290" selection-start-column="9" selection-end-line="290" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -844,24 +861,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+        <state relative-caret-position="255">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/graphql-request/dist/index.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="290" column="9" selection-start-line="290" selection-start-column="9" selection-end-line="290" selection-end-column="9" />
+        <state relative-caret-position="425">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-45">
-          <caret line="3411" column="67" lean-forward="true" selection-start-line="3411" selection-start-column="67" selection-end-line="3411" selection-end-column="67" />
+        <state relative-caret-position="100">
+          <caret line="3449" column="27" lean-forward="true" selection-start-line="3449" selection-start-column="27" selection-end-line="3449" selection-end-column="27" />
         </state>
       </provider>
     </entry>
