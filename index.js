@@ -3508,7 +3508,7 @@ app.post("/verify", async (req, res) => {
                     resp.on('end', () => {
                         let result = JSON.parse(data);
                         let amount = result.result / 1e18;
-                        if (amount > 10) {
+                        if (amount > 9) {
                             allMembers.forEach(m => {
                                 var usernameDiscriminator = m.user.username + '#' + m.user.discriminator;
                                 if (usernameDiscriminator.toLowerCase() === username.toLowerCase()) {
