@@ -151,7 +151,7 @@ var coingeckoBtc = 0.000351;
 var binanceUsd = 3.74;
 var kucoinUsd = 3.74;
 
-var payday = new Date('2020-08-12 13:00');
+var payday = new Date('2020-08-12 04:00');
 
 const Synth = class {
     constructor(name, price, gain) {
@@ -222,6 +222,49 @@ let fundChannel = null;
 let testChannel = null;
 
 let guild = null;
+
+async function checkMessages() {
+    let countsUsers = new Map();
+    client.channels.fetch('413890591840272398').then(async c => {
+        //+ textChannel.messages.fetch({ limit: 10 });
+
+        const fetchAll = require('discord-fetch-all');
+        const allMessages = await fetchAll.messages(c, {
+            reverseArray: true, // Reverse the returned array
+            userOnly: true, // Only return messages by users
+            botOnly: false, // Only return messages by bots
+            pinnedOnly: false, // Only returned pinned messages
+        });
+
+// Will return an array of all messages in the channel
+// If the channel has no messages it will return an empty array
+        console.log(allMessages);
+
+        allMessages.forEach(mes => {
+            var created = mes.createdTimestamp;
+            let joinedMinsAgo = Date.now() - created;
+            joinedMinsAgo = (((joinedMinsAgo / 1000) / 60));
+            joinedMinsAgo = Math.round(((joinedMinsAgo) + Number.EPSILON) * 100) / 100;
+            if (joinedMinsAgo < 2880) {
+                var username = mes.author.username;
+                if (countsUsers.has(username)) {
+                    countsUsers.set(username, (countsUsers.get(username) + 1))
+                } else {
+                    countsUsers.set(username, 1)
+                }
+            }
+        })
+
+        countsUsers[Symbol.iterator] = function* () {
+            yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
+        }
+
+        for (let [key, value] of countsUsers) {     // get data sorted
+            console.log(key + ' ' + value);
+        }
+    })
+}
+
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.channels.fetch('785320922278133800').then(c => {
@@ -245,6 +288,9 @@ client.on("ready", () => {
     client.channels.fetch('705191770903806022').then(c => {
         testChannel = c;
     });
+
+
+   // checkMessages();
 
     client.guilds.cache.forEach(function (value, key) {
         if (value.name.toLowerCase().includes('synthetix')) {
@@ -3334,7 +3380,7 @@ setInterval(function () {
                                     choices.get(vote.msg.payload.choice));
                                 exampleEmbed.addField("Voter",
                                     "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                                councilChannel.send(exampleEmbed);
+                                // councilChannel.send(exampleEmbed);
                             }
                         } else {
                             console.log("New Vote" + vote.msg.payload.choice);
@@ -3347,7 +3393,7 @@ setInterval(function () {
                                 choices.get(vote.msg.payload.choice));
                             exampleEmbed.addField("Voter",
                                 "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                            councilChannel.send(exampleEmbed);
+                            // councilChannel.send(exampleEmbed);
                         }
                         votesMapNew.set(voter, vote.msg.payload.choice);
 
