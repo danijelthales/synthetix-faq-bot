@@ -2151,7 +2151,7 @@ setInterval(function () {
 
 setInterval(function () {
     try {
-        https.get('https://api-v2.dex.ag/price?from=sUSD&to=USDT&fromAmount=10000&dex=ag', (resp) => {
+        https.get('https://api.1inch.exchange/v3.0/1/quote?fromTokenAddress=0x57Ab1ec28D129707052df4dF418D58a2D46d5f51&toTokenAddress=0xdAC17F958D2ee523a2206206994597C13D831ec7&amount=10000000000000000000000', (resp) => {
             try {
                 let data = '';
 
@@ -2163,8 +2163,8 @@ setInterval(function () {
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
                     try {
-                        let result = JSON.parse(data);
-                        usdtPeg = Math.round(((result.price * 1.0) + Number.EPSILON) * 1000) / 1000;
+                        let result = JSON.parse(data).toTokenAmount/1e10;
+                        usdtPeg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch
                         (e) {
                         console.log("Error on fetching 1inch peg: ", e);
@@ -2186,7 +2186,7 @@ setInterval(function () {
 
 setInterval(function () {
     try {
-        https.get('https://api-v2.dex.ag/price?from=sUSD&to=USDC&fromAmount=10000&dex=ag', (resp) => {
+        https.get('https://api.1inch.exchange/v3.0/1/quote?fromTokenAddress=0x57Ab1ec28D129707052df4dF418D58a2D46d5f51&toTokenAddress=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&amount=10000000000000000000000', (resp) => {
             try {
                 let data = '';
 
@@ -2198,8 +2198,8 @@ setInterval(function () {
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
                     try {
-                        let result = JSON.parse(data);
-                        usdcPeg = Math.round(((result.price * 1.0) + Number.EPSILON) * 1000) / 1000;
+                        let result = JSON.parse(data).toTokenAmount/1e10;
+                        usdcPeg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch (e) {
                         console.log("Error: ", e);
                     }
