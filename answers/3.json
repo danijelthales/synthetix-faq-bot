@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "To unlock your locked SNX, you need to 'burn' the sUSD you debt owed. Burning will unlock your escrowed SNX first then it will start unlocking your SNX in your wallet to transfer.  \n\nIf you had $1000 worth of SNX you would have been able to mint ~133 sUSD (at the 600% Collateralization Ratio). This would lock up all of your SNX, thus making it non-transferrable. You cant mint money then sell your collateral used to supply it. The minted amount must be burned. \n\nSo you now need to burn that 133 sUSD you minted (give or take any fluctuations in your debt) to unlock your SNX so you can transfer it. Mintr will tell you how much sUSD you need to burn to unlock your SNX."
+      "value": "To unlock your locked SNX, you need to 'burn' the sUSD debt you owe. Burning will unlock your escrowed SNX first, then it will start unlocking your SNX in your wallet to transfer.\n\nIf you had $1000 worth of SNX you would have been able to mint ~133 sUSD (at the 600% Collateralization Ratio). This would lock up all of your SNX, thus making it non-transferrable. You can't mint money then sell your collateral used to supply it. The minted amount must be burned. \n\nSo you now need to burn that 133 sUSD you minted (give or take any fluctuations in your debt) to unlock your SNX so you can transfer it. Mintr will tell you how much sUSD you need to burn to unlock your SNX."
     },
     {
       "title": "What if I don't have any sUSD in my wallet to burn?",

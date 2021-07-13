@@ -13,10 +13,6 @@ clientFaqPrice.login(process.env.BOT_TOKEN_SNX);
 const clientPegPrice = new Discord.Client();
 clientPegPrice.login(process.env.BOT_TOKEN_PEG);
 
-const clientsSEthPegPrice = new Discord.Client();
-clientsSEthPegPrice.login(process.env.BOT_TOKEN_SETH_PEG);
-
-
 const clientTknPrice = new Discord.Client();
 clientTknPrice.login(process.env.BOT_TOKEN_TKN);
 
@@ -79,7 +75,7 @@ let redisClient = null;
 
 var fs = require('fs');
 var snxRewardsPerMinterUsd = 0.013;
-var snxToMintUsd =  0.35;
+var snxToMintUsd = 1.933;
 var snxRewardsThisPeriod = "940,415 SNX";
 var totalDebt = "$71,589,622";
 var gasPrice = 240;
@@ -155,7 +151,7 @@ var coingeckoBtc = 0.000351;
 var binanceUsd = 3.74;
 var kucoinUsd = 3.74;
 
-var payday = new Date('2020-08-12 05:30');
+var payday = new Date('2020-08-12 13:00');
 
 const Synth = class {
     constructor(name, price, gain) {
@@ -176,11 +172,7 @@ var synthsMap = new Map();
 let gasSubscribersMap = new Map();
 let gasSubscribersLastPushMap = new Map();
 
-let synthetixProposals = new Map();
-
-let illuviumProposals = new Map();
-
-let votesMapNew4 = new Map();
+let votesMapNew = new Map();
 
 console.log("Redis URL:" + process.env.REDIS_URL);
 
@@ -208,28 +200,12 @@ if (process.env.REDIS_URL) {
         }
     });
 
-    redisClient.get("votesMapNew4", function (err, obj) {
+    redisClient.get("votesMapNew", function (err, obj) {
         votesMapRaw = obj;
-        console.log("votesMapRaw3:" + votesMapRaw);
+        console.log("votesMapRaw:" + votesMapRaw);
         if (votesMapRaw) {
-            votesMapNew4 = new Map(JSON.parse(votesMapRaw));
-            console.log("votesMapNew4:" + votesMapNew4);
-        }
-    });
-
-    redisClient.get("synthetixProposals", function (err, obj) {
-        proposalsRaw = obj;
-        if (proposalsRaw) {
-            synthetixProposals = new Map(JSON.parse(proposalsRaw));
-            console.log("synthetixProposals:" + synthetixProposals);
-        }
-    });
-
-    redisClient.get("illuviumProposals", function (err, obj) {
-        illuviumproposalsRaw = obj;
-        if (illuviumproposalsRaw) {
-            illuviumProposals = new Map(JSON.parse(illuviumproposalsRaw));
-            console.log("illuviumProposals:" + illuviumProposals);
+            votesMapNew = new Map(JSON.parse(votesMapRaw));
+            console.log("votesMapNew:" + votesMapNew);
         }
     });
 
@@ -244,18 +220,12 @@ let general = null;
 let councilChannel = null;
 let fundChannel = null;
 let testChannel = null;
-let channelGov = null;
-let channelPdao = null;
-let channelSdao = null;
-let channelGdao = null;
-let channelDeployer = null;
-let channelShorts = null;
-let channelAmbassadors = null;
+
 let guild = null;
 
 async function checkMessages() {
     let countsUsers = new Map();
-    client.channels.fetch('413890591840272398').then(async c => {
+    client.channels.fetch('478542505227321354').then(async c => {
         //+ textChannel.messages.fetch({ limit: 10 });
 
         const fetchAll = require('discord-fetch-all');
@@ -318,30 +288,9 @@ client.on("ready", () => {
     client.channels.fetch('705191770903806022').then(c => {
         testChannel = c;
     });
-    client.channels.fetch('804120595976421406').then(c => {
-        channelGov = c;
-    });
-    client.channels.fetch('823701952122716210').then(c => {
-        channelPdao = c;
-    });
-    client.channels.fetch('823701931888607262').then(c => {
-        channelSdao = c;
-    });
-    client.channels.fetch('823701967841919016').then(c => {
-        channelGdao = c;
-    });
-    client.channels.fetch('836246784241696778').then(c => {
-        channelAmbassadors = c;
-    });
-    client.channels.fetch(process.env.DEPLOYER).then(c => {
-        channelDeployer = c;
-    });
-    client.channels.fetch(process.env.SHORTS).then(c => {
-        channelShorts = c;
-    });
 
 
-    // checkMessages();
+    checkMessages();
 
     client.guilds.cache.forEach(function (value, key) {
         if (value.name.toLowerCase().includes('synthetix')) {
@@ -363,10 +312,6 @@ client.on('messageReactionAdd', (reaction, user) => {
         }
     }
 });
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 function doInnerQuestion(command, doReply, msg) {
     try {
@@ -1903,7 +1848,6 @@ async function getSnxToolStaking() {
                 '--disable-setuid-sandbox',
             ],
         });
-        console.log("Fetching SNX tools data");
         const page = await browser.newPage();
         await page.setViewport({width: 1000, height: 926});
         await page.goto("https://snx.tools/calculator/staking/", {waitUntil: 'networkidle2'});
@@ -1923,10 +1867,11 @@ async function getSnxToolStaking() {
         if (!isNaN(prices[3].split(' ')[0] * 1.0)) {
             snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
         }
+        if (!isNaN(prices[4].split(' ')[0] * 1.0)) {
+            snxToMintUsd = prices[4].split(' ')[0] * 1.0;
+        }
         snxRewardsThisPeriod = prices[5];
         totalDebt = prices[6];
-        console.log("Fetched SNX tools data");
-        console.log("Fetched snxRewardsThisPeriod:" + snxRewardsThisPeriod);
         browser.close()
     } catch (e) {
         console.log("Error happened on getting data from SNX tools.");
@@ -2108,42 +2053,6 @@ function delay(time) {
     });
 }
 
-let sethPeg = 1
-setInterval(function () {
-    try {
-        https.get('https://api.1inch.exchange/v3.0/1/quote?fromTokenAddress=0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb&toTokenAddress=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&amount=10000000000000000000', (resp) => {
-            try {
-                let data = '';
-
-                // A chunk of data has been recieved.
-                resp.on('data', (chunk) => {
-                    data += chunk;
-                });
-
-                // The whole response has been received. Print out the result.
-                resp.on('end', () => {
-                    try {
-                        let result = JSON.parse(data).toTokenAmount/1e19;
-                        sethPeg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
-                    } catch
-                        (e) {
-                        console.log("Error on fetching 1inch peg: ", e);
-                    }
-                });
-            } catch (e) {
-                console.log("Error on fetching 1inch peg: ", e);
-            }
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch
-        (e) {
-        console.log("Error on fetching 1inch peg: ", e);
-    }
-
-}, 60 * 1000);
-
 setInterval(function () {
     try {
         https.get('https://api-v2.dex.ag/price?from=sUSD&to=USDT&fromAmount=10000&dex=ag', (resp) => {
@@ -2302,14 +2211,6 @@ setInterval(function () {
         try {
             value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
             value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'});
-        } catch (e) {
-            console.log(e);
-        }
-    });
-    clientsSEthPegPrice.guilds.cache.forEach(function (value, key) {
-        try {
-            value.members.cache.get("844321938456313887").setNickname("sETH peg");
-            value.members.cache.get("844321938456313887").user.setActivity(""+sethPeg, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -2562,11 +2463,10 @@ setInterval(function () {
     } catch (e) {
         console.log(e);
     }
-}, 1000 * 60 * 5);
+}, 30 * 1000);
 
 function doCalculate(command, msg, gasPriceParam, fromDM) {
     try {
-        snxToMintUsd = 1/(snxPrice/4);
         var gasPriceToUse = gasPrice;
         if (gasPriceParam) {
             gasPriceToUse = gasPriceParam;
@@ -2902,7 +2802,7 @@ setTimeout(function () {
     snxData.synths.issuers({max: 10000}).then(result => {
         getAllWallets(result);
     });
-}, 1000 * 10
+}, 1000 * 60 * 5
 )
 
 
@@ -3262,7 +3162,7 @@ setInterval(function () {
 
 
 let council = [];
-let voteDay = new Date('2021-03-15 07:00');
+let voteDay = new Date('2021-01-01 00:00');
 
 async function getCouncil() {
     try {
@@ -3274,7 +3174,7 @@ async function getCouncil() {
         });
         const page = await browser.newPage();
         await page.setViewport({width: 1000, height: 926});
-        await page.goto("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE", {waitUntil: 'networkidle2'});
+        await page.goto("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6", {waitUntil: 'networkidle2'});
 
         await delay(10000);
 
@@ -3318,11 +3218,9 @@ setInterval(function () {
                         exampleEmbed.addField("Wallet",
                             '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(r.fromAmount.toFixed(2)) + " " + r.fromCurrencyKey);
+                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(r.toAmount.toFixed(2)) + " " + r.toCurrencyKey);
-                        exampleEmbed.addField("Value",
-                            numberWithCommas(r.fromAmountInUSD.toFixed(2)) + " sUSD");
+                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
                         trades1000.send(exampleEmbed);
                     } else if (r.toAmountInUSD >= 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
@@ -3332,11 +3230,9 @@ setInterval(function () {
                         exampleEmbed.addField("Wallet",
                             '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(r.fromAmount.toFixed(2)) + " " + r.fromCurrencyKey);
+                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(r.toAmount.toFixed(2)) + " " + r.toCurrencyKey);
-                        exampleEmbed.addField("Value",
-                            numberWithCommas(r.fromAmountInUSD.toFixed(2)) + " sUSD");
+                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
                         trades100.send(exampleEmbed);
                     }
                 } catch (e) {
@@ -3429,34 +3325,31 @@ setInterval(function () {
 
 
 let choices = new Map();
-choices.set(1, "NaotoSake");
-choices.set(2, "MrSolver");
-choices.set(3, "MoneyManDoug");
-choices.set(4, "BigPenny");
+choices.set(1, "BigPenny");
+choices.set(2, "Danijel");
+choices.set(3, "Farmwell");
+choices.set(4, "Jackson");
 choices.set(5, "Spreek");
-choices.set(6, "TerraBellus");
-choices.set(7, "Bojan");
-choices.set(8, "Danijel");
-choices.set(9, "Farmwell");
-choices.set(10, "Synthaman");
-choices.set(11, "justwanttoknowathing");
-choices.set(12, "Farmer Joe - The DeFi Oracle");
-choices.set(13, "Kaleb");
-choices.set(14, "Akin");
-choices.set(15, "Samantha");
-choices.set(16, "Michael | Framework");
-choices.set(17, "Chevis");
-choices.set(18, "Simone | Dialectic");
+choices.set(6, "Synthaman");
+choices.set(7, "justwanttoknowathing");
+choices.set(8, "Farmer Joe - The DeFi Oracle");
+choices.set(9, "Psybull");
+choices.set(10, "Kaleb");
+choices.set(11, "rubber duck");
+choices.set(12, "Akin");
+choices.set(13, "Samantha");
+choices.set(14, "Michael | Framework");
+choices.set(15, "Andy | Synthetix");
+choices.set(16, "Chevis");
+choices.set(17, "Simone ");
+choices.set(18, "TerraBellus");
 choices.set(19, "larpras");
-choices.set(20, "Andy | synthetix");
-choices.set(21, "Jackson | synthetix");
-choices.set(22, "redmarglar");
 
 
 setInterval(function () {
     console.log("Getting votes");
     try {
-        https.get('https://hub.snapshot.page/api/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE', (resp) => {
+        https.get('https://hub.snapshot.page/api/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6', (resp) => {
             let data = '';
 
             // A chunk of data has been recieved.
@@ -3473,21 +3366,21 @@ setInterval(function () {
                     for (const result in results) {
                         let vote = results[result];
                         let voter = vote.address;
-                        if (votesMapNew4.has(voter)) {
-                            let choice = votesMapNew4.get(voter);
+                        if (votesMapNew.has(voter)) {
+                            let choice = votesMapNew.get(voter);
                             if (choice != vote.msg.payload.choice) {
                                 console.log("Vote change");
                                 const exampleEmbed = new Discord.MessageEmbed();
                                 exampleEmbed.setColor("00770f");
                                 exampleEmbed.setTitle("Vote Changed");
-                                exampleEmbed.setURL("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE");
+                                exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
                                 exampleEmbed.addField("From",
                                     choices.get(choice));
                                 exampleEmbed.addField("To",
                                     choices.get(vote.msg.payload.choice));
                                 exampleEmbed.addField("Voter",
                                     "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                                //councilChannel.send(exampleEmbed);
+                                // councilChannel.send(exampleEmbed);
                             }
                         } else {
                             console.log("New Vote" + vote.msg.payload.choice);
@@ -3495,17 +3388,17 @@ setInterval(function () {
                             const exampleEmbed = new Discord.MessageEmbed();
                             exampleEmbed.setColor("00770f");
                             exampleEmbed.setTitle("New Vote");
-                            exampleEmbed.setURL("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE");
+                            exampleEmbed.setURL("https://council.synthetix.io/#/synthetixcouncil/proposal/QmPyFrvjPRzqsxCpcUFdHU2hWGWV4EJa99ahFATtTyxyZ6");
                             exampleEmbed.addField("For",
                                 choices.get(vote.msg.payload.choice));
                             exampleEmbed.addField("Voter",
                                 "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                            //councilChannel.send(exampleEmbed);
+                            // councilChannel.send(exampleEmbed);
                         }
-                        votesMapNew4.set(voter, vote.msg.payload.choice);
+                        votesMapNew.set(voter, vote.msg.payload.choice);
 
                         if (process.env.REDIS_URL) {
-                            redisClient.set("votesMapNew4", JSON.stringify([...votesMapNew4]), function () {
+                            redisClient.set("votesMapNew", JSON.stringify([...votesMapNew]), function () {
                             });
                         }
                     }
@@ -3560,10 +3453,11 @@ const fundInfo = gql`
 let fund = null;
 setInterval(function () {
     request('https://api.dhedge.org/graphql', fundInfo).then((data) => {
+            console.log(data);
             fund = data.fund;
         }
     );
-}, 1000 * 300)
+}, 1000 * 60)
 
 
 function printFund() {
@@ -3571,10 +3465,8 @@ function printFund() {
     exampleEmbed.setColor("00770f");
     exampleEmbed.setTitle("Synthetix Community Pool Daily digest");
     exampleEmbed.setURL("https://app.dhedge.org/pool/0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed");
-    let dayperf = (performance.day / 1e18 - 1) * 100;
-    let weekerf = (performance.week / 1e18 - 1) * 100;
     exampleEmbed.addField("Performance",
-        "Day: " + (dayperf).toFixed(2) + "%\n Week: " + (weekerf).toFixed(2) + "%");
+        "Day: " + (performance.day * 1.0).toFixed(2) + "%\n Week: " + (performance.week * 1.0).toFixed(2) + "%");
     let composition = "";
     fund.fundComposition.forEach(c => {
         if ((c.amount * 1.0) > 0) {
@@ -3604,8 +3496,8 @@ var app = express();
 var cors = require('cors');
 app.use(cors());
 const bodyParser = require("body-parser");
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Server running on port " + (process.env.PORT || 3000));
+app.listen(process.env.PORT || 3002, () => {
+    console.log("Server running on port " + (process.env.PORT || 3002));
 });
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -3624,65 +3516,6 @@ setInterval(function () {
         allMembers = fetchedMembers;
     });
 }, 60 * 1000);
-
-app.post("/pdao", async (req, res) => {
-        try {
-            let content = req.body;
-            console.log(content);
-            if (
-                content.status.toLowerCase().includes("confirmed")
-            ) {
-                if (content.from.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())
-                    ||
-                    content.to.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())) {
-                    channelGdao.send("New transaction from gDAO: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase())) {
-                    channelPdao.send("New transaction from pDAO: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase())) {
-                    channelSdao.send("New transaction from sDAO: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase())) {
-                    channelDeployer.send("New transaction from Synthetix Deployer: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase())) {
-                    channelAmbassadors.send("New transaction from Synthetix Ambassadors: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase())) {
-                    const exampleEmbed = new Discord.MessageEmbed();
-                    exampleEmbed.setColor("00770f");
-                    exampleEmbed.setTitle("New loan tx");
-                    exampleEmbed.setURL("https://etherscan.io/tx/" + content.hash);
-                    exampleEmbed.addField("Type",
-                        content.contractCall.methodName);
-                    exampleEmbed.addField("From",
-                        "[" + content.from + "]" + "(https://etherscan.io/address/" + content.from + ")");
-                    if (content.contractCall.methodName.toLowerCase() == "open") {
-                        let asset = "ETH";
-                        if (content.contractCall.params.currency.includes("734254")) {
-                            asset = "BTC";
-                        }
-                        exampleEmbed.addField("Short",
-                            asset);
-                        let amount = content.contractCall.params.amount * 1.0 / 1e18;
-                        amount = amount.toFixed(2);
-                        exampleEmbed.addField("Amount",
-                            amount);
-                    }
-                    channelShorts.send(exampleEmbed);
-                }
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-)
 
 app.post("/verify", async (req, res) => {
         try {
@@ -3743,216 +3576,3 @@ app.post("/verify", async (req, res) => {
     }
 )
 
-
-var knownAddress = new Set();
-knownAddress.add("0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04");
-knownAddress.add("0xBD015d82a36C9a05108ebC5FEE12672F24dA0Cf4");
-knownAddress.add("0x9d256b839C1b46e57122eBb3C5e6da97288FaCf1");
-knownAddress.add("0x9cFc4cfB2aa99bedc98d52E2DCc0Eb010F20718f");
-knownAddress.add("0x0bc3668d2AaFa53eD5E5134bA13ec74ea195D000");
-knownAddress.add("0x65DCD62932fEf5af25AdA91F0F24658e94e259c5");
-knownAddress.add("0x0120666306F4D15bb125696f322BFD8EE83423a9");
-knownAddress.add("0x935D2fD458fdf41B6F7B62471f593797866a3Ce6");
-knownAddress.add("0x682C4184286415344a35a0Ff6699bb8EdAbDdc17");
-knownAddress.add("0xbf49b454818783d12bf4f3375ff17c59015e66cb");
-knownAddress.add("0x0120666306f4d15bb125696f322bfd8ee83423a9");
-
-const dateformat = require('dateformat');
-setInterval(function () {
-    https.get('https://hub.snapshot.page/api/snxgov.eth/proposals', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', async () => {
-            try {
-                let results = JSON.parse(data);
-                let print = false;
-                if (synthetixProposals.size > 0) {
-                    print = true;
-                }
-                var counterInc = 0;
-                let keys = [];
-                for (const result in results) {
-                    keys.push(result);
-                }
-                keys = keys.reverse();
-                for (const res in keys) {
-                    let result = keys[res];
-                    if (!synthetixProposals.has(result)) {
-                        let proposal = results[result];
-                        synthetixProposals.set(result, proposal);
-                        let start = new Date(proposal.msg.payload.start * 1000);
-                        let end = new Date(proposal.msg.payload.end * 1000);
-                        let content = proposal.msg.payload.body;
-                        let name = proposal.msg.payload.name;
-
-                        if (content.length > 1024) {
-                            content = content.substring(0, 1020) + "...";
-                        }
-
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New proposal");
-                        exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
-                        exampleEmbed.addField("Name",
-                            name);
-                        exampleEmbed.addField("Start",
-                            dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("End",
-                            dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("Description",
-                            content);
-                        if (print) {
-
-                            counterInc += 5;
-                            setTimeout(
-                                function () {
-                                    https.get('https://hub.snapshot.page/api/synthetixproposal/proposal/' + result, (resp) => {
-                                        let data = '';
-
-                                        // A chunk of data has been recieved.
-                                        resp.on('data', (chunk) => {
-                                            data += chunk;
-                                        });
-
-                                        // The whole response has been received. Print out the result.
-                                        resp.on('end', () => {
-                                            try {
-                                                let resultsV = JSON.parse(data);
-                                                let print = false;
-                                                let yes = 0;
-                                                let no = 0;
-                                                for (const resultV in resultsV) {
-                                                    let vote = resultsV[resultV];
-                                                    let voter = vote.address;
-                                                    if (knownAddress.has(voter)) {
-                                                        let voteRes = vote.msg.payload.choice;
-                                                        if (voteRes == '2') {
-                                                            no++;
-                                                        } else {
-                                                            yes++;
-                                                        }
-                                                    }
-                                                }
-                                                exampleEmbed.addField("Votes",
-                                                    "sYES: " + yes + " iNO: " + no);
-
-                                                channelGov.send(exampleEmbed);
-                                            } catch
-                                                (e) {
-                                                console.log(e);
-                                            }
-
-                                        });
-
-
-                                    })
-                                }, counterInc * 1000)
-
-
-                        }
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
-                            });
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 1000 * 60 * 5);
-
-const clientIllGov = new Discord.Client();
-clientIllGov.login(process.env.BOT_TOKEN_ILLUVIUM_GOVERNANCE);
-
-var channelIllProposals = null;
-clientIllGov.on("ready", () => {
-    console.log(`Logged in as ${clientIllGov.user.tag}!`);
-    clientIllGov.channels.fetch('809220730608680990').then(c => {
-        channelIllProposals = c;
-    });
-})
-
-setInterval(function () {
-    https.get('https://hub.snapshot.page/api/ilvgov.eth/proposals', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', async () => {
-            try {
-                let results = JSON.parse(data);
-                let print = false;
-                if (illuviumProposals.size > 0) {
-                    print = true;
-                }
-                var counterInc = 0;
-                let keys = [];
-                for (const result in results) {
-                    keys.push(result);
-                }
-                keys = keys.reverse();
-                for (const res in keys) {
-                    let result = keys[res];
-                    if (!illuviumProposals.has(result)) {
-                        let proposal = results[result];
-                        illuviumProposals.set(result, proposal);
-                        let start = new Date(proposal.msg.payload.start * 1000);
-                        let end = new Date(proposal.msg.payload.end * 1000);
-                        let content = proposal.msg.payload.body;
-                        let name = proposal.msg.payload.name;
-
-                        if (content.length > 1024) {
-                            content = content.substring(0, 1020) + "...";
-                        }
-
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New proposal");
-                        exampleEmbed.setURL("https://gov.illuvium.io/#/ilvgov.eth/proposal/" + result);
-                        exampleEmbed.addField("Name",
-                            name);
-                        exampleEmbed.addField("Start",
-                            dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("End",
-                            dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("Description",
-                            content);
-                        if (print) {
-                            channelIllProposals.send(exampleEmbed);
-                        }
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("illuviumProposals", JSON.stringify([...illuviumProposals]), function () {
-                            });
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 1000 * 60 * 5);

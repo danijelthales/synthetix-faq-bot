@@ -5,7 +5,7 @@
   "fields": [
     {
       "title": "Answer",
-      "value": "xSNX is a smart contract for SNX that provides exposure to staking incentives and trading returns without the week-to-week management currently required.\n\nIt will enable two kinds of investors to benefit fully from the SNX investment thesis:\n\n- Investors who,  for tax and accounting reasons, can't invest in stakeable tokens.\n- Investors who, for complexity reasons, aren't comfortable with the technical and strategic elements of staking.\n\nThe other benefit of using xSNX to manage your SNX staking for you, is that gas costs will be shared by the pool, resulting in less gas costs for the user. There will be some fees to use; blog post coming on release soon will detail this further.\n\nhttps://github.com/Synthetixio/snx-grants-dao/blob/master/proposals/xsnx-staking-wrapper.md\n(link to blog post when it arrives instead of github.)"
+      "value": "xSNX is a smart contract for SNX that provides exposure to staking incentives and exchange fee returns without the week-to-week management that native SNX  requires.\n\nxSNX will enable two kinds of investors to benefit fully from the SNX investment thesis:\n\n- Investors who, for tax and accounting reasons, can't invest in stakeable tokens.\n- Investors who, for complexity reasons, aren't comfortable with the technical and strategic elements of staking.\n\nThe other benefit of using xSNX to manage your SNX staking for you, is that gas costs will be shared by the pool, resulting in less gas costs for the user. There will be some fees to use. \n\nSee the [xToken blog post](https://medium.com/xtoken/xsnx-take-two-8003f5ed8782) for more information."
     }
   ],
   "footer": {}

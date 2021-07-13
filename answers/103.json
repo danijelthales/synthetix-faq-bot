@@ -1,0 +1,12 @@
+{
+  "title": "Question 103:",
+  "description": "What is the ETH Wrappr?",
+  "color": "0099ff",
+  "footer": {},
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "The ETH Wrappr is a contract that accepts deposits in ETH or WETH and in return mints sETH in the user’s wallet. It also allows for the reverse, i.e. sETH -> ETH or WETH.\n\nWhy have this? It allows ETH holders to easily enter and exit Kwenta with the least amount of friction possible.\n\nAnother benefit is to act as a peg balancing layer that allows arbers to enter and exit with the least friction possible. For more detailed information on this and other aspects of the contract, see: \n\n[SIP 112: ETH Wrappr](https://sips.synthetix.io/sips/sip-112)"
+    }
+  ]
+}

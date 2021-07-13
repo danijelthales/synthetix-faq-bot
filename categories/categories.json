@@ -70,7 +70,7 @@
     ]
   },
   {
-    "name": "Synthetix.Exchange",
+    "name": "Kwenta",
     "desc": "General question the exchange and synths",
     "questions": [
       18,
@@ -87,7 +87,9 @@
       48,
       49,
       50,
-      66
+      66,
+      102,
+      103
     ]
   },
   {
@@ -151,7 +153,8 @@
     "desc": "Casual questions, jokes, memes",
     "questions": [
       80,
-      81
+      81,
+      101
     ]
   }
 ]

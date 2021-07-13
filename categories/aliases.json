@@ -582,5 +582,33 @@
   {
     "number": 100,
     "alias": "council"
+  },
+  {
+    "number": 101,
+    "alias": "samantha"
+  },
+  {
+    "number": 102,
+    "alias": "loan"
+  },
+  {
+    "number": 102,
+    "alias": "loans"
+  },
+  {
+    "number": 103,
+    "alias": "ETH wrapper"
+  },
+  {
+    "number": 103,
+    "alias": "ETH wrappr"
+  },
+  {
+    "number": 103,
+    "alias": "wrapper"
+  },
+  {
+    "number": 103,
+    "alias": "wrappr"
   }
 ]

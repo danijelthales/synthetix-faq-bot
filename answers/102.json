@@ -1,0 +1,13 @@
+{
+  "title": "Question 102:",
+  "description": "How can I take out a synth loan?",
+  "color": "0099ff",
+  "footer": {},
+  "fields": [
+    {
+      "title": "Answer",
+      "value": "sUSD and sETH loans can be taken currently at no interest on https://synthetix.exchange/#/loans\nAlthough need to highlight that users will need to be close these loans core-contributors announce the end of this program and the upgrade to new loan contracts. Please refer to the blog posts below for more information:\n- [blog](https://blog.synthetix.io/ether-collateral-trial-susd/) \n- [second blog](https://blog.synthetix.io/ether-collateral-second-trial/)"
+    }
+  ],
+  "image": "loans.png"
+}
