@@ -1,5 +1,10 @@
 require("dotenv").config()
 
+const Web3 = require('web3');
+const DataFrame = require("dataframe-js");
+const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/2a1ba27ea6ea4b9683bd48100631ca1e"))
+const axios = require('axios');
+const synthetixAPI = require('synthetix');
 const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = require('@uniswap/sdk');
 var yaxis = null;
 var pair = null;
@@ -79,7 +84,7 @@ let redisClient = null;
 
 var fs = require('fs');
 var snxRewardsPerMinterUsd = 0.013;
-var snxToMintUsd =  0.35;
+var snxToMintUsd = 0.35;
 var snxRewardsThisPeriod = "940,415 SNX";
 var totalDebt = "$71,589,622";
 var gasPrice = 240;
@@ -720,8 +725,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                //     msg.reply("I've called for master, he will be with you shortly.");
+                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                    //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
@@ -2123,7 +2128,7 @@ setInterval(function () {
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
                     try {
-                        let result = JSON.parse(data).toTokenAmount/1e19;
+                        let result = JSON.parse(data).toTokenAmount / 1e19;
                         sethPeg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch
                         (e) {
@@ -2309,7 +2314,7 @@ setInterval(function () {
     clientsSEthPegPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("844321938456313887").setNickname("sETH peg");
-            value.members.cache.get("844321938456313887").user.setActivity(""+sethPeg, {type: 'PLAYING'});
+            value.members.cache.get("844321938456313887").user.setActivity("" + sethPeg, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -2566,7 +2571,7 @@ setInterval(function () {
 
 function doCalculate(command, msg, gasPriceParam, fromDM) {
     try {
-        snxToMintUsd = 1/(snxPrice/4);
+        snxToMintUsd = 1 / (snxPrice / 4);
         var gasPriceToUse = gasPrice;
         if (gasPriceParam) {
             gasPriceToUse = gasPriceParam;
@@ -3956,3 +3961,157 @@ setInterval(function () {
     });
 
 }, 1000 * 60 * 5);
+
+
+client.on('message', message => {
+    if (message.content.toLowerCase().includes(`!hedge`)) {
+        const args = message.content.slice(`!hedge`.length).trim().split(' ');
+        const command = args.shift().toLowerCase();
+        calculateDebt(command, message);
+    }
+});
+
+
+const calculateDebt = async (debtValue, message) => {
+    var network = 'mainnet';
+    const EtherWrapper = synthetixAPI.getTarget({network, contract: 'EtherWrapper'});
+    const provider = ethers.getDefaultProvider();
+    const {abi} = synthetixAPI.getSource({
+        network,
+        contract: "SynthUtil"
+    });
+    const {address} = synthetixAPI.getTarget({
+        network,
+        contract: "SynthUtil"
+    });
+
+    const SynthUtil = new ethers.Contract(address, abi, provider);
+    Promise.all([getAPI('https://api.etherscan.io/api?module=contract&action=getabi&address=' +
+        EtherWrapper.address + '&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ'),
+        getMultiCollateralIssuance('sETH'), getMultiCollateralIssuance('sBTC'), getMultiCollateralIssuance('sUSD'), getSynthMarketCap(SynthUtil)])
+        .then(function (results) {
+            const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24
+            const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24
+            const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24
+            let df = adjustDataFrame(results[4]);
+            var contractABI = "";
+            contractABI = JSON.parse(results[0].data.result);
+            var etherWrapper = new web3.eth.Contract(contractABI, EtherWrapper.address);
+            Promise.all([getWrapprETH(etherWrapper), getWrapprUSD(etherWrapper)])
+                .then(function (results) {
+                    var wrapprETH = results[0] / 1e24
+                    console.log("Wrapper ETH is " + wrapprETH)
+                    var wrapprUSD = results[1] / 1e24
+                    console.log("Wrapper USD is " + wrapprUSD)
+                    df = df.map(row => row.set('supply', row.get('synth') == 'sETH' ? row.get('supply') - multicolateralResultsETH - wrapprETH : row.get('supply')));
+                    df = df.map(row => row.set('supply', row.get('synth') == 'sBTC' ? row.get('supply') - multicolateralResultsBTC : row.get('supply')));
+                    df = df.map(row => row.set('supply', row.get('synth') == 'sUSD' ? row.get('supply') - multicolateralResultsUSD - wrapprUSD : row.get('supply')));
+                    df = df.map(row => row.set('cap', row.get('price') * row.get('supply')));
+                    var marketCapAbs = [];
+                    for (const caps of df.select('cap').toArray()) {
+                        if (caps && !isNaN(caps))
+                            marketCapAbs.push(Math.abs(caps))
+                    }
+                    var marketCapSum = sum(marketCapAbs);
+                    df = df.map(row => row.set('debt_pool_percentage', Math.abs(row.get('cap') / marketCapSum)));
+                    var debtPercentages = [];
+                    for (const debt of df.select('debt_pool_percentage').toArray()) {
+                        if (debt && !isNaN(debt) && debt[0] < 0.05)
+                            debtPercentages.push(debt[0])
+                    }
+                    var othersDebtSum = sum(debtPercentages);
+                    df = df.filter(row => row.get('debt_pool_percentage') > 0.05);
+                    df = df.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
+                    df = df.rename('supply', 'units');
+                    df = df.map(row => row.set('cap', parseFloat(row.get('cap'))));
+                    df = df.sortBy(['debt_pool_percentage'], true)
+                    df = df.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * debtValue) + '%')));
+                    var hedgeMessage = new Discord.MessageEmbed()
+                        .setTitle("Hedge command")
+                        .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
+                        .setColor("#0060ff")
+                    let counter = 1;
+                    for (const dfElement of df.toArray()) {
+                        hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5], "\u200b")
+                        counter++;
+
+                    }
+                    hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * debtValue) + '%', "\u200b");
+                    message.channel.send(hedgeMessage);
+                });
+        });
+
+
+}
+
+
+const getAPI = function (url) {
+    return axios.get(url);
+}
+
+const sum = function (array) {
+    var total = 0;
+    for (var i in array) {
+        total += array[i];
+    }
+    return total;
+}
+
+
+const getWrapprETH = function (contractInstance) {
+    return contractInstance.methods.sETHIssued().call();
+}
+
+const getWrapprUSD = function (contractInstance) {
+    return contractInstance.methods.sUSDIssued().call();
+}
+
+const getMultiCollateralIssuance = function (currency) {
+
+    var network = 'mainnet';
+    var provider = ethers.getDefaultProvider();
+    var {abi} = synthetixAPI.getSource({
+        network,
+        contract: "CollateralManagerState"
+    });
+    var {address} = synthetixAPI.getTarget({
+        network,
+        contract: "CollateralManagerState"
+    });
+
+    var CollateralManagerState = new ethers.Contract(address, abi, provider);
+
+    return CollateralManagerState.totalIssuedSynths(
+        synthetixAPI.toBytes32(currency));
+}
+
+
+const adjustDataFrame = function (dataFrame) {
+
+    let initDF = new DataFrame.DataFrame(dataFrame).transpose();
+    let df = new DataFrame.DataFrame(initDF.toArray(), ["synthHex", "supply", "cap"])
+    const replacer = new RegExp('\x00', 'g')
+    df = df.map(row => row.set('synth', convertHexToStr(row.get('synthHex')).replace(replacer, "")));
+    df = df.filter(row => row.get('supply') > 0);
+    df = df.map(row => row.set('price', row.get('cap') / row.get('supply')));
+    df = df.map(row => row.set('cap', row.get('cap') / 1e24));
+    df = df.map(row => row.set('supply', row.get('supply') / 1e24));
+
+    return df;
+
+}
+
+
+const getSynthMarketCap = function (contractInstance) {
+    return contractInstance.synthsTotalSupplies();
+}
+
+const convertHexToStr = function (str1) {
+    var hex = str1.toString();
+    var str = '';
+    for (var n = 0; n < hex.length; n += 2) {
+        str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+    return str;
+};
+
