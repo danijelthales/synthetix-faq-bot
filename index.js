@@ -3986,145 +3986,58 @@ const calculateDebt = async (debtValue, message) => {
     });
 
     const SynthUtil = new ethers.Contract(address, abi, provider);
-
-
     Promise.all([getAPI('https://api.etherscan.io/api?module=contract&action=getabi&address=' +
         EtherWrapper.address + '&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ'),
         getMultiCollateralIssuance('sETH'), getMultiCollateralIssuance('sBTC'), getMultiCollateralIssuance('sUSD'), getSynthMarketCap(SynthUtil)])
         .then(function (results) {
-            console.log("user");
-
             const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24
             const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24
             const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24
             let df = adjustDataFrame(results[4]);
-
             var contractABI = "";
             contractABI = JSON.parse(results[0].data.result);
-
             var etherWrapper = new web3.eth.Contract(contractABI, EtherWrapper.address);
-
             Promise.all([getWrapprETH(etherWrapper), getWrapprUSD(etherWrapper)])
                 .then(function (results) {
-
                     var wrapprETH = results[0] / 1e24
-
                     console.log("Wrapper ETH is " + wrapprETH)
-
                     var wrapprUSD = results[1] / 1e24
-
                     console.log("Wrapper USD is " + wrapprUSD)
-
-
-                    //df = df.where(row => row.get('synth') == 'sETH' || row.get('synth') == 'sBTC' || row.get('synth') == 'sUSD' || row.get('synth') == 'sEUR' || row.get('synth') == 'sLINK')
-
-                    console.log("begining")
-
-                    df.show()
-
                     df = df.map(row => row.set('supply', row.get('synth') == 'sETH' ? row.get('supply') - multicolateralResultsETH - wrapprETH : row.get('supply')));
-
-
                     df = df.map(row => row.set('supply', row.get('synth') == 'sBTC' ? row.get('supply') - multicolateralResultsBTC : row.get('supply')));
-
-
                     df = df.map(row => row.set('supply', row.get('synth') == 'sUSD' ? row.get('supply') - multicolateralResultsUSD - wrapprUSD : row.get('supply')));
-
-                    console.log("after deducting");
-                    df.show();
-
-
                     df = df.map(row => row.set('cap', row.get('price') * row.get('supply')));
-
-
-                    console.log("after price * supply");
-
-                    df.show();
-
-
                     var marketCapAbs = [];
-
-
                     for (const caps of df.select('cap').toArray()) {
                         if (caps && !isNaN(caps))
                             marketCapAbs.push(Math.abs(caps))
                     }
-
                     var marketCapSum = sum(marketCapAbs);
-
-                    console.log("marketCapSum " + marketCapSum);
-
                     df = df.map(row => row.set('debt_pool_percentage', Math.abs(row.get('cap') / marketCapSum)));
-
-                    console.log("after debt_pool_percentage");
-
-                    df.show();
-
                     var debtPercentages = [];
-
                     for (const debt of df.select('debt_pool_percentage').toArray()) {
                         if (debt && !isNaN(debt) && debt[0] < 0.05)
                             debtPercentages.push(debt[0])
                     }
-
                     var othersDebtSum = sum(debtPercentages);
-
                     df = df.filter(row => row.get('debt_pool_percentage') > 0.05);
-
-                    console.log("othersDebtSum is " + othersDebtSum);
-
-                    console.log("after others filter ");
-
-                    df.show();
-
-
                     df = df.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
-
-                    console.log("after shorting");
-
-                    df.show();
-
                     df = df.rename('supply', 'units');
-
-                    console.log("after renaming");
-
-                    df.show();
-
                     df = df.map(row => row.set('cap', parseFloat(row.get('cap'))));
-
-                    console.log("after cap float");
-
-                    df.show();
-
                     df = df.sortBy(['debt_pool_percentage'], true)
-
-                    console.log("after debt pool percentage");
-
-                    df.show();
-
                     df = df.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * debtValue) + '%')));
-
-
-                    df.show();
-
                     var hedgeMessage = new Discord.MessageEmbed()
                         .setTitle("Hedge command")
                         .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
                         .setColor("#0060ff")
-
-                    let messageBody;
                     let counter = 1;
                     for (const dfElement of df.toArray()) {
-                        console.log(dfElement);
                         hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5], "\u200b")
                         counter++;
 
                     }
                     hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * debtValue) + '%', "\u200b");
-
-
                     message.channel.send(hedgeMessage);
-
                 });
         });
 
