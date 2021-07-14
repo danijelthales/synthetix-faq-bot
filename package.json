@@ -12,6 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@uniswap/sdk": "^3.0.3",
+    "axios": "^0.21.1",
+    "dataframe-js": "^1.4.4",
+    "dateformat": "^3.0.3",
     "discord-fetch-all": "^3.0.2",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
@@ -24,13 +27,10 @@
     "puppeteer": "^5.2.1",
     "redis": "^3.0.2",
     "replace-string": "^3.1.0",
+    "synthetix": "^2.46.0-ovm",
     "synthetix-data": "^2.1.33",
     "web3": "^1.3.0",
-    "web3-js": "^1.0.5-beta.26",
-    "synthetix": "^2.46.0-ovm",
-    "dateformat": "^3.0.3",
-    "dataframe-js": "^1.4.4",
-    "axios": "^0.21.1"
+    "web3-js": "^1.0.5-beta.26"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
