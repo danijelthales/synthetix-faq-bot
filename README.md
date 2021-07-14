@@ -57,6 +57,9 @@ Search all known questions by given search term, e.g. **search SNX price**
 **aliases**  
 Lists all known aliases
 
+**hedge hedgeAmount**  
+For the given hedge amount worth of debt shows the mirror strategy to invest the synths in the following manner (in sUSD terms)
+
 **Or Ask the bot any question and it will try its' best to find a match from the known questions**
 
 **subscribe gas safeGasPrice**  
