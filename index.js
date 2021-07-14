@@ -2163,7 +2163,7 @@ setInterval(function () {
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
                     try {
-                        let result = JSON.parse(data).toTokenAmount/1e10;
+                        let result = JSON.parse(data).toTokenAmount / 1e10;
                         usdtPeg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch
                         (e) {
@@ -2198,7 +2198,7 @@ setInterval(function () {
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
                     try {
-                        let result = JSON.parse(data).toTokenAmount/1e10;
+                        let result = JSON.parse(data).toTokenAmount / 1e10;
                         usdcPeg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
                     } catch (e) {
                         console.log("Error: ", e);
@@ -4032,11 +4032,18 @@ const calculateDebt = async (debtValue, message) => {
                         .setColor("#0060ff")
                     let counter = 1;
                     for (const dfElement of df.toArray()) {
-                        hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5], "\u200b")
+                        var percentMain = (debtValue / 100) * dfElement[5];
+                        var unitsMain = (percentMain / dfElement[4]);
+                        if (unitsMain > 1) {
+                            unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
+                        } else {
+                            unitsMain = unitsMain.toFixed(5);
+                        }
+                        hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units')
                         counter++;
-
                     }
-                    hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * debtValue) + '%', "\u200b");
+                    var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
+                    hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
                     message.channel.send(hedgeMessage);
                 });
         });
