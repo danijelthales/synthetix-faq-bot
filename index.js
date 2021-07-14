@@ -3968,6 +3968,8 @@ client.on('message', message => {
         const args = message.content.slice(`!hedge`.length).trim().split(' ');
         const command = args.shift().toLowerCase();
         calculateDebt(command, message);
+    } else if (message.content.toLowerCase().includes(`!debt`)) {
+        calculateDebt('debt', message);
     }
 });
 
@@ -4026,29 +4028,41 @@ const calculateDebt = async (debtValue, message) => {
                     df = df.map(row => row.set('cap', parseFloat(row.get('cap'))));
                     df = df.sortBy(['debt_pool_percentage'], true)
                     df = df.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
-                    var hedgeMessage = new Discord.MessageEmbed()
-                        .setTitle("Hedge command")
-                        .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
-                        .setColor("#0060ff")
-                    let counter = 1;
-                    for (const dfElement of df.toArray()) {
-                        var percentMain = (debtValue / 100) * dfElement[5];
-                        var unitsMain = (percentMain / dfElement[4]);
-                        if (unitsMain > 1) {
-                            unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
-                        } else {
-                            unitsMain = unitsMain.toFixed(5);
+                    if (debtValue != 'debt') {
+                        var hedgeMessage = new Discord.MessageEmbed()
+                            .setTitle("Hedge command")
+                            .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
+                            .setColor("#0060ff")
+                        let counter = 1;
+                        for (const dfElement of df.toArray()) {
+                            var percentMain = (debtValue / 100) * dfElement[5];
+                            var unitsMain = (percentMain / dfElement[4]);
+                            if (unitsMain > 1) {
+                                unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
+                            } else {
+                                unitsMain = unitsMain.toFixed(5);
+                            }
+                            hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units')
+                            counter++;
                         }
-                        hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units')
-                        counter++;
+                        var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
+                        hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
+                        message.channel.send(hedgeMessage);
+                    } else {
+                        var debtMessage = new Discord.MessageEmbed()
+                            .setTitle("Debt command")
+                            .setDescription("Debt pool:")
+                            .setColor("#0060ff")
+                        let counter = 1;
+                        for (const dfElement of df.toArray()) {
+                            debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b")
+                            counter++;
+                        }
+                        debtMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', "\u200b");
+                        message.channel.send(debtMessage);
                     }
-                    var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
-                    hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
-                    message.channel.send(hedgeMessage);
                 });
         });
-
-
 }
 
 
