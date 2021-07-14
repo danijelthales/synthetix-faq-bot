@@ -4025,7 +4025,7 @@ const calculateDebt = async (debtValue, message) => {
                     df = df.rename('supply', 'units');
                     df = df.map(row => row.set('cap', parseFloat(row.get('cap'))));
                     df = df.sortBy(['debt_pool_percentage'], true)
-                    df = df.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * debtValue) + '%')));
+                    df = df.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
                     var hedgeMessage = new Discord.MessageEmbed()
                         .setTitle("Hedge command")
                         .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
