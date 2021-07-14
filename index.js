@@ -353,6 +353,9 @@ client.on("ready", () => {
             guild = value;
         }
     });
+
+    calculateDebt();
+
 })
 client.on("guildMemberAdd", function (member) {
     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
@@ -3963,18 +3966,63 @@ setInterval(function () {
 }, 1000 * 60 * 5);
 
 
+let df;
+let othersDebtSum;
+
 client.on('message', message => {
     if (message.content.toLowerCase().includes(`!hedge`)) {
         const args = message.content.slice(`!hedge`.length).trim().split(' ');
         const command = args.shift().toLowerCase();
-        calculateDebt(command, message);
+        message.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+        getDebtHedgeMessage(command, df, othersDebtSum);
     } else if (message.content.toLowerCase().includes(`!debt`)) {
-        calculateDebt('debt', message);
+        message.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
     }
 });
 
 
-const calculateDebt = async (debtValue, message) => {
+setInterval(function () {
+    calculateDebt();
+}, 60 * 1000);
+
+
+function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
+    if (debtValue != 'debt') {
+        var hedgeMessage = new Discord.MessageEmbed()
+            .setTitle("Hedge command")
+            .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
+            .setColor("#0060ff")
+        let counter = 1;
+        for (const dfElement of df.toArray()) {
+            var percentMain = (debtValue / 100) * dfElement[5];
+            var unitsMain = (percentMain / dfElement[4]);
+            if (unitsMain > 1) {
+                unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
+            } else {
+                unitsMain = unitsMain.toFixed(5);
+            }
+            hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units')
+            counter++;
+        }
+        var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
+        hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
+        return hedgeMessage;
+    } else {
+        var debtMessage = new Discord.MessageEmbed()
+            .setTitle("Debt command")
+            .setDescription("Debt pool:")
+            .setColor("#0060ff")
+        let counter = 1;
+        for (const dfElement of df.toArray()) {
+            debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b")
+            counter++;
+        }
+        debtMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', "\u200b");
+        return debtMessage;
+    }
+}
+
+const calculateDebt = async () => {
     var network = 'mainnet';
     const EtherWrapper = synthetixAPI.getTarget({network, contract: 'EtherWrapper'});
     const provider = ethers.getDefaultProvider();
@@ -3995,7 +4043,7 @@ const calculateDebt = async (debtValue, message) => {
             const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24
             const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24
             const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24
-            let df = adjustDataFrame(results[4]);
+            df = adjustDataFrame(results[4]);
             var contractABI = "";
             contractABI = JSON.parse(results[0].data.result);
             var etherWrapper = new web3.eth.Contract(contractABI, EtherWrapper.address);
@@ -4021,46 +4069,13 @@ const calculateDebt = async (debtValue, message) => {
                         if (debt && !isNaN(debt) && debt[0] < 0.05)
                             debtPercentages.push(debt[0])
                     }
-                    var othersDebtSum = sum(debtPercentages);
+                    othersDebtSum = sum(debtPercentages);
                     df = df.filter(row => row.get('debt_pool_percentage') > 0.05);
                     df = df.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
                     df = df.rename('supply', 'units');
                     df = df.map(row => row.set('cap', parseFloat(row.get('cap'))));
                     df = df.sortBy(['debt_pool_percentage'], true)
                     df = df.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
-                    if (debtValue != 'debt') {
-                        var hedgeMessage = new Discord.MessageEmbed()
-                            .setTitle("Hedge command")
-                            .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
-                            .setColor("#0060ff")
-                        let counter = 1;
-                        for (const dfElement of df.toArray()) {
-                            var percentMain = (debtValue / 100) * dfElement[5];
-                            var unitsMain = (percentMain / dfElement[4]);
-                            if (unitsMain > 1) {
-                                unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
-                            } else {
-                                unitsMain = unitsMain.toFixed(5);
-                            }
-                            hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units')
-                            counter++;
-                        }
-                        var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
-                        hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
-                        message.channel.send(hedgeMessage);
-                    } else {
-                        var debtMessage = new Discord.MessageEmbed()
-                            .setTitle("Debt command")
-                            .setDescription("Debt pool:")
-                            .setColor("#0060ff")
-                        let counter = 1;
-                        for (const dfElement of df.toArray()) {
-                            debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b")
-                            counter++;
-                        }
-                        debtMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', "\u200b");
-                        message.channel.send(debtMessage);
-                    }
                 });
         });
 }
