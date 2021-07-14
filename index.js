@@ -4043,7 +4043,7 @@ const calculateDebt = async () => {
             const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24
             const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24
             const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24
-            df = adjustDataFrame(results[4]);
+            var newDf = adjustDataFrame(results[4]);
             var contractABI = "";
             contractABI = JSON.parse(results[0].data.result);
             var etherWrapper = new web3.eth.Contract(contractABI, EtherWrapper.address);
@@ -4053,29 +4053,29 @@ const calculateDebt = async () => {
                     console.log("Wrapper ETH is " + wrapprETH)
                     var wrapprUSD = results[1] / 1e24
                     console.log("Wrapper USD is " + wrapprUSD)
-                    df = df.map(row => row.set('supply', row.get('synth') == 'sETH' ? row.get('supply') - multicolateralResultsETH - wrapprETH : row.get('supply')));
-                    df = df.map(row => row.set('supply', row.get('synth') == 'sBTC' ? row.get('supply') - multicolateralResultsBTC : row.get('supply')));
-                    df = df.map(row => row.set('supply', row.get('synth') == 'sUSD' ? row.get('supply') - multicolateralResultsUSD - wrapprUSD : row.get('supply')));
-                    df = df.map(row => row.set('cap', row.get('price') * row.get('supply')));
+                    newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sETH' ? row.get('supply') - multicolateralResultsETH - wrapprETH : row.get('supply')));
+                    newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sBTC' ? row.get('supply') - multicolateralResultsBTC : row.get('supply')));
+                    newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sUSD' ? row.get('supply') - multicolateralResultsUSD - wrapprUSD : row.get('supply')));
+                    newDf = newDf.map(row => row.set('cap', row.get('price') * row.get('supply')));
                     var marketCapAbs = [];
-                    for (const caps of df.select('cap').toArray()) {
+                    for (const caps of newDf.select('cap').toArray()) {
                         if (caps && !isNaN(caps))
                             marketCapAbs.push(Math.abs(caps))
                     }
                     var marketCapSum = sum(marketCapAbs);
-                    df = df.map(row => row.set('debt_pool_percentage', Math.abs(row.get('cap') / marketCapSum)));
+                    newDf = newDf.map(row => row.set('debt_pool_percentage', Math.abs(row.get('cap') / marketCapSum)));
                     var debtPercentages = [];
-                    for (const debt of df.select('debt_pool_percentage').toArray()) {
+                    for (const debt of newDf.select('debt_pool_percentage').toArray()) {
                         if (debt && !isNaN(debt) && debt[0] < 0.05)
                             debtPercentages.push(debt[0])
                     }
                     othersDebtSum = sum(debtPercentages);
-                    df = df.filter(row => row.get('debt_pool_percentage') > 0.05);
-                    df = df.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
-                    df = df.rename('supply', 'units');
-                    df = df.map(row => row.set('cap', parseFloat(row.get('cap'))));
-                    df = df.sortBy(['debt_pool_percentage'], true)
-                    df = df.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
+                    newDf = newDf.filter(row => row.get('debt_pool_percentage') > 0.05);
+                    newDf = newDf.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
+                    newDf = newDf.rename('supply', 'units');
+                    newDf = newDf.map(row => row.set('cap', parseFloat(row.get('cap'))));
+                    newDf = newDf.sortBy(['debt_pool_percentage'], true)
+                    df = newDf.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
                 });
         });
 }
@@ -4125,15 +4125,15 @@ const getMultiCollateralIssuance = function (currency) {
 const adjustDataFrame = function (dataFrame) {
 
     let initDF = new DataFrame.DataFrame(dataFrame).transpose();
-    let df = new DataFrame.DataFrame(initDF.toArray(), ["synthHex", "supply", "cap"])
+    let adjustedDF = new DataFrame.DataFrame(initDF.toArray(), ["synthHex", "supply", "cap"])
     const replacer = new RegExp('\x00', 'g')
-    df = df.map(row => row.set('synth', convertHexToStr(row.get('synthHex')).replace(replacer, "")));
-    df = df.filter(row => row.get('supply') > 0);
-    df = df.map(row => row.set('price', row.get('cap') / row.get('supply')));
-    df = df.map(row => row.set('cap', row.get('cap') / 1e24));
-    df = df.map(row => row.set('supply', row.get('supply') / 1e24));
+    adjustedDF = adjustedDF.map(row => row.set('synth', convertHexToStr(row.get('synthHex')).replace(replacer, "")));
+    adjustedDF = adjustedDF.filter(row => row.get('supply') > 0);
+    adjustedDF = adjustedDF.map(row => row.set('price', row.get('cap') / row.get('supply')));
+    adjustedDF = adjustedDF.map(row => row.set('cap', row.get('cap') / 1e24));
+    adjustedDF = adjustedDF.map(row => row.set('supply', row.get('supply') / 1e24));
 
-    return df;
+    return adjustedDF;
 
 }
 
