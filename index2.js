@@ -665,8 +665,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                //     msg.reply("I've called for master, he will be with you shortly.");
+                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                    //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
@@ -1029,6 +1029,8 @@ client.on("message", msg => {
                 "Shows the synth last price as well as its description");
             exampleEmbed.addField("synths gainers/losers",
                 "Shows the best/worse performing synths in the last 24h");
+            exampleEmbed.addField("hedge hedgeAmount",
+                "For the given hedge amount worth of debt shows the mirror strategy to invest the synths in the following manner (in sUSD terms)");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
             msg.reply(exampleEmbed);
