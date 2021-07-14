@@ -1031,6 +1031,8 @@ client.on("message", msg => {
                 "Shows the best/worse performing synths in the last 24h");
             exampleEmbed.addField("hedge hedgeAmount",
                 "For the given hedge amount worth of debt shows the mirror strategy to invest the synths in the following manner (in sUSD terms)");
+            exampleEmbed.addField("debt",
+                "Shows the current debt pool");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
             msg.reply(exampleEmbed);
