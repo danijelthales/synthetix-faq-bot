@@ -462,25 +462,6 @@ function doInnerQuestion(command, doReply, msg) {
                 });
             }
 
-        } else if (command == "63") {
-
-            var distribution = "";
-            for (var i = 0; i < poolDistribution.length; i++) {
-                distribution += poolDistribution[i] + " " + poolDistribution[i + 1] + "\n";
-                i++;
-            }
-
-            exampleEmbed.addField("Debt distribution:", distribution, false);
-            if (doReply) {
-                msg.reply(exampleEmbed);
-            } else {
-                msg.channel.send(exampleEmbed).then(function (message) {
-                    message.react("❌");
-                }).catch(function () {
-                    //Something
-                });
-            }
-
         } else if (command == "66") {
 
             var synthsGainers = "";
@@ -665,8 +646,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                //     msg.reply("I've called for master, he will be with you shortly.");
+                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                    //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {

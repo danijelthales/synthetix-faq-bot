@@ -525,25 +525,6 @@ function doInnerQuestion(command, doReply, msg) {
                 });
             }
 
-        } else if (command == "63") {
-
-            var distribution = "";
-            for (var i = 0; i < poolDistribution.length; i++) {
-                distribution += poolDistribution[i] + " " + poolDistribution[i + 1] + "\n";
-                i++;
-            }
-
-            exampleEmbed.addField("Debt distribution:", distribution, false);
-            if (doReply) {
-                msg.reply(exampleEmbed);
-            } else {
-                msg.channel.send(exampleEmbed).then(function (message) {
-                    message.react("❌");
-                }).catch(function () {
-                    //Something
-                });
-            }
-
         } else if (command == "66") {
 
             var synthsGainers = "";
@@ -3970,12 +3951,12 @@ let df;
 let othersDebtSum;
 
 client.on('message', message => {
-    if (message.content.toLowerCase().includes(`!hedge`)) {
-        const args = message.content.slice(`!hedge`.length).trim().split(' ');
+    if (message.content.toLowerCase().includes(`!faq hedge`)) {
+        const args = message.content.slice(`!faq hedge`.length).trim().split(' ');
         const command = args.shift().toLowerCase();
         message.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
         getDebtHedgeMessage(command, df, othersDebtSum);
-    } else if (message.content.toLowerCase().includes(`!debt`)) {
+    } else if (message.content.toLowerCase().includes(`!faq debt`)) {
         message.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
     }
 });

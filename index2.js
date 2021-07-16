@@ -462,25 +462,6 @@ function doInnerQuestion(command, doReply, msg) {
                 });
             }
 
-        } else if (command == "63") {
-
-            var distribution = "";
-            for (var i = 0; i < poolDistribution.length; i++) {
-                distribution += poolDistribution[i] + " " + poolDistribution[i + 1] + "\n";
-                i++;
-            }
-
-            exampleEmbed.addField("Debt distribution:", distribution, false);
-            if (doReply) {
-                msg.reply(exampleEmbed);
-            } else {
-                msg.channel.send(exampleEmbed).then(function (message) {
-                    message.react("❌");
-                }).catch(function () {
-                    //Something
-                });
-            }
-
         } else if (command == "66") {
 
             var synthsGainers = "";
