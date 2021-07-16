@@ -8,6 +8,8 @@ const synthetixAPI = require('synthetix');
 const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = require('@uniswap/sdk');
 var yaxis = null;
 var pair = null;
+const bugRedisKey = 'Bug';
+const {v4: uuidv4} = require('uuid');
 
 const Discord = require("discord.js")
 const client = new Discord.Client();
@@ -3958,6 +3960,25 @@ client.on('message', message => {
         getDebtHedgeMessage(command, df, othersDebtSum);
     } else if (message.content.toLowerCase().includes(`!faq debt`)) {
         message.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+    } else if (message.content.toLowerCase().includes(`$bug`)) {
+        let bugDTO = getBugDTO(message);
+        var port = process.env.PORT || 3000;
+        axios.post('http://localhost:' + port + '/bug', {
+            bug: bugDTO
+        }).then(res => {
+            console.log(JSON.stringify(bugDTO) + `is now created`);
+            var messageEmbed = new Discord.MessageEmbed()
+                .addFields(
+                    {
+                        name: 'Bug',
+                        value: "Bug with id: " + bugDTO.id + " is now created"
+                    }
+                ).setColor("#d32222")
+            message.channel.send(messageEmbed);
+        })
+            .catch(error => {
+                console.error(error)
+            });
     }
 });
 
@@ -4131,4 +4152,61 @@ const convertHexToStr = function (str1) {
     }
     return str;
 };
+
+
+function getBugDTO(message) {
+    return {
+        content: message.content,
+        reporter: message.author.username,
+        time: formatDate(new Date()),
+        timestamp: message.createdTimestamp,
+        id: uuidv4()
+    }
+}
+
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [day, month, year].join('-');
+}
+
+
+app.get('/bug', (req, res) => {
+    redisClient.llen(bugRedisKey, function (err, listSize) {
+        redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
+            res.send(bugs ? bugs.sort() : bugs);
+        });
+    });
+});
+
+app.post('/bug', (req, res) => {
+    let bugRequest = req.body.bug;
+    let bugJson = JSON.stringify(bugRequest);
+    redisClient.lpush(bugRedisKey, bugJson);
+    res.send(bugRequest.id);
+});
+
+app.delete('/bug/:bugid', (req, res) => {
+    const bugId = req.params.bugid;
+    redisClient.llen(bugRedisKey, function (err, listSize) {
+        redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
+            bugs.forEach(function (bug) {
+                var bugDTO = JSON.parse(bug);
+                if (bugDTO.id == bugId) {
+                    redisClient.lrem(bugRedisKey, 0, bug);
+                }
+            });
+        });
+        res.send('bug with id ' + bugId + ' is deleted');
+    });
+});
 
