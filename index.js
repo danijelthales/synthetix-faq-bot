@@ -4192,7 +4192,7 @@ app.get('/bug', (req, res) => {
 app.get('/bugs', (req, res) => {
     redisClient.llen(bugRedisKey, function (err, listSize) {
         redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
-            res.send(bugs ? bugs.sort() : bugs);
+            res.json(bugs ? bugs.sort() : bugs);
         });
     });
 });
