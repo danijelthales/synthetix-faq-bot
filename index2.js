@@ -1014,8 +1014,8 @@ client.on("message", msg => {
                 "For the given hedge amount worth of debt shows the mirror strategy to invest the synths in the following manner (in sUSD terms)");
             exampleEmbed.addField("faq debt",
                 "Shows the current debt pool");
-            exampleEmbed.addField("$bug description of the bug",
-                "Place the special word $bug anywhere inside of the sentence and a bug will be created containing your sentence");
+            exampleEmbed.addField("!bug description of the bug",
+                "Place the special word !bug at start of the sentence and a bug will be created containing your sentence");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
             msg.reply(exampleEmbed);

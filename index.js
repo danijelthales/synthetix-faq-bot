@@ -702,6 +702,10 @@ function doInnerQuestion(command, doReply, msg) {
     }
 }
 
+let df;
+let othersDebtSum;
+
+
 client.on("message", msg => {
 
         if (!msg.author.username.includes("FAQ")) {
@@ -770,6 +774,39 @@ client.on("message", msg => {
                     }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
                     msg.reply("No longer supported. Use $ticker snx");
+                } else if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
+                    const args = msg.content.slice(`!faq hedge`.length).trim().split(' ');
+                    const command = args.shift().toLowerCase();
+                    message.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                    getDebtHedgeMessage(command, df, othersDebtSum);
+                } else if (msg.content.toLowerCase().startsWith(`!hedge`)) {
+                    const args = msg.content.slice(`!hedge`.length).trim().split(' ');
+                    const command = args.shift().toLowerCase();
+                    msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                    getDebtHedgeMessage(command, df, othersDebtSum);
+                } else if (msg.content.toLowerCase().startsWith(`!faq debt`)) {
+                    msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                } else if (msg.content.toLowerCase().startsWith(`!debt`)) {
+                    msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                } else if (msg.content.toLowerCase().startsWith(`!bug`)) {
+                    let bugDTO = getBugDTO(msg);
+                    var port = process.env.PORT || 3000;
+                    axios.post('http://localhost:' + port + '/bug', {
+                        bug: bugDTO
+                    }).then(res => {
+                        console.log(JSON.stringify(bugDTO) + `is now created`);
+                        var messageEmbed = new Discord.MessageEmbed()
+                            .addFields(
+                                {
+                                    name: 'Bug',
+                                    value: "Bug with id: " + bugDTO.id + " is now created"
+                                }
+                            ).setColor("#d32222")
+                        msg.channel.send(messageEmbed);
+                    })
+                        .catch(error => {
+                            console.error(error)
+                        });
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq ")) {
                     let found = checkAliasMatching(false);
                     if (!found) {
@@ -1075,6 +1112,12 @@ client.on("message", msg => {
                 "Shows the synth last price as well as its description");
             exampleEmbed.addField("synths gainers/losers",
                 "Shows the best/worse performing synths in the last 24h");
+            exampleEmbed.addField("faq hedge hedgeAmount",
+                "For the given hedge amount worth of debt shows the mirror strategy to invest the synths in the following manner (in sUSD terms)");
+            exampleEmbed.addField("faq debt",
+                "Shows the current debt pool");
+            exampleEmbed.addField("bug description of the bug",
+                "Place the special word !bug at start of the sentence and a bug will be created containing your sentence");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
 
             msg.reply(exampleEmbed);
@@ -3949,40 +3992,6 @@ setInterval(function () {
 }, 1000 * 60 * 5);
 
 
-let df;
-let othersDebtSum;
-
-client.on('message', message => {
-    if (message.content.toLowerCase().includes(`!faq hedge`)) {
-        const args = message.content.slice(`!faq hedge`.length).trim().split(' ');
-        const command = args.shift().toLowerCase();
-        message.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
-        getDebtHedgeMessage(command, df, othersDebtSum);
-    } else if (message.content.toLowerCase().includes(`!faq debt`)) {
-        message.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
-    } else if (message.content.toLowerCase().includes(`$bug`)) {
-        let bugDTO = getBugDTO(message);
-        var port = process.env.PORT || 3000;
-        axios.post('http://localhost:' + port + '/bug', {
-            bug: bugDTO
-        }).then(res => {
-            console.log(JSON.stringify(bugDTO) + `is now created`);
-            var messageEmbed = new Discord.MessageEmbed()
-                .addFields(
-                    {
-                        name: 'Bug',
-                        value: "Bug with id: " + bugDTO.id + " is now created"
-                    }
-                ).setColor("#d32222")
-            message.channel.send(messageEmbed);
-        })
-            .catch(error => {
-                console.error(error)
-            });
-    }
-});
-
-
 setInterval(function () {
     calculateDebt();
 }, 60 * 1000);
@@ -4183,7 +4192,11 @@ function formatDate(date) {
 app.get('/bug', (req, res) => {
     redisClient.llen(bugRedisKey, function (err, listSize) {
         redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
-            res.send(bugs ? bugs.sort() : bugs);
+            var obj = [];
+            bugs.forEach(function (bug) {
+                obj.push(JSON.parse(bug));
+            });
+            res.send(obj);
         });
     });
 });
