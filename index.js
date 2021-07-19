@@ -780,7 +780,7 @@ client.on("message", msg => {
                 } else if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
                     const args = msg.content.slice(`!faq hedge`.length).trim().split(' ');
                     const command = args.shift().toLowerCase();
-                    message.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                    msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
                     getDebtHedgeMessage(command, df, othersDebtSum);
                 } else if (msg.content.toLowerCase().startsWith(`!hedge`)) {
                     const args = msg.content.slice(`!hedge`.length).trim().split(' ');
