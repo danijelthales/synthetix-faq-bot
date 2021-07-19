@@ -705,6 +705,9 @@ function doInnerQuestion(command, doReply, msg) {
 let df;
 let othersDebtSum;
 
+setInterval(function () {
+    calculateDebt();
+}, 60 * 1000);
 
 client.on("message", msg => {
 
@@ -3990,11 +3993,6 @@ setInterval(function () {
     });
 
 }, 1000 * 60 * 5);
-
-
-setInterval(function () {
-    calculateDebt();
-}, 60 * 1000);
 
 
 function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
