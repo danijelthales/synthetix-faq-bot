@@ -4202,15 +4202,6 @@ app.get('/bug', (req, res) => {
 });
 
 
-app.get('/bugs', (req, res) => {
-    redisClient.llen(bugRedisKey, function (err, listSize) {
-        redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
-            res.json(bugs ? bugs.sort() : bugs);
-        });
-    });
-});
-
-
 app.post('/bug', (req, res) => {
     let bugRequest = req.body.bug;
     let bugJson = JSON.stringify(bugRequest);
