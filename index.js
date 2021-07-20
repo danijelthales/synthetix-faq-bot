@@ -4167,7 +4167,8 @@ function getBugDTO(message) {
         reporter: message.author.username,
         time: formatDate(new Date()),
         timestamp: message.createdTimestamp,
-        id: uuidv4()
+        id: uuidv4(),
+        messageLink: message.url
     }
 }
 
