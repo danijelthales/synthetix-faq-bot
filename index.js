@@ -359,9 +359,9 @@ client.on("ready", () => {
     calculateDebt();
 
 })
-client.on("guildMemberAdd", function (member) {
-    member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
-});
+// client.on("guildMemberAdd", function (member) {
+//     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
+// });
 
 client.on('messageReactionAdd', (reaction, user) => {
     let msg = reaction.message, emoji = reaction.emoji;
@@ -802,7 +802,7 @@ client.on("message", msg => {
                             .addFields(
                                 {
                                     name: 'Bug',
-                                    value: "Bug with id: " + bugDTO.id + " is now created"
+                                    value: "Your bug was stored with id " + bugDTO.id + ". A spartan will follow up."
                                 }
                             ).setColor("#d32222")
                         msg.channel.send(messageEmbed);
@@ -4187,7 +4187,7 @@ function formatDate(date) {
 }
 
 
-app.get('/bug', (req, res) => {
+app.get('/bugs', (req, res) => {
     redisClient.llen(bugRedisKey, function (err, listSize) {
         redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
             var obj = [];
