@@ -826,19 +826,12 @@ client.on("message", msg => {
 
                     // this is the logic for DM
                     console.log("I got sent a DM:" + msg.content);
-                    if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
-                        const args = msg.content.slice(`!faq hedge`.length).trim().split(' ');
+                   if (msg.content.toLowerCase().startsWith(`hedge`)) {
+                        const args = msg.content.slice(`hedge`.length).trim().split(' ');
                         const command = args.shift().toLowerCase();
                         msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
                         getDebtHedgeMessage(command, df, othersDebtSum);
-                    } else if (msg.content.toLowerCase().startsWith(`!hedge`)) {
-                        const args = msg.content.slice(`!hedge`.length).trim().split(' ');
-                        const command = args.shift().toLowerCase();
-                        msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
-                        getDebtHedgeMessage(command, df, othersDebtSum);
-                    } else if (msg.content.toLowerCase() == (`!faq debt`)) {
-                        msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
-                    } else if (msg.content.toLowerCase() == (`!debt`)) {
+                    } else if (msg.content.toLowerCase() == (`debt`)) {
                         msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                     } else {
                     let found = checkAliasMatching(true);
