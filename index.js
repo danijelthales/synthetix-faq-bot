@@ -787,9 +787,9 @@ client.on("message", msg => {
                     const command = args.shift().toLowerCase();
                     msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
                     getDebtHedgeMessage(command, df, othersDebtSum);
-                } else if (msg.content.toLowerCase().startsWith(`!faq debt`)) {
+                } else if (msg.content.toLowerCase() == (`!faq debt`)) {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
-                } else if (msg.content.toLowerCase().startsWith(`!debt`)) {
+                } else if (msg.content.toLowerCase() == (`!debt`)) {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                 } else if (msg.content.toLowerCase().startsWith(`!bug`)) {
                     let bugDTO = getBugDTO(msg);
@@ -826,7 +826,21 @@ client.on("message", msg => {
 
                     // this is the logic for DM
                     console.log("I got sent a DM:" + msg.content);
-
+                    if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
+                        const args = msg.content.slice(`!faq hedge`.length).trim().split(' ');
+                        const command = args.shift().toLowerCase();
+                        msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                        getDebtHedgeMessage(command, df, othersDebtSum);
+                    } else if (msg.content.toLowerCase().startsWith(`!hedge`)) {
+                        const args = msg.content.slice(`!hedge`.length).trim().split(' ');
+                        const command = args.shift().toLowerCase();
+                        msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                        getDebtHedgeMessage(command, df, othersDebtSum);
+                    } else if (msg.content.toLowerCase() == (`!faq debt`)) {
+                        msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                    } else if (msg.content.toLowerCase() == (`!debt`)) {
+                        msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                    } else {
                     let found = checkAliasMatching(true);
                     // if alias is found, just reply to it, otherwise continue
 
@@ -985,6 +999,7 @@ client.on("message", msg => {
                             }
                         }
                     }
+                }
                 } catch (e) {
                     msg.reply("Unknown error ocurred.  Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
                 }
