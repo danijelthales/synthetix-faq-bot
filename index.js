@@ -2022,7 +2022,7 @@ async function getDashboard() {
         });
         const page = await browser.newPage();
         await page.setViewport({width: 1000, height: 926});
-        await page.goto("https://dashboard.synthetix.io/", {waitUntil: 'networkidle2'});
+        await page.goto("https://stats.synthetix.io/#staking", {waitUntil: 'networkidle2'});
 
         /** @type {string[]} */
         var prices = await page.evaluate(() => {
@@ -2659,7 +2659,7 @@ function doCalculateSusd(command, msg, fromDM) {
         var minutes = Math.floor(seconds / 60);
         var hours = Math.floor(minutes / 60);
 
-        var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
+        var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '').split(' ')[0] * 1.0;
         var feesPeriod = totalFeesNumber;
         var percentagePassed = Math.round(((100 - (hours * 100) / (7 * 24)) + Number.EPSILON) * 100) / 100;
         var scaledPeriod = feesPeriod * ((200 - percentagePassed) / 100);
