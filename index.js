@@ -2043,7 +2043,13 @@ async function getDashboard() {
             return prices
         })
 
-        currentFees = prices[5];
+        const statsBox = await page.$$eval(
+            "div[class*='StatsBox__StatsBoxNumber']",
+            stats => stats.map(stat => stat.innerHTML)
+        );
+
+        currentFees = statsBox[14];
+
         poolDistribution = prices.slice(11, 21);
         browser.close()
     } catch (e) {
@@ -2659,7 +2665,7 @@ function doCalculateSusd(command, msg, fromDM) {
         var minutes = Math.floor(seconds / 60);
         var hours = Math.floor(minutes / 60);
 
-        var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '').split(' ')[0] * 1.0;
+        var totalFeesNumber = currentFees.replace(/,/g, '').replace(/\$/g, '') * 1.0;
         var feesPeriod = totalFeesNumber;
         var percentagePassed = Math.round(((100 - (hours * 100) / (7 * 24)) + Number.EPSILON) * 100) / 100;
         var scaledPeriod = feesPeriod * ((200 - percentagePassed) / 100);
