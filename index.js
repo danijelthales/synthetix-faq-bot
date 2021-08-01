@@ -10,6 +10,10 @@ var yaxis = null;
 var pair = null;
 const bugRedisKey = 'Bug';
 const {v4: uuidv4} = require('uuid');
+let leadingMarketCap;
+const QuickChart = require('quickchart-js');
+let historicDebts = new Map();
+let historicMarketCaps = new Map();
 
 const Discord = require("discord.js")
 const client = new Discord.Client();
@@ -357,6 +361,7 @@ client.on("ready", () => {
     });
 
     calculateDebt();
+    calculateHistoricDebt();
 
 })
 // client.on("guildMemberAdd", function (member) {
@@ -709,6 +714,11 @@ setInterval(function () {
     calculateDebt();
 }, 60 * 1000);
 
+//every 12 hours
+setInterval(function () {
+    calculateHistoricDebt();
+}, 4.32e+7);
+
 client.on("message", msg => {
 
         if (!msg.author.username.includes("FAQ")) {
@@ -791,6 +801,10 @@ client.on("message", msg => {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                 } else if (msg.content.toLowerCase() == (`!debt`)) {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                } else if (msg.content.toLowerCase() == (`!faq historical debt`)) {
+                    createHistoricChart(msg);
+                } else if (msg.content.toLowerCase() == (`!historical debt`)) {
+                    createHistoricChart(msg);
                 } else if (msg.content.toLowerCase().startsWith(`!bug`)) {
                     let bugDTO = getBugDTO(msg);
                     var port = process.env.PORT || 3000;
@@ -826,37 +840,25 @@ client.on("message", msg => {
 
                     // this is the logic for DM
                     console.log("I got sent a DM:" + msg.content);
-                   if (msg.content.toLowerCase().startsWith(`hedge`)) {
+                    if (msg.content.toLowerCase().startsWith(`hedge`)) {
                         const args = msg.content.slice(`hedge`.length).trim().split(' ');
                         const command = args.shift().toLowerCase();
                         msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
                         getDebtHedgeMessage(command, df, othersDebtSum);
                     } else if (msg.content.toLowerCase() == (`debt`)) {
                         msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                    } else if (msg.content.toLowerCase() == (`historical debt`)) {
+                        createHistoricChart(msg);
                     } else {
-                    let found = checkAliasMatching(true);
-                    // if alias is found, just reply to it, otherwise continue
+                        let found = checkAliasMatching(true);
+                        // if alias is found, just reply to it, otherwise continue
 
-                    if (!found) {
-                        let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
-                        if (checkIfUltimateQuestion(encodedForm)) {
-                            answerUltimateQuestion();
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("unsubscribe")) {
-                            gasSubscribersMap.delete(msg.author.id);
-                            gasSubscribersLastPushMap.delete(msg.author.id);
-                            if (process.env.REDIS_URL) {
-                                redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
-                                });
-                                redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
-                                });
-                            }
-                            msg.reply("You are now unsubscribed from gas updates");
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
-                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
-                            args.shift();
-                            const command = args.shift().trim();
-                            if (command && !isNaN(command)) {
-                                gasSubscribersMap.set(msg.author.id, command);
+                        if (!found) {
+                            let encodedForm = Buffer.from(msg.content.toLowerCase()).toString('base64');
+                            if (checkIfUltimateQuestion(encodedForm)) {
+                                answerUltimateQuestion();
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("unsubscribe")) {
+                                gasSubscribersMap.delete(msg.author.id);
                                 gasSubscribersLastPushMap.delete(msg.author.id);
                                 if (process.env.REDIS_URL) {
                                     redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
@@ -864,135 +866,149 @@ client.on("message", msg => {
                                     redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
                                     });
                                 }
-                                msg.reply(" I will send you a message once safe gas price is below " + command + " gwei , and every hour after that that it remains below that level. \nTo change the threshold level for gas price, send me a new subscribe message with the new amount.\n" +
-                                    "To unsubscribe, send me another DM **unsubscribe**.");
-                            } else {
-                                msg.reply(command + " is not a proper integer number.");
-                            }
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show wallet")) {
-                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("show wallet".length).split(' ');
-                            args.shift();
-                            const command = args.shift().trim();
-                            getMintrData(msg, command, true);
-                        } else if (msg.content.toLowerCase().trim() == "aliases") {
-                            showAllAliases(true);
-                        } else if (msg.content.toLowerCase().trim() == "help") {
-                            doFaqHelp();
-                        } else if (msg.content.startsWith("help ")) {
-                            const args = msg.content.slice("help".length).split(' ');
-                            args.shift();
-                            const command = args.shift().trim();
-                            if (command == "question") {
-                                msg.reply("Choose your question with ***question questionNumber***, e.g. ***question 1***\nYou can get the question number via **list** command");
-                            } else if (command == "category") {
-                                msg.reply("Choose your category with ***category categoryName***, e.g. ***category SNX-Rewards***\nCategory name is fetched from **categories** command");
-                            } else if (command == "search") {
-                                msg.reply("Search for questions with ***search searchTerm***, e.g. ***search failing transactions***");
-                            } else {
-                                msg.reply("I don't know that one. Try just **help** for known commands");
-                            }
-                        } else if (msg.content.toLowerCase().trim() == "list" || msg.content.toLowerCase().trim() == "questions") {
-                            listQuestions();
-                        } else if (msg.content.toLowerCase().startsWith("question ")) {
-                            console.log("question asked:" + msg.content);
-                            doQuestion(msg, "question", true);
-                        } else if (msg.content.toLowerCase().startsWith("q ")) {
-                            console.log("question asked:" + msg.content);
-                            doQuestion(msg, "q", true);
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("q")) {
-                            const args = msg.content.slice('q'.length);
-                            if (!isNaN(args)) {
-                                doInnerQuestion(args, true, msg);
-                            }
-                        } else if (msg.content == "categories") {
-                            listCategories();
-                        } else if (msg.content.toLowerCase().startsWith("category")) {
-
-                            const args = msg.content.slice("category".length).split(' ');
-                            args.shift();
-                            const command = args.shift();
-
-                            let rawdata = fs.readFileSync('categories/categories.json');
-                            let categories = JSON.parse(rawdata);
-
-                            const exampleEmbed = new Discord.MessageEmbed()
-                                .setColor('#0099ff')
-                                .setTitle('Questions in category ' + command + ':');
-
-                            let found = false;
-                            categories.forEach(function (category) {
-                                if (category.name == command) {
-                                    found = true;
-                                    category.questions.forEach(function (question) {
-                                        rawdata = fs.readFileSync('questions/' + question + ".txt", "utf8");
-                                        exampleEmbed.addField(question, rawdata, false);
-                                    });
-                                }
-                            });
-
-                            if (!found) {
-                                exampleEmbed.addField('\u200b', "That doesn't look like a known category. Use a category name from **categories** command, e.g. **category Staking&Minting**");
-                            } else {
-                                exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
-                            }
-                            msg.reply(exampleEmbed);
-
-                        } else if (msg.content.toLowerCase().startsWith("search ")) {
-
-                            const args = msg.content.slice("search".length).split(' ').slice(1);
-                            const searchWord = msg.content.substring("search".length + 1);
-                            doSearch(searchWord, args);
-
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate rewards")) {
-                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                            const args = content.slice("calculate rewards".length).split(' ');
-                            args.shift();
-                            const command = args.shift().trim();
-                            if (command && !isNaN(command)) {
-                                var gas = false;
-                                if (content.includes("with")) {
-                                    var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
-                                    argsSecondPart.shift();
-                                    gas = argsSecondPart.shift().trim();
-                                }
-                                doCalculate(command, msg, gas, true);
-                            }
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate susd rewards")) {
-                            let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
-                            const args = content.slice("calculate susd rewards".length).split(' ');
-                            args.shift();
-                            const command = args.shift().trim();
-                            if (command && !isNaN(command)) {
-                                var gas = false;
-                                if (content.includes("with")) {
-                                    var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
-                                    argsSecondPart.shift();
-                                    gas = argsSecondPart.shift().trim();
-                                }
-                                doCalculateSusd(command, msg, true);
-                            }
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth ")) {
-                            const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
-                            args.shift();
-                            const command = args.shift().trim();
-                            if (command) {
-                                doShowSynth(command, msg, true);
-                            }
-                        } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
-                            msg.reply("No longer supported. Use $ticker snx")
-                        } else {
-                            if (!msg.author.username.toLowerCase().includes("faq")) {
-                                if (msg.content.endsWith("?")) {
-                                    const args = msg.content.substring(0, msg.content.length - 1).split(' ');
-                                    const searchWord = msg.content;
-                                    doCustomQuestion(searchWord, args);
+                                msg.reply("You are now unsubscribed from gas updates");
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
+                                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
+                                args.shift();
+                                const command = args.shift().trim();
+                                if (command && !isNaN(command)) {
+                                    gasSubscribersMap.set(msg.author.id, command);
+                                    gasSubscribersLastPushMap.delete(msg.author.id);
+                                    if (process.env.REDIS_URL) {
+                                        redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
+                                        });
+                                        redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
+                                        });
+                                    }
+                                    msg.reply(" I will send you a message once safe gas price is below " + command + " gwei , and every hour after that that it remains below that level. \nTo change the threshold level for gas price, send me a new subscribe message with the new amount.\n" +
+                                        "To unsubscribe, send me another DM **unsubscribe**.");
                                 } else {
-                                    msg.reply("Oops, I don't know that one. Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
+                                    msg.reply(command + " is not a proper integer number.");
+                                }
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show wallet")) {
+                                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("show wallet".length).split(' ');
+                                args.shift();
+                                const command = args.shift().trim();
+                                getMintrData(msg, command, true);
+                            } else if (msg.content.toLowerCase().trim() == "aliases") {
+                                showAllAliases(true);
+                            } else if (msg.content.toLowerCase().trim() == "help") {
+                                doFaqHelp();
+                            } else if (msg.content.startsWith("help ")) {
+                                const args = msg.content.slice("help".length).split(' ');
+                                args.shift();
+                                const command = args.shift().trim();
+                                if (command == "question") {
+                                    msg.reply("Choose your question with ***question questionNumber***, e.g. ***question 1***\nYou can get the question number via **list** command");
+                                } else if (command == "category") {
+                                    msg.reply("Choose your category with ***category categoryName***, e.g. ***category SNX-Rewards***\nCategory name is fetched from **categories** command");
+                                } else if (command == "search") {
+                                    msg.reply("Search for questions with ***search searchTerm***, e.g. ***search failing transactions***");
+                                } else {
+                                    msg.reply("I don't know that one. Try just **help** for known commands");
+                                }
+                            } else if (msg.content.toLowerCase().trim() == "list" || msg.content.toLowerCase().trim() == "questions") {
+                                listQuestions();
+                            } else if (msg.content.toLowerCase().startsWith("question ")) {
+                                console.log("question asked:" + msg.content);
+                                doQuestion(msg, "question", true);
+                            } else if (msg.content.toLowerCase().startsWith("q ")) {
+                                console.log("question asked:" + msg.content);
+                                doQuestion(msg, "q", true);
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("q")) {
+                                const args = msg.content.slice('q'.length);
+                                if (!isNaN(args)) {
+                                    doInnerQuestion(args, true, msg);
+                                }
+                            } else if (msg.content == "categories") {
+                                listCategories();
+                            } else if (msg.content.toLowerCase().startsWith("category")) {
+
+                                const args = msg.content.slice("category".length).split(' ');
+                                args.shift();
+                                const command = args.shift();
+
+                                let rawdata = fs.readFileSync('categories/categories.json');
+                                let categories = JSON.parse(rawdata);
+
+                                const exampleEmbed = new Discord.MessageEmbed()
+                                    .setColor('#0099ff')
+                                    .setTitle('Questions in category ' + command + ':');
+
+                                let found = false;
+                                categories.forEach(function (category) {
+                                    if (category.name == command) {
+                                        found = true;
+                                        category.questions.forEach(function (question) {
+                                            rawdata = fs.readFileSync('questions/' + question + ".txt", "utf8");
+                                            exampleEmbed.addField(question, rawdata, false);
+                                        });
+                                    }
+                                });
+
+                                if (!found) {
+                                    exampleEmbed.addField('\u200b', "That doesn't look like a known category. Use a category name from **categories** command, e.g. **category Staking&Minting**");
+                                } else {
+                                    exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                                }
+                                msg.reply(exampleEmbed);
+
+                            } else if (msg.content.toLowerCase().startsWith("search ")) {
+
+                                const args = msg.content.slice("search".length).split(' ').slice(1);
+                                const searchWord = msg.content.substring("search".length + 1);
+                                doSearch(searchWord, args);
+
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate rewards")) {
+                                let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                                const args = content.slice("calculate rewards".length).split(' ');
+                                args.shift();
+                                const command = args.shift().trim();
+                                if (command && !isNaN(command)) {
+                                    var gas = false;
+                                    if (content.includes("with")) {
+                                        var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                                        argsSecondPart.shift();
+                                        gas = argsSecondPart.shift().trim();
+                                    }
+                                    doCalculate(command, msg, gas, true);
+                                }
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("calculate susd rewards")) {
+                                let content = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '');
+                                const args = content.slice("calculate susd rewards".length).split(' ');
+                                args.shift();
+                                const command = args.shift().trim();
+                                if (command && !isNaN(command)) {
+                                    var gas = false;
+                                    if (content.includes("with")) {
+                                        var argsSecondPart = content.slice(content.indexOf("with") + "with".length).split(' ');
+                                        argsSecondPart.shift();
+                                        gas = argsSecondPart.shift().trim();
+                                    }
+                                    doCalculateSusd(command, msg, true);
+                                }
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth ")) {
+                                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
+                                args.shift();
+                                const command = args.shift().trim();
+                                if (command) {
+                                    doShowSynth(command, msg, true);
+                                }
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
+                                msg.reply("No longer supported. Use $ticker snx")
+                            } else {
+                                if (!msg.author.username.toLowerCase().includes("faq")) {
+                                    if (msg.content.endsWith("?")) {
+                                        const args = msg.content.substring(0, msg.content.length - 1).split(' ');
+                                        const searchWord = msg.content;
+                                        doCustomQuestion(searchWord, args);
+                                    } else {
+                                        msg.reply("Oops, I don't know that one. Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
+                                    }
                                 }
                             }
                         }
                     }
-                }
                 } catch (e) {
                     msg.reply("Unknown error ocurred.  Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
                 }
@@ -1127,6 +1143,8 @@ client.on("message", msg => {
                 "For the given hedge amount worth of debt shows the mirror strategy to invest the synths in the following manner (in sUSD terms)");
             exampleEmbed.addField("faq debt",
                 "Shows the current debt pool");
+            exampleEmbed.addField("faq historical debt",
+                "Shows the historical value of the debt alongside the SNX market cap percentage from the given dates");
             exampleEmbed.addField("bug description of the bug",
                 "Place the special word !bug at start of the sentence and a bug will be created containing your sentence");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
@@ -4237,3 +4255,173 @@ app.delete('/bug/:bugid', (req, res) => {
     });
 });
 
+
+function mapToDateString(date) {
+    return date.yyyymmdd();
+}
+
+function createHistoricChart(msg) {
+    let calculatedMarketCaps = new Map();
+    //divide everything by market cap value
+    for (let [key, value] of historicMarketCaps.entries()) {
+        if (value != 1) {
+            calculatedMarketCaps.set(key, Math.round(((value / leadingMarketCap) + Number.EPSILON) * 10) / 10);
+        } else {
+            calculatedMarketCaps.set(key, value);
+        }
+    }
+
+    let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
+        const first = a.key
+        const second = b.key
+        return first > second ? 1 : (first < second ? -1 : 0)
+    }).reverse());
+
+
+    let sortedHistoricDebt = new Map([...historicDebts.entries()].sort((a, b) => {
+        const first = a.key
+        const second = b.key
+        return first > second ? 1 : (first < second ? -1 : 0)
+    }).reverse());
+
+    for (let [key, value] of sortedHistoricDebt.entries()) {
+        console.log(key + " = " + value);
+    }
+
+    let times = Array.from(sortedMarketCaps.keys());
+    times = times.map(mapToDateString)
+    let chart = new QuickChart();
+    chart.setConfig({
+            type: 'line',
+            data: {
+                labels: times,
+                datasets: [{
+                    axis: 'y',
+                    label: 'Debt',
+                    data: Array.from(sortedHistoricDebt.values()),
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }, {
+                    axis: 'y',
+                    label: 'SNX market cap',
+                    data: Array.from(sortedMarketCaps.values()),
+                    fill: false,
+                    borderColor: 'blue'
+                }]
+            }, options: {
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        }
+    );
+
+    const chartEmbed = {
+        title: 'Historical debt',
+        description: 'Historical debt in $sUSD with Market cap percentage',
+        image: {
+            url: chart.getUrl(),
+        },
+    };
+    msg.channel.send({embed: chartEmbed});
+
+
+}
+
+Date.prototype.yyyymmdd = function () {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+
+    return [this.getFullYear(),
+        (mm > 9 ? '' : '0') + mm,
+        (dd > 9 ? '' : '0') + dd
+    ].join('-');
+};
+
+
+function getBlockNumbers(date, etherWrapper) {
+    getAPI('https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=' + Math.floor(date.getTime() / 1000) + '&closest=before&apikey=47XNM5QC6HAJW2UV7WK24IN45N7ED5BKVC')
+        .then(function (result) {
+            console.log("block is  " + result.data.result + ' for the date ' + date);
+            if (!isNaN(result.data.result)) {
+                getHistoricalDebt(etherWrapper, result.data.result, date);
+            }
+        }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+function getMarketCaps(dateFrom, dateTo, isLeading, dateToBeAddedToHistory) {
+
+    getAPI('https://api.coingecko.com/api/v3/coins/havven/market_chart/range?vs_currency=usd&from=' + dateFrom + '&to=' + dateTo)
+        .then(function (result) {
+            console.log("market caps response is  " + result.data.market_caps[0][1] + ' for the date ' + new Date(dateFrom * 1000) + ' and the leading is ' + isLeading);
+            if (isLeading) {
+                leadingMarketCap = result.data.market_caps[0][1];
+                historicMarketCaps.set(dateToBeAddedToHistory, 1);
+            } else {
+                historicMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
+            }
+        }).catch(function (error) {
+        console.log(error);
+    });
+
+}
+
+
+const calculateHistoricDebt = async () => {
+
+    var etherWrapper = new web3.eth.Contract(contract, '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F', provider);
+
+    for (var i = 0; i <= 12; i++) {
+        var date = new Date();
+        date.setMonth(date.getMonth() - i);
+        console.log('date is ' + date);
+        await delay(1001);
+        var dateToBeAddedToHistory = date;
+        getBlockNumbers(date, etherWrapper);
+        var dateTo = Math.floor(date.getTime() / 1000);
+        date.setHours(date.getHours() - 2);
+        var dateFrom = Math.floor(date.getTime() / 1000);
+        await delay(1001);
+        if (i == 12) {
+            getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory);
+        } else {
+            getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory);
+        }
+    }
+}
+
+
+const getHistoricalDebt = function (contractInstance, blockNumber, date) {
+    contractInstance.methods.debtBalanceOf('0xdeb7adCa884fc71def5BE34D3Fa5C2BC0203a525', '0x7355534400000000000000000000000000000000000000000000000000000000')
+        .call(blockNumber).then(function (result) {
+        let historicDebt = Math.round(((result / 1e18) + Number.EPSILON) * 10) / 10;
+        historicDebts.set(date, historicDebt);
+        console.log('historic debt is ' + historicDebt + '$');
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
