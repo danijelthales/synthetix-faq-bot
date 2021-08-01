@@ -4353,12 +4353,12 @@ Date.prototype.yyyymmdd = function () {
 };
 
 
-function getBlockNumbers(date, etherWrapper) {
+function getBlockNumbers(date, etherWrapper,isAllTime) {
     getAPI('https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=' + Math.floor(date.getTime() / 1000) + '&closest=before&apikey=47XNM5QC6HAJW2UV7WK24IN45N7ED5BKVC')
         .then(function (result) {
             console.log("block is  " + result.data.result + ' for the date ' + date);
             if (!isNaN(result.data.result)) {
-                getHistoricalDebt(etherWrapper, result.data.result, date);
+                getHistoricalDebt(etherWrapper, result.data.result, date,isAllTime);
             }
         }).catch(function (error) {
         console.log(error);
