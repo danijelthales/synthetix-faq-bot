@@ -4471,9 +4471,9 @@ const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTi
         let historicDebt = Math.round(((result / 1e18) + Number.EPSILON) * 10) / 10;
         console.log('historic debt is ' + historicDebt + '$');
         if (isAllTime) {
-            historicDebts.set(date, historicDebt);
-        } else {
             allTimeHistoricDebts.set(date, historicDebt);
+        } else {
+            historicDebts.set(date, historicDebt);
         }
     }).catch(function (error) {
         console.log(error);
