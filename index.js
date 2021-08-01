@@ -14,6 +14,9 @@ let leadingMarketCap;
 const QuickChart = require('quickchart-js');
 let historicDebts = new Map();
 let historicMarketCaps = new Map();
+let allTimeLeadingMarketCap;
+let allTimeHistoricDebts = new Map();
+let allTimeHistoricMarketCaps = new Map();
 
 const Discord = require("discord.js")
 const client = new Discord.Client();
@@ -362,7 +365,7 @@ client.on("ready", () => {
 
     calculateDebt();
     calculateHistoricDebt();
-
+    calculateAllTimeHistoricDebt();
 })
 // client.on("guildMemberAdd", function (member) {
 //     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
@@ -717,6 +720,7 @@ setInterval(function () {
 //every 12 hours
 setInterval(function () {
     calculateHistoricDebt();
+    calculateAllTimeHistoricDebt();
 }, 4.32e+7);
 
 client.on("message", msg => {
@@ -801,11 +805,15 @@ client.on("message", msg => {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                 } else if (msg.content.toLowerCase() == (`!debt`)) {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                } else if (msg.content.toLowerCase() == (`!faq historical debt 1y`)) {
+                    createHistoricChart(msg);
+                } else if (msg.content.toLowerCase() == (`!historical debt 1y`)) {
+                    createHistoricChart(msg);
                 } else if (msg.content.toLowerCase() == (`!faq historical debt`)) {
-                    createHistoricChart(msg);
+                    createAllTimeHistoricChart(msg);
                 } else if (msg.content.toLowerCase() == (`!historical debt`)) {
-                    createHistoricChart(msg);
-                } else if (msg.content.toLowerCase().startsWith(`!bug`)) {
+                    createAllTimeHistoricChart(msg);
+                }else if (msg.content.toLowerCase().startsWith(`!bug`)) {
                     let bugDTO = getBugDTO(msg);
                     var port = process.env.PORT || 3000;
                     axios.post('http://localhost:' + port + '/bug', {
@@ -847,8 +855,10 @@ client.on("message", msg => {
                         getDebtHedgeMessage(command, df, othersDebtSum);
                     } else if (msg.content.toLowerCase() == (`debt`)) {
                         msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
-                    } else if (msg.content.toLowerCase() == (`historical debt`)) {
+                    } else if (msg.content.toLowerCase() == (`historical debt 1y`)) {
                         createHistoricChart(msg);
+                    } else if (msg.content.toLowerCase() == (`historical debt`)) {
+                        createAllTimeHistoricChart(msg);
                     } else {
                         let found = checkAliasMatching(true);
                         // if alias is found, just reply to it, otherwise continue
@@ -1143,6 +1153,8 @@ client.on("message", msg => {
                 "For the given hedge amount worth of debt shows the mirror strategy to invest the synths in the following manner (in sUSD terms)");
             exampleEmbed.addField("faq debt",
                 "Shows the current debt pool");
+            exampleEmbed.addField("faq historical debt 1y",
+                "Shows the last year value of the debt alongside the SNX market cap percentage from the given dates");
             exampleEmbed.addField("faq historical debt",
                 "Shows the historical value of the debt alongside the SNX market cap percentage from the given dates");
             exampleEmbed.addField("bug description of the bug",
@@ -4297,40 +4309,23 @@ function createHistoricChart(msg) {
                 labels: times,
                 datasets: [{
                     axis: 'y',
-                    label: 'Debt',
+                    label: 'debt (LHS)',
                     data: Array.from(sortedHistoricDebt.values()),
                     fill: false,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
-                    ],
-                    borderWidth: 1
+                    borderColor: 'red'
                 }, {
                     axis: 'y',
-                    label: 'SNX market cap',
+                    label: 'SNX Market Cap Change (RHS)',
                     data: Array.from(sortedMarketCaps.values()),
                     fill: false,
                     borderColor: 'blue'
                 }]
             }, options: {
+                pointStyle: 'star',
                 indexAxis: 'y',
                 scales: {
                     x: {
-                        beginAtZero: true
+                        beginAtZero: false
                     }
                 }
             }
@@ -4338,8 +4333,8 @@ function createHistoricChart(msg) {
     );
 
     const chartEmbed = {
-        title: 'Historical debt',
-        description: 'Historical debt in $sUSD with Market cap percentage',
+        title: 'Last year debt',
+        description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
         image: {
             url: chart.getUrl(),
         },
@@ -4351,11 +4346,9 @@ function createHistoricChart(msg) {
 
 Date.prototype.yyyymmdd = function () {
     var mm = this.getMonth() + 1; // getMonth() is zero-based
-    var dd = this.getDate();
 
     return [this.getFullYear(),
-        (mm > 9 ? '' : '0') + mm,
-        (dd > 9 ? '' : '0') + dd
+        (mm > 9 ? '' : '0') + mm
     ].join('-');
 };
 
@@ -4373,21 +4366,29 @@ function getBlockNumbers(date, etherWrapper) {
 }
 
 
-function getMarketCaps(dateFrom, dateTo, isLeading, dateToBeAddedToHistory) {
+function getMarketCaps(dateFrom, dateTo, isLeading, dateToBeAddedToHistory, isAllTime) {
 
     getAPI('https://api.coingecko.com/api/v3/coins/havven/market_chart/range?vs_currency=usd&from=' + dateFrom + '&to=' + dateTo)
         .then(function (result) {
             console.log("market caps response is  " + result.data.market_caps[0][1] + ' for the date ' + new Date(dateFrom * 1000) + ' and the leading is ' + isLeading);
             if (isLeading) {
-                leadingMarketCap = result.data.market_caps[0][1];
-                historicMarketCaps.set(dateToBeAddedToHistory, 1);
+                if (isAllTime) {
+                    allTimeLeadingMarketCap = result.data.market_caps[0][1];
+                    allTimeHistoricMarketCaps.set(dateToBeAddedToHistory, 1);
+                } else {
+                    leadingMarketCap = result.data.market_caps[0][1];
+                    historicMarketCaps.set(dateToBeAddedToHistory, 1);
+                }
             } else {
-                historicMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
+                if (isAllTime) {
+                    allTimeHistoricMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
+                } else {
+                    historicMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
+                }
             }
         }).catch(function (error) {
         console.log(error);
     });
-
 }
 
 
@@ -4401,27 +4402,149 @@ const calculateHistoricDebt = async () => {
         console.log('date is ' + date);
         await delay(1001);
         var dateToBeAddedToHistory = date;
-        getBlockNumbers(date, etherWrapper);
+        getBlockNumbers(date, etherWrapper, false);
         var dateTo = Math.floor(date.getTime() / 1000);
         date.setHours(date.getHours() - 2);
         var dateFrom = Math.floor(date.getTime() / 1000);
         await delay(1001);
         if (i == 12) {
-            getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory);
+            getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory, false);
         } else {
-            getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory);
+            getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, false);
         }
     }
 }
 
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+}
 
-const getHistoricalDebt = function (contractInstance, blockNumber, date) {
+const calculateAllTimeHistoricDebt = async () => {
+
+    var etherWrapper = new web3.eth.Contract(contract, '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F', provider);
+
+    var dateOfDebtStart = new Date(1578255814 * 1000);
+    let monthDifference = Math.round(monthDiff(dateOfDebtStart, new Date()) / 12);
+
+    var stopIteration = false;
+    for (var i = 0; i < 12; i++) {
+        var date = new Date();
+
+        date.setMonth(date.getMonth() - (i * monthDifference));
+        var dateDiff = new Date();
+        dateDiff.setMonth(dateDiff.getMonth() - ((i + 1) * monthDifference));
+        if (stopIteration) {
+            date = dateOfDebtStart;
+            i = 11;
+        }
+        if (monthDiff(dateOfDebtStart, dateDiff) < monthDifference) {
+            stopIteration = true;
+        }
+
+        console.log('date is ' + date);
+        await delay(1001);
+        var dateToBeAddedToHistory = date;
+        if (i == 11) {
+            allTimeHistoricDebts.set(dateOfDebtStart, 1);
+        } else {
+            getBlockNumbers(date, etherWrapper, true);
+        }
+        var dateTo = Math.floor(date.getTime() / 1000);
+        date.setHours(date.getHours() - 2);
+        var dateFrom = Math.floor(date.getTime() / 1000);
+        await delay(1001);
+        if (i == 11) {
+            getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory, true);
+        } else {
+            getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, true);
+        }
+    }
+}
+
+const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTime) {
     contractInstance.methods.debtBalanceOf('0xdeb7adCa884fc71def5BE34D3Fa5C2BC0203a525', '0x7355534400000000000000000000000000000000000000000000000000000000')
         .call(blockNumber).then(function (result) {
         let historicDebt = Math.round(((result / 1e18) + Number.EPSILON) * 10) / 10;
-        historicDebts.set(date, historicDebt);
         console.log('historic debt is ' + historicDebt + '$');
+        if (isAllTime) {
+            historicDebts.set(date, historicDebt);
+        } else {
+            allTimeHistoricDebts.set(date, historicDebt);
+        }
     }).catch(function (error) {
         console.log(error);
     });
+}
+
+
+function createAllTimeHistoricChart(msg) {
+    let calculatedMarketCaps = new Map();
+    //divide everything by market cap value
+    for (let [key, value] of allTimeHistoricMarketCaps.entries()) {
+        if (value != 1) {
+            calculatedMarketCaps.set(key, Math.round(((value / allTimeLeadingMarketCap) + Number.EPSILON) * 10) / 10);
+        } else {
+            calculatedMarketCaps.set(key, value);
+        }
+    }
+    let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
+        const first = a.key
+        const second = b.key
+        return first > second ? 1 : (first < second ? -1 : 0)
+    }).reverse());
+    let sortedHistoricDebt = new Map([...allTimeHistoricDebts.entries()].sort((a, b) => {
+        const first = a.key
+        const second = b.key
+        return first > second ? 1 : (first < second ? -1 : 0)
+    }).reverse());
+
+    for (let [key, value] of sortedHistoricDebt.entries()) {
+        console.log(key + " = " + value);
+    }
+
+    let times = Array.from(sortedMarketCaps.keys());
+    times = times.map(mapToDateString)
+    let chart = new QuickChart();
+    chart.setConfig({
+            type: 'line',
+            data: {
+                labels: times,
+                datasets: [{
+                    axis: 'y',
+                    label: 'debt (LHS)',
+                    data: Array.from(sortedHistoricDebt.values()),
+                    fill: false,
+                    borderColor: 'red'
+                }, {
+                    axis: 'y',
+                    label: 'SNX Market Cap Change (RHS)',
+                    data: Array.from(sortedMarketCaps.values()),
+                    fill: false,
+                    borderColor: 'blue'
+                }]
+            }, options: {
+                pointStyle: 'star',
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        }
+    );
+
+    const chartEmbed = {
+        title: 'All Time - Historical debt',
+        description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
+        image: {
+            url: chart.getUrl(),
+        },
+    };
+
+    msg.channel.send({embed: chartEmbed});
 }
