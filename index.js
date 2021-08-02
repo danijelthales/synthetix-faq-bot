@@ -17,6 +17,8 @@ let historicMarketCaps = new Map();
 let allTimeLeadingMarketCap;
 let allTimeHistoricDebts = new Map();
 let allTimeHistoricMarketCaps = new Map();
+const w3utils = require('web3-utils');
+const fetch = require('node-fetch');
 
 const Discord = require("discord.js")
 const client = new Discord.Client();
@@ -254,6 +256,7 @@ let channel = null;
 let trades = null;
 let trades100 = null;
 let trades1000 = null;
+let l2trades = null;
 let general = null;
 let councilChannel = null;
 let fundChannel = null;
@@ -266,6 +269,8 @@ let channelDeployer = null;
 let channelShorts = null;
 let channelAmbassadors = null;
 let guild = null;
+
+const fromBytes32 = key => w3utils.hexToAscii(key);
 
 async function checkMessages() {
     let countsUsers = new Map();
@@ -319,6 +324,9 @@ client.on("ready", () => {
     });
     client.channels.fetch('790349176289624084').then(c => {
         trades1000 = c
+    });
+    client.channels.fetch('871713566225485834').then(c => {
+        l2trades = c
     });
     client.channels.fetch('413890591840272398').then(c => {
         general = c;
@@ -3441,6 +3449,70 @@ setInterval(function () {
         console.log(e);
     }
 }, 1000 * 60 * 5);
+
+async function getl2Exchanges() {
+    try {
+        const ts = Math.floor(Date.now() / 1e3);
+        const oneDayAgo = ts - 300;
+        const body = JSON.stringify({
+            query: `{
+      synthExchanges(
+        orderBy:timestamp,
+        orderDirection:desc,
+        where:{timestamp_gt: ${oneDayAgo}}
+      )
+      {
+        fromAmount
+        fromAmountInUSD
+        fromCurrencyKey
+        toCurrencyKey
+        block
+        timestamp
+        toAddress
+        toAmount
+        toAmountInUSD
+        feesInUSD
+      }
+    }`,
+            variables: null,
+        });
+
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/killerbyte/optimism-exchanges', {
+            method: 'POST',
+            body,
+        });
+
+        const json = await response.json();
+        const {synthExchanges} = json.data;
+        synthExchanges.forEach(r => {
+            try {
+                console.log("Exchanged " + r.fromAmount + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4) + " to " + r.toAmount  + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD );
+                const exampleEmbed = new Discord.MessageEmbed();
+                exampleEmbed.setColor("ff0000");
+                exampleEmbed.setTitle("New trade");
+                exampleEmbed.setURL("https://optimistic.etherscan.io/address/" + r.toAddress);
+                exampleEmbed.addField("Wallet",
+                    '[' + r.toAddress + '](https://optimistic.etherscan.io/address/' + r.toAddress + ')');
+                exampleEmbed.addField("From",
+                    numberWithCommas((r.fromAmount*1.0 ).toFixed(2)) + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4));
+                exampleEmbed.addField("To",
+                    numberWithCommas((r.toAmount*1.0 ).toFixed(2)) + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                exampleEmbed.addField("Value",
+                    numberWithCommas((r.fromAmountInUSD*1.0).toFixed(2)) + " sUSD");
+                l2trades.send(exampleEmbed);
+            } catch (e) {
+                console.log(e);
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+setInterval(getl2Exchanges, 1000 * 60 * 5);
+
+
 
 
 setInterval(function () {
