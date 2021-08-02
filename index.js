@@ -4441,7 +4441,7 @@ const calculateHistoricDebt = async () => {
 
     var etherWrapper = new web3.eth.Contract(contract, '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F', provider);
 
-    for (var i = 0; i <= 12; i++) {
+    for (var i = 0; i < 12; i++) {
         var date = new Date();
         date.setMonth(date.getMonth() - i);
         console.log('date is ' + date);
@@ -4452,7 +4452,7 @@ const calculateHistoricDebt = async () => {
         date.setHours(date.getHours() - 2);
         var dateFrom = Math.floor(date.getTime() / 1000);
         await delay(1001);
-        if (i == 12) {
+        if (i == 11) {
             getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory, false);
         } else {
             getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, false);
