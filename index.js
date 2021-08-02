@@ -4359,7 +4359,7 @@ chart.setConfig({
                 labels: times,
                 datasets: [{
                     axis: 'y',
-                    label: 'debt (LHS)',
+                    label: 'debt',
                     data: Array.from(sortedHistoricDebt.values()),
                     fill: false,
                     borderColor: 'red'
@@ -4600,7 +4600,7 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
                 labels: times,
                 datasets: [{
                     axis: 'y',
-                    label: 'debt (LHS)',
+                    label: 'debt',
                     data: Array.from(sortedHistoricDebt.values()),
                     fill: false,
                     borderColor: 'red'
