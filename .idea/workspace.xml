@@ -4,8 +4,6 @@
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="4259" selection-start-line="4259" selection-end-line="4259" />
+            <state relative-caret-position="282">
+              <caret line="3514" selection-start-line="3514" selection-end-line="3514" />
             </state>
           </provider>
         </entry>
@@ -54,8 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="77" selection-end-column="2" />
+            <state relative-caret-position="204">
+              <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -64,8 +62,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>usdtPeg</find>
-      <find>eth</find>
       <find>ethpeg</find>
       <find>sethpeg</find>
       <find>sethpeg =</find>
@@ -89,11 +85,13 @@
       <find>fetch</find>
       <find>l2trade</find>
       <find>w3utils</find>
-      <find>l2trades</find>
       <find>trades1000</find>
       <find>pass</find>
-      <find>0, 5</find>
       <find>l2tra</find>
+      <find>getExc</find>
+      <find>getl2Exchanges</find>
+      <find>l2trades</find>
+      <find>0, 5</find>
     </findStrings>
     <replaceStrings>
       <replace>https://synthetix.community/docs/is-snx-liquid</replace>
@@ -189,8 +187,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="1952" />
+    <option name="y" value="275" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
@@ -219,7 +217,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SIPs" />
+    <property name="last_opened_file_path" value="C:/thales/synthetix" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -412,12 +410,12 @@
       <workItem from="1625953913040" duration="65000" />
       <workItem from="1626172852220" duration="3701000" />
       <workItem from="1626292666546" duration="2064000" />
-      <workItem from="1627899683109" duration="5270000" />
+      <workItem from="1627899683109" duration="7841000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="556433000" />
+    <option name="totallyTimeSpent" value="559004000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -429,7 +427,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
@@ -446,7 +444,7 @@
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32827735" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.36078006" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.47020584" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.32936078" />
@@ -488,6 +486,18 @@
       </list>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/test.js</url>
+          <line>53</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
@@ -511,6 +521,11 @@
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>oneDayAgo</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>&quot;&quot;+numberWithCommas((r.fromAmount*1.0 ).toFixed(2)) + &quot; &quot; + fromBytes32(r.fromCurrencyKey)</expression-string>
         <language-id>JavaScript</language-id>
@@ -548,11 +563,6 @@
       </expression>
       <expression>
         <expression-string>data.performanceHistory.day/ie18</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>data.performanceHistory.day</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -811,13 +821,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="77" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/web3-utils/types/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -827,10 +830,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="4259" selection-start-line="4259" selection-end-line="4259" />
+        <state relative-caret-position="282">
+          <caret line="3514" selection-start-line="3514" selection-end-line="3514" />
         </state>
       </provider>
     </entry>

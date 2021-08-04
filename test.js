@@ -20,7 +20,7 @@ client.on("ready", () => {
 async function getl2Exchanges() {
     try {
         const ts = Math.floor(Date.now() / 1e3);
-        const oneDayAgo = ts - 3600 * 24;
+        const oneDayAgo = ts - 60*60;
         const body = JSON.stringify({
             query: `{
       synthExchanges(
@@ -58,9 +58,9 @@ async function getl2Exchanges() {
                 const exampleEmbed = new Discord.MessageEmbed();
                 exampleEmbed.setColor("ff0000");
                 exampleEmbed.setTitle("New trade");
-                exampleEmbed.setURL("https://etherscan.io/tx/" + r.toAddress);
+                exampleEmbed.setURL("https://optimistic.etherscan.io/address/" + r.toAddress);
                 exampleEmbed.addField("Wallet",
-                    '[' + r.toAddress + '](https://etherscan.io/address/' + r.toAddress + ')');
+                    '[' + r.toAddress + '](https://optimistic.etherscan.io/address/' + r.toAddress + ')');
                 exampleEmbed.addField("From",
                     numberWithCommas((r.fromAmount*1.0 ).toFixed(2)) + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4));
                 exampleEmbed.addField("To",
@@ -76,7 +76,6 @@ async function getl2Exchanges() {
         console.log(e);
     }
 };
-
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

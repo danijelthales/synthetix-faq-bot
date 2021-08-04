@@ -3453,7 +3453,7 @@ setInterval(function () {
 async function getl2Exchanges() {
     try {
         const ts = Math.floor(Date.now() / 1e3);
-        const oneDayAgo = ts - 300;
+        const oneDayAgo = ts - 60*60;
         const body = JSON.stringify({
             query: `{
       synthExchanges(
@@ -3510,7 +3510,7 @@ async function getl2Exchanges() {
     }
 };
 
-setInterval(getl2Exchanges, 1000 * 60 * 5);
+setInterval(getl2Exchanges, 1000 * 60*60);
 
 
 
