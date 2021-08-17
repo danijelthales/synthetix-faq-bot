@@ -726,7 +726,7 @@ setInterval(function () {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
-}, 4.32e+7);
+}, 1000*60*60*12);
 
 client.on("message", msg => {
 
