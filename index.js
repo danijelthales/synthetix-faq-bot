@@ -721,12 +721,9 @@ function doInnerQuestion(command, doReply, msg) {
 let df;
 let othersDebtSum;
 
-setInterval(function () {
-    calculateDebt();
-}, 60 * 1000);
-
 //every 12 hours
 setInterval(function () {
+    calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
 }, 4.32e+7);
@@ -814,22 +811,22 @@ client.on("message", msg => {
                 } else if (msg.content.toLowerCase() == (`!debt`)) {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                 } else if (msg.content.toLowerCase() == (`!faq historical debt 1y`)) {
-                    createHistoricChart(msg,true);
+                    createHistoricChart(msg, true);
                 } else if (msg.content.toLowerCase() == (`!historical debt 1y`)) {
-                    createHistoricChart(msg,true);
+                    createHistoricChart(msg, true);
                 } else if (msg.content.toLowerCase() == (`!faq historical debt`)) {
-                    createAllTimeHistoricChart(msg,true);
+                    createAllTimeHistoricChart(msg, true);
                 } else if (msg.content.toLowerCase() == (`!historical debt`)) {
-                    createAllTimeHistoricChart(msg,true);
-                }else if (msg.content.toLowerCase() == (`!faq historical debt only 1y`)) {
-                    createHistoricChart(msg,false);
+                    createAllTimeHistoricChart(msg, true);
+                } else if (msg.content.toLowerCase() == (`!faq historical debt only 1y`)) {
+                    createHistoricChart(msg, false);
                 } else if (msg.content.toLowerCase() == (`!historical debt only 1y`)) {
-                    createHistoricChart(msg,false);
+                    createHistoricChart(msg, false);
                 } else if (msg.content.toLowerCase() == (`!faq historical debt only`)) {
-                    createAllTimeHistoricChart(msg,false);
+                    createAllTimeHistoricChart(msg, false);
                 } else if (msg.content.toLowerCase() == (`!historical debt only`)) {
-                    createAllTimeHistoricChart(msg,false);
-                }else if (msg.content.toLowerCase().startsWith(`!bug`)) {
+                    createAllTimeHistoricChart(msg, false);
+                } else if (msg.content.toLowerCase().startsWith(`!bug`)) {
                     let bugDTO = getBugDTO(msg);
                     var port = process.env.PORT || 3000;
                     axios.post('http://localhost:' + port + '/bug', {
@@ -872,13 +869,13 @@ client.on("message", msg => {
                     } else if (msg.content.toLowerCase() == (`debt`)) {
                         msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                     } else if (msg.content.toLowerCase() == (`historical debt 1y`)) {
-                        createHistoricChart(msg,true);
+                        createHistoricChart(msg, true);
                     } else if (msg.content.toLowerCase() == (`historical debt`)) {
-                        createAllTimeHistoricChart(msg,true);
+                        createAllTimeHistoricChart(msg, true);
                     } else if (msg.content.toLowerCase() == (`historical debt only 1y`)) {
-                        createHistoricChart(msg,false);
+                        createHistoricChart(msg, false);
                     } else if (msg.content.toLowerCase() == (`historical debt only`)) {
-                        createAllTimeHistoricChart(msg,false);
+                        createAllTimeHistoricChart(msg, false);
                     } else {
                         let found = checkAliasMatching(true);
                         // if alias is found, just reply to it, otherwise continue
@@ -4387,76 +4384,75 @@ function createHistoricChart(msg, isMarketCapsIncluded) {
     let times = Array.from(sortedMarketCaps.keys());
     times = times.map(mapToDateString)
     let chart = new QuickChart();
-    if(isMarketCapsIncluded){
-    chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt (LHS)',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }, {
-                    axis: 'y',
-                    label: 'SNX Market Cap Change (RHS)',
-                    data: Array.from(sortedMarketCaps.values()),
-                    fill: false,
-                    borderColor: 'blue'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+    if (isMarketCapsIncluded) {
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt (LHS)',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }, {
+                        axis: 'y',
+                        label: 'SNX Market Cap Change (RHS)',
+                        data: Array.from(sortedMarketCaps.values()),
+                        fill: false,
+                        borderColor: 'blue'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
+        );
         const chartEmbed = {
-        title: 'Last year debt',
-        description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
-    msg.channel.send({embed: chartEmbed});
-} else {
-chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+            title: 'Last year debt',
+            description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
+        msg.channel.send({embed: chartEmbed});
+    } else {
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
-    const chartEmbed = {
-        title: 'Last year debt',
-        description: 'value of 1 sUSD minted',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
-    msg.channel.send({embed: chartEmbed});
+        );
+        const chartEmbed = {
+            title: 'Last year debt',
+            description: 'value of 1 sUSD minted',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
+        msg.channel.send({embed: chartEmbed});
     }
-
 
 
 }
@@ -4470,12 +4466,12 @@ Date.prototype.yyyymmdd = function () {
 };
 
 
-function getBlockNumbers(date, etherWrapper,isAllTime) {
+function getBlockNumbers(date, etherWrapper, isAllTime) {
     getAPI('https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=' + Math.floor(date.getTime() / 1000) + '&closest=before&apikey=47XNM5QC6HAJW2UV7WK24IN45N7ED5BKVC')
         .then(function (result) {
             console.log("block is  " + result.data.result + ' for the date ' + date);
             if (!isNaN(result.data.result)) {
-                getHistoricalDebt(etherWrapper, result.data.result, date,isAllTime);
+                getHistoricalDebt(etherWrapper, result.data.result, date, isAllTime);
             }
         }).catch(function (error) {
         console.log(error);
@@ -4626,77 +4622,77 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
     let times = Array.from(sortedMarketCaps.keys());
     times = times.map(mapToDateString)
     let chart = new QuickChart();
-    if(isMarketCapsIncluded){
-    chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt (LHS)',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }, {
-                    axis: 'y',
-                    label: 'SNX Market Cap Change (RHS)',
-                    data: Array.from(sortedMarketCaps.values()),
-                    fill: false,
-                    borderColor: 'blue'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+    if (isMarketCapsIncluded) {
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt (LHS)',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }, {
+                        axis: 'y',
+                        label: 'SNX Market Cap Change (RHS)',
+                        data: Array.from(sortedMarketCaps.values()),
+                        fill: false,
+                        borderColor: 'blue'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
+        );
         const chartEmbed = {
-        title: 'All Time - Historical debt',
-        description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
+            title: 'All Time - Historical debt',
+            description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
 
-    msg.channel.send({embed: chartEmbed});
+        msg.channel.send({embed: chartEmbed});
 
     } else {
-    chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
-     const chartEmbed = {
-        title: 'All Time - Historical debt',
-        description: 'value of 1 sUSD minted',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
+        );
+        const chartEmbed = {
+            title: 'All Time - Historical debt',
+            description: 'value of 1 sUSD minted',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
 
-    msg.channel.send({embed: chartEmbed});
+        msg.channel.send({embed: chartEmbed});
     }
 
 
