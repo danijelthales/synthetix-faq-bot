@@ -721,12 +721,9 @@ function doInnerQuestion(command, doReply, msg) {
 let df;
 let othersDebtSum;
 
-setInterval(function () {
-    calculateDebt();
-}, 60 * 1000);
-
 //every 12 hours
 setInterval(function () {
+    calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
 }, 4.32e+7);
