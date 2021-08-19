@@ -787,14 +787,7 @@ client.on("message", msg => {
                     args.shift();
                     const command = args.shift().trim();
                     getMintrData(msg, command, false);
-                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth ")) {
-                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq synth".length).split(' ');
-                    args.shift();
-                    const command = args.shift().trim();
-                    if (command) {
-                        doShowSynth(command, msg, false);
-                    }
-                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
+                }  else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
                     msg.reply("No longer supported. Use $ticker snx");
                 } else if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
                     const args = msg.content.slice(`!faq hedge`.length).trim().split(' ');
@@ -1014,14 +1007,7 @@ client.on("message", msg => {
                                     }
                                     doCalculateSusd(command, msg, true);
                                 }
-                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth ")) {
-                                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
-                                args.shift();
-                                const command = args.shift().trim();
-                                if (command) {
-                                    doShowSynth(command, msg, true);
-                                }
-                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
+                            }  else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
                                 msg.reply("No longer supported. Use $ticker snx")
                             } else {
                                 if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -2104,102 +2090,6 @@ async function getDashboard() {
     }
 }
 
-async function getExchange() {
-    try {
-        const browser = await puppeteer.launch({
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ],
-        });
-        const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 926});
-        await page.goto("https://synthetix.exchange/#/synths", {waitUntil: 'networkidle2'});
-        await delay(5000);
-
-        /** @type {string[]} */
-        var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('.table-body-row span');
-
-            var prices = []
-            div.forEach(element => {
-                prices.push(element.textContent);
-            });
-
-            return prices
-        })
-
-        var i = 0;
-        synths = new Array();
-        while (i < prices.length) {
-            if (prices[2] == '-') break;
-            let synthName = prices[i].substring(0, prices[i].lastIndexOf(prices[i + 1]));
-            let gain = prices[i + 3];
-            if (gain == "-") {
-                gain = "0%";
-            }
-            let synth = new Synth(synthName, prices[i + 2], gain);
-            if (synthsMap.has(synthName.toLowerCase())) {
-                synth = synthsMap.get(synthName.toLowerCase());
-                synth.gain = gain;
-                synth.price = prices[i + 2];
-            }
-            synths.push(synth);
-            if (prices[i + 3] == "-" && synthName.toLowerCase() != "susd") {
-                i = i + 5;
-            } else {
-                i = i + 4;
-            }
-            synthsMap.set(synthName.toLowerCase(), synth);
-        }
-        synths.sort(function (a, b) {
-            return b.gain.replace(/%/g, "") * 1.0 - a.gain.replace(/%/g, "") * 1.0;
-        });
-
-        browser.close()
-    } catch (e) {
-        console.log("Error happened on getting data from synthetix exchange");
-        console.log(e);
-    }
-}
-
-async function getSynthInfo(synth) {
-    try {
-        const browser = await puppeteer.launch({
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ],
-        });
-        const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 1226});
-        await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
-        await page.waitForSelector('div.isELEY');
-        await delay(5000);
-
-        const rect = await page.evaluate(() => {
-            const element = document.querySelector('div.isELEY');
-            const {x, y, width, height} = element.getBoundingClientRect();
-            return {left: x, top: y, width, height, id: element.id};
-        });
-
-        await page.screenshot({
-            path: 'charts/chart' + synth.toLowerCase() + '.png',
-            clip: {
-                x: rect.left - 0,
-                y: rect.top - 0,
-                width: rect.width + 0 * 2,
-                height: rect.height + 0 * 2
-            }
-        });
-        console.log("Got screenshot for: " + synth);
-        browser.close()
-    } catch (e) {
-        console.log("Error happened on getting data from synthetix exchange");
-        console.log(e);
-    }
-}
-
 function delay(time) {
     return new Promise(function (resolve) {
         setTimeout(resolve, time)
@@ -2752,93 +2642,6 @@ function doCalculateSusd(command, msg, fromDM) {
     }
 }
 
-function doShowSynth(command, msg, fromDm) {
-    try {
-        let synthInfo = synthsMap.get(command);
-        if (synthInfo) {
-            const exampleEmbed = new Discord.MessageEmbed()
-                .setColor('#0099ff')
-                .setTitle('Synth info:');
-
-            let arrow = (synthInfo.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (synthInfo.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
-            exampleEmbed.addField(synthInfo.name,
-                "Price:**" + synthInfo.price + "**\n"
-                + "Gain:**" + synthInfo.gain + arrow + "**\n"
-            );
-
-
-            exampleEmbed.attachFiles(['charts/chart' + command.toLowerCase() + '.png'])
-                .setImage('attachment://' + 'chart' + command.toLowerCase() + '.png');
-
-            if (fromDm) {
-                msg.reply(exampleEmbed);
-            } else {
-                msg.channel.send(exampleEmbed).then(function (message) {
-                    message.react("❌");
-                }).catch(function () {
-                    //Something
-                });
-            }
-        } else {
-            msg.reply("Synth not available");
-        }
-    } catch (e) {
-        console.log("Error occurred on show synth");
-    }
-}
-
-function doShowChart(type, msg, fromDM) {
-    try {
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle(type + ' SNX price chart');
-        exampleEmbed.addField("Possible options:", "realtime, 24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
-        exampleEmbed.attachFiles(['charts/chart' + type.toLowerCase() + '.png'])
-            .setImage('attachment://' + 'chart' + type.toLowerCase() + '.png');
-        if (fromDM) {
-            msg.reply(exampleEmbed);
-        } else {
-            msg.channel.send(exampleEmbed).then(function (message) {
-                message.react("❌");
-            }).catch(function () {
-                //Something
-            });
-        }
-    } catch (e) {
-        console.log("Exception happened when showing the chart");
-        console.log(e);
-    }
-}
-
-setTimeout(function () {
-    try {
-        var increment = 1;
-        synthsMap.forEach(function (value, key) {
-            increment += 1;
-            setTimeout(function () {
-                getSynthInfo(value.name)
-            }, 1000 * 30 * increment);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 2 * 60 * 1000);
-
-setInterval(function () {
-    try {
-        var increment = 1;
-        synthsMap.forEach(function (value, key) {
-            increment += 1;
-            setTimeout(function () {
-                getSynthInfo(value.name)
-            }, 1000 * 30 * increment);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 30 * 60 * 1000);
-
-
 setTimeout(function () {
     try {
         getSnxToolStaking();
@@ -2890,29 +2693,6 @@ setInterval(function () {
         console.log(e);
     }
 }, 60 * 13 * 1000);
-
-setTimeout(function () {
-    try {
-        getExchange();
-    } catch (e) {
-        console.log(e);
-    }
-}, 40 * 1000);
-
-setTimeout(function () {
-    try {
-        getExchange();
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 1000 * 3);
-setInterval(function () {
-    try {
-        getExchange();
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 10 * 1000);
 
 setInterval(function () {
     try {
@@ -2995,46 +2775,7 @@ async function getMintrData(msg, address, isDM) {
 
 
 const snxData = require('synthetix-data');
-
-setTimeout(function () {
-    snxData.synths.issuers({max: 10000}).then(result => {
-        getAllWallets(result);
-    });
-}, 1000 * 10
-)
-
-
-setTimeout(function () {
-    setInterval(function () {
-        wallets = [];
-        snxData.synths.issuers({max: 10000}).then(result => {
-            getAllWallets(result);
-        });
-    }, 1000 * 60 * 10
-    )
-}, 1000 * 60 * 60
-)
-
-
 var ignoreAddresses = new Set();
-
-async function getAllWallets(results) {
-    try {
-        for (let i = 0; i < results.length; i++) {
-            try {
-                if (!ignoreAddresses.has(results[i])) {
-                    getWalletInfo(results[i]);
-                }
-                await delay(500);
-            } catch (e) {
-                //console.log(e);
-            }
-        }
-    } catch (e) {
-        //console.log(e);
-    }
-}
-
 
 class WalletInfo {
 
@@ -3054,8 +2795,6 @@ class WalletInfo {
 }
 
 var wallets = [];
-var mapToReturn = new Map();
-var walletsToReturn = [];
 
 
 async function getWalletInfo(address) {
@@ -3093,51 +2832,6 @@ async function getWalletInfo(address) {
     }
 }
 
-
-function sortWallets() {
-    try {
-        console.log("wallets count is: " + wallets.length);
-        wallets.sort(function (a, b) {
-            return a.cRatio - b.cRatio;
-        });
-        wallets.forEach(w => {
-            mapToReturn.set(w.address, w);
-        });
-        if (wallets.length > 20) {
-            wallets = wallets.slice(0, 20);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-setInterval(function () {
-    sortWallets();
-}, 1000 * 55
-)
-
-setInterval(function () {
-    sortWalletsToReturn();
-}, 1000 * 60
-)
-
-function sortWalletsToReturn() {
-    try {
-        walletsToReturn = [];
-        for (const [key, value] of mapToReturn.entries()) {
-            walletsToReturn.push(value);
-        }
-        walletsToReturn.sort(function (a, b) {
-            return a.cRatio - b.cRatio;
-        });
-        if (walletsToReturn.length > 20) {
-            walletsToReturn = walletsToReturn.slice(0, 20);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
-
 const clientPayday = new Discord.Client();
 clientPayday.login(process.env.BOT_TOKEN_PAYDAY);
 
@@ -3166,162 +2860,7 @@ setInterval(function () {
         }
     });
 
-}, 30 * 1000);
-
-
-var flaggedAccountsMap = new Map();
-
-setInterval(function () {
-    try {
-        http.get('http://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=1&toBlock=latest&topic0=0xc77e4625de0c70adaf3bd1aabb5f22f9eae8f565367c706fc209030c13857996', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-                    var results = result.result;
-                    var flaggedWallet = new Object();
-                    var tempFlaggedAccountsMap = new Map();
-                    results.forEach(fl => {
-                        var address = fl.topics[1];
-                        address = address.substring(26, address.length);
-                        var flaggedTime = fl.timeStamp;
-                        flaggedTime = parseInt(flaggedTime, 16);
-                        var w = new WalletInfo();
-                        w.flaggedTime = new Date(flaggedTime * 1000);
-                        tempFlaggedAccountsMap.set(address, w);
-                    });
-                    for (const [key, value] of tempFlaggedAccountsMap.entries()) {
-                        if (!flaggedAccountsMap.get(key)) {
-                            flaggedAccountsMap.set(key, value);
-                        }
-                    }
-                    for (const [key, value] of flaggedAccountsMap.entries()) {
-                        if (!tempFlaggedAccountsMap.get(key)) {
-                            flaggedAccountsMap.delete(key);
-                        }
-                    }
-
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 50 * 1000);
-
-// setInterval(function () {
-//     try {
-//         http.get('http://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=1&toBlock=latest&topic0=0xaadb11d74982254be0fa96d24a08db29d68f446bc96b3092a9c9120b5c89caf2', (resp) => {
-//             let data = '';
-//
-//             // A chunk of data has been recieved.
-//             resp.on('data', (chunk) => {
-//                 data += chunk;
-//             });
-//
-//             // The whole response has been received. Print out the result.
-//             resp.on('end', () => {
-//                 try {
-//                     let result = JSON.parse(data);
-//                     var results = result.result;
-//                     var sum = 0
-//                     results.forEach(fl => {
-//                         var dat = fl.data;
-//                         dat = dat.substring(2, 66);
-//                         var dec= parseInt(dat, 16)/1000000000000000000;
-//                         sum=sum+dec;
-//                     });
-//                     console.log("Total liquidated SNX:" + sum);
-//
-//                 } catch (e) {
-//                     console.log(e);
-//                 }
-//             });
-//
-//         }).on("error", (err) => {
-//             console.log("Error: " + err.message);
-//         });
-//     } catch (e) {
-//         console.log(e);
-//     }
-// }, 10 * 1000);
-
-
-setInterval(function () {
-    try {
-        for (const [key, value] of flaggedAccountsMap.entries()) {
-            getFlaggedWalletInfo(key);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}, 65 * 1000);
-
-
-async function getFlaggedWalletInfo(address) {
-    try {
-
-        const cRatio = await synthetix.collateralisationRatio(address);
-        let numberCRatio = 100000000000000000000 / cRatio.toString();
-        if (numberCRatio == Infinity) {
-            ignoreAddresses.add(address);
-            return;
-        }
-        numberCRatio = Math.round(((numberCRatio * 1.0) + Number.EPSILON) * 100) / 100;
-        if (numberCRatio > 300) {
-            ignoreAddresses.add(address);
-            return;
-        }
-
-        const totalSNX = await synthetix.collateral(address);
-        let totalSNXNum = totalSNX.toString() / 1000000000000000000;
-        totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
-        if (totalSNXNum < 1000 && numberCRatio > 250) {
-            ignoreAddresses.add(address);
-            return;
-        }
-
-        const balance = await synthetix.balanceOf(address);
-        let notEscrowedSnx = balance.toString() / 1000000000000000000;
-
-        let escrowedSNX = totalSNXNum - notEscrowedSnx;
-        escrowedSNX = Math.round(((escrowedSNX * 1.0) + Number.EPSILON) * 100) / 100;
-
-        var w = new WalletInfo(numberCRatio, totalSNXNum, address, escrowedSNX);
-        w.flaggedTime = flaggedAccountsMap.get(address).flaggedTime;
-        var liquidationDate = new Date(w.flaggedTime);
-        liquidationDate.setDate(liquidationDate.getDate() + 3);
-        var difference = liquidationDate.getTime() - (new Date()).getTime();
-        if (difference > 0) {
-            var seconds = Math.floor(difference / 1000);
-            var minutes = Math.floor(seconds / 60);
-            var hours = Math.floor(minutes / 60);
-            var days = Math.floor(hours / 24);
-            hours %= 24;
-            minutes %= 60;
-            seconds %= 60;
-            w.etaToLiquidation = days + " days " + hours + " hours " + minutes + " minutes ";
-        } else {
-            w.etaToLiquidation = "0";
-        }
-        flaggedAccountsMap.set(address, w);
-    } catch (e) {
-        //console.log(e);
-    }
-}
-
+}, 60 * 1000);
 
 setInterval(function () {
     try {
@@ -3358,47 +2897,6 @@ setInterval(function () {
     }
 }, 60 * 1000 * 60);
 
-
-let council = [];
-let voteDay = new Date('2021-03-15 07:00');
-
-async function getCouncil() {
-    try {
-        const browser = await puppeteer.launch({
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ],
-        });
-        const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 926});
-        await page.goto("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE", {waitUntil: 'networkidle2'});
-
-        await delay(10000);
-
-        /** @type {string[]} */
-        var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('div.p-4 .mb-1');
-
-            var prices = []
-            div.forEach(element => {
-                prices.push(element.textContent);
-            });
-
-            return prices
-        })
-
-        council = [];
-        council = council.concat(prices.slice(6, 14));
-        browser.close()
-    } catch (e) {
-        console.log("Error happened on getting data from SNX tools.");
-        console.log(e);
-    }
-}
-
-setTimeout(getCouncil, 1000 * 30);
-setInterval(getCouncil, 1000 * 60 * 2);
 
 setInterval(function () {
     try {
@@ -3567,7 +3065,7 @@ function getVolume() {
     }
 }
 
-setTimeout(getVolume, 1000 * 60 * 1);
+setTimeout(getVolume, 1000 * 60 * 2);
 setInterval(function () {
     getVolume();
 }, 1000 * 60 * 30);
@@ -3590,102 +3088,6 @@ setInterval(function () {
 }, 60 * 1000)
 
 
-let choices = new Map();
-choices.set(1, "NaotoSake");
-choices.set(2, "MrSolver");
-choices.set(3, "MoneyManDoug");
-choices.set(4, "BigPenny");
-choices.set(5, "Spreek");
-choices.set(6, "TerraBellus");
-choices.set(7, "Bojan");
-choices.set(8, "Danijel");
-choices.set(9, "Farmwell");
-choices.set(10, "Synthaman");
-choices.set(11, "justwanttoknowathing");
-choices.set(12, "Farmer Joe - The DeFi Oracle");
-choices.set(13, "Kaleb");
-choices.set(14, "Akin");
-choices.set(15, "Samantha");
-choices.set(16, "Michael | Framework");
-choices.set(17, "Chevis");
-choices.set(18, "Simone | Dialectic");
-choices.set(19, "larpras");
-choices.set(20, "Andy | synthetix");
-choices.set(21, "Jackson | synthetix");
-choices.set(22, "redmarglar");
-
-
-setInterval(function () {
-    console.log("Getting votes");
-    try {
-        https.get('https://hub.snapshot.page/api/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let results = JSON.parse(data);
-                    let print = false;
-                    console.log("Votes " + results);
-                    for (const result in results) {
-                        let vote = results[result];
-                        let voter = vote.address;
-                        if (votesMapNew4.has(voter)) {
-                            let choice = votesMapNew4.get(voter);
-                            if (choice != vote.msg.payload.choice) {
-                                console.log("Vote change");
-                                const exampleEmbed = new Discord.MessageEmbed();
-                                exampleEmbed.setColor("00770f");
-                                exampleEmbed.setTitle("Vote Changed");
-                                exampleEmbed.setURL("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE");
-                                exampleEmbed.addField("From",
-                                    choices.get(choice));
-                                exampleEmbed.addField("To",
-                                    choices.get(vote.msg.payload.choice));
-                                exampleEmbed.addField("Voter",
-                                    "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                                //councilChannel.send(exampleEmbed);
-                            }
-                        } else {
-                            console.log("New Vote" + vote.msg.payload.choice);
-                            console.log("New Voter" + voter);
-                            const exampleEmbed = new Discord.MessageEmbed();
-                            exampleEmbed.setColor("00770f");
-                            exampleEmbed.setTitle("New Vote");
-                            exampleEmbed.setURL("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE");
-                            exampleEmbed.addField("For",
-                                choices.get(vote.msg.payload.choice));
-                            exampleEmbed.addField("Voter",
-                                "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                            //councilChannel.send(exampleEmbed);
-                        }
-                        votesMapNew4.set(voter, vote.msg.payload.choice);
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("votesMapNew4", JSON.stringify([...votesMapNew4]), function () {
-                            });
-                        }
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-
-}, 60 * 1000 * 3);
-
 const {request, gql} = require('graphql-request');
 const queryPerformanceHistory = gql`
     {
@@ -3699,11 +3101,10 @@ const queryPerformanceHistory = gql`
 let performance = null;
 setInterval(function () {
     request('https://api.dhedge.org/graphql', queryPerformanceHistory).then((data) => {
-            console.log(data);
             performance = data.performanceHistory;
         }
     );
-}, 1000 * 60)
+}, 1000 * 60 * 5)
 
 const fundInfo = gql`
     {
@@ -3725,7 +3126,7 @@ setInterval(function () {
             fund = data.fund;
         }
     );
-}, 1000 * 300)
+}, 1000 * 60 * 5)
 
 
 function printFund() {
