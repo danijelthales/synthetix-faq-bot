@@ -1,8 +1,9 @@
-require("dotenv").config()
+require("dotenv").config();
 
 const Web3 = require('web3');
 const DataFrame = require("dataframe-js");
-const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/2a1ba27ea6ea4b9683bd48100631ca1e"))
+const infuraId = process.env.INFURA;
+const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/" + infuraId));
 const axios = require('axios');
 const synthetixAPI = require('synthetix');
 const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = require('@uniswap/sdk');
@@ -20,7 +21,7 @@ let allTimeHistoricMarketCaps = new Map();
 const w3utils = require('web3-utils');
 const fetch = require('node-fetch');
 
-const Discord = require("discord.js")
+const Discord = require("discord.js");
 const client = new Discord.Client();
 
 const clientFaqPrice = new Discord.Client();
@@ -174,19 +175,19 @@ var kucoinUsd = 3.74;
 var payday = new Date('2020-08-12 05:30');
 
 const Synth = class {
+    name;
+    price;
+    gain;
+    description = '';
+
     constructor(name, price, gain) {
         this.name = name;
         this.price = price;
         this.gain = gain;
     }
-
-    name;
-    price;
-    gain;
-    description = '';
 };
 
-var synths = new Array();
+var synths = [];
 var synthsMap = new Map();
 
 let gasSubscribersMap = new Map();
@@ -302,11 +303,11 @@ async function checkMessages() {
                     countsUsers.set(username, 1)
                 }
             }
-        })
+        });
 
         countsUsers[Symbol.iterator] = function* () {
             yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
-        }
+        };
 
         for (let [key, value] of countsUsers) {     // get data sorted
             console.log(key + ' ' + value);
@@ -374,7 +375,7 @@ client.on("ready", () => {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
-})
+});
 // client.on("guildMemberAdd", function (member) {
 //     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
 // });
@@ -726,7 +727,7 @@ setInterval(function () {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
-}, 1000*60*60*12);
+}, 1000 * 60 * 60 * 12);
 
 client.on("message", msg => {
 
@@ -737,8 +738,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                    //     msg.reply("I've called for master, he will be with you shortly.");
+                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
@@ -787,7 +788,7 @@ client.on("message", msg => {
                     args.shift();
                     const command = args.shift().trim();
                     getMintrData(msg, command, false);
-                }  else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
+                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
                     msg.reply("No longer supported. Use $ticker snx");
                 } else if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
                     const args = msg.content.slice(`!faq hedge`.length).trim().split(' ');
@@ -804,22 +805,22 @@ client.on("message", msg => {
                 } else if (msg.content.toLowerCase() == (`!debt`)) {
                     msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                 } else if (msg.content.toLowerCase() == (`!faq historical debt 1y`)) {
-                    createHistoricChart(msg,true);
+                    createHistoricChart(msg, true);
                 } else if (msg.content.toLowerCase() == (`!historical debt 1y`)) {
-                    createHistoricChart(msg,true);
+                    createHistoricChart(msg, true);
                 } else if (msg.content.toLowerCase() == (`!faq historical debt`)) {
-                    createAllTimeHistoricChart(msg,true);
+                    createAllTimeHistoricChart(msg, true);
                 } else if (msg.content.toLowerCase() == (`!historical debt`)) {
-                    createAllTimeHistoricChart(msg,true);
-                }else if (msg.content.toLowerCase() == (`!faq historical debt only 1y`)) {
-                    createHistoricChart(msg,false);
+                    createAllTimeHistoricChart(msg, true);
+                } else if (msg.content.toLowerCase() == (`!faq historical debt only 1y`)) {
+                    createHistoricChart(msg, false);
                 } else if (msg.content.toLowerCase() == (`!historical debt only 1y`)) {
-                    createHistoricChart(msg,false);
+                    createHistoricChart(msg, false);
                 } else if (msg.content.toLowerCase() == (`!faq historical debt only`)) {
-                    createAllTimeHistoricChart(msg,false);
+                    createAllTimeHistoricChart(msg, false);
                 } else if (msg.content.toLowerCase() == (`!historical debt only`)) {
-                    createAllTimeHistoricChart(msg,false);
-                }else if (msg.content.toLowerCase().startsWith(`!bug`)) {
+                    createAllTimeHistoricChart(msg, false);
+                } else if (msg.content.toLowerCase().startsWith(`!bug`)) {
                     let bugDTO = getBugDTO(msg);
                     var port = process.env.PORT || 3000;
                     axios.post('http://localhost:' + port + '/bug', {
@@ -832,7 +833,7 @@ client.on("message", msg => {
                                     name: 'Bug',
                                     value: "Your bug was stored with id " + bugDTO.id + ". A spartan will follow up."
                                 }
-                            ).setColor("#d32222")
+                            ).setColor("#d32222");
                         msg.channel.send(messageEmbed);
                     })
                         .catch(error => {
@@ -862,13 +863,13 @@ client.on("message", msg => {
                     } else if (msg.content.toLowerCase() == (`debt`)) {
                         msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
                     } else if (msg.content.toLowerCase() == (`historical debt 1y`)) {
-                        createHistoricChart(msg,true);
+                        createHistoricChart(msg, true);
                     } else if (msg.content.toLowerCase() == (`historical debt`)) {
-                        createAllTimeHistoricChart(msg,true);
+                        createAllTimeHistoricChart(msg, true);
                     } else if (msg.content.toLowerCase() == (`historical debt only 1y`)) {
-                        createHistoricChart(msg,false);
+                        createHistoricChart(msg, false);
                     } else if (msg.content.toLowerCase() == (`historical debt only`)) {
-                        createAllTimeHistoricChart(msg,false);
+                        createAllTimeHistoricChart(msg, false);
                     } else {
                         let found = checkAliasMatching(true);
                         // if alias is found, just reply to it, otherwise continue
@@ -1007,7 +1008,7 @@ client.on("message", msg => {
                                     }
                                     doCalculateSusd(command, msg, true);
                                 }
-                            }  else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
+                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
                                 msg.reply("No longer supported. Use $ticker snx")
                             } else {
                                 if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -1038,7 +1039,7 @@ client.on("message", msg => {
                     aliasQuestion.push(alias.alias);
                     questionMap.set(alias.number, aliasQuestion);
                 } else {
-                    let aliasQuestion = new Array();
+                    let aliasQuestion = [];
                     aliasQuestion.push(alias.alias);
                     questionMap.set(alias.number, aliasQuestion);
                 }
@@ -1056,7 +1057,7 @@ client.on("message", msg => {
                 let questionsString = "";
                 questions.forEach(function (q) {
                     questionsString += (isDM ? "" : "!faq ") + q + "\n";
-                })
+                });
                 let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
                 let answer = JSON.parse(rawdata);
                 exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
@@ -1184,7 +1185,7 @@ client.on("message", msg => {
                     });
                     files.forEach(function (file) {
                         let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                        exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false)
+                        exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false);
                         counter++;
                         if (counter == 20) {
                             msg.reply(exampleEmbed);
@@ -1224,14 +1225,14 @@ client.on("message", msg => {
                 .setTitle('Questions found for ***' + searchWord + '***:');
 
             const Match = class {
+                matchedCount = 0;
+                title;
+                value;
+
                 constructor(title, value) {
                     this.title = title;
                     this.value = value;
                 }
-
-                matchedCount = 0;
-                title;
-                value;
             };
 
             const fullMatches = [];
@@ -1304,14 +1305,14 @@ client.on("message", msg => {
                 .setTitle('Looks like you asked a custom question. This is the best I could find for your query:');
 
             const Match = class {
+                matchedCount = 0;
+                title;
+                value;
+
                 constructor(title, value) {
                     this.title = title;
                     this.value = value;
                 }
-
-                matchedCount = 0;
-                title;
-                value;
             };
 
             const fullMatches = [];
@@ -1387,7 +1388,7 @@ client.on("message", msg => {
         }
 
     }
-)
+);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
@@ -1990,13 +1991,13 @@ async function getSnxToolStaking() {
         var prices = await page.evaluate(() => {
             var div = document.querySelectorAll('span.text-white');
 
-            var prices = []
+            var prices = [];
             div.forEach(element => {
                 prices.push(element.textContent);
             });
 
             return prices
-        })
+        });
 
         if (!isNaN(prices[3].split(' ')[0] * 1.0)) {
             snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
@@ -2028,13 +2029,13 @@ async function getSnxToolHome() {
         var prices = await page.evaluate(() => {
             var div = document.querySelectorAll('span.text-2xl');
 
-            var prices = []
+            var prices = [];
             div.forEach(element => {
                 prices.push(element.textContent);
             });
 
             return prices
-        })
+        });
 
         periodVolume = prices[3];
         browser.close()
@@ -2061,7 +2062,7 @@ async function getDashboard() {
         var prices = await page.evaluate(() => {
 
 
-            var prices = []
+            var prices = [];
 
             var div = document.querySelectorAll('.cpEXSW');
             div.forEach(element => {
@@ -2074,7 +2075,7 @@ async function getDashboard() {
             });
 
             return prices
-        })
+        });
 
         const statsBox = await page.$$eval(
             "div[class*='StatsBox__StatsBoxNumber']",
@@ -2096,7 +2097,7 @@ function delay(time) {
     });
 }
 
-let sethPeg = 1
+let sethPeg = 1;
 setInterval(function () {
     try {
         https.get('https://api.1inch.exchange/v3.0/1/quote?fromTokenAddress=0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb&toTokenAddress=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&amount=10000000000000000000', (resp) => {
@@ -2455,13 +2456,13 @@ function getNumberLabel(labelValue) {
 
 setInterval(async function () {
     try {
-        yaxis = new Token(ChainId.MAINNET, '0xb1dC9124c395c1e97773ab855d66E879f053A289', 18)
+        yaxis = new Token(ChainId.MAINNET, '0xb1dC9124c395c1e97773ab855d66E879f053A289', 18);
 
         // note that you may want/need to handle this async code differently,
         // for example if top-level await is not an option
-        pair = await Fetcher.fetchPairData(yaxis, WETH[yaxis.chainId])
+        pair = await Fetcher.fetchPairData(yaxis, WETH[yaxis.chainId]);
 
-        var route = new Route([pair], WETH[yaxis.chainId])
+        var route = new Route([pair], WETH[yaxis.chainId]);
 
         yaxisPrice = route.midPrice.invert().toSignificant(6) * ethPrice;
         yaxisPrice = Math.round(((yaxisPrice * 1.0) + Number.EPSILON) * 100) / 100;
@@ -2498,59 +2499,6 @@ setInterval(function () {
         console.log(e);
     }
 }, 60 * 1000);
-
-
-setInterval(function () {
-    try {
-        https.get('https://yaxis.io/api/circulatingSupply', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-                    yaxisCircSupply = result;
-                    yaxisCircSupply = Math.round(((yaxisCircSupply * 1.0) + Number.EPSILON) * 100) / 100;
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-
-        https.get('https://yaxis.io/api/totalSupply', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-                    yaxisTotalSuuply = result;
-                    yaxisTotalSuuply = Math.round(((yaxisTotalSuuply * 1.0) + Number.EPSILON) * 100) / 100;
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 1000 * 60 * 5);
 
 function doCalculate(command, msg, gasPriceParam, fromDM) {
     try {
@@ -2779,19 +2727,19 @@ var ignoreAddresses = new Set();
 
 class WalletInfo {
 
-    constructor(cRatio, snxCount, address, escrowedSnxCount) {
-        this.cRatio = cRatio;
-        this.snxCount = snxCount;
-        this.address = address;
-        this.escrowedSnxCount = escrowedSnxCount;
-    }
-
     cRatio;
     snxCount;
     escrowedSnxCount;
     address;
     flaggedTime;
     etaToLiquidation;
+
+    constructor(cRatio, snxCount, address, escrowedSnxCount) {
+        this.cRatio = cRatio;
+        this.snxCount = snxCount;
+        this.address = address;
+        this.escrowedSnxCount = escrowedSnxCount;
+    }
 }
 
 var wallets = [];
@@ -2948,7 +2896,7 @@ setInterval(function () {
 async function getl2Exchanges() {
     try {
         const ts = Math.floor(Date.now() / 1e3);
-        const oneDayAgo = ts - 60*60;
+        const oneDayAgo = ts - 60 * 60;
         const body = JSON.stringify({
             query: `{
       synthExchanges(
@@ -2981,8 +2929,8 @@ async function getl2Exchanges() {
         const {synthExchanges} = json.data;
         synthExchanges.forEach(r => {
             try {
-                console.log("Exchanged " + r.fromAmount + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4) + " to " + r.toAmount  + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
-                console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD );
+                console.log("Exchanged " + r.fromAmount + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4) + " to " + r.toAmount + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                 const exampleEmbed = new Discord.MessageEmbed();
                 exampleEmbed.setColor("ff0000");
                 exampleEmbed.setTitle("New trade");
@@ -2990,11 +2938,11 @@ async function getl2Exchanges() {
                 exampleEmbed.addField("Wallet",
                     '[' + r.toAddress + '](https://optimistic.etherscan.io/address/' + r.toAddress + ')');
                 exampleEmbed.addField("From",
-                    numberWithCommas((r.fromAmount*1.0 ).toFixed(2)) + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4));
+                    numberWithCommas((r.fromAmount * 1.0).toFixed(2)) + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4));
                 exampleEmbed.addField("To",
-                    numberWithCommas((r.toAmount*1.0 ).toFixed(2)) + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                    numberWithCommas((r.toAmount * 1.0).toFixed(2)) + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
                 exampleEmbed.addField("Value",
-                    numberWithCommas((r.fromAmountInUSD*1.0).toFixed(2)) + " sUSD");
+                    numberWithCommas((r.fromAmountInUSD * 1.0).toFixed(2)) + " sUSD");
                 l2trades.send(exampleEmbed);
             } catch (e) {
                 console.log(e);
@@ -3003,11 +2951,8 @@ async function getl2Exchanges() {
     } catch (e) {
         console.log(e);
     }
-};
-
-setInterval(getl2Exchanges, 1000 * 60*60);
-
-
+}
+setInterval(getl2Exchanges, 1000 * 60 * 60);
 
 
 setInterval(function () {
@@ -3085,7 +3030,7 @@ setInterval(function () {
         }
     });
 
-}, 60 * 1000)
+}, 60 * 1000);
 
 
 const {request, gql} = require('graphql-request');
@@ -3096,7 +3041,7 @@ const queryPerformanceHistory = gql`
             week
         }
     }
-`
+`;
 
 let performance = null;
 setInterval(function () {
@@ -3104,7 +3049,7 @@ setInterval(function () {
             performance = data.performanceHistory;
         }
     );
-}, 1000 * 60 * 5)
+}, 1000 * 60 * 5);
 
 const fundInfo = gql`
     {
@@ -3117,7 +3062,7 @@ const fundInfo = gql`
             totalValue
         }
     }
-`
+`;
 
 
 let fund = null;
@@ -3126,7 +3071,7 @@ setInterval(function () {
             fund = data.fund;
         }
     );
-}, 1000 * 60 * 5)
+}, 1000 * 60 * 5);
 
 
 function printFund() {
@@ -3146,7 +3091,7 @@ function printFund() {
             composition += " Value: $" + (c.amount / 1e18 * c.rate / 1e18).toFixed(2);
             composition += "\n";
         }
-    })
+    });
     exampleEmbed.addField("Composition",
         composition);
     exampleEmbed.addField("Total value",
@@ -3245,7 +3190,7 @@ app.post("/pdao", async (req, res) => {
             console.log(e);
         }
     }
-)
+);
 
 app.post("/verify", async (req, res) => {
         try {
@@ -3254,7 +3199,7 @@ app.post("/verify", async (req, res) => {
             let msg = req.body.value.msg;
             let username = req.body.value.username;
 
-            const sigUtil = require('eth-sig-util')
+            const sigUtil = require('eth-sig-util');
 
             const recovered = sigUtil.recoverPersonalSignature({
                 data: msg,
@@ -3304,7 +3249,7 @@ app.post("/verify", async (req, res) => {
             console.log(e);
         }
     }
-)
+);
 
 
 var knownAddress = new Set();
@@ -3321,122 +3266,122 @@ knownAddress.add("0xbf49b454818783d12bf4f3375ff17c59015e66cb");
 knownAddress.add("0x0120666306f4d15bb125696f322bfd8ee83423a9");
 
 const dateformat = require('dateformat');
-setInterval(function () {
-    https.get('https://hub.snapshot.page/api/snxgov.eth/proposals', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', async () => {
-            try {
-                let results = JSON.parse(data);
-                let print = false;
-                if (synthetixProposals.size > 0) {
-                    print = true;
-                }
-                var counterInc = 0;
-                let keys = [];
-                for (const result in results) {
-                    keys.push(result);
-                }
-                keys = keys.reverse();
-                for (const res in keys) {
-                    let result = keys[res];
-                    if (!synthetixProposals.has(result)) {
-                        let proposal = results[result];
-                        synthetixProposals.set(result, proposal);
-                        let start = new Date(proposal.msg.payload.start * 1000);
-                        let end = new Date(proposal.msg.payload.end * 1000);
-                        let content = proposal.msg.payload.body;
-                        let name = proposal.msg.payload.name;
-
-                        if (content.length > 1024) {
-                            content = content.substring(0, 1020) + "...";
-                        }
-
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New proposal");
-                        exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
-                        exampleEmbed.addField("Name",
-                            name);
-                        exampleEmbed.addField("Start",
-                            dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("End",
-                            dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("Description",
-                            content);
-                        if (print) {
-
-                            counterInc += 5;
-                            setTimeout(
-                                function () {
-                                    https.get('https://hub.snapshot.page/api/synthetixproposal/proposal/' + result, (resp) => {
-                                        let data = '';
-
-                                        // A chunk of data has been recieved.
-                                        resp.on('data', (chunk) => {
-                                            data += chunk;
-                                        });
-
-                                        // The whole response has been received. Print out the result.
-                                        resp.on('end', () => {
-                                            try {
-                                                let resultsV = JSON.parse(data);
-                                                let print = false;
-                                                let yes = 0;
-                                                let no = 0;
-                                                for (const resultV in resultsV) {
-                                                    let vote = resultsV[resultV];
-                                                    let voter = vote.address;
-                                                    if (knownAddress.has(voter)) {
-                                                        let voteRes = vote.msg.payload.choice;
-                                                        if (voteRes == '2') {
-                                                            no++;
-                                                        } else {
-                                                            yes++;
-                                                        }
-                                                    }
-                                                }
-                                                exampleEmbed.addField("Votes",
-                                                    "sYES: " + yes + " iNO: " + no);
-
-                                                channelGov.send(exampleEmbed);
-                                            } catch
-                                                (e) {
-                                                console.log(e);
-                                            }
-
-                                        });
-
-
-                                    })
-                                }, counterInc * 1000)
-
-
-                        }
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
-                            });
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 1000 * 60 * 5);
+// setInterval(function () {
+//     https.get('https://hub.snapshot.page/api/snxgov.eth/proposals', (resp) => {
+//         let data = '';
+//
+//         // A chunk of data has been recieved.
+//         resp.on('data', (chunk) => {
+//             data += chunk;
+//         });
+//
+//         // The whole response has been received. Print out the result.
+//         resp.on('end', async () => {
+//             try {
+//                 let results = JSON.parse(data);
+//                 let print = false;
+//                 if (synthetixProposals.size > 0) {
+//                     print = true;
+//                 }
+//                 var counterInc = 0;
+//                 let keys = [];
+//                 for (const result in results) {
+//                     keys.push(result);
+//                 }
+//                 keys = keys.reverse();
+//                 for (const res in keys) {
+//                     let result = keys[res];
+//                     if (!synthetixProposals.has(result)) {
+//                         let proposal = results[result];
+//                         synthetixProposals.set(result, proposal);
+//                         let start = new Date(proposal.msg.payload.start * 1000);
+//                         let end = new Date(proposal.msg.payload.end * 1000);
+//                         let content = proposal.msg.payload.body;
+//                         let name = proposal.msg.payload.name;
+//
+//                         if (content.length > 1024) {
+//                             content = content.substring(0, 1020) + "...";
+//                         }
+//
+//                         const exampleEmbed = new Discord.MessageEmbed();
+//                         exampleEmbed.setColor("00770f");
+//                         exampleEmbed.setTitle("New proposal");
+//                         exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
+//                         exampleEmbed.addField("Name",
+//                             name);
+//                         exampleEmbed.addField("Start",
+//                             dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("End",
+//                             dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("Description",
+//                             content);
+//                         if (print) {
+//
+//                             counterInc += 5;
+//                             setTimeout(
+//                                 function () {
+//                                     https.get('https://hub.snapshot.page/api/synthetixproposal/proposal/' + result, (resp) => {
+//                                         let data = '';
+//
+//                                         // A chunk of data has been recieved.
+//                                         resp.on('data', (chunk) => {
+//                                             data += chunk;
+//                                         });
+//
+//                                         // The whole response has been received. Print out the result.
+//                                         resp.on('end', () => {
+//                                             try {
+//                                                 let resultsV = JSON.parse(data);
+//                                                 let print = false;
+//                                                 let yes = 0;
+//                                                 let no = 0;
+//                                                 for (const resultV in resultsV) {
+//                                                     let vote = resultsV[resultV];
+//                                                     let voter = vote.address;
+//                                                     if (knownAddress.has(voter)) {
+//                                                         let voteRes = vote.msg.payload.choice;
+//                                                         if (voteRes == '2') {
+//                                                             no++;
+//                                                         } else {
+//                                                             yes++;
+//                                                         }
+//                                                     }
+//                                                 }
+//                                                 exampleEmbed.addField("Votes",
+//                                                     "sYES: " + yes + " iNO: " + no);
+//
+//                                                 channelGov.send(exampleEmbed);
+//                                             } catch
+//                                                 (e) {
+//                                                 console.log(e);
+//                                             }
+//
+//                                         });
+//
+//
+//                                     })
+//                                 }, counterInc * 1000)
+//
+//
+//                         }
+//
+//                         if (process.env.REDIS_URL) {
+//                             redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
+//                             });
+//                         }
+//                     }
+//                 }
+//             } catch (e) {
+//                 console.log(e);
+//             }
+//
+//         });
+//
+//     }).on("error", (err) => {
+//         console.log("Error: " + err.message);
+//     });
+//
+// }, 1000 * 60 * 5);
 
 const clientIllGov = new Discord.Client();
 clientIllGov.login(process.env.BOT_TOKEN_ILLUVIUM_GOVERNANCE);
@@ -3447,78 +3392,78 @@ clientIllGov.on("ready", () => {
     clientIllGov.channels.fetch('809220730608680990').then(c => {
         channelIllProposals = c;
     });
-})
+});
 
-setInterval(function () {
-    https.get('https://hub.snapshot.page/api/ilvgov.eth/proposals', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', async () => {
-            try {
-                let results = JSON.parse(data);
-                let print = false;
-                if (illuviumProposals.size > 0) {
-                    print = true;
-                }
-                var counterInc = 0;
-                let keys = [];
-                for (const result in results) {
-                    keys.push(result);
-                }
-                keys = keys.reverse();
-                for (const res in keys) {
-                    let result = keys[res];
-                    if (!illuviumProposals.has(result)) {
-                        let proposal = results[result];
-                        illuviumProposals.set(result, proposal);
-                        let start = new Date(proposal.msg.payload.start * 1000);
-                        let end = new Date(proposal.msg.payload.end * 1000);
-                        let content = proposal.msg.payload.body;
-                        let name = proposal.msg.payload.name;
-
-                        if (content.length > 1024) {
-                            content = content.substring(0, 1020) + "...";
-                        }
-
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New proposal");
-                        exampleEmbed.setURL("https://gov.illuvium.io/#/ilvgov.eth/proposal/" + result);
-                        exampleEmbed.addField("Name",
-                            name);
-                        exampleEmbed.addField("Start",
-                            dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("End",
-                            dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("Description",
-                            content);
-                        if (print) {
-                            channelIllProposals.send(exampleEmbed);
-                        }
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("illuviumProposals", JSON.stringify([...illuviumProposals]), function () {
-                            });
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 1000 * 60 * 5);
+// setInterval(function () {
+//     https.get('https://hub.snapshot.page/api/ilvgov.eth/proposals', (resp) => {
+//         let data = '';
+//
+//         // A chunk of data has been recieved.
+//         resp.on('data', (chunk) => {
+//             data += chunk;
+//         });
+//
+//         // The whole response has been received. Print out the result.
+//         resp.on('end', async () => {
+//             try {
+//                 let results = JSON.parse(data);
+//                 let print = false;
+//                 if (illuviumProposals.size > 0) {
+//                     print = true;
+//                 }
+//                 var counterInc = 0;
+//                 let keys = [];
+//                 for (const result in results) {
+//                     keys.push(result);
+//                 }
+//                 keys = keys.reverse();
+//                 for (const res in keys) {
+//                     let result = keys[res];
+//                     if (!illuviumProposals.has(result)) {
+//                         let proposal = results[result];
+//                         illuviumProposals.set(result, proposal);
+//                         let start = new Date(proposal.msg.payload.start * 1000);
+//                         let end = new Date(proposal.msg.payload.end * 1000);
+//                         let content = proposal.msg.payload.body;
+//                         let name = proposal.msg.payload.name;
+//
+//                         if (content.length > 1024) {
+//                             content = content.substring(0, 1020) + "...";
+//                         }
+//
+//                         const exampleEmbed = new Discord.MessageEmbed();
+//                         exampleEmbed.setColor("00770f");
+//                         exampleEmbed.setTitle("New proposal");
+//                         exampleEmbed.setURL("https://gov.illuvium.io/#/ilvgov.eth/proposal/" + result);
+//                         exampleEmbed.addField("Name",
+//                             name);
+//                         exampleEmbed.addField("Start",
+//                             dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("End",
+//                             dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("Description",
+//                             content);
+//                         if (print) {
+//                             channelIllProposals.send(exampleEmbed);
+//                         }
+//
+//                         if (process.env.REDIS_URL) {
+//                             redisClient.set("illuviumProposals", JSON.stringify([...illuviumProposals]), function () {
+//                             });
+//                         }
+//                     }
+//                 }
+//             } catch (e) {
+//                 console.log(e);
+//             }
+//
+//         });
+//
+//     }).on("error", (err) => {
+//         console.log("Error: " + err.message);
+//     });
+//
+// }, 1000 * 60 * 5);
 
 
 function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
@@ -3526,7 +3471,7 @@ function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
         var hedgeMessage = new Discord.MessageEmbed()
             .setTitle("Hedge command")
             .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
-            .setColor("#0060ff")
+            .setColor("#0060ff");
         let counter = 1;
         for (const dfElement of df.toArray()) {
             var percentMain = (debtValue / 100) * dfElement[5];
@@ -3536,7 +3481,7 @@ function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
             } else {
                 unitsMain = unitsMain.toFixed(5);
             }
-            hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units')
+            hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units');
             counter++;
         }
         var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
@@ -3546,10 +3491,10 @@ function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
         var debtMessage = new Discord.MessageEmbed()
             .setTitle("Debt command")
             .setDescription("Debt pool:")
-            .setColor("#0060ff")
+            .setColor("#0060ff");
         let counter = 1;
         for (const dfElement of df.toArray()) {
-            debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b")
+            debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b");
             counter++;
         }
         debtMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', "\u200b");
@@ -3575,19 +3520,19 @@ const calculateDebt = async () => {
         EtherWrapper.address + '&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ'),
         getMultiCollateralIssuance('sETH'), getMultiCollateralIssuance('sBTC'), getMultiCollateralIssuance('sUSD'), getSynthMarketCap(SynthUtil)])
         .then(function (results) {
-            const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24
-            const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24
-            const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24
+            const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24;
+            const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24;
+            const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24;
             var newDf = adjustDataFrame(results[4]);
             var contractABI = "";
             contractABI = JSON.parse(results[0].data.result);
             var etherWrapper = new web3.eth.Contract(contractABI, EtherWrapper.address);
             Promise.all([getWrapprETH(etherWrapper), getWrapprUSD(etherWrapper)])
                 .then(function (results) {
-                    var wrapprETH = results[0] / 1e24
-                    console.log("Wrapper ETH is " + wrapprETH)
-                    var wrapprUSD = results[1] / 1e24
-                    console.log("Wrapper USD is " + wrapprUSD)
+                    var wrapprETH = results[0] / 1e24;
+                    console.log("Wrapper ETH is " + wrapprETH);
+                    var wrapprUSD = results[1] / 1e24;
+                    console.log("Wrapper USD is " + wrapprUSD);
                     newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sETH' ? row.get('supply') - multicolateralResultsETH - wrapprETH : row.get('supply')));
                     newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sBTC' ? row.get('supply') - multicolateralResultsBTC : row.get('supply')));
                     newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sUSD' ? row.get('supply') - multicolateralResultsUSD - wrapprUSD : row.get('supply')));
@@ -3609,16 +3554,16 @@ const calculateDebt = async () => {
                     newDf = newDf.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
                     newDf = newDf.rename('supply', 'units');
                     newDf = newDf.map(row => row.set('cap', parseFloat(row.get('cap'))));
-                    newDf = newDf.sortBy(['debt_pool_percentage'], true)
+                    newDf = newDf.sortBy(['debt_pool_percentage'], true);
                     df = newDf.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
                 });
         });
-}
+};
 
 
 const getAPI = function (url) {
     return axios.get(url);
-}
+};
 
 const sum = function (array) {
     var total = 0;
@@ -3626,16 +3571,26 @@ const sum = function (array) {
         total += array[i];
     }
     return total;
-}
+};
 
 
 const getWrapprETH = function (contractInstance) {
-    return contractInstance.methods.sETHIssued().call();
-}
+    try {
+        console.log("Infura call made");
+        return contractInstance.methods.sETHIssued().call();
+    } catch (e) {
+        console.log("Error occured", e);
+    }
+};
 
 const getWrapprUSD = function (contractInstance) {
-    return contractInstance.methods.sUSDIssued().call();
-}
+    try {
+        console.log("Infura call made");
+        return contractInstance.methods.sUSDIssued().call();
+    } catch (e) {
+        console.log("Error occured", e);
+    }
+};
 
 const getMultiCollateralIssuance = function (currency) {
 
@@ -3654,14 +3609,14 @@ const getMultiCollateralIssuance = function (currency) {
 
     return CollateralManagerState.totalIssuedSynths(
         synthetixAPI.toBytes32(currency));
-}
+};
 
 
 const adjustDataFrame = function (dataFrame) {
 
     let initDF = new DataFrame.DataFrame(dataFrame).transpose();
-    let adjustedDF = new DataFrame.DataFrame(initDF.toArray(), ["synthHex", "supply", "cap"])
-    const replacer = new RegExp('\x00', 'g')
+    let adjustedDF = new DataFrame.DataFrame(initDF.toArray(), ["synthHex", "supply", "cap"]);
+    const replacer = new RegExp('\x00', 'g');
     adjustedDF = adjustedDF.map(row => row.set('synth', convertHexToStr(row.get('synthHex')).replace(replacer, "")));
     adjustedDF = adjustedDF.filter(row => row.get('supply') > 0);
     adjustedDF = adjustedDF.map(row => row.set('price', row.get('cap') / row.get('supply')));
@@ -3670,12 +3625,12 @@ const adjustDataFrame = function (dataFrame) {
 
     return adjustedDF;
 
-}
+};
 
 
 const getSynthMarketCap = function (contractInstance) {
     return contractInstance.synthsTotalSupplies();
-}
+};
 
 const convertHexToStr = function (str1) {
     var hex = str1.toString();
@@ -3766,15 +3721,15 @@ function createHistoricChart(msg, isMarketCapsIncluded) {
     }
 
     let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
+        const first = a.key;
+        const second = b.key;
         return first > second ? 1 : (first < second ? -1 : 0)
     }).reverse());
 
 
     let sortedHistoricDebt = new Map([...historicDebts.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
+        const first = a.key;
+        const second = b.key;
         return first > second ? 1 : (first < second ? -1 : 0)
     }).reverse());
 
@@ -3783,78 +3738,77 @@ function createHistoricChart(msg, isMarketCapsIncluded) {
     }
 
     let times = Array.from(sortedMarketCaps.keys());
-    times = times.map(mapToDateString)
+    times = times.map(mapToDateString);
     let chart = new QuickChart();
-    if(isMarketCapsIncluded){
-    chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt (LHS)',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }, {
-                    axis: 'y',
-                    label: 'SNX Market Cap Change (RHS)',
-                    data: Array.from(sortedMarketCaps.values()),
-                    fill: false,
-                    borderColor: 'blue'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+    if (isMarketCapsIncluded) {
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt (LHS)',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }, {
+                        axis: 'y',
+                        label: 'SNX Market Cap Change (RHS)',
+                        data: Array.from(sortedMarketCaps.values()),
+                        fill: false,
+                        borderColor: 'blue'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
+        );
         const chartEmbed = {
-        title: 'Last year debt',
-        description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
-    msg.channel.send({embed: chartEmbed});
-} else {
-chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+            title: 'Last year debt',
+            description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
+        msg.channel.send({embed: chartEmbed});
+    } else {
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
-    const chartEmbed = {
-        title: 'Last year debt',
-        description: 'value of 1 sUSD minted',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
-    msg.channel.send({embed: chartEmbed});
+        );
+        const chartEmbed = {
+            title: 'Last year debt',
+            description: 'value of 1 sUSD minted',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
+        msg.channel.send({embed: chartEmbed});
     }
-
 
 
 }
@@ -3868,12 +3822,12 @@ Date.prototype.yyyymmdd = function () {
 };
 
 
-function getBlockNumbers(date, etherWrapper,isAllTime) {
+function getBlockNumbers(date, etherWrapper, isAllTime) {
     getAPI('https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=' + Math.floor(date.getTime() / 1000) + '&closest=before&apikey=47XNM5QC6HAJW2UV7WK24IN45N7ED5BKVC')
         .then(function (result) {
             console.log("block is  " + result.data.result + ' for the date ' + date);
             if (!isNaN(result.data.result)) {
-                getHistoricalDebt(etherWrapper, result.data.result, date,isAllTime);
+                getHistoricalDebt(etherWrapper, result.data.result, date, isAllTime);
             }
         }).catch(function (error) {
         console.log(error);
@@ -3928,7 +3882,7 @@ const calculateHistoricDebt = async () => {
             getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, false);
         }
     }
-}
+};
 
 function monthDiff(d1, d2) {
     var months;
@@ -3978,9 +3932,10 @@ const calculateAllTimeHistoricDebt = async () => {
             getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, true);
         }
     }
-}
+};
 
 const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTime) {
+    console.log("Infura call made");
     contractInstance.methods.debtBalanceOf('0xdeb7adCa884fc71def5BE34D3Fa5C2BC0203a525', '0x7355534400000000000000000000000000000000000000000000000000000000')
         .call(blockNumber).then(function (result) {
         let historicDebt = Math.round(((result / 1e18) + Number.EPSILON) * 10) / 10;
@@ -3991,9 +3946,9 @@ const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTi
             historicDebts.set(date, historicDebt);
         }
     }).catch(function (error) {
-        console.log(error);
+        console.log("error in get Historical debt: " + error);
     });
-}
+};
 
 
 function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
@@ -4007,13 +3962,13 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
         }
     }
     let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
+        const first = a.key;
+        const second = b.key;
         return first > second ? 1 : (first < second ? -1 : 0)
     }).reverse());
     let sortedHistoricDebt = new Map([...allTimeHistoricDebts.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
+        const first = a.key;
+        const second = b.key;
         return first > second ? 1 : (first < second ? -1 : 0)
     }).reverse());
 
@@ -4022,79 +3977,79 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
     }
 
     let times = Array.from(sortedMarketCaps.keys());
-    times = times.map(mapToDateString)
+    times = times.map(mapToDateString);
     let chart = new QuickChart();
-    if(isMarketCapsIncluded){
-    chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt (LHS)',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }, {
-                    axis: 'y',
-                    label: 'SNX Market Cap Change (RHS)',
-                    data: Array.from(sortedMarketCaps.values()),
-                    fill: false,
-                    borderColor: 'blue'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+    if (isMarketCapsIncluded) {
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt (LHS)',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }, {
+                        axis: 'y',
+                        label: 'SNX Market Cap Change (RHS)',
+                        data: Array.from(sortedMarketCaps.values()),
+                        fill: false,
+                        borderColor: 'blue'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
+        );
         const chartEmbed = {
-        title: 'All Time - Historical debt',
-        description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
+            title: 'All Time - Historical debt',
+            description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
 
-    msg.channel.send({embed: chartEmbed});
+        msg.channel.send({embed: chartEmbed});
 
     } else {
-    chart.setConfig({
-            type: 'line',
-            data: {
-                labels: times,
-                datasets: [{
-                    axis: 'y',
-                    label: 'debt',
-                    data: Array.from(sortedHistoricDebt.values()),
-                    fill: false,
-                    borderColor: 'red'
-                }]
-            }, options: {
-                pointStyle: 'star',
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: false
+        chart.setConfig({
+                type: 'line',
+                data: {
+                    labels: times,
+                    datasets: [{
+                        axis: 'y',
+                        label: 'debt',
+                        data: Array.from(sortedHistoricDebt.values()),
+                        fill: false,
+                        borderColor: 'red'
+                    }]
+                }, options: {
+                    pointStyle: 'star',
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: false
+                        }
                     }
                 }
             }
-        }
-    );
-     const chartEmbed = {
-        title: 'All Time - Historical debt',
-        description: 'value of 1 sUSD minted',
-        image: {
-            url: chart.getUrl(),
-        },
-    };
+        );
+        const chartEmbed = {
+            title: 'All Time - Historical debt',
+            description: 'value of 1 sUSD minted',
+            image: {
+                url: chart.getUrl(),
+            },
+        };
 
-    msg.channel.send({embed: chartEmbed});
+        msg.channel.send({embed: chartEmbed});
     }
 
 

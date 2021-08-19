@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,50 +21,39 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-20298">
-              <caret line="1009" column="30" selection-start-line="1009" selection-start-column="30" selection-end-line="1009" selection-end-column="30" />
+            <state relative-caret-position="185">
+              <caret line="3400" column="48" lean-forward="true" selection-start-line="3400" selection-start-column="48" selection-end-line="3400" selection-end-column="48" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/web3-utils/types/index.d.ts">
+        <entry file="file://$PROJECT_DIR$/node_modules/web3-core-requestmanager/lib/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="53">
+              <caret line="283" column="8" selection-start-line="283" selection-start-column="8" selection-end-line="283" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
+        <entry file="file://$PROJECT_DIR$/node_modules/xhr2-cookies/dist/xml-http-request.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="18" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="18" />
+            <state relative-caret-position="159">
+              <caret line="288" column="60" selection-start-line="288" selection-start-column="60" selection-end-line="288" selection-end-column="60" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="36" />
-            </state>
-          </provider>
+        <entry file="mock://_http_agent.js">
+          <provider selected="true" editor-type-id="vmFileEditor" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sethpeg</find>
-      <find>sethpeg =</find>
-      <find>6000</find>
-      <find>usdcpeg =</find>
-      <find>usdtpeg =</find>
       <find>u200b</find>
       <find>hedge</find>
       <find>doInnerQuestion</find>
@@ -91,6 +79,11 @@
       <find>l2trades</find>
       <find>0, 5</find>
       <find>getMintrData</find>
+      <find>infura</find>
+      <find>block is</find>
+      <find>web3</find>
+      <find>new proposal</find>
+      <find>hub.snaps</find>
     </findStrings>
     <replaceStrings>
       <replace>https://synthetix.community/docs/is-snx-liquid</replace>
@@ -175,17 +168,17 @@
         <option value="$PROJECT_DIR$/answers/101.json" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/new.js" />
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/answers/103.json" />
         <option value="$PROJECT_DIR$/questions/103.txt" />
         <option value="$PROJECT_DIR$/categories/aliases.json" />
         <option value="$PROJECT_DIR$/categories/categories.json" />
         <option value="$PROJECT_DIR$/test.js" />
+        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1912" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -207,16 +200,16 @@
           <select />
         </subPane>
       </pane>
-      <pane id="CatdeaLogs" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="C:/thales/synthetix" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../synthetix-monitoring" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -246,7 +239,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.test.js">
+  <component name="RunManager" selected="Node.js.index.js">
     <configuration name="index2.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="index2.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
@@ -410,11 +403,12 @@
       <workItem from="1626172852220" duration="3701000" />
       <workItem from="1626292666546" duration="2064000" />
       <workItem from="1627899683109" duration="7841000" />
+      <workItem from="1629374789950" duration="2406000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="560240000" />
+    <option name="totallyTimeSpent" value="562646000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -426,24 +420,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5040783" side_tool="true" weight="0.30197755" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.16044776" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.16204691" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32827735" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="1" sideWeight="0.4989339" visible="true" weight="0.27952328" />
+      <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.4989339" weight="0.27952328" />
       <window_info anchor="bottom" id="Database Changes" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5010661" side_tool="true" weight="0.24918744" />
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32827735" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.47020584" />
+      <window_info active="true" anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.45178765" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.32936078" />
@@ -484,17 +479,6 @@
         <option value="1" />
       </list>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/test.js</url>
-          <line>53</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
@@ -567,28 +551,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index4.js" />
-    <entry file="file://$PROJECT_DIR$/node_modules/discord.js/typings/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16116">
-          <caret line="953" column="11" selection-start-line="953" selection-start-column="11" selection-end-line="953" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/69.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/4.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/answers/87.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -791,13 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="28" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/express/lib/response.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3842">
@@ -812,13 +767,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="18" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/web3-utils/types/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -828,17 +776,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="18" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="29" column="39" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="36" />
+        <state relative-caret-position="901">
+          <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/web3-providers-http/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="97" column="12" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/discord.js/src/client/Client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="214" column="53" selection-start-line="214" selection-start-column="53" selection-end-line="214" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/xhr2-cookies/dist/xml-http-request.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="288" column="60" selection-start-line="288" selection-start-column="60" selection-end-line="288" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/web3-core-requestmanager/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="53">
+          <caret line="283" column="8" selection-start-line="283" selection-start-column="8" selection-end-line="283" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-20298">
-          <caret line="1009" column="30" selection-start-line="1009" selection-start-column="30" selection-end-line="1009" selection-end-column="30" />
+        <state relative-caret-position="185">
+          <caret line="3400" column="48" lean-forward="true" selection-start-line="3400" selection-start-column="48" selection-end-line="3400" selection-end-column="48" />
         </state>
       </provider>
     </entry>
