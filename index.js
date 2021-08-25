@@ -1,8 +1,9 @@
-require("dotenv").config()
+require("dotenv").config();
 
 const Web3 = require('web3');
 const DataFrame = require("dataframe-js");
-const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/2a1ba27ea6ea4b9683bd48100631ca1e"))
+const infuraId = process.env.INFURA;
+const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/" + infuraId));
 const axios = require('axios');
 const synthetixAPI = require('synthetix');
 const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = require('@uniswap/sdk');
@@ -20,7 +21,7 @@ let allTimeHistoricMarketCaps = new Map();
 const w3utils = require('web3-utils');
 const fetch = require('node-fetch');
 
-const Discord = require("discord.js")
+const Discord = require("discord.js");
 const client = new Discord.Client();
 
 const clientFaqPrice = new Discord.Client();
@@ -174,19 +175,19 @@ var kucoinUsd = 3.74;
 var payday = new Date('2020-08-12 05:30');
 
 const Synth = class {
+    name;
+    price;
+    gain;
+    description = '';
+
     constructor(name, price, gain) {
         this.name = name;
         this.price = price;
         this.gain = gain;
     }
-
-    name;
-    price;
-    gain;
-    description = '';
 };
 
-var synths = new Array();
+var synths = [];
 var synthsMap = new Map();
 
 let gasSubscribersMap = new Map();
@@ -303,11 +304,11 @@ async function checkMessages() {
                     countsUsers.set(username, 1)
                 }
             }
-        })
+        });
 
         countsUsers[Symbol.iterator] = function* () {
             yield* [...this.entries()].sort((a, b) => a[1] - b[1]);
-        }
+        };
 
         for (let [key, value] of countsUsers) {     // get data sorted
             console.log(key + ' ' + value);
@@ -378,7 +379,7 @@ client.on("ready", () => {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
-})
+});
 // client.on("guildMemberAdd", function (member) {
 //     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
 // });
@@ -730,7 +731,7 @@ setInterval(function () {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
-}, 4.32e+7);
+}, 1000 * 60 * 60 * 12);
 
 client.on("message", msg => {
 
@@ -791,13 +792,6 @@ client.on("message", msg => {
                     args.shift();
                     const command = args.shift().trim();
                     getMintrData(msg, command, false);
-                } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq synth ")) {
-                    const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("!faq synth".length).split(' ');
-                    args.shift();
-                    const command = args.shift().trim();
-                    if (command) {
-                        doShowSynth(command, msg, false);
-                    }
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
                     msg.reply("No longer supported. Use $ticker snx");
                 } else if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
@@ -843,7 +837,7 @@ client.on("message", msg => {
                                     name: 'Bug',
                                     value: "Your bug was stored with id " + bugDTO.id + ". A spartan will follow up."
                                 }
-                            ).setColor("#d32222")
+                            ).setColor("#d32222");
                         msg.channel.send(messageEmbed);
                     })
                         .catch(error => {
@@ -1018,13 +1012,6 @@ client.on("message", msg => {
                                     }
                                     doCalculateSusd(command, msg, true);
                                 }
-                            } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("synth ")) {
-                                const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("synth".length).split(' ');
-                                args.shift();
-                                const command = args.shift().trim();
-                                if (command) {
-                                    doShowSynth(command, msg, true);
-                                }
                             } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
                                 msg.reply("No longer supported. Use $ticker snx")
                             } else {
@@ -1056,7 +1043,7 @@ client.on("message", msg => {
                     aliasQuestion.push(alias.alias);
                     questionMap.set(alias.number, aliasQuestion);
                 } else {
-                    let aliasQuestion = new Array();
+                    let aliasQuestion = [];
                     aliasQuestion.push(alias.alias);
                     questionMap.set(alias.number, aliasQuestion);
                 }
@@ -1074,7 +1061,7 @@ client.on("message", msg => {
                 let questionsString = "";
                 questions.forEach(function (q) {
                     questionsString += (isDM ? "" : "!faq ") + q + "\n";
-                })
+                });
                 let rawdata = fs.readFileSync('answers/' + questionNumber + '.json');
                 let answer = JSON.parse(rawdata);
                 exampleEmbed.addField(answer.title + ' ' + answer.description, questionsString);
@@ -1202,7 +1189,7 @@ client.on("message", msg => {
                     });
                     files.forEach(function (file) {
                         let rawdata = fs.readFileSync('questions/' + file, "utf8");
-                        exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false)
+                        exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false);
                         counter++;
                         if (counter == 20) {
                             msg.reply(exampleEmbed);
@@ -1242,14 +1229,14 @@ client.on("message", msg => {
                 .setTitle('Questions found for ***' + searchWord + '***:');
 
             const Match = class {
+                matchedCount = 0;
+                title;
+                value;
+
                 constructor(title, value) {
                     this.title = title;
                     this.value = value;
                 }
-
-                matchedCount = 0;
-                title;
-                value;
             };
 
             const fullMatches = [];
@@ -1322,14 +1309,14 @@ client.on("message", msg => {
                 .setTitle('Looks like you asked a custom question. This is the best I could find for your query:');
 
             const Match = class {
+                matchedCount = 0;
+                title;
+                value;
+
                 constructor(title, value) {
                     this.title = title;
                     this.value = value;
                 }
-
-                matchedCount = 0;
-                title;
-                value;
             };
 
             const fullMatches = [];
@@ -1405,7 +1392,7 @@ client.on("message", msg => {
         }
 
     }
-)
+);
 
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/ethereum', (resp) => {
@@ -2008,13 +1995,13 @@ async function getSnxToolStaking() {
         var prices = await page.evaluate(() => {
             var div = document.querySelectorAll('span.text-white');
 
-            var prices = []
+            var prices = [];
             div.forEach(element => {
                 prices.push(element.textContent);
             });
 
             return prices
-        })
+        });
 
         if (!isNaN(prices[3].split(' ')[0] * 1.0)) {
             snxRewardsPerMinterUsd = prices[3].split(' ')[0] * 1.0;
@@ -2046,13 +2033,13 @@ async function getSnxToolHome() {
         var prices = await page.evaluate(() => {
             var div = document.querySelectorAll('span.text-2xl');
 
-            var prices = []
+            var prices = [];
             div.forEach(element => {
                 prices.push(element.textContent);
             });
 
             return prices
-        })
+        });
 
         periodVolume = prices[3];
         browser.close()
@@ -2079,7 +2066,7 @@ async function getDashboard() {
         var prices = await page.evaluate(() => {
 
 
-            var prices = []
+            var prices = [];
 
             var div = document.querySelectorAll('.cpEXSW');
             div.forEach(element => {
@@ -2092,7 +2079,7 @@ async function getDashboard() {
             });
 
             return prices
-        })
+        });
 
         const statsBox = await page.$$eval(
             "div[class*='StatsBox__StatsBoxNumber']",
@@ -2108,109 +2095,13 @@ async function getDashboard() {
     }
 }
 
-async function getExchange() {
-    try {
-        const browser = await puppeteer.launch({
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ],
-        });
-        const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 926});
-        await page.goto("https://synthetix.exchange/#/synths", {waitUntil: 'networkidle2'});
-        await delay(5000);
-
-        /** @type {string[]} */
-        var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('.table-body-row span');
-
-            var prices = []
-            div.forEach(element => {
-                prices.push(element.textContent);
-            });
-
-            return prices
-        })
-
-        var i = 0;
-        synths = new Array();
-        while (i < prices.length) {
-            if (prices[2] == '-') break;
-            let synthName = prices[i].substring(0, prices[i].lastIndexOf(prices[i + 1]));
-            let gain = prices[i + 3];
-            if (gain == "-") {
-                gain = "0%";
-            }
-            let synth = new Synth(synthName, prices[i + 2], gain);
-            if (synthsMap.has(synthName.toLowerCase())) {
-                synth = synthsMap.get(synthName.toLowerCase());
-                synth.gain = gain;
-                synth.price = prices[i + 2];
-            }
-            synths.push(synth);
-            if (prices[i + 3] == "-" && synthName.toLowerCase() != "susd") {
-                i = i + 5;
-            } else {
-                i = i + 4;
-            }
-            synthsMap.set(synthName.toLowerCase(), synth);
-        }
-        synths.sort(function (a, b) {
-            return b.gain.replace(/%/g, "") * 1.0 - a.gain.replace(/%/g, "") * 1.0;
-        });
-
-        browser.close()
-    } catch (e) {
-        console.log("Error happened on getting data from synthetix exchange");
-        console.log(e);
-    }
-}
-
-async function getSynthInfo(synth) {
-    try {
-        const browser = await puppeteer.launch({
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ],
-        });
-        const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 1226});
-        await page.goto("https://synthetix.exchange/#/synths/" + synth, {waitUntil: 'networkidle2'});
-        await page.waitForSelector('div.isELEY');
-        await delay(5000);
-
-        const rect = await page.evaluate(() => {
-            const element = document.querySelector('div.isELEY');
-            const {x, y, width, height} = element.getBoundingClientRect();
-            return {left: x, top: y, width, height, id: element.id};
-        });
-
-        await page.screenshot({
-            path: 'charts/chart' + synth.toLowerCase() + '.png',
-            clip: {
-                x: rect.left - 0,
-                y: rect.top - 0,
-                width: rect.width + 0 * 2,
-                height: rect.height + 0 * 2
-            }
-        });
-        console.log("Got screenshot for: " + synth);
-        browser.close()
-    } catch (e) {
-        console.log("Error happened on getting data from synthetix exchange");
-        console.log(e);
-    }
-}
-
 function delay(time) {
     return new Promise(function (resolve) {
         setTimeout(resolve, time)
     });
 }
 
-let sethPeg = 1
+let sethPeg = 1;
 setInterval(function () {
     try {
         https.get('https://api.1inch.exchange/v3.0/1/quote?fromTokenAddress=0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb&toTokenAddress=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&amount=10000000000000000000', (resp) => {
@@ -2569,13 +2460,13 @@ function getNumberLabel(labelValue) {
 
 setInterval(async function () {
     try {
-        yaxis = new Token(ChainId.MAINNET, '0xb1dC9124c395c1e97773ab855d66E879f053A289', 18)
+        yaxis = new Token(ChainId.MAINNET, '0xb1dC9124c395c1e97773ab855d66E879f053A289', 18);
 
         // note that you may want/need to handle this async code differently,
         // for example if top-level await is not an option
-        pair = await Fetcher.fetchPairData(yaxis, WETH[yaxis.chainId])
+        pair = await Fetcher.fetchPairData(yaxis, WETH[yaxis.chainId]);
 
-        var route = new Route([pair], WETH[yaxis.chainId])
+        var route = new Route([pair], WETH[yaxis.chainId]);
 
         yaxisPrice = route.midPrice.invert().toSignificant(6) * ethPrice;
         yaxisPrice = Math.round(((yaxisPrice * 1.0) + Number.EPSILON) * 100) / 100;
@@ -2612,59 +2503,6 @@ setInterval(function () {
         console.log(e);
     }
 }, 60 * 1000);
-
-
-setInterval(function () {
-    try {
-        https.get('https://yaxis.io/api/circulatingSupply', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-                    yaxisCircSupply = result;
-                    yaxisCircSupply = Math.round(((yaxisCircSupply * 1.0) + Number.EPSILON) * 100) / 100;
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-
-        https.get('https://yaxis.io/api/totalSupply', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-                    yaxisTotalSuuply = result;
-                    yaxisTotalSuuply = Math.round(((yaxisTotalSuuply * 1.0) + Number.EPSILON) * 100) / 100;
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 1000 * 60 * 5);
 
 function doCalculate(command, msg, gasPriceParam, fromDM) {
     try {
@@ -2756,93 +2594,6 @@ function doCalculateSusd(command, msg, fromDM) {
     }
 }
 
-function doShowSynth(command, msg, fromDm) {
-    try {
-        let synthInfo = synthsMap.get(command);
-        if (synthInfo) {
-            const exampleEmbed = new Discord.MessageEmbed()
-                .setColor('#0099ff')
-                .setTitle('Synth info:');
-
-            let arrow = (synthInfo.gain.replace(/%/g, "") * 1.0 == 0) ? " - " : (synthInfo.gain.replace(/%/g, "") * 1.0 > 0) ? " ⤤ " : " ⤥ ";
-            exampleEmbed.addField(synthInfo.name,
-                "Price:**" + synthInfo.price + "**\n"
-                + "Gain:**" + synthInfo.gain + arrow + "**\n"
-            );
-
-
-            exampleEmbed.attachFiles(['charts/chart' + command.toLowerCase() + '.png'])
-                .setImage('attachment://' + 'chart' + command.toLowerCase() + '.png');
-
-            if (fromDm) {
-                msg.reply(exampleEmbed);
-            } else {
-                msg.channel.send(exampleEmbed).then(function (message) {
-                    message.react("❌");
-                }).catch(function () {
-                    //Something
-                });
-            }
-        } else {
-            msg.reply("Synth not available");
-        }
-    } catch (e) {
-        console.log("Error occurred on show synth");
-    }
-}
-
-function doShowChart(type, msg, fromDM) {
-    try {
-        const exampleEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle(type + ' SNX price chart');
-        exampleEmbed.addField("Possible options:", "realtime, 24H, 7D, 1M, 3M, 6M, YTD, 1Y, ALL");
-        exampleEmbed.attachFiles(['charts/chart' + type.toLowerCase() + '.png'])
-            .setImage('attachment://' + 'chart' + type.toLowerCase() + '.png');
-        if (fromDM) {
-            msg.reply(exampleEmbed);
-        } else {
-            msg.channel.send(exampleEmbed).then(function (message) {
-                message.react("❌");
-            }).catch(function () {
-                //Something
-            });
-        }
-    } catch (e) {
-        console.log("Exception happened when showing the chart");
-        console.log(e);
-    }
-}
-
-setTimeout(function () {
-    try {
-        var increment = 1;
-        synthsMap.forEach(function (value, key) {
-            increment += 1;
-            setTimeout(function () {
-                getSynthInfo(value.name)
-            }, 1000 * 30 * increment);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 2 * 60 * 1000);
-
-setInterval(function () {
-    try {
-        var increment = 1;
-        synthsMap.forEach(function (value, key) {
-            increment += 1;
-            setTimeout(function () {
-                getSynthInfo(value.name)
-            }, 1000 * 30 * increment);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 30 * 60 * 1000);
-
-
 setTimeout(function () {
     try {
         getSnxToolStaking();
@@ -2894,29 +2645,6 @@ setInterval(function () {
         console.log(e);
     }
 }, 60 * 13 * 1000);
-
-setTimeout(function () {
-    try {
-        getExchange();
-    } catch (e) {
-        console.log(e);
-    }
-}, 40 * 1000);
-
-setTimeout(function () {
-    try {
-        getExchange();
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 1000 * 3);
-setInterval(function () {
-    try {
-        getExchange();
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 10 * 1000);
 
 setInterval(function () {
     try {
@@ -2999,55 +2727,9 @@ async function getMintrData(msg, address, isDM) {
 
 
 const snxData = require('synthetix-data');
-
-setTimeout(function () {
-    snxData.synths.issuers({max: 10000}).then(result => {
-        getAllWallets(result);
-    });
-}, 1000 * 10
-)
-
-
-setTimeout(function () {
-    setInterval(function () {
-        wallets = [];
-        snxData.synths.issuers({max: 10000}).then(result => {
-            getAllWallets(result);
-        });
-    }, 1000 * 60 * 10
-    )
-}, 1000 * 60 * 60
-)
-
-
 var ignoreAddresses = new Set();
 
-async function getAllWallets(results) {
-    try {
-        for (let i = 0; i < results.length; i++) {
-            try {
-                if (!ignoreAddresses.has(results[i])) {
-                    getWalletInfo(results[i]);
-                }
-                await delay(500);
-            } catch (e) {
-                //console.log(e);
-            }
-        }
-    } catch (e) {
-        //console.log(e);
-    }
-}
-
-
 class WalletInfo {
-
-    constructor(cRatio, snxCount, address, escrowedSnxCount) {
-        this.cRatio = cRatio;
-        this.snxCount = snxCount;
-        this.address = address;
-        this.escrowedSnxCount = escrowedSnxCount;
-    }
 
     cRatio;
     snxCount;
@@ -3055,11 +2737,16 @@ class WalletInfo {
     address;
     flaggedTime;
     etaToLiquidation;
+
+    constructor(cRatio, snxCount, address, escrowedSnxCount) {
+        this.cRatio = cRatio;
+        this.snxCount = snxCount;
+        this.address = address;
+        this.escrowedSnxCount = escrowedSnxCount;
+    }
 }
 
 var wallets = [];
-var mapToReturn = new Map();
-var walletsToReturn = [];
 
 
 async function getWalletInfo(address) {
@@ -3097,51 +2784,6 @@ async function getWalletInfo(address) {
     }
 }
 
-
-function sortWallets() {
-    try {
-        console.log("wallets count is: " + wallets.length);
-        wallets.sort(function (a, b) {
-            return a.cRatio - b.cRatio;
-        });
-        wallets.forEach(w => {
-            mapToReturn.set(w.address, w);
-        });
-        if (wallets.length > 20) {
-            wallets = wallets.slice(0, 20);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-setInterval(function () {
-    sortWallets();
-}, 1000 * 55
-)
-
-setInterval(function () {
-    sortWalletsToReturn();
-}, 1000 * 60
-)
-
-function sortWalletsToReturn() {
-    try {
-        walletsToReturn = [];
-        for (const [key, value] of mapToReturn.entries()) {
-            walletsToReturn.push(value);
-        }
-        walletsToReturn.sort(function (a, b) {
-            return a.cRatio - b.cRatio;
-        });
-        if (walletsToReturn.length > 20) {
-            walletsToReturn = walletsToReturn.slice(0, 20);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
-
 const clientPayday = new Discord.Client();
 clientPayday.login(process.env.BOT_TOKEN_PAYDAY);
 
@@ -3170,162 +2812,7 @@ setInterval(function () {
         }
     });
 
-}, 30 * 1000);
-
-
-var flaggedAccountsMap = new Map();
-
-setInterval(function () {
-    try {
-        http.get('http://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=1&toBlock=latest&topic0=0xc77e4625de0c70adaf3bd1aabb5f22f9eae8f565367c706fc209030c13857996', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-                    var results = result.result;
-                    var flaggedWallet = new Object();
-                    var tempFlaggedAccountsMap = new Map();
-                    results.forEach(fl => {
-                        var address = fl.topics[1];
-                        address = address.substring(26, address.length);
-                        var flaggedTime = fl.timeStamp;
-                        flaggedTime = parseInt(flaggedTime, 16);
-                        var w = new WalletInfo();
-                        w.flaggedTime = new Date(flaggedTime * 1000);
-                        tempFlaggedAccountsMap.set(address, w);
-                    });
-                    for (const [key, value] of tempFlaggedAccountsMap.entries()) {
-                        if (!flaggedAccountsMap.get(key)) {
-                            flaggedAccountsMap.set(key, value);
-                        }
-                    }
-                    for (const [key, value] of flaggedAccountsMap.entries()) {
-                        if (!tempFlaggedAccountsMap.get(key)) {
-                            flaggedAccountsMap.delete(key);
-                        }
-                    }
-
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 50 * 1000);
-
-// setInterval(function () {
-//     try {
-//         http.get('http://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=1&toBlock=latest&topic0=0xaadb11d74982254be0fa96d24a08db29d68f446bc96b3092a9c9120b5c89caf2', (resp) => {
-//             let data = '';
-//
-//             // A chunk of data has been recieved.
-//             resp.on('data', (chunk) => {
-//                 data += chunk;
-//             });
-//
-//             // The whole response has been received. Print out the result.
-//             resp.on('end', () => {
-//                 try {
-//                     let result = JSON.parse(data);
-//                     var results = result.result;
-//                     var sum = 0
-//                     results.forEach(fl => {
-//                         var dat = fl.data;
-//                         dat = dat.substring(2, 66);
-//                         var dec= parseInt(dat, 16)/1000000000000000000;
-//                         sum=sum+dec;
-//                     });
-//                     console.log("Total liquidated SNX:" + sum);
-//
-//                 } catch (e) {
-//                     console.log(e);
-//                 }
-//             });
-//
-//         }).on("error", (err) => {
-//             console.log("Error: " + err.message);
-//         });
-//     } catch (e) {
-//         console.log(e);
-//     }
-// }, 10 * 1000);
-
-
-setInterval(function () {
-    try {
-        for (const [key, value] of flaggedAccountsMap.entries()) {
-            getFlaggedWalletInfo(key);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}, 65 * 1000);
-
-
-async function getFlaggedWalletInfo(address) {
-    try {
-
-        const cRatio = await synthetix.collateralisationRatio(address);
-        let numberCRatio = 100000000000000000000 / cRatio.toString();
-        if (numberCRatio == Infinity) {
-            ignoreAddresses.add(address);
-            return;
-        }
-        numberCRatio = Math.round(((numberCRatio * 1.0) + Number.EPSILON) * 100) / 100;
-        if (numberCRatio > 300) {
-            ignoreAddresses.add(address);
-            return;
-        }
-
-        const totalSNX = await synthetix.collateral(address);
-        let totalSNXNum = totalSNX.toString() / 1000000000000000000;
-        totalSNXNum = Math.round(((totalSNXNum * 1.0) + Number.EPSILON) * 100) / 100;
-        if (totalSNXNum < 1000 && numberCRatio > 250) {
-            ignoreAddresses.add(address);
-            return;
-        }
-
-        const balance = await synthetix.balanceOf(address);
-        let notEscrowedSnx = balance.toString() / 1000000000000000000;
-
-        let escrowedSNX = totalSNXNum - notEscrowedSnx;
-        escrowedSNX = Math.round(((escrowedSNX * 1.0) + Number.EPSILON) * 100) / 100;
-
-        var w = new WalletInfo(numberCRatio, totalSNXNum, address, escrowedSNX);
-        w.flaggedTime = flaggedAccountsMap.get(address).flaggedTime;
-        var liquidationDate = new Date(w.flaggedTime);
-        liquidationDate.setDate(liquidationDate.getDate() + 3);
-        var difference = liquidationDate.getTime() - (new Date()).getTime();
-        if (difference > 0) {
-            var seconds = Math.floor(difference / 1000);
-            var minutes = Math.floor(seconds / 60);
-            var hours = Math.floor(minutes / 60);
-            var days = Math.floor(hours / 24);
-            hours %= 24;
-            minutes %= 60;
-            seconds %= 60;
-            w.etaToLiquidation = days + " days " + hours + " hours " + minutes + " minutes ";
-        } else {
-            w.etaToLiquidation = "0";
-        }
-        flaggedAccountsMap.set(address, w);
-    } catch (e) {
-        //console.log(e);
-    }
-}
-
+}, 60 * 1000);
 
 setInterval(function () {
     try {
@@ -3362,47 +2849,6 @@ setInterval(function () {
     }
 }, 60 * 1000 * 60);
 
-
-let council = [];
-let voteDay = new Date('2021-03-15 07:00');
-
-async function getCouncil() {
-    try {
-        const browser = await puppeteer.launch({
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ],
-        });
-        const page = await browser.newPage();
-        await page.setViewport({width: 1000, height: 926});
-        await page.goto("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE", {waitUntil: 'networkidle2'});
-
-        await delay(10000);
-
-        /** @type {string[]} */
-        var prices = await page.evaluate(() => {
-            var div = document.querySelectorAll('div.p-4 .mb-1');
-
-            var prices = []
-            div.forEach(element => {
-                prices.push(element.textContent);
-            });
-
-            return prices
-        })
-
-        council = [];
-        council = council.concat(prices.slice(6, 14));
-        browser.close()
-    } catch (e) {
-        console.log("Error happened on getting data from SNX tools.");
-        console.log(e);
-    }
-}
-
-setTimeout(getCouncil, 1000 * 30);
-setInterval(getCouncil, 1000 * 60 * 2);
 
 setInterval(function () {
     try {
@@ -3510,208 +2956,107 @@ async function getl2Exchanges() {
                 console.log(e);
             }
         });
-    } catch (e) {
-        console.log(e);
     }
-};
-
-setInterval(getl2Exchanges, 1000 * 60 * 60);
+    setInterval(getl2Exchanges, 1000 * 60 * 60);
 
 
-setInterval(function () {
-    try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 120}).then(result => {
-            console.log("Fetching exchanges in last two minutes");
-            result.forEach(r => {
-                try {
-                    console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
-                    console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    if (r.toAmountInUSD < 100000) {
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
-                        exampleEmbed.addField("Wallet",
-                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
-                        exampleEmbed.addField("From",
-                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
-                        exampleEmbed.addField("To",
-                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
-                        trades.send(exampleEmbed);
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-            })
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 1000 * 60 * 2);
-
-
-let volume = 100000;
-let distinctTraders = new Set();
-
-function getVolume() {
-    volume = 0;
-    distinctTraders = new Set();
-    try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 3600 * 24}).then(result => {
-            console.log("Fetching exchanges in last day");
-            result.forEach(r => {
-                try {
-                    volume += r.toAmountInUSD;
-                    distinctTraders.add(r.fromAddress)
-                } catch (e) {
-                    console.log(e);
-                }
-            })
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-setTimeout(getVolume, 1000 * 60 * 1);
-setInterval(function () {
-    getVolume();
-}, 1000 * 60 * 30);
-
-const clientKwenta = new Discord.Client();
-clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
-setInterval(function () {
-
-    clientKwenta.guilds.cache.forEach(function (value, key) {
+    setInterval(function () {
         try {
-            if (volume > 0) {
-                value.members.cache.get("784489616781869067").setNickname("24h = $" + getNumberLabel(volume));
-                value.members.cache.get("784489616781869067").user.setActivity("Traders=" + distinctTraders.size, {type: 'PLAYING'});
-            }
+            snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 120}).then(result => {
+                console.log("Fetching exchanges in last two minutes");
+                result.forEach(r => {
+                    try {
+                        console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
+                        console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
+                        if (r.toAmountInUSD < 100000) {
+                            const exampleEmbed = new Discord.MessageEmbed();
+                            exampleEmbed.setColor("00770f");
+                            exampleEmbed.setTitle("New trade");
+                            exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                            exampleEmbed.addField("Wallet",
+                                '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                            exampleEmbed.addField("From",
+                                r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                            exampleEmbed.addField("To",
+                                r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                            trades.send(exampleEmbed);
+                        }
+                    } catch (e) {
+                        console.log(e);
+                    }
+                })
+            });
         } catch (e) {
             console.log(e);
         }
-    });
-
-}, 60 * 1000)
+    }, 1000 * 60 * 2);
 
 
-let choices = new Map();
-choices.set(1, "NaotoSake");
-choices.set(2, "MrSolver");
-choices.set(3, "MoneyManDoug");
-choices.set(4, "BigPenny");
-choices.set(5, "Spreek");
-choices.set(6, "TerraBellus");
-choices.set(7, "Bojan");
-choices.set(8, "Danijel");
-choices.set(9, "Farmwell");
-choices.set(10, "Synthaman");
-choices.set(11, "justwanttoknowathing");
-choices.set(12, "Farmer Joe - The DeFi Oracle");
-choices.set(13, "Kaleb");
-choices.set(14, "Akin");
-choices.set(15, "Samantha");
-choices.set(16, "Michael | Framework");
-choices.set(17, "Chevis");
-choices.set(18, "Simone | Dialectic");
-choices.set(19, "larpras");
-choices.set(20, "Andy | synthetix");
-choices.set(21, "Jackson | synthetix");
-choices.set(22, "redmarglar");
+    let volume = 100000;
+    let distinctTraders = new Set();
 
-
-setInterval(function () {
-    console.log("Getting votes");
-    try {
-        https.get('https://hub.snapshot.page/api/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let results = JSON.parse(data);
-                    let print = false;
-                    console.log("Votes " + results);
-                    for (const result in results) {
-                        let vote = results[result];
-                        let voter = vote.address;
-                        if (votesMapNew4.has(voter)) {
-                            let choice = votesMapNew4.get(voter);
-                            if (choice != vote.msg.payload.choice) {
-                                console.log("Vote change");
-                                const exampleEmbed = new Discord.MessageEmbed();
-                                exampleEmbed.setColor("00770f");
-                                exampleEmbed.setTitle("Vote Changed");
-                                exampleEmbed.setURL("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE");
-                                exampleEmbed.addField("From",
-                                    choices.get(choice));
-                                exampleEmbed.addField("To",
-                                    choices.get(vote.msg.payload.choice));
-                                exampleEmbed.addField("Voter",
-                                    "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                                //councilChannel.send(exampleEmbed);
-                            }
-                        } else {
-                            console.log("New Vote" + vote.msg.payload.choice);
-                            console.log("New Voter" + voter);
-                            const exampleEmbed = new Discord.MessageEmbed();
-                            exampleEmbed.setColor("00770f");
-                            exampleEmbed.setTitle("New Vote");
-                            exampleEmbed.setURL("https://council.synthetix.io/#/spartancouncil.eth/proposal/QmT8e5oWmyyM61gnjv5dRx5L5dcX7SZ24Ako62dPS7oHhE");
-                            exampleEmbed.addField("For",
-                                choices.get(vote.msg.payload.choice));
-                            exampleEmbed.addField("Voter",
-                                "[" + voter + "](https://etherscan.io/address/" + voter + ")");
-                            //councilChannel.send(exampleEmbed);
-                        }
-                        votesMapNew4.set(voter, vote.msg.payload.choice);
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("votesMapNew4", JSON.stringify([...votesMapNew4]), function () {
-                            });
-                        }
+    function getVolume() {
+        volume = 0;
+        distinctTraders = new Set();
+        try {
+            snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 3600 * 24}).then(result => {
+                console.log("Fetching exchanges in last day");
+                result.forEach(r => {
+                    try {
+                        volume += r.toAmountInUSD;
+                        distinctTraders.add(r.fromAddress)
+                    } catch (e) {
+                        console.log(e);
                     }
-                } catch (e) {
-                    console.log(e);
-                }
-
+                })
             });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch (e) {
-        console.log(e);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-}, 60 * 1000 * 3);
+    setTimeout(getVolume, 1000 * 60 * 2);
+    setInterval(function () {
+        getVolume();
+    }, 1000 * 60 * 30);
 
-const {request, gql} = require('graphql-request');
-const queryPerformanceHistory = gql`
+    const clientKwenta = new Discord.Client();
+    clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
+    setInterval(function () {
+
+        clientKwenta.guilds.cache.forEach(function (value, key) {
+            try {
+                if (volume > 0) {
+                    value.members.cache.get("784489616781869067").setNickname("24h = $" + getNumberLabel(volume));
+                    value.members.cache.get("784489616781869067").user.setActivity("Traders=" + distinctTraders.size, {type: 'PLAYING'});
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        });
+
+    }, 60 * 1000);
+
+
+    const {request, gql} = require('graphql-request');
+    const queryPerformanceHistory = gql`
     {
         performanceHistory(address: "0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed", period:"week") {
             day
             week
         }
     }
-`
+`;
 
-let performance = null;
-setInterval(function () {
-    request('https://api.dhedge.org/graphql', queryPerformanceHistory).then((data) => {
-            console.log(data);
-            performance = data.performanceHistory;
-        }
-    );
-}, 1000 * 60)
+    let performance = null;
+    setInterval(function () {
+        request('https://api.dhedge.org/graphql', queryPerformanceHistory).then((data) => {
+                performance = data.performanceHistory;
+            }
+        );
+    }, 1000 * 60 * 5);
 
-const fundInfo = gql`
+    const fundInfo = gql`
     {
         fund(address: "0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed") {
             fundComposition{
@@ -3722,984 +3067,995 @@ const fundInfo = gql`
             totalValue
         }
     }
-`
+`;
 
 
-let fund = null;
-setInterval(function () {
-    request('https://api.dhedge.org/graphql', fundInfo).then((data) => {
-            fund = data.fund;
+    let fund = null;
+    setInterval(function () {
+        request('https://api.dhedge.org/graphql', fundInfo).then((data) => {
+                fund = data.fund;
+            }
+        );
+    }, 1000 * 60 * 5);
+
+
+    function printFund() {
+        const exampleEmbed = new Discord.MessageEmbed();
+        exampleEmbed.setColor("00770f");
+        exampleEmbed.setTitle("Synthetix Community Pool Daily digest");
+        exampleEmbed.setURL("https://app.dhedge.org/pool/0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed");
+        let dayperf = (performance.day / 1e18 - 1) * 100;
+        let weekerf = (performance.week / 1e18 - 1) * 100;
+        exampleEmbed.addField("Performance",
+            "Day: " + (dayperf).toFixed(2) + "%\n Week: " + (weekerf).toFixed(2) + "%");
+        let composition = "";
+        fund.fundComposition.forEach(c => {
+            if ((c.amount * 1.0) > 0) {
+                composition += "Token: " + c.tokenName;
+                composition += " Amount: " + (c.amount / 1e18).toFixed(2);
+                composition += " Value: $" + (c.amount / 1e18 * c.rate / 1e18).toFixed(2);
+                composition += "\n";
+            }
+        });
+        exampleEmbed.addField("Composition",
+            composition);
+        exampleEmbed.addField("Total value",
+            "$" + getNumberLabel(fund.totalValue / 1e18));
+        fundChannel.send(exampleEmbed);
+    }
+
+
+    var schedule = require('node-schedule');
+
+    schedule.scheduleJob('0 1 * * *', function () {
+        printFund();
+    });
+
+
+    var express = require("express");
+    var app = express();
+    var cors = require('cors');
+    app.use(cors());
+    const bodyParser = require("body-parser");
+    app.listen(process.env.PORT || 3000, () => {
+        console.log("Server running on port " + (process.env.PORT || 3000));
+    });
+
+    app.use(bodyParser.urlencoded({extended: false}));
+    app.use(bodyParser.json());
+
+
+    var allMembers = [];
+    setTimeout(function () {
+        guild.members.fetch().then(fetchedMembers => {
+            allMembers = fetchedMembers;
+        });
+    }, 6 * 1000);
+
+    setInterval(function () {
+        guild.members.fetch().then(fetchedMembers => {
+            allMembers = fetchedMembers;
+        });
+    }, 60 * 1000);
+
+    app.post("/pdao", async (req, res) => {
+            try {
+                let content = req.body;
+                console.log(content);
+                if (
+                    content.status.toLowerCase().includes("confirmed")
+                ) {
+                    if (content.from.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())
+                        ||
+                        content.to.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())) {
+                        channelGdao.send("New transaction from gDAO: https://etherscan.io/tx/" + content.hash);
+                    }
+                    if (content.from.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase()) ||
+                        content.to.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase())) {
+                        channelPdao.send("New transaction from pDAO: https://etherscan.io/tx/" + content.hash);
+                    }
+                    if (content.from.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase()) ||
+                        content.to.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase())) {
+                        channelSdao.send("New transaction from sDAO: https://etherscan.io/tx/" + content.hash);
+                    }
+                    if (content.from.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase()) ||
+                        content.to.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase())) {
+                        channelDeployer.send("New transaction from Synthetix Deployer: https://etherscan.io/tx/" + content.hash);
+                    }
+                    if (content.from.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase()) ||
+                        content.to.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase())) {
+                        channelAmbassadors.send("New transaction from Synthetix Ambassadors: https://etherscan.io/tx/" + content.hash);
+                    }
+                    if (content.from.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase()) ||
+                        content.to.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase())) {
+                        const exampleEmbed = new Discord.MessageEmbed();
+                        exampleEmbed.setColor("00770f");
+                        exampleEmbed.setTitle("New loan tx");
+                        exampleEmbed.setURL("https://etherscan.io/tx/" + content.hash);
+                        exampleEmbed.addField("Type",
+                            content.contractCall.methodName);
+                        exampleEmbed.addField("From",
+                            "[" + content.from + "]" + "(https://etherscan.io/address/" + content.from + ")");
+                        if (content.contractCall.methodName.toLowerCase() == "open") {
+                            let asset = "ETH";
+                            if (content.contractCall.params.currency.includes("734254")) {
+                                asset = "BTC";
+                            }
+                            exampleEmbed.addField("Short",
+                                asset);
+                            let amount = content.contractCall.params.amount * 1.0 / 1e18;
+                            amount = amount.toFixed(2);
+                            exampleEmbed.addField("Amount",
+                                amount);
+                        }
+                        channelShorts.send(exampleEmbed);
+                    }
+                }
+            } catch (e) {
+                console.log(e);
+            }
         }
     );
-}, 1000 * 300)
 
+    app.post("/verify", async (req, res) => {
+            try {
+                let address = req.body.value.address + "";
+                let sig = req.body.value.sig;
+                let msg = req.body.value.msg;
+                let username = req.body.value.username;
 
-function printFund() {
-    const exampleEmbed = new Discord.MessageEmbed();
-    exampleEmbed.setColor("00770f");
-    exampleEmbed.setTitle("Synthetix Community Pool Daily digest");
-    exampleEmbed.setURL("https://app.dhedge.org/pool/0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed");
-    let dayperf = (performance.day / 1e18 - 1) * 100;
-    let weekerf = (performance.week / 1e18 - 1) * 100;
-    exampleEmbed.addField("Performance",
-        "Day: " + (dayperf).toFixed(2) + "%\n Week: " + (weekerf).toFixed(2) + "%");
-    let composition = "";
-    fund.fundComposition.forEach(c => {
-        if ((c.amount * 1.0) > 0) {
-            composition += "Token: " + c.tokenName;
-            composition += " Amount: " + (c.amount / 1e18).toFixed(2);
-            composition += " Value: $" + (c.amount / 1e18 * c.rate / 1e18).toFixed(2);
-            composition += "\n";
-        }
-    })
-    exampleEmbed.addField("Composition",
-        composition);
-    exampleEmbed.addField("Total value",
-        "$" + getNumberLabel(fund.totalValue / 1e18));
-    fundChannel.send(exampleEmbed);
-}
+                const sigUtil = require('eth-sig-util');
 
-
-var schedule = require('node-schedule');
-
-schedule.scheduleJob('0 1 * * *', function () {
-    printFund();
-});
-
-
-var express = require("express");
-var app = express();
-var cors = require('cors');
-app.use(cors());
-const bodyParser = require("body-parser");
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Server running on port " + (process.env.PORT || 3000));
-});
-
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-
-
-var allMembers = [];
-setTimeout(function () {
-    guild.members.fetch().then(fetchedMembers => {
-        allMembers = fetchedMembers;
-    });
-}, 6 * 1000);
-
-setInterval(function () {
-    guild.members.fetch().then(fetchedMembers => {
-        allMembers = fetchedMembers;
-    });
-}, 60 * 1000);
-
-app.post("/pdao", async (req, res) => {
-        try {
-            let content = req.body;
-            console.log(content);
-            if (
-                content.status.toLowerCase().includes("confirmed")
-            ) {
-                if (content.from.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())
-                    ||
-                    content.to.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())) {
-                    channelGdao.send("New transaction from gDAO: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase())) {
-                    channelPdao.send("New transaction from pDAO: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase())) {
-                    channelSdao.send("New transaction from sDAO: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase())) {
-                    channelDeployer.send("New transaction from Synthetix Deployer: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase())) {
-                    channelAmbassadors.send("New transaction from Synthetix Ambassadors: https://etherscan.io/tx/" + content.hash);
-                }
-                if (content.from.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase())) {
-                    const exampleEmbed = new Discord.MessageEmbed();
-                    exampleEmbed.setColor("00770f");
-                    exampleEmbed.setTitle("New loan tx");
-                    exampleEmbed.setURL("https://etherscan.io/tx/" + content.hash);
-                    exampleEmbed.addField("Type",
-                        content.contractCall.methodName);
-                    exampleEmbed.addField("From",
-                        "[" + content.from + "]" + "(https://etherscan.io/address/" + content.from + ")");
-                    if (content.contractCall.methodName.toLowerCase() == "open") {
-                        let asset = "ETH";
-                        if (content.contractCall.params.currency.includes("734254")) {
-                            asset = "BTC";
-                        }
-                        exampleEmbed.addField("Short",
-                            asset);
-                        let amount = content.contractCall.params.amount * 1.0 / 1e18;
-                        amount = amount.toFixed(2);
-                        exampleEmbed.addField("Amount",
-                            amount);
-                    }
-                    channelShorts.send(exampleEmbed);
-                }
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-)
-
-app.post("/verify", async (req, res) => {
-        try {
-            let address = req.body.value.address + "";
-            let sig = req.body.value.sig;
-            let msg = req.body.value.msg;
-            let username = req.body.value.username;
-
-            const sigUtil = require('eth-sig-util')
-
-            const recovered = sigUtil.recoverPersonalSignature({
-                data: msg,
-                sig: sig
-            });
-            if (recovered.toLowerCase() === address.toLowerCase()) {
-                var roleToAssign = null;
-                guild.roles.cache.forEach(function (value, key) {
-                    console.log(value.name);
-                    if (value.name.toLowerCase().includes("chess")) {
-                        roleToAssign = value;
-                    }
+                const recovered = sigUtil.recoverPersonalSignature({
+                    data: msg,
+                    sig: sig
                 });
-
-                var url = 'https://api.etherscan.io/api' +
-                    '?module=account&action=tokenbalance&contractaddress=0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f&address=AddressToReplace&tag=latest&apikey=YourApiKeyToken';
-                url = url.replace("AddressToReplace", address.toString());
-                https.get(url, (resp) => {
-                    let data = '';
-
-                    // A chunk of data has been recieved.
-                    resp.on('data', (chunk) => {
-                        data += chunk;
-                    });
-
-                    // The whole response has been received. Print out the result.
-                    resp.on('end', () => {
-                        let result = JSON.parse(data);
-                        let amount = result.result / 1e18;
-                        if (amount > 9) {
-                            allMembers.forEach(m => {
-                                var usernameDiscriminator = m.user.username + '#' + m.user.discriminator;
-                                if (usernameDiscriminator.toLowerCase() === username.toLowerCase()) {
-                                    m.roles.add(roleToAssign);
-                                }
-                            })
+                if (recovered.toLowerCase() === address.toLowerCase()) {
+                    var roleToAssign = null;
+                    guild.roles.cache.forEach(function (value, key) {
+                        console.log(value.name);
+                        if (value.name.toLowerCase().includes("chess")) {
+                            roleToAssign = value;
                         }
                     });
 
-                }).on("error", (err) => {
-                    console.log("Error: " + err.message);
-                });
+                    var url = 'https://api.etherscan.io/api' +
+                        '?module=account&action=tokenbalance&contractaddress=0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f&address=AddressToReplace&tag=latest&apikey=YourApiKeyToken';
+                    url = url.replace("AddressToReplace", address.toString());
+                    https.get(url, (resp) => {
+                        let data = '';
 
+                        // A chunk of data has been recieved.
+                        resp.on('data', (chunk) => {
+                            data += chunk;
+                        });
+
+                        // The whole response has been received. Print out the result.
+                        resp.on('end', () => {
+                            let result = JSON.parse(data);
+                            let amount = result.result / 1e18;
+                            if (amount > 9) {
+                                allMembers.forEach(m => {
+                                    var usernameDiscriminator = m.user.username + '#' + m.user.discriminator;
+                                    if (usernameDiscriminator.toLowerCase() === username.toLowerCase()) {
+                                        m.roles.add(roleToAssign);
+                                    }
+                                })
+                            }
+                        });
+
+                    }).on("error", (err) => {
+                        console.log("Error: " + err.message);
+                    });
+
+                }
+
+            } catch (e) {
+                console.log(e);
             }
+        }
+    );
 
+
+    var knownAddress = new Set();
+    knownAddress.add("0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04");
+    knownAddress.add("0xBD015d82a36C9a05108ebC5FEE12672F24dA0Cf4");
+    knownAddress.add("0x9d256b839C1b46e57122eBb3C5e6da97288FaCf1");
+    knownAddress.add("0x9cFc4cfB2aa99bedc98d52E2DCc0Eb010F20718f");
+    knownAddress.add("0x0bc3668d2AaFa53eD5E5134bA13ec74ea195D000");
+    knownAddress.add("0x65DCD62932fEf5af25AdA91F0F24658e94e259c5");
+    knownAddress.add("0x0120666306F4D15bb125696f322BFD8EE83423a9");
+    knownAddress.add("0x935D2fD458fdf41B6F7B62471f593797866a3Ce6");
+    knownAddress.add("0x682C4184286415344a35a0Ff6699bb8EdAbDdc17");
+    knownAddress.add("0xbf49b454818783d12bf4f3375ff17c59015e66cb");
+    knownAddress.add("0x0120666306f4d15bb125696f322bfd8ee83423a9");
+
+    const dateformat = require('dateformat');
+// setInterval(function () {
+//     https.get('https://hub.snapshot.page/api/snxgov.eth/proposals', (resp) => {
+//         let data = '';
+//
+//         // A chunk of data has been recieved.
+//         resp.on('data', (chunk) => {
+//             data += chunk;
+//         });
+//
+//         // The whole response has been received. Print out the result.
+//         resp.on('end', async () => {
+//             try {
+//                 let results = JSON.parse(data);
+//                 let print = false;
+//                 if (synthetixProposals.size > 0) {
+//                     print = true;
+//                 }
+//                 var counterInc = 0;
+//                 let keys = [];
+//                 for (const result in results) {
+//                     keys.push(result);
+//                 }
+//                 keys = keys.reverse();
+//                 for (const res in keys) {
+//                     let result = keys[res];
+//                     if (!synthetixProposals.has(result)) {
+//                         let proposal = results[result];
+//                         synthetixProposals.set(result, proposal);
+//                         let start = new Date(proposal.msg.payload.start * 1000);
+//                         let end = new Date(proposal.msg.payload.end * 1000);
+//                         let content = proposal.msg.payload.body;
+//                         let name = proposal.msg.payload.name;
+//
+//                         if (content.length > 1024) {
+//                             content = content.substring(0, 1020) + "...";
+//                         }
+//
+//                         const exampleEmbed = new Discord.MessageEmbed();
+//                         exampleEmbed.setColor("00770f");
+//                         exampleEmbed.setTitle("New proposal");
+//                         exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
+//                         exampleEmbed.addField("Name",
+//                             name);
+//                         exampleEmbed.addField("Start",
+//                             dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("End",
+//                             dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("Description",
+//                             content);
+//                         if (print) {
+//
+//                             counterInc += 5;
+//                             setTimeout(
+//                                 function () {
+//                                     https.get('https://hub.snapshot.page/api/synthetixproposal/proposal/' + result, (resp) => {
+//                                         let data = '';
+//
+//                                         // A chunk of data has been recieved.
+//                                         resp.on('data', (chunk) => {
+//                                             data += chunk;
+//                                         });
+//
+//                                         // The whole response has been received. Print out the result.
+//                                         resp.on('end', () => {
+//                                             try {
+//                                                 let resultsV = JSON.parse(data);
+//                                                 let print = false;
+//                                                 let yes = 0;
+//                                                 let no = 0;
+//                                                 for (const resultV in resultsV) {
+//                                                     let vote = resultsV[resultV];
+//                                                     let voter = vote.address;
+//                                                     if (knownAddress.has(voter)) {
+//                                                         let voteRes = vote.msg.payload.choice;
+//                                                         if (voteRes == '2') {
+//                                                             no++;
+//                                                         } else {
+//                                                             yes++;
+//                                                         }
+//                                                     }
+//                                                 }
+//                                                 exampleEmbed.addField("Votes",
+//                                                     "sYES: " + yes + " iNO: " + no);
+//
+//                                                 channelGov.send(exampleEmbed);
+//                                             } catch
+//                                                 (e) {
+//                                                 console.log(e);
+//                                             }
+//
+//                                         });
+//
+//
+//                                     })
+//                                 }, counterInc * 1000)
+//
+//
+//                         }
+//
+//                         if (process.env.REDIS_URL) {
+//                             redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
+//                             });
+//                         }
+//                     }
+//                 }
+//             } catch (e) {
+//                 console.log(e);
+//             }
+//
+//         });
+//
+//     }).on("error", (err) => {
+//         console.log("Error: " + err.message);
+//     });
+//
+// }, 1000 * 60 * 5);
+
+    const clientIllGov = new Discord.Client();
+    clientIllGov.login(process.env.BOT_TOKEN_ILLUVIUM_GOVERNANCE);
+
+    var channelIllProposals = null;
+    clientIllGov.on("ready", () => {
+        console.log(`Logged in as ${clientIllGov.user.tag}!`);
+        clientIllGov.channels.fetch('809220730608680990').then(c => {
+            channelIllProposals = c;
+        });
+    });
+
+// setInterval(function () {
+//     https.get('https://hub.snapshot.page/api/ilvgov.eth/proposals', (resp) => {
+//         let data = '';
+//
+//         // A chunk of data has been recieved.
+//         resp.on('data', (chunk) => {
+//             data += chunk;
+//         });
+//
+//         // The whole response has been received. Print out the result.
+//         resp.on('end', async () => {
+//             try {
+//                 let results = JSON.parse(data);
+//                 let print = false;
+//                 if (illuviumProposals.size > 0) {
+//                     print = true;
+//                 }
+//                 var counterInc = 0;
+//                 let keys = [];
+//                 for (const result in results) {
+//                     keys.push(result);
+//                 }
+//                 keys = keys.reverse();
+//                 for (const res in keys) {
+//                     let result = keys[res];
+//                     if (!illuviumProposals.has(result)) {
+//                         let proposal = results[result];
+//                         illuviumProposals.set(result, proposal);
+//                         let start = new Date(proposal.msg.payload.start * 1000);
+//                         let end = new Date(proposal.msg.payload.end * 1000);
+//                         let content = proposal.msg.payload.body;
+//                         let name = proposal.msg.payload.name;
+//
+//                         if (content.length > 1024) {
+//                             content = content.substring(0, 1020) + "...";
+//                         }
+//
+//                         const exampleEmbed = new Discord.MessageEmbed();
+//                         exampleEmbed.setColor("00770f");
+//                         exampleEmbed.setTitle("New proposal");
+//                         exampleEmbed.setURL("https://gov.illuvium.io/#/ilvgov.eth/proposal/" + result);
+//                         exampleEmbed.addField("Name",
+//                             name);
+//                         exampleEmbed.addField("Start",
+//                             dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("End",
+//                             dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
+//                         exampleEmbed.addField("Description",
+//                             content);
+//                         if (print) {
+//                             channelIllProposals.send(exampleEmbed);
+//                         }
+//
+//                         if (process.env.REDIS_URL) {
+//                             redisClient.set("illuviumProposals", JSON.stringify([...illuviumProposals]), function () {
+//                             });
+//                         }
+//                     }
+//                 }
+//             } catch (e) {
+//                 console.log(e);
+//             }
+//
+//         });
+//
+//     }).on("error", (err) => {
+//         console.log("Error: " + err.message);
+//     });
+//
+// }, 1000 * 60 * 5);
+
+
+    function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
+        if (debtValue != 'debt') {
+            var hedgeMessage = new Discord.MessageEmbed()
+                .setTitle("Hedge command")
+                .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
+                .setColor("#0060ff");
+            let counter = 1;
+            for (const dfElement of df.toArray()) {
+                var percentMain = (debtValue / 100) * dfElement[5];
+                var unitsMain = (percentMain / dfElement[4]);
+                if (unitsMain > 1) {
+                    unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
+                } else {
+                    unitsMain = unitsMain.toFixed(5);
+                }
+                hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units');
+                counter++;
+            }
+            var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
+            hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
+            return hedgeMessage;
+        } else {
+            var debtMessage = new Discord.MessageEmbed()
+                .setTitle("Debt command")
+                .setDescription("Debt pool:")
+                .setColor("#0060ff");
+            let counter = 1;
+            for (const dfElement of df.toArray()) {
+                debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b");
+                counter++;
+            }
+            debtMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', "\u200b");
+            return debtMessage;
+        }
+    }
+
+    const calculateDebt = async () => {
+        var network = 'mainnet';
+        const EtherWrapper = synthetixAPI.getTarget({network, contract: 'EtherWrapper'});
+        const provider = ethers.getDefaultProvider();
+        const {abi} = synthetixAPI.getSource({
+            network,
+            contract: "SynthUtil"
+        });
+        const {address} = synthetixAPI.getTarget({
+            network,
+            contract: "SynthUtil"
+        });
+
+        const SynthUtil = new ethers.Contract(address, abi, provider);
+        Promise.all([getAPI('https://api.etherscan.io/api?module=contract&action=getabi&address=' +
+            EtherWrapper.address + '&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ'),
+            getMultiCollateralIssuance('sETH'), getMultiCollateralIssuance('sBTC'), getMultiCollateralIssuance('sUSD'), getSynthMarketCap(SynthUtil)])
+            .then(function (results) {
+                const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24;
+                const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24;
+                const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24;
+                var newDf = adjustDataFrame(results[4]);
+                var contractABI = "";
+                contractABI = JSON.parse(results[0].data.result);
+                var etherWrapper = new web3.eth.Contract(contractABI, EtherWrapper.address);
+                Promise.all([getWrapprETH(etherWrapper), getWrapprUSD(etherWrapper)])
+                    .then(function (results) {
+                        var wrapprETH = results[0] / 1e24;
+                        console.log("Wrapper ETH is " + wrapprETH);
+                        var wrapprUSD = results[1] / 1e24;
+                        console.log("Wrapper USD is " + wrapprUSD);
+                        newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sETH' ? row.get('supply') - multicolateralResultsETH - wrapprETH : row.get('supply')));
+                        newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sBTC' ? row.get('supply') - multicolateralResultsBTC : row.get('supply')));
+                        newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sUSD' ? row.get('supply') - multicolateralResultsUSD - wrapprUSD : row.get('supply')));
+                        newDf = newDf.map(row => row.set('cap', row.get('price') * row.get('supply')));
+                        var marketCapAbs = [];
+                        for (const caps of newDf.select('cap').toArray()) {
+                            if (caps && !isNaN(caps))
+                                marketCapAbs.push(Math.abs(caps))
+                        }
+                        var marketCapSum = sum(marketCapAbs);
+                        newDf = newDf.map(row => row.set('debt_pool_percentage', Math.abs(row.get('cap') / marketCapSum)));
+                        var debtPercentages = [];
+                        for (const debt of newDf.select('debt_pool_percentage').toArray()) {
+                            if (debt && !isNaN(debt) && debt[0] < 0.05)
+                                debtPercentages.push(debt[0])
+                        }
+                        othersDebtSum = sum(debtPercentages);
+                        newDf = newDf.filter(row => row.get('debt_pool_percentage') > 0.05);
+                        newDf = newDf.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
+                        newDf = newDf.rename('supply', 'units');
+                        newDf = newDf.map(row => row.set('cap', parseFloat(row.get('cap'))));
+                        newDf = newDf.sortBy(['debt_pool_percentage'], true);
+                        df = newDf.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
+                    });
+            });
+    };
+
+
+    const getAPI = function (url) {
+        return axios.get(url);
+    };
+
+    const sum = function (array) {
+        var total = 0;
+        for (var i in array) {
+            total += array[i];
+        }
+        return total;
+    };
+
+
+    const getWrapprETH = function (contractInstance) {
+        try {
+            console.log("Infura call made");
+            return contractInstance.methods.sETHIssued().call();
         } catch (e) {
-            console.log(e);
+            console.log("Error occured", e);
+        }
+    };
+
+    const getWrapprUSD = function (contractInstance) {
+        try {
+            console.log("Infura call made");
+            return contractInstance.methods.sUSDIssued().call();
+        } catch (e) {
+            console.log("Error occured", e);
+        }
+    };
+
+    const getMultiCollateralIssuance = function (currency) {
+
+        var network = 'mainnet';
+        var provider = ethers.getDefaultProvider();
+        var {abi} = synthetixAPI.getSource({
+            network,
+            contract: "CollateralManagerState"
+        });
+        var {address} = synthetixAPI.getTarget({
+            network,
+            contract: "CollateralManagerState"
+        });
+
+        var CollateralManagerState = new ethers.Contract(address, abi, provider);
+
+        return CollateralManagerState.totalIssuedSynths(
+            synthetixAPI.toBytes32(currency));
+    };
+
+
+    const adjustDataFrame = function (dataFrame) {
+
+        let initDF = new DataFrame.DataFrame(dataFrame).transpose();
+        let adjustedDF = new DataFrame.DataFrame(initDF.toArray(), ["synthHex", "supply", "cap"]);
+        const replacer = new RegExp('\x00', 'g');
+        adjustedDF = adjustedDF.map(row => row.set('synth', convertHexToStr(row.get('synthHex')).replace(replacer, "")));
+        adjustedDF = adjustedDF.filter(row => row.get('supply') > 0);
+        adjustedDF = adjustedDF.map(row => row.set('price', row.get('cap') / row.get('supply')));
+        adjustedDF = adjustedDF.map(row => row.set('cap', row.get('cap') / 1e24));
+        adjustedDF = adjustedDF.map(row => row.set('supply', row.get('supply') / 1e24));
+
+        return adjustedDF;
+
+    };
+
+
+    const getSynthMarketCap = function (contractInstance) {
+        return contractInstance.synthsTotalSupplies();
+    };
+
+    const convertHexToStr = function (str1) {
+        var hex = str1.toString();
+        var str = '';
+        for (var n = 0; n < hex.length; n += 2) {
+            str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+        }
+        return str;
+    };
+
+
+    function getBugDTO(message) {
+        return {
+            content: message.content,
+            reporter: message.author.username,
+            time: formatDate(new Date()),
+            timestamp: message.createdTimestamp,
+            id: uuidv4(),
+            messageLink: message.url
         }
     }
-)
 
 
-var knownAddress = new Set();
-knownAddress.add("0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04");
-knownAddress.add("0xBD015d82a36C9a05108ebC5FEE12672F24dA0Cf4");
-knownAddress.add("0x9d256b839C1b46e57122eBb3C5e6da97288FaCf1");
-knownAddress.add("0x9cFc4cfB2aa99bedc98d52E2DCc0Eb010F20718f");
-knownAddress.add("0x0bc3668d2AaFa53eD5E5134bA13ec74ea195D000");
-knownAddress.add("0x65DCD62932fEf5af25AdA91F0F24658e94e259c5");
-knownAddress.add("0x0120666306F4D15bb125696f322BFD8EE83423a9");
-knownAddress.add("0x935D2fD458fdf41B6F7B62471f593797866a3Ce6");
-knownAddress.add("0x682C4184286415344a35a0Ff6699bb8EdAbDdc17");
-knownAddress.add("0xbf49b454818783d12bf4f3375ff17c59015e66cb");
-knownAddress.add("0x0120666306f4d15bb125696f322bfd8ee83423a9");
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
 
-const dateformat = require('dateformat');
-setInterval(function () {
-    https.get('https://hub.snapshot.page/api/snxgov.eth/proposals', (resp) => {
-        let data = '';
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', async () => {
-            try {
-                let results = JSON.parse(data);
-                let print = false;
-                if (synthetixProposals.size > 0) {
-                    print = true;
-                }
-                var counterInc = 0;
-                let keys = [];
-                for (const result in results) {
-                    keys.push(result);
-                }
-                keys = keys.reverse();
-                for (const res in keys) {
-                    let result = keys[res];
-                    if (!synthetixProposals.has(result)) {
-                        let proposal = results[result];
-                        synthetixProposals.set(result, proposal);
-                        let start = new Date(proposal.msg.payload.start * 1000);
-                        let end = new Date(proposal.msg.payload.end * 1000);
-                        let content = proposal.msg.payload.body;
-                        let name = proposal.msg.payload.name;
-
-                        if (content.length > 1024) {
-                            content = content.substring(0, 1020) + "...";
-                        }
-
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New proposal");
-                        exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
-                        exampleEmbed.addField("Name",
-                            name);
-                        exampleEmbed.addField("Start",
-                            dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("End",
-                            dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("Description",
-                            content);
-                        if (print) {
-
-                            counterInc += 5;
-                            setTimeout(
-                                function () {
-                                    https.get('https://hub.snapshot.page/api/synthetixproposal/proposal/' + result, (resp) => {
-                                        let data = '';
-
-                                        // A chunk of data has been recieved.
-                                        resp.on('data', (chunk) => {
-                                            data += chunk;
-                                        });
-
-                                        // The whole response has been received. Print out the result.
-                                        resp.on('end', () => {
-                                            try {
-                                                let resultsV = JSON.parse(data);
-                                                let print = false;
-                                                let yes = 0;
-                                                let no = 0;
-                                                for (const resultV in resultsV) {
-                                                    let vote = resultsV[resultV];
-                                                    let voter = vote.address;
-                                                    if (knownAddress.has(voter)) {
-                                                        let voteRes = vote.msg.payload.choice;
-                                                        if (voteRes == '2') {
-                                                            no++;
-                                                        } else {
-                                                            yes++;
-                                                        }
-                                                    }
-                                                }
-                                                exampleEmbed.addField("Votes",
-                                                    "sYES: " + yes + " iNO: " + no);
-
-                                                channelGov.send(exampleEmbed);
-                                            } catch
-                                                (e) {
-                                                console.log(e);
-                                            }
-
-                                        });
-
-
-                                    })
-                                }, counterInc * 1000)
-
-
-                        }
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
-                            });
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 1000 * 60 * 5);
-
-const clientIllGov = new Discord.Client();
-clientIllGov.login(process.env.BOT_TOKEN_ILLUVIUM_GOVERNANCE);
-
-var channelIllProposals = null;
-clientIllGov.on("ready", () => {
-    console.log(`Logged in as ${clientIllGov.user.tag}!`);
-    clientIllGov.channels.fetch('809220730608680990').then(c => {
-        channelIllProposals = c;
-    });
-})
-
-setInterval(function () {
-    https.get('https://hub.snapshot.page/api/ilvgov.eth/proposals', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', async () => {
-            try {
-                let results = JSON.parse(data);
-                let print = false;
-                if (illuviumProposals.size > 0) {
-                    print = true;
-                }
-                var counterInc = 0;
-                let keys = [];
-                for (const result in results) {
-                    keys.push(result);
-                }
-                keys = keys.reverse();
-                for (const res in keys) {
-                    let result = keys[res];
-                    if (!illuviumProposals.has(result)) {
-                        let proposal = results[result];
-                        illuviumProposals.set(result, proposal);
-                        let start = new Date(proposal.msg.payload.start * 1000);
-                        let end = new Date(proposal.msg.payload.end * 1000);
-                        let content = proposal.msg.payload.body;
-                        let name = proposal.msg.payload.name;
-
-                        if (content.length > 1024) {
-                            content = content.substring(0, 1020) + "...";
-                        }
-
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("00770f");
-                        exampleEmbed.setTitle("New proposal");
-                        exampleEmbed.setURL("https://gov.illuvium.io/#/ilvgov.eth/proposal/" + result);
-                        exampleEmbed.addField("Name",
-                            name);
-                        exampleEmbed.addField("Start",
-                            dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("End",
-                            dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-                        exampleEmbed.addField("Description",
-                            content);
-                        if (print) {
-                            channelIllProposals.send(exampleEmbed);
-                        }
-
-                        if (process.env.REDIS_URL) {
-                            redisClient.set("illuviumProposals", JSON.stringify([...illuviumProposals]), function () {
-                            });
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 1000 * 60 * 5);
-
-
-function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
-    if (debtValue != 'debt') {
-        var hedgeMessage = new Discord.MessageEmbed()
-            .setTitle("Hedge command")
-            .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
-            .setColor("#0060ff")
-        let counter = 1;
-        for (const dfElement of df.toArray()) {
-            var percentMain = (debtValue / 100) * dfElement[5];
-            var unitsMain = (percentMain / dfElement[4]);
-            if (unitsMain > 1) {
-                unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
-            } else {
-                unitsMain = unitsMain.toFixed(5);
-            }
-            hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units')
-            counter++;
-        }
-        var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
-        hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
-        return hedgeMessage;
-    } else {
-        var debtMessage = new Discord.MessageEmbed()
-            .setTitle("Debt command")
-            .setDescription("Debt pool:")
-            .setColor("#0060ff")
-        let counter = 1;
-        for (const dfElement of df.toArray()) {
-            debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b")
-            counter++;
-        }
-        debtMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', "\u200b");
-        return debtMessage;
+        return [day, month, year].join('-');
     }
-}
 
-const calculateDebt = async () => {
-    var network = 'mainnet';
-    const EtherWrapper = synthetixAPI.getTarget({network, contract: 'EtherWrapper'});
-    const provider = ethers.getDefaultProvider();
-    const {abi} = synthetixAPI.getSource({
-        network,
-        contract: "SynthUtil"
-    });
-    const {address} = synthetixAPI.getTarget({
-        network,
-        contract: "SynthUtil"
-    });
 
-    const SynthUtil = new ethers.Contract(address, abi, provider);
-    Promise.all([getAPI('https://api.etherscan.io/api?module=contract&action=getabi&address=' +
-        EtherWrapper.address + '&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ'),
-        getMultiCollateralIssuance('sETH'), getMultiCollateralIssuance('sBTC'), getMultiCollateralIssuance('sUSD'), getSynthMarketCap(SynthUtil)])
-        .then(function (results) {
-            const multicolateralResultsETH = (parseFloat(results[1].long.toString()) + parseFloat(results[1].short.toString())) / 1e24
-            const multicolateralResultsBTC = (parseFloat(results[2].long.toString()) + parseFloat(results[2].short.toString())) / 1e24
-            const multicolateralResultsUSD = (parseFloat(results[3].long.toString()) + parseFloat(results[3].short.toString())) / 1e24
-            var newDf = adjustDataFrame(results[4]);
-            var contractABI = "";
-            contractABI = JSON.parse(results[0].data.result);
-            var etherWrapper = new web3.eth.Contract(contractABI, EtherWrapper.address);
-            Promise.all([getWrapprETH(etherWrapper), getWrapprUSD(etherWrapper)])
-                .then(function (results) {
-                    var wrapprETH = results[0] / 1e24
-                    console.log("Wrapper ETH is " + wrapprETH)
-                    var wrapprUSD = results[1] / 1e24
-                    console.log("Wrapper USD is " + wrapprUSD)
-                    newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sETH' ? row.get('supply') - multicolateralResultsETH - wrapprETH : row.get('supply')));
-                    newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sBTC' ? row.get('supply') - multicolateralResultsBTC : row.get('supply')));
-                    newDf = newDf.map(row => row.set('supply', row.get('synth') == 'sUSD' ? row.get('supply') - multicolateralResultsUSD - wrapprUSD : row.get('supply')));
-                    newDf = newDf.map(row => row.set('cap', row.get('price') * row.get('supply')));
-                    var marketCapAbs = [];
-                    for (const caps of newDf.select('cap').toArray()) {
-                        if (caps && !isNaN(caps))
-                            marketCapAbs.push(Math.abs(caps))
-                    }
-                    var marketCapSum = sum(marketCapAbs);
-                    newDf = newDf.map(row => row.set('debt_pool_percentage', Math.abs(row.get('cap') / marketCapSum)));
-                    var debtPercentages = [];
-                    for (const debt of newDf.select('debt_pool_percentage').toArray()) {
-                        if (debt && !isNaN(debt) && debt[0] < 0.05)
-                            debtPercentages.push(debt[0])
-                    }
-                    othersDebtSum = sum(debtPercentages);
-                    newDf = newDf.filter(row => row.get('debt_pool_percentage') > 0.05);
-                    newDf = newDf.map(row => row.set('synth', row.get('synth') == 'sETH' && (row.get('cap') < 0) ? 'Short sETH' : row.get('synth')));
-                    newDf = newDf.rename('supply', 'units');
-                    newDf = newDf.map(row => row.set('cap', parseFloat(row.get('cap'))));
-                    newDf = newDf.sortBy(['debt_pool_percentage'], true)
-                    df = newDf.map(row => row.set('debt_pool_percentage', (Math.round(parseFloat(row.get('debt_pool_percentage')) * 100))));
+    app.get('/bugs', (req, res) => {
+        redisClient.llen(bugRedisKey, function (err, listSize) {
+            redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
+                var obj = [];
+                bugs.forEach(function (bug) {
+                    obj.push(JSON.parse(bug));
                 });
-        });
-}
-
-
-const getAPI = function (url) {
-    return axios.get(url);
-}
-
-const sum = function (array) {
-    var total = 0;
-    for (var i in array) {
-        total += array[i];
-    }
-    return total;
-}
-
-
-const getWrapprETH = function (contractInstance) {
-    return contractInstance.methods.sETHIssued().call();
-}
-
-const getWrapprUSD = function (contractInstance) {
-    return contractInstance.methods.sUSDIssued().call();
-}
-
-const getMultiCollateralIssuance = function (currency) {
-
-    var network = 'mainnet';
-    var provider = ethers.getDefaultProvider();
-    var {abi} = synthetixAPI.getSource({
-        network,
-        contract: "CollateralManagerState"
-    });
-    var {address} = synthetixAPI.getTarget({
-        network,
-        contract: "CollateralManagerState"
-    });
-
-    var CollateralManagerState = new ethers.Contract(address, abi, provider);
-
-    return CollateralManagerState.totalIssuedSynths(
-        synthetixAPI.toBytes32(currency));
-}
-
-
-const adjustDataFrame = function (dataFrame) {
-
-    let initDF = new DataFrame.DataFrame(dataFrame).transpose();
-    let adjustedDF = new DataFrame.DataFrame(initDF.toArray(), ["synthHex", "supply", "cap"])
-    const replacer = new RegExp('\x00', 'g')
-    adjustedDF = adjustedDF.map(row => row.set('synth', convertHexToStr(row.get('synthHex')).replace(replacer, "")));
-    adjustedDF = adjustedDF.filter(row => row.get('supply') > 0);
-    adjustedDF = adjustedDF.map(row => row.set('price', row.get('cap') / row.get('supply')));
-    adjustedDF = adjustedDF.map(row => row.set('cap', row.get('cap') / 1e24));
-    adjustedDF = adjustedDF.map(row => row.set('supply', row.get('supply') / 1e24));
-
-    return adjustedDF;
-
-}
-
-
-const getSynthMarketCap = function (contractInstance) {
-    return contractInstance.synthsTotalSupplies();
-}
-
-const convertHexToStr = function (str1) {
-    var hex = str1.toString();
-    var str = '';
-    for (var n = 0; n < hex.length; n += 2) {
-        str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
-    }
-    return str;
-};
-
-
-function getBugDTO(message) {
-    return {
-        content: message.content,
-        reporter: message.author.username,
-        time: formatDate(new Date()),
-        timestamp: message.createdTimestamp,
-        id: uuidv4(),
-        messageLink: message.url
-    }
-}
-
-
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [day, month, year].join('-');
-}
-
-
-app.get('/bugs', (req, res) => {
-    redisClient.llen(bugRedisKey, function (err, listSize) {
-        redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
-            var obj = [];
-            bugs.forEach(function (bug) {
-                obj.push(JSON.parse(bug));
-            });
-            res.send(obj);
-        });
-    });
-});
-
-
-app.post('/bug', (req, res) => {
-    let bugRequest = req.body.bug;
-    let bugJson = JSON.stringify(bugRequest);
-    redisClient.lpush(bugRedisKey, bugJson);
-    res.send(bugRequest.id);
-});
-
-app.delete('/bug/:bugid', (req, res) => {
-    const bugId = req.params.bugid;
-    redisClient.llen(bugRedisKey, function (err, listSize) {
-        redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
-            bugs.forEach(function (bug) {
-                var bugDTO = JSON.parse(bug);
-                if (bugDTO.id == bugId) {
-                    redisClient.lrem(bugRedisKey, 0, bug);
-                }
+                res.send(obj);
             });
         });
-        res.send('bug with id ' + bugId + ' is deleted');
     });
-});
 
 
-function mapToDateString(date) {
-    return date.yyyymmdd();
-}
-
-function createHistoricChart(msg, isMarketCapsIncluded) {
-    let calculatedMarketCaps = new Map();
-    //divide everything by market cap value
-    for (let [key, value] of historicMarketCaps.entries()) {
-        if (value != 1) {
-            calculatedMarketCaps.set(key, Math.round(((value / leadingMarketCap) + Number.EPSILON) * 10) / 10);
-        } else {
-            calculatedMarketCaps.set(key, value);
-        }
-    }
-
-    let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
-        return first > second ? 1 : (first < second ? -1 : 0)
-    }).reverse());
-
-
-    let sortedHistoricDebt = new Map([...historicDebts.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
-        return first > second ? 1 : (first < second ? -1 : 0)
-    }).reverse());
-
-    for (let [key, value] of sortedHistoricDebt.entries()) {
-        console.log(key + " = " + value);
-    }
-
-    let times = Array.from(sortedMarketCaps.keys());
-    times = times.map(mapToDateString)
-    let chart = new QuickChart();
-    if (isMarketCapsIncluded) {
-        chart.setConfig({
-                type: 'line',
-                data: {
-                    labels: times,
-                    datasets: [{
-                        axis: 'y',
-                        label: 'debt (LHS)',
-                        data: Array.from(sortedHistoricDebt.values()),
-                        fill: false,
-                        borderColor: 'red'
-                    }, {
-                        axis: 'y',
-                        label: 'SNX Market Cap Change (RHS)',
-                        data: Array.from(sortedMarketCaps.values()),
-                        fill: false,
-                        borderColor: 'blue'
-                    }]
-                }, options: {
-                    pointStyle: 'star',
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            beginAtZero: false
-                        }
-                    }
-                }
-            }
-        );
-        const chartEmbed = {
-            title: 'Last year debt',
-            description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
-            image: {
-                url: chart.getUrl(),
-            },
-        };
-        msg.channel.send({embed: chartEmbed});
-    } else {
-        chart.setConfig({
-                type: 'line',
-                data: {
-                    labels: times,
-                    datasets: [{
-                        axis: 'y',
-                        label: 'debt',
-                        data: Array.from(sortedHistoricDebt.values()),
-                        fill: false,
-                        borderColor: 'red'
-                    }]
-                }, options: {
-                    pointStyle: 'star',
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            beginAtZero: false
-                        }
-                    }
-                }
-            }
-        );
-        const chartEmbed = {
-            title: 'Last year debt',
-            description: 'value of 1 sUSD minted',
-            image: {
-                url: chart.getUrl(),
-            },
-        };
-        msg.channel.send({embed: chartEmbed});
-    }
-
-
-}
-
-Date.prototype.yyyymmdd = function () {
-    var mm = this.getMonth() + 1; // getMonth() is zero-based
-
-    return [this.getFullYear(),
-        (mm > 9 ? '' : '0') + mm
-    ].join('-');
-};
-
-
-function getBlockNumbers(date, etherWrapper, isAllTime) {
-    getAPI('https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=' + Math.floor(date.getTime() / 1000) + '&closest=before&apikey=47XNM5QC6HAJW2UV7WK24IN45N7ED5BKVC')
-        .then(function (result) {
-            console.log("block is  " + result.data.result + ' for the date ' + date);
-            if (!isNaN(result.data.result)) {
-                getHistoricalDebt(etherWrapper, result.data.result, date, isAllTime);
-            }
-        }).catch(function (error) {
-        console.log(error);
+    app.post('/bug', (req, res) => {
+        let bugRequest = req.body.bug;
+        let bugJson = JSON.stringify(bugRequest);
+        redisClient.lpush(bugRedisKey, bugJson);
+        res.send(bugRequest.id);
     });
-}
+
+    app.delete('/bug/:bugid', (req, res) => {
+        const bugId = req.params.bugid;
+        redisClient.llen(bugRedisKey, function (err, listSize) {
+            redisClient.lrange(bugRedisKey, 0, listSize, function (err, bugs) {
+                bugs.forEach(function (bug) {
+                    var bugDTO = JSON.parse(bug);
+                    if (bugDTO.id == bugId) {
+                        redisClient.lrem(bugRedisKey, 0, bug);
+                    }
+                });
+            });
+            res.send('bug with id ' + bugId + ' is deleted');
+        });
+    });
 
 
-function getMarketCaps(dateFrom, dateTo, isLeading, dateToBeAddedToHistory, isAllTime) {
+    function mapToDateString(date) {
+        return date.yyyymmdd();
+    }
 
-    getAPI('https://api.coingecko.com/api/v3/coins/havven/market_chart/range?vs_currency=usd&from=' + dateFrom + '&to=' + dateTo)
-        .then(function (result) {
-            console.log("market caps response is  " + result.data.market_caps[0][1] + ' for the date ' + new Date(dateFrom * 1000) + ' and the leading is ' + isLeading);
-            if (isLeading) {
-                if (isAllTime) {
-                    allTimeLeadingMarketCap = result.data.market_caps[0][1];
-                    allTimeHistoricMarketCaps.set(dateToBeAddedToHistory, 1);
-                } else {
-                    leadingMarketCap = result.data.market_caps[0][1];
-                    historicMarketCaps.set(dateToBeAddedToHistory, 1);
-                }
+    function createHistoricChart(msg, isMarketCapsIncluded) {
+        let calculatedMarketCaps = new Map();
+        //divide everything by market cap value
+        for (let [key, value] of historicMarketCaps.entries()) {
+            if (value != 1) {
+                calculatedMarketCaps.set(key, Math.round(((value / leadingMarketCap) + Number.EPSILON) * 10) / 10);
             } else {
-                if (isAllTime) {
-                    allTimeHistoricMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
-                } else {
-                    historicMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
+                calculatedMarketCaps.set(key, value);
+            }
+        }
+
+        let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
+            const first = a.key;
+            const second = b.key;
+            return first > second ? 1 : (first < second ? -1 : 0)
+        }).reverse());
+
+
+        let sortedHistoricDebt = new Map([...historicDebts.entries()].sort((a, b) => {
+            const first = a.key;
+            const second = b.key;
+            return first > second ? 1 : (first < second ? -1 : 0)
+        }).reverse());
+
+        for (let [key, value] of sortedHistoricDebt.entries()) {
+            console.log(key + " = " + value);
+        }
+
+        let times = Array.from(sortedMarketCaps.keys());
+        times = times.map(mapToDateString);
+        let chart = new QuickChart();
+        if (isMarketCapsIncluded) {
+            chart.setConfig({
+                    type: 'line',
+                    data: {
+                        labels: times,
+                        datasets: [{
+                            axis: 'y',
+                            label: 'debt (LHS)',
+                            data: Array.from(sortedHistoricDebt.values()),
+                            fill: false,
+                            borderColor: 'red'
+                        }, {
+                            axis: 'y',
+                            label: 'SNX Market Cap Change (RHS)',
+                            data: Array.from(sortedMarketCaps.values()),
+                            fill: false,
+                            borderColor: 'blue'
+                        }]
+                    }, options: {
+                        pointStyle: 'star',
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
                 }
+            );
+            const chartEmbed = {
+                title: 'Last year debt',
+                description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
+                image: {
+                    url: chart.getUrl(),
+                },
+            };
+            msg.channel.send({embed: chartEmbed});
+        } else {
+            chart.setConfig({
+                    type: 'line',
+                    data: {
+                        labels: times,
+                        datasets: [{
+                            axis: 'y',
+                            label: 'debt',
+                            data: Array.from(sortedHistoricDebt.values()),
+                            fill: false,
+                            borderColor: 'red'
+                        }]
+                    }, options: {
+                        pointStyle: 'star',
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                }
+            );
+            const chartEmbed = {
+                title: 'Last year debt',
+                description: 'value of 1 sUSD minted',
+                image: {
+                    url: chart.getUrl(),
+                },
+            };
+            msg.channel.send({embed: chartEmbed});
+        }
+
+
+    }
+
+    Date.prototype.yyyymmdd = function () {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+
+        return [this.getFullYear(),
+            (mm > 9 ? '' : '0') + mm
+        ].join('-');
+    };
+
+
+    function getBlockNumbers(date, etherWrapper, isAllTime) {
+        getAPI('https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=' + Math.floor(date.getTime() / 1000) + '&closest=before&apikey=47XNM5QC6HAJW2UV7WK24IN45N7ED5BKVC')
+            .then(function (result) {
+                console.log("block is  " + result.data.result + ' for the date ' + date);
+                if (!isNaN(result.data.result)) {
+                    getHistoricalDebt(etherWrapper, result.data.result, date, isAllTime);
+                }
+            }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+
+    function getMarketCaps(dateFrom, dateTo, isLeading, dateToBeAddedToHistory, isAllTime) {
+
+        getAPI('https://api.coingecko.com/api/v3/coins/havven/market_chart/range?vs_currency=usd&from=' + dateFrom + '&to=' + dateTo)
+            .then(function (result) {
+                console.log("market caps response is  " + result.data.market_caps[0][1] + ' for the date ' + new Date(dateFrom * 1000) + ' and the leading is ' + isLeading);
+                if (isLeading) {
+                    if (isAllTime) {
+                        allTimeLeadingMarketCap = result.data.market_caps[0][1];
+                        allTimeHistoricMarketCaps.set(dateToBeAddedToHistory, 1);
+                    } else {
+                        leadingMarketCap = result.data.market_caps[0][1];
+                        historicMarketCaps.set(dateToBeAddedToHistory, 1);
+                    }
+                } else {
+                    if (isAllTime) {
+                        allTimeHistoricMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
+                    } else {
+                        historicMarketCaps.set(dateToBeAddedToHistory, result.data.market_caps[0][1]);
+                    }
+                }
+            }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+
+    const calculateHistoricDebt = async () => {
+
+        var etherWrapper = new web3.eth.Contract(contract, '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F', provider);
+
+        for (var i = 0; i < 12; i++) {
+            var date = new Date();
+            date.setMonth(date.getMonth() - i);
+            console.log('date is ' + date);
+            await delay(1001);
+            var dateToBeAddedToHistory = date;
+            getBlockNumbers(date, etherWrapper, false);
+            var dateTo = Math.floor(date.getTime() / 1000);
+            date.setHours(date.getHours() - 2);
+            var dateFrom = Math.floor(date.getTime() / 1000);
+            await delay(1001);
+            if (i == 11) {
+                getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory, false);
+            } else {
+                getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, false);
+            }
+        }
+    };
+
+    function monthDiff(d1, d2) {
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth();
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
+
+    const calculateAllTimeHistoricDebt = async () => {
+
+        var etherWrapper = new web3.eth.Contract(contract, '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F', provider);
+
+        var dateOfDebtStart = new Date(1578255814 * 1000);
+        let monthDifference = Math.round(monthDiff(dateOfDebtStart, new Date()) / 12);
+
+        var stopIteration = false;
+        for (var i = 0; i < 12; i++) {
+            var date = new Date();
+
+            date.setMonth(date.getMonth() - (i * monthDifference));
+            var dateDiff = new Date();
+            dateDiff.setMonth(dateDiff.getMonth() - ((i + 1) * monthDifference));
+            if (stopIteration) {
+                date = dateOfDebtStart;
+                i = 11;
+            }
+            if (monthDiff(dateOfDebtStart, dateDiff) < monthDifference) {
+                stopIteration = true;
+            }
+
+            console.log('date is ' + date);
+            await delay(1001);
+            var dateToBeAddedToHistory = date;
+            if (i == 11) {
+                allTimeHistoricDebts.set(dateOfDebtStart, 1);
+            } else {
+                getBlockNumbers(date, etherWrapper, true);
+            }
+            var dateTo = Math.floor(date.getTime() / 1000);
+            date.setHours(date.getHours() - 2);
+            var dateFrom = Math.floor(date.getTime() / 1000);
+            await delay(1001);
+            if (i == 11) {
+                getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory, true);
+            } else {
+                getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, true);
+            }
+        }
+    };
+
+    const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTime) {
+        console.log("Infura call made");
+        contractInstance.methods.debtBalanceOf('0xdeb7adCa884fc71def5BE34D3Fa5C2BC0203a525', '0x7355534400000000000000000000000000000000000000000000000000000000')
+            .call(blockNumber).then(function (result) {
+            let historicDebt = Math.round(((result / 1e18) + Number.EPSILON) * 10) / 10;
+            console.log('historic debt is ' + historicDebt + '$');
+            if (isAllTime) {
+                allTimeHistoricDebts.set(date, historicDebt);
+            } else {
+                historicDebts.set(date, historicDebt);
             }
         }).catch(function (error) {
-        console.log(error);
-    });
-}
+            console.log("error in get Historical debt: " + error);
+        });
+    };
 
 
-const calculateHistoricDebt = async () => {
-
-    var etherWrapper = new web3.eth.Contract(contract, '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F', provider);
-
-    for (var i = 0; i < 12; i++) {
-        var date = new Date();
-        date.setMonth(date.getMonth() - i);
-        console.log('date is ' + date);
-        await delay(1001);
-        var dateToBeAddedToHistory = date;
-        getBlockNumbers(date, etherWrapper, false);
-        var dateTo = Math.floor(date.getTime() / 1000);
-        date.setHours(date.getHours() - 2);
-        var dateFrom = Math.floor(date.getTime() / 1000);
-        await delay(1001);
-        if (i == 11) {
-            getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory, false);
-        } else {
-            getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, false);
+    function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
+        let calculatedMarketCaps = new Map();
+        //divide everything by market cap value
+        for (let [key, value] of allTimeHistoricMarketCaps.entries()) {
+            if (value != 1) {
+                calculatedMarketCaps.set(key, Math.round(((value / allTimeLeadingMarketCap) + Number.EPSILON) * 10) / 10);
+            } else {
+                calculatedMarketCaps.set(key, value);
+            }
         }
-    }
-}
+        let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
+            const first = a.key;
+            const second = b.key;
+            return first > second ? 1 : (first < second ? -1 : 0)
+        }).reverse());
+        let sortedHistoricDebt = new Map([...allTimeHistoricDebts.entries()].sort((a, b) => {
+            const first = a.key;
+            const second = b.key;
+            return first > second ? 1 : (first < second ? -1 : 0)
+        }).reverse());
 
-function monthDiff(d1, d2) {
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth();
-    months += d2.getMonth();
-    return months <= 0 ? 0 : months;
-}
-
-const calculateAllTimeHistoricDebt = async () => {
-
-    var etherWrapper = new web3.eth.Contract(contract, '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F', provider);
-
-    var dateOfDebtStart = new Date(1578255814 * 1000);
-    let monthDifference = Math.round(monthDiff(dateOfDebtStart, new Date()) / 12);
-
-    var stopIteration = false;
-    for (var i = 0; i < 12; i++) {
-        var date = new Date();
-
-        date.setMonth(date.getMonth() - (i * monthDifference));
-        var dateDiff = new Date();
-        dateDiff.setMonth(dateDiff.getMonth() - ((i + 1) * monthDifference));
-        if (stopIteration) {
-            date = dateOfDebtStart;
-            i = 11;
-        }
-        if (monthDiff(dateOfDebtStart, dateDiff) < monthDifference) {
-            stopIteration = true;
+        for (let [key, value] of sortedHistoricDebt.entries()) {
+            console.log(key + " = " + value);
         }
 
-        console.log('date is ' + date);
-        await delay(1001);
-        var dateToBeAddedToHistory = date;
-        if (i == 11) {
-            allTimeHistoricDebts.set(dateOfDebtStart, 1);
-        } else {
-            getBlockNumbers(date, etherWrapper, true);
-        }
-        var dateTo = Math.floor(date.getTime() / 1000);
-        date.setHours(date.getHours() - 2);
-        var dateFrom = Math.floor(date.getTime() / 1000);
-        await delay(1001);
-        if (i == 11) {
-            getMarketCaps(dateFrom, dateTo, true, dateToBeAddedToHistory, true);
-        } else {
-            getMarketCaps(dateFrom, dateTo, false, dateToBeAddedToHistory, true);
-        }
-    }
-}
-
-const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTime) {
-    contractInstance.methods.debtBalanceOf('0xdeb7adCa884fc71def5BE34D3Fa5C2BC0203a525', '0x7355534400000000000000000000000000000000000000000000000000000000')
-        .call(blockNumber).then(function (result) {
-        let historicDebt = Math.round(((result / 1e18) + Number.EPSILON) * 10) / 10;
-        console.log('historic debt is ' + historicDebt + '$');
-        if (isAllTime) {
-            allTimeHistoricDebts.set(date, historicDebt);
-        } else {
-            historicDebts.set(date, historicDebt);
-        }
-    }).catch(function (error) {
-        console.log(error);
-    });
-}
-
-
-function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
-    let calculatedMarketCaps = new Map();
-    //divide everything by market cap value
-    for (let [key, value] of allTimeHistoricMarketCaps.entries()) {
-        if (value != 1) {
-            calculatedMarketCaps.set(key, Math.round(((value / allTimeLeadingMarketCap) + Number.EPSILON) * 10) / 10);
-        } else {
-            calculatedMarketCaps.set(key, value);
-        }
-    }
-    let sortedMarketCaps = new Map([...calculatedMarketCaps.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
-        return first > second ? 1 : (first < second ? -1 : 0)
-    }).reverse());
-    let sortedHistoricDebt = new Map([...allTimeHistoricDebts.entries()].sort((a, b) => {
-        const first = a.key
-        const second = b.key
-        return first > second ? 1 : (first < second ? -1 : 0)
-    }).reverse());
-
-    for (let [key, value] of sortedHistoricDebt.entries()) {
-        console.log(key + " = " + value);
-    }
-
-    let times = Array.from(sortedMarketCaps.keys());
-    times = times.map(mapToDateString)
-    let chart = new QuickChart();
-    if (isMarketCapsIncluded) {
-        chart.setConfig({
-                type: 'line',
-                data: {
-                    labels: times,
-                    datasets: [{
-                        axis: 'y',
-                        label: 'debt (LHS)',
-                        data: Array.from(sortedHistoricDebt.values()),
-                        fill: false,
-                        borderColor: 'red'
-                    }, {
-                        axis: 'y',
-                        label: 'SNX Market Cap Change (RHS)',
-                        data: Array.from(sortedMarketCaps.values()),
-                        fill: false,
-                        borderColor: 'blue'
-                    }]
-                }, options: {
-                    pointStyle: 'star',
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            beginAtZero: false
+        let times = Array.from(sortedMarketCaps.keys());
+        times = times.map(mapToDateString);
+        let chart = new QuickChart();
+        if (isMarketCapsIncluded) {
+            chart.setConfig({
+                    type: 'line',
+                    data: {
+                        labels: times,
+                        datasets: [{
+                            axis: 'y',
+                            label: 'debt (LHS)',
+                            data: Array.from(sortedHistoricDebt.values()),
+                            fill: false,
+                            borderColor: 'red'
+                        }, {
+                            axis: 'y',
+                            label: 'SNX Market Cap Change (RHS)',
+                            data: Array.from(sortedMarketCaps.values()),
+                            fill: false,
+                            borderColor: 'blue'
+                        }]
+                    }, options: {
+                        pointStyle: 'star',
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: false
+                            }
                         }
                     }
                 }
-            }
-        );
-        const chartEmbed = {
-            title: 'All Time - Historical debt',
-            description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
-            image: {
-                url: chart.getUrl(),
-            },
-        };
+            );
+            const chartEmbed = {
+                title: 'All Time - Historical debt',
+                description: 'value of 1 sUSD minted and percentage in SNX Market Cap',
+                image: {
+                    url: chart.getUrl(),
+                },
+            };
 
-        msg.channel.send({embed: chartEmbed});
+            msg.channel.send({embed: chartEmbed});
 
-    } else {
-        chart.setConfig({
-                type: 'line',
-                data: {
-                    labels: times,
-                    datasets: [{
-                        axis: 'y',
-                        label: 'debt',
-                        data: Array.from(sortedHistoricDebt.values()),
-                        fill: false,
-                        borderColor: 'red'
-                    }]
-                }, options: {
-                    pointStyle: 'star',
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            beginAtZero: false
+        } else {
+            chart.setConfig({
+                    type: 'line',
+                    data: {
+                        labels: times,
+                        datasets: [{
+                            axis: 'y',
+                            label: 'debt',
+                            data: Array.from(sortedHistoricDebt.values()),
+                            fill: false,
+                            borderColor: 'red'
+                        }]
+                    }, options: {
+                        pointStyle: 'star',
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: false
+                            }
                         }
                     }
                 }
-            }
-        );
-        const chartEmbed = {
-            title: 'All Time - Historical debt',
-            description: 'value of 1 sUSD minted',
-            image: {
-                url: chart.getUrl(),
-            },
-        };
+            );
+            const chartEmbed = {
+                title: 'All Time - Historical debt',
+                description: 'value of 1 sUSD minted',
+                image: {
+                    url: chart.getUrl(),
+                },
+            };
 
-        msg.channel.send({embed: chartEmbed});
+            msg.channel.send({embed: chartEmbed});
+        }
+
+
     }
-
-
-}
