@@ -256,7 +256,8 @@ let channel = null;
 let trades = null;
 let trades100 = null;
 let trades1000 = null;
-let l2trades = null;
+let l2tradesBelow10k = null;
+let l2tradesAbove10k = null;
 let general = null;
 let councilChannel = null;
 let fundChannel = null;
@@ -326,7 +327,10 @@ client.on("ready", () => {
         trades1000 = c
     });
     client.channels.fetch('871713566225485834').then(c => {
-        l2trades = c
+        l2tradesBelow10k = c
+    });
+    client.channels.fetch('880035104456572958').then(c => {
+        l2tradesAbove10k = c
     });
     client.channels.fetch('413890591840272398').then(c => {
         general = c;
@@ -3450,7 +3454,7 @@ setInterval(function () {
 async function getl2Exchanges() {
     try {
         const ts = Math.floor(Date.now() / 1e3);
-        const oneDayAgo = ts - 60*60;
+        const oneDayAgo = ts - 60 * 60;
         const body = JSON.stringify({
             query: `{
       synthExchanges(
@@ -3483,8 +3487,8 @@ async function getl2Exchanges() {
         const {synthExchanges} = json.data;
         synthExchanges.forEach(r => {
             try {
-                console.log("Exchanged " + r.fromAmount + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4) + " to " + r.toAmount  + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
-                console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD );
+                console.log("Exchanged " + r.fromAmount + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4) + " to " + r.toAmount + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                 const exampleEmbed = new Discord.MessageEmbed();
                 exampleEmbed.setColor("ff0000");
                 exampleEmbed.setTitle("New trade");
@@ -3492,12 +3496,16 @@ async function getl2Exchanges() {
                 exampleEmbed.addField("Wallet",
                     '[' + r.toAddress + '](https://optimistic.etherscan.io/address/' + r.toAddress + ')');
                 exampleEmbed.addField("From",
-                    numberWithCommas((r.fromAmount*1.0 ).toFixed(2)) + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4));
+                    numberWithCommas((r.fromAmount * 1.0).toFixed(2)) + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4));
                 exampleEmbed.addField("To",
-                    numberWithCommas((r.toAmount*1.0 ).toFixed(2)) + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                    numberWithCommas((r.toAmount * 1.0).toFixed(2)) + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
                 exampleEmbed.addField("Value",
-                    numberWithCommas((r.fromAmountInUSD*1.0).toFixed(2)) + " sUSD");
-                l2trades.send(exampleEmbed);
+                    numberWithCommas((r.fromAmountInUSD * 1.0).toFixed(2)) + " sUSD");
+                if (r.toAmountInUSD < 10000)
+                    l2tradesBelow10k.send(exampleEmbed);
+                else {
+                    l2tradesAbove10k.send(exampleEmbed);
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -3507,9 +3515,7 @@ async function getl2Exchanges() {
     }
 };
 
-setInterval(getl2Exchanges, 1000 * 60*60);
-
-
+setInterval(getl2Exchanges, 1000 * 60 * 60);
 
 
 setInterval(function () {
