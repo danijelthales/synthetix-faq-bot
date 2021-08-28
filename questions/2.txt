@@ -1,1 +1,1 @@
-How can I check exactly how many of my SNX are unlocked?
+How can I check how much sUSD burning is required to unlock a certain amount of SNX?
