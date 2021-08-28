@@ -257,7 +257,8 @@ let channel = null;
 let trades = null;
 let trades100 = null;
 let trades1000 = null;
-let l2trades = null;
+let l2tradesBelow10k = null;
+let l2tradesAbove10k = null;
 let general = null;
 let councilChannel = null;
 let fundChannel = null;
@@ -327,7 +328,10 @@ client.on("ready", () => {
         trades1000 = c
     });
     client.channels.fetch('871713566225485834').then(c => {
-        l2trades = c
+        l2tradesBelow10k = c
+    });
+    client.channels.fetch('880035104456572958').then(c => {
+        l2tradesAbove10k = c
     });
     client.channels.fetch('413890591840272398').then(c => {
         general = c;
@@ -738,8 +742,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                //     msg.reply("I've called for master, he will be with you shortly.");
+                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                    //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
@@ -2943,7 +2947,12 @@ async function getl2Exchanges() {
                     numberWithCommas((r.toAmount * 1.0).toFixed(2)) + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
                 exampleEmbed.addField("Value",
                     numberWithCommas((r.fromAmountInUSD * 1.0).toFixed(2)) + " sUSD");
-                l2trades.send(exampleEmbed);
+
+                if (r.toAmountInUSD < 10000)
+                    l2tradesBelow10k.send(exampleEmbed);
+                else {
+                    l2tradesAbove10k.send(exampleEmbed);
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -2952,6 +2961,7 @@ async function getl2Exchanges() {
         console.log(e);
     }
 }
+
 setInterval(getl2Exchanges, 1000 * 60 * 60);
 
 
