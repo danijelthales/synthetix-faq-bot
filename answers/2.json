@@ -15,7 +15,7 @@
     },
     {
       "title": "Codepen",
-      "value": "A Synthetix core contributor created a tool for stakers to check. Go to [codepen](https://codepen.io/justinjmoses/pen/qwqoBR) and enter your wallet address, and you'll be told how many unlocked SNX you have. ",
+      "value": "A Synthetix core contributor created a tool for stakers to check. Go to [codepen](https://codepen.io/justinjmoses/pen/qwqoBR) and enter your wallet address, and you'll be told how many unlocked SNX you have. Note that this tool only supports L1.",
       "inline": true
     },
     {
