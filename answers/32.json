@@ -13,7 +13,7 @@
     },
 	{
       "title": "Notes",
-      "value": "If you have not previously connected your wallet to the OP Gateway or Etherscan sites you will first be prompted with wallet connection.\nThere is no chain side time sensitivity for claiming the relay so you could leave it until a cheaper gas period if you wanted to wait.\nIf you need further help, ask in the appropriate discord channels."
+      "value": "If you have not previously connected your wallet to the OP Gateway or Etherscan sites you will first be prompted with wallet connection.\n\nThere is no chain-side time sensitivity for claiming the relay so you could leave it until a cheaper gas period if you wanted to wait.\n\nIf you need further help, ask in the appropriate discord channels."
     }
   ],
   "image": "relay_merged.gif",
