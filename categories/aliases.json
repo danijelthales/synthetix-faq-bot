@@ -203,6 +203,10 @@
     "number": 31,
     "alias": "contracts"
   },
+    {
+    "number": 32,
+    "alias": "relay"
+  },
   {
     "number": 22,
     "alias": "claiming blocked"
