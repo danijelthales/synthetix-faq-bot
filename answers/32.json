@@ -1,12 +1,22 @@
 {
   "title": "Question 32:",
-  "description": "Why is there a minimum deposit of 50 sUSD into the Depot?",
+  "description": "I bridged my funds back from L2 Optimism a while ago and I still haven't received anything. Where are my tokens?",
   "color": "0099ff",
   "fields": [
     {
-      "title": "Answer:",
-      "value": "We've implemented a minimum deposit to prevent bad actors filling the queue with tiny amounts (e.g. .0000005) of sUSD, which could cause anyone buying sUSD on Synthetix.Exchange to pay a large amount of gas as they attempted to gather all the tiny entries of sUSD. \n \nFor amounts lower than $50, sell it on an exchange where sUSD is listed, Uniswap, or use it at Synthetix.Exchange to trade for other synthetic assets such as sBTC or Gold."
+      "title": "You must relay or claim the deposit youself now",
+      "value": "All transactions back to Ethereum Mainnet from Optimism Mainnet must now be relayed manually using the [Optimism Gateway](https://gateway.optimism.io/).\nOn the OP gateway website, ensure your wallet is connected and press the wallet 'account' bar upper right corner, or go to [https://gateway.optimism.io/account] (https://gateway.optimism.io/account). If the challenge period has finished (the 7+ day wait), the transfer should show up on this page with a status marked ‘Pending relay’. If you click this status bar it will pop-up a confirmation that the transaction is ready to be relayed back to Ethereum. Press the ‘Claim Withdrawal’ button which will lead you to the Etherscan page specifically for your relay transaction to then execute.",
+	  "image": "relay_find.gif"
+    },
+    {
+      "title": "Execute your relay into an Ethereum deposit",
+      "value": "On the relay Etherscan page you will then need to click the ‘Execute’ button located in the lower right area of the page and then confirm the pop-up window. It should then pass the relay transaction to your wallet for your claim approval. As soon as this Ethereum mainnet transaction has been confirmed your wallet will have the funds.",
+	  "image": "relay_exe.gif"
+    },
+	{
+      "title": "Notes",
+      "value": "If you have not previously connected your wallet to the OP Gateway or Etherscan sites you will first be prompted with wallet connection.\nThere is no chain side time sensitivity for claiming the relay so you could leave it until a cheaper gas period if you wanted to wait.\nIf you need further help, ask in the appropriate discord channels."
     }
   ],
   "footer": {}
-}
+
