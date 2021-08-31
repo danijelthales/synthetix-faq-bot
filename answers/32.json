@@ -9,13 +9,13 @@
     },
     {
       "title": "Execute your relay into an Ethereum deposit",
-      "value": "On the relay Etherscan page you will then need to click the ‘Execute’ button located in the lower right area of the page and then confirm the pop-up window. It should then pass the relay transaction to your wallet for your claim approval. As soon as this Ethereum mainnet transaction has been confirmed your wallet will have the funds.",
-	  "image": "relay_merged.gif"
+      "value": "On the relay Etherscan page you will then need to click the ‘Execute’ button located in the lower right area of the page and then confirm the pop-up window. It should then pass the relay transaction to your wallet for your claim approval. As soon as this Ethereum mainnet transaction has been confirmed your wallet will have the funds."
     },
 	{
       "title": "Notes",
       "value": "If you have not previously connected your wallet to the OP Gateway or Etherscan sites you will first be prompted with wallet connection.\nThere is no chain side time sensitivity for claiming the relay so you could leave it until a cheaper gas period if you wanted to wait.\nIf you need further help, ask in the appropriate discord channels."
     }
   ],
+  "image": "relay_merged.gif",
   "footer": {}
 
