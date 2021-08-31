@@ -371,7 +371,7 @@ client.on("ready", () => {
     // checkMessages();
 
     client.guilds.cache.forEach(function (value, key) {
-        if (value.name.toLowerCase().includes('synthetix')) {
+        if (value.name.toLowerCase().includes('synthetix')||value.name.toLowerCase().includes('playground')) {
             guild = value;
         }
     });
