@@ -1,0 +1,32 @@
+{
+  "title": "Question 2:",
+  "description": "How can I check how much sUSD burning is required to unlock a certain amount of SNX?",
+  "color": "0099ff",
+  "url": "https://synthetix.community/docs/staking#how-can-i-check-exactly-how-many-of-my-snx-are-unlocked",
+  "fields": [
+    {
+      "title": "Answer:",
+      "value": "If you try to send more SNX than is transferrable the transaction will fail. There are two ways you can check how many SNX are unlocked:"
+    },
+    {
+      "title": "Staking dapp",
+      "value": "In the [Staking dapp](https://staking.synthetix.io/) if you go to the burn custom page and enter various burn figures, it will show you transferable SNX incorporating c-ratio and the escrowed SNX factors. To unstake/unlock SNX beyond what is already transferable, you must burn some sUSD.",
+      "inline": true
+    },
+    {
+      "title": "Codepen",
+      "value": "A Synthetix core contributor created a tool for stakers to check. Go to [codepen](https://codepen.io/justinjmoses/pen/qwqoBR) and enter your wallet address, and you'll be told how many unlocked SNX you have. ",
+      "inline": true
+    },
+    {
+      "title": "For more details visit the community help page:",
+      "value": "[here](https://synthetix.community/docs/staking#how-can-i-check-exactly-how-many-of-my-snx-are-unlocked)"
+    }
+  ],
+<<<<<<< HEAD
+  "image": "q3supportimage.png",
+=======
+  "image": "answer2.png",
+>>>>>>> fix image 2
+  "footer": {}
+}
