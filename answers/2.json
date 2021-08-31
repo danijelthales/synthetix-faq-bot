@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "If you try to send more SNX than is transferrable the transaction will fail. There are two ways you can check how many SNX are unlocked:"
+      "value": "If you try to send more SNX than is transferrable, the transaction will fail. There are two ways you can check how many SNX are unlocked:"
     },
     {
       "title": "Staking dapp",
