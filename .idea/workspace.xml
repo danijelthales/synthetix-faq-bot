@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/refunds.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,42 +20,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.js">
+        <entry file="file://$PROJECT_DIR$/binaryOptions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="3400" column="48" lean-forward="true" selection-start-line="3400" selection-start-column="48" selection-end-line="3400" selection-end-column="48" />
+            <state relative-caret-position="183">
+              <caret line="45" column="30" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/web3-core-requestmanager/lib/index.js">
+        <entry file="file://$PROJECT_DIR$/refunds.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="53">
-              <caret line="283" column="8" selection-start-line="283" selection-start-column="8" selection-end-line="283" selection-end-column="8" />
+            <state relative-caret-position="417">
+              <caret line="35" column="60" selection-start-line="35" selection-start-column="60" selection-end-line="35" selection-end-column="60" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/xhr2-cookies/dist/xml-http-request.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="288" column="60" selection-start-line="288" selection-start-column="60" selection-end-line="288" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="mock://_http_agent.js">
-          <provider selected="true" editor-type-id="vmFileEditor" />
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>u200b</find>
       <find>hedge</find>
       <find>doInnerQuestion</find>
       <find>!faq debt</find>
@@ -84,9 +77,9 @@
       <find>web3</find>
       <find>new proposal</find>
       <find>hub.snaps</find>
+      <find>marketsMap.get(market)</find>
     </findStrings>
     <replaceStrings>
-      <replace>https://synthetix.community/docs/is-snx-liquid</replace>
       <replace>https://synthetix.community/docs/susd-tracker</replace>
       <replace>https://synthetix.community/docs/layer-2</replace>
       <replace>https://synthetix.community/docs/chainlink-oracles</replace>
@@ -116,6 +109,7 @@
       <replace>https://staking.synthetix.io/gov/snxgov.eth/</replace>
       <replace>0, 5</replace>
       <replace>0, 4</replace>
+      <replace>origMarket</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -124,8 +118,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/answers/87.json" />
-        <option value="$PROJECT_DIR$/answers/88.json" />
         <option value="$PROJECT_DIR$/answers/89.json" />
         <option value="$PROJECT_DIR$/questions/90.txt" />
         <option value="$PROJECT_DIR$/questions/89.txt" />
@@ -175,6 +167,8 @@
         <option value="$PROJECT_DIR$/test.js" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/refunds.csv" />
+        <option value="$PROJECT_DIR$/binaryOptions.js" />
       </list>
     </option>
   </component>
@@ -189,6 +183,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="CatdeaLogs" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -200,9 +197,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -239,8 +233,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.index.js">
-    <configuration name="index2.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="index2.js" working-dir="$PROJECT_DIR$">
+  <component name="RunManager" selected="Node.js.binaryOptions.js">
+    <configuration name="binaryOptions.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="binaryOptions.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration name="index.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="index.js" working-dir="$PROJECT_DIR$">
@@ -250,7 +244,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Node.js.index2.js" />
+      <item itemvalue="Node.js.binaryOptions.js" />
       <item itemvalue="Node.js.test.js" />
       <item itemvalue="Node.js.index.js" />
     </list>
@@ -408,7 +402,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="562646000" />
+    <option name="totallyTimeSpent" value="566802000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -428,7 +422,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5040783" side_tool="true" weight="0.30197755" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.16204691" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.122068234" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32827735" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.4989339" weight="0.27952328" />
@@ -443,8 +437,8 @@
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.32936078" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="bottom" id="GraphQL" order="13" sideWeight="0.49946696" weight="0.32936078" />
-      <window_info anchor="bottom" id="Messages" order="14" />
+      <window_info anchor="bottom" id="Messages" order="13" />
+      <window_info anchor="bottom" id="GraphQL" order="14" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Log Viewer" order="15" />
       <window_info anchor="right" id="Theme Preview" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -551,22 +545,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/answers/87.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/88.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/92.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/71.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/answers/48.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -576,7 +554,7 @@
     <entry file="file://$PROJECT_DIR$/answers/2.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="25" column="2" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="26" />
+          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -628,13 +606,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/images/samantha.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/synthetix-data/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/answers/102.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -776,13 +747,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="18" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
@@ -825,10 +789,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
+        <state relative-caret-position="13020">
           <caret line="3400" column="48" lean-forward="true" selection-start-line="3400" selection-start-column="48" selection-end-line="3400" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="17950" column="12" selection-start-line="17950" selection-start-column="12" selection-end-line="17950" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/synthetix-data/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-274">
+          <caret line="941" column="8" selection-start-line="941" selection-start-column="8" selection-end-line="941" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answers/4.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/refunds.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="35" column="60" selection-start-line="35" selection-start-column="60" selection-end-line="35" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/binaryOptions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="45" column="30" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
         </state>
       </provider>
     </entry>
