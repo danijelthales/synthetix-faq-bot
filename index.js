@@ -88,6 +88,9 @@ clientPerpPrice.login(process.env.BOT_TOKEN_PERP);
 const clientNecPrice = new Discord.Client();
 clientNecPrice.login(process.env.BOT_TOKEN_NEC);
 
+const clientKwentaL1Volume = new Discord.Client();
+clientKwentaL1Volume.login(process.env.BOT_TOKEN_KWENTA_L1);
+
 const replaceString = require('replace-string');
 const https = require('https');
 const http = require('http');
@@ -371,7 +374,7 @@ client.on("ready", () => {
     // checkMessages();
 
     client.guilds.cache.forEach(function (value, key) {
-        if (value.name.toLowerCase().includes('synthetix')||value.name.toLowerCase().includes('playground')) {
+        if (value.name.toLowerCase().includes('synthetix') || value.name.toLowerCase().includes('playground')) {
             guild = value;
         }
     });
@@ -4060,6 +4063,65 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
         };
 
         msg.channel.send({embed: chartEmbed});
+    }
+
+
+    clientKwentaL1Volume.once('ready', () => {
+        console.log("kwenta l1 volume getting date")
+        getL1KwentaVolume();
+    });
+
+
+    setInterval(function () {
+        console.log("kwenta trading volumes")
+        getL1KwentaVolume();
+    }, 360 * 1000);
+
+
+    const l2synthetixExchanger =
+        'https://thegraph.com/legacy-explorer/subgraph/synthetixio-team/optimism-exchanger';
+    const l1synthetixExchanger =
+        'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger';
+
+    async function getL1KwentaVolume() {
+        // Fetch all kwenta l1 trading in the last 24hrs
+        await (async () => {
+            const body = JSON.stringify({
+                query: `{
+      dailyExchangePartners(
+        orderBy:dayID,
+        orderDirection:desc,
+        max:"1",
+        where:{partner: "KWENTA"
+               }
+      )
+      {
+        dayID
+        partner
+        usdFees
+        usdVolume
+        trades
+      }
+    }`,
+                variables: null,
+            });
+
+            const response = await fetch(l1synthetixExchanger, {
+                method: 'POST',
+                body,
+            });
+
+            const json = await response.json();
+            clientKwentaL1Volume.guilds.cache.forEach(function (value, key) {
+                try {
+                    console.log("Updating KWENTA L1");
+                    value.members.cache.get(clientKwentaL1Volume.user.id).setNickname("24h = $" + getNumberLabel(json.data.dailyExchangePartners[0].usdVolume));
+                } catch (e) {
+                    console.log(e);
+                }
+            });
+            clientKwentaL1Volume.user.setActivity("KWENTA L1 trading volume", {type: 'WATCHING'});
+        })();
     }
 
 
