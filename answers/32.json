@@ -5,7 +5,7 @@
   "fields": [
     {
       "title": "You must relay (claim) the deposit yourself now",
-      "value": "All transactions back to Ethereum Mainnet from Optimism Mainnet must now be relayed manually using the [Optimism Gateway](https://gateway.optimism.io/).\n\nOn the OP gateway website, ensure your wallet is connected to Ethereum network and press the wallet 'account' bar upper right corner, or go to (https://gateway.optimism.io/account). If the challenge period has finished (the 7+ day wait), the transfer should show up on this page with a status marked ‘Pending relay’. If you press this status bar it will pop-up a confirmation that the transaction is ready to be relayed back to Ethereum. Press the ‘Claim Withdrawal’ button which will lead you to the Etherscan page specifically for your relay transaction to then execute."
+      "value": "All transactions back to Ethereum Mainnet from Optimism Mainnet must now be relayed manually using the [Optimism Gateway](https://gateway.optimism.io/).\n\nOn the OP gateway website, ensure your wallet is connected and on the Ethereum network. Press the wallet 'account' bar upper right corner, or go to (https://gateway.optimism.io/account). If the challenge period has finished (the 7+ day wait), the transfer should show up on this page with a status marked ‘Pending relay’. If you press this status bar it will pop-up a confirmation that the transaction is ready to be relayed back to Ethereum. Press the ‘Claim Withdrawal’ button which will lead you to the Etherscan page specifically for your relay transaction to then execute."
     },
     {
       "title": "Execute your relay to get your Ethereum deposit",
