@@ -3423,76 +3423,11 @@ clientIllGov.on("ready", () => {
     });
 });
 
-// setInterval(function () {
-//     https.get('https://hub.snapshot.page/api/ilvgov.eth/proposals', (resp) => {
-//         let data = '';
-//
-//         // A chunk of data has been recieved.
-//         resp.on('data', (chunk) => {
-//             data += chunk;
-//         });
-//
-//         // The whole response has been received. Print out the result.
-//         resp.on('end', async () => {
-//             try {
-//                 let results = JSON.parse(data);
-//                 let print = false;
-//                 if (illuviumProposals.size > 0) {
-//                     print = true;
-//                 }
-//                 var counterInc = 0;
-//                 let keys = [];
-//                 for (const result in results) {
-//                     keys.push(result);
-//                 }
-//                 keys = keys.reverse();
-//                 for (const res in keys) {
-//                     let result = keys[res];
-//                     if (!illuviumProposals.has(result)) {
-//                         let proposal = results[result];
-//                         illuviumProposals.set(result, proposal);
-//                         let start = new Date(proposal.msg.payload.start * 1000);
-//                         let end = new Date(proposal.msg.payload.end * 1000);
-//                         let content = proposal.msg.payload.body;
-//                         let name = proposal.msg.payload.name;
-//
-//                         if (content.length > 1024) {
-//                             content = content.substring(0, 1020) + "...";
-//                         }
-//
-//                         const exampleEmbed = new Discord.MessageEmbed();
-//                         exampleEmbed.setColor("00770f");
-//                         exampleEmbed.setTitle("New proposal");
-//                         exampleEmbed.setURL("https://gov.illuvium.io/#/ilvgov.eth/proposal/" + result);
-//                         exampleEmbed.addField("Name",
-//                             name);
-//                         exampleEmbed.addField("Start",
-//                             dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-//                         exampleEmbed.addField("End",
-//                             dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-//                         exampleEmbed.addField("Description",
-//                             content);
-//                         if (print) {
-//                             channelIllProposals.send(exampleEmbed);
-//                         }
-//
-//                         if (process.env.REDIS_URL) {
-//                             redisClient.set("illuviumProposals", JSON.stringify([...illuviumProposals]), function () {
-//                             });
-//                         }
-//                     }
-//                 }
-//             } catch (e) {
-//                 console.log(e);
-//             }
-//
-//         });
-//
-//     }).on("error", (err) => {
-//         console.log("Error: " + err.message);
-//     });
-//
-// }, 1000 * 60 * 5);
+setInterval(function () {
+        getILVProposalsData();
+    },
+    1000 * 60 * 4.8
+);
 
 
 function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
@@ -4121,5 +4056,70 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
         };
 
         msg.channel.send({embed: chartEmbed});
+    }
+}
+
+
+async function getILVProposalsData() {
+
+    const body = JSON.stringify({
+        query: `
+  query {
+  proposals(first: 20, skip: 0, where: {space_in: ["ilvgov.eth"]}, orderBy: "created", orderDirection: desc) {
+    id
+    title
+    created
+    body
+    choices
+    start
+    end
+    snapshot
+    state
+    author
+    space {
+      id
+      name
+    }
+  }
+}`
+    });
+
+    const response = await fetch('https://hub.snapshot.org/graphql', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body,
+    });
+    const json = await response.json();
+
+    var startdate = new Date();
+    var durationInMinutes = 5;
+    startdate.setMinutes(startdate.getMinutes() - durationInMinutes);
+    let startDateUnixTime = startdate.getTime() / 1000;
+
+
+    for (const proposal of json.data.proposals) {
+        if (startDateUnixTime < proposal.created) {
+
+            let content = proposal.body;
+            if (content.length > 1024) {
+                content = content.substring(0, 1020) + "...";
+            }
+
+            const exampleEmbed = new Discord.MessageEmbed();
+            exampleEmbed.setColor("00770f");
+            exampleEmbed.setTitle("New proposal");
+            exampleEmbed.setURL("https://gov.illuvium.io/#/ilvgov.eth/proposal/" + proposal.id);
+            exampleEmbed.addField("Name",
+                proposal.title);
+            exampleEmbed.addField("Start",
+                dateformat(new Date(proposal.start * 1000), 'dd.mm.yyyy.HH:MM'));
+            exampleEmbed.addField("End",
+                dateformat(new Date(proposal.end * 1000), 'dd.mm.yyyy.HH:MM'));
+            exampleEmbed.addField("Description",
+                content);
+            channelIllProposals.send(exampleEmbed);
+        }
     }
 }
