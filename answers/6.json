@@ -10,13 +10,11 @@
     },
 	{
       "title": "Alternatively,",
-      "value": "you can go directly to the Synthetix [Staking dapp](https://staking.synthetix.io/staking) and connect your wallet, which will display your current SNX balance and enable you to participate in the native staking ecosystem if you so desire.",
-      "inline": true
+      "value": "you can go directly to the Synthetix [Staking dapp](https://staking.synthetix.io/staking) and connect your wallet, which will display your current SNX balance and enable you to participate in the native staking ecosystem if you so desire."
     },
     {
       "title": "SNX",
-      "value": "The token address for SNX is: [0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F](https://etherscan.io/token/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F) \nDecimals: 18\nYou can find a list of all our token contracts here:  [synthetix.io/tokens](https://docs.synthetix.io/addresses/).",
-      "inline": true
+      "value": "The token address for SNX is: [0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F](https://etherscan.io/token/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F) \nDecimals: 18\nYou can find a list of all our token contracts here:  [synthetix.io/tokens](https://docs.synthetix.io/addresses/)."
     }
   ],
   "image": "havwallet.png",
