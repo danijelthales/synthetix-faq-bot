@@ -21,7 +21,7 @@ let allTimeHistoricMarketCaps = new Map();
 const w3utils = require('web3-utils');
 const fetch = require('node-fetch');
 const l2synthetixExchanger =
-    'https://thegraph.com/legacy-explorer/subgraph/synthetixio-team/optimism-exchanger';
+    'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanges';
 const l1synthetixExchanger =
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger';
 
@@ -94,6 +94,10 @@ clientNecPrice.login(process.env.BOT_TOKEN_NEC);
 
 const clientKwentaL1Volume = new Discord.Client();
 clientKwentaL1Volume.login(process.env.BOT_TOKEN_KWENTA_L1);
+
+
+const clientKwentaL2Volume = new Discord.Client();
+clientKwentaL2Volume.login(process.env.BOT_TOKEN_KWENTA_L2);
 
 const replaceString = require('replace-string');
 const https = require('https');
@@ -329,10 +333,16 @@ clientKwentaL1Volume.once('ready', () => {
     getL1KwentaVolume();
 });
 
+clientKwentaL2Volume.once('ready', () => {
+    console.log("kwenta l1 volume getting date")
+    getL2KwentaVolume();
+});
+
 
 setInterval(function () {
     console.log("kwenta trading volumes")
     getL1KwentaVolume();
+    getL2KwentaVolume();
 }, 360 * 1000);
 
 client.on("ready", () => {
@@ -3956,6 +3966,38 @@ async function getL1KwentaVolume() {
     })();
 }
 
+async function getL2KwentaVolume() {
+    // Fetch all kwenta l2 trading in the last 24hrs
+    await (async () => {
+        const body = JSON.stringify({
+            query: `{
+  totals(first: 1) {
+    id
+    trades
+    exchangers
+    exchangeUSDTally
+  }
+}`,
+            variables: null,
+        });
+
+        const response = await fetch(l2synthetixExchanger, {
+            method: 'POST',
+            body,
+        });
+
+        const json = await response.json();
+        clientKwentaL2Volume.guilds.cache.forEach(function (value, key) {
+            try {
+                console.log("Updating KWENTA L2");
+                value.members.cache.get(clientKwentaL2Volume.user.id).setNickname("24h = $" + getNumberLabel(json.data.totals[0].exchangeUSDTally));
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        await clientKwentaL2Volume.user.setActivity("KWENTA L2 trading volume", {type: 'WATCHING'});
+    })();
+}
 
 function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
     let calculatedMarketCaps = new Map();
