@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebdc9bb-fe2c-43ca-a458-a9c0940ff418" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +22,35 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="371" lean-forward="true" selection-start-line="371" selection-end-line="371" />
+            <state relative-caret-position="323">
+              <caret line="2237" column="19" selection-start-line="2237" selection-start-column="19" selection-end-line="2237" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testSnapshot.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2550">
+              <caret line="150" column="22" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" selection-start-line="30" selection-end-line="30" selection-end-column="86" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/graphql-request/dist/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1394">
+              <caret line="82" column="14" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -38,26 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>debt</find>
-      <find>!hedge</find>
-      <find>bug description of the bug</find>
-      <find>bugs</find>
-      <find>json</find>
-      <find>countdown</find>
-      <find>bug</find>
-      <find>fetch(</find>
-      <find>numberw</find>
-      <find>0,4</find>
-      <find>fetch</find>
-      <find>l2trade</find>
-      <find>w3utils</find>
-      <find>trades1000</find>
-      <find>pass</find>
-      <find>l2tra</find>
-      <find>getExc</find>
-      <find>getl2Exchanges</find>
-      <find>l2trades</find>
-      <find>0, 5</find>
       <find>getMintrData</find>
       <find>infura</find>
       <find>block is</find>
@@ -67,7 +75,27 @@
       <find>marketsMap.get(market)</find>
       <find>synthetix</find>
       <find>&quot;synthetix</find>
+      <find>graph</find>
+      <find>gql</find>
+      <find>discord</find>
+      <find>.client</find>
+      <find>cliet</find>
+      <find>channel</find>
+      <find>channelShorts</find>
+      <find>&lt;@</find>
+      <find>&lt;@!</find>
+      <find>513707101730897921</find>
+      <find>gasSubscribersMap</find>
+      <find>member</find>
+      <find>guild =</find>
       <find>guild</find>
+      <find>guild.members</find>
+      <find>guild.members.fetc</find>
+      <find>guild.member</find>
+      <find>pe</find>
+      <find>performance</find>
+      <find>coingecko</find>
+      <find>coingeckoUsd</find>
     </findStrings>
     <replaceStrings>
       <replace>https://synthetix.community/docs/susd-tracker</replace>
@@ -108,7 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/answers/89.json" />
         <option value="$PROJECT_DIR$/questions/90.txt" />
         <option value="$PROJECT_DIR$/questions/89.txt" />
         <option value="$PROJECT_DIR$/questions/88.txt" />
@@ -158,12 +185,13 @@
         <option value="$PROJECT_DIR$/refunds.csv" />
         <option value="$PROJECT_DIR$/binaryOptions.js" />
         <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/testSnapshot.js" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+    <option name="x" value="1912" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -173,8 +201,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="CatdeaLogs" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -187,13 +213,15 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../synthetix-monitoring" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/testSnapshot.js" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -223,19 +251,19 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.binaryOptions.js">
+  <component name="RunManager" selected="Node.js.testSnapshot.js">
     <configuration name="binaryOptions.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="binaryOptions.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration name="index.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="index.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
-    <configuration name="test.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/test.js" working-dir="$PROJECT_DIR$">
+    <configuration name="testSnapshot.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="testSnapshot.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Node.js.binaryOptions.js" />
-      <item itemvalue="Node.js.test.js" />
+      <item itemvalue="Node.js.testSnapshot.js" />
       <item itemvalue="Node.js.index.js" />
     </list>
   </component>
@@ -388,11 +416,19 @@
       <workItem from="1626292666546" duration="2064000" />
       <workItem from="1627899683109" duration="7841000" />
       <workItem from="1629374789950" duration="2406000" />
+      <workItem from="1630922481066" duration="606000" />
+      <workItem from="1631091653961" duration="596000" />
+      <workItem from="1631357229806" duration="594000" />
+      <workItem from="1631520141803" duration="595000" />
+      <workItem from="1631571942568" duration="2755000" />
+      <workItem from="1631698591942" duration="8976000" />
+      <workItem from="1631775210079" duration="1209000" />
+      <workItem from="1631874583058" duration="594000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="567485000" />
+    <option name="totallyTimeSpent" value="585543000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -404,25 +440,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5040783" side_tool="true" weight="0.30197755" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.122068234" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.17857143" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32827735" />
-      <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.4989339" weight="0.27952328" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="1" sideWeight="0.4989339" visible="true" weight="0.27952328" />
       <window_info anchor="bottom" id="Database Changes" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5010661" side_tool="true" weight="0.24918744" />
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.49946696" weight="0.32827735" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" visible="true" weight="0.45178765" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49946696" weight="0.36619717" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.32936078" />
@@ -463,6 +498,17 @@
         <option value="1" />
       </list>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/testSnapshot.js</url>
+          <line>146</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
@@ -535,12 +581,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/answers/48.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/answers/1.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/answers/2.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -810,17 +850,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="69" selection-start-line="1" selection-start-column="69" selection-end-line="1" selection-end-column="69" />
+        <state relative-caret-position="323">
+          <caret line="2237" column="19" selection-start-line="2237" selection-start-column="19" selection-end-line="2237" selection-end-column="64" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
+    <entry file="file://$PROJECT_DIR$/testSnapshot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="371" lean-forward="true" selection-start-line="371" selection-end-line="371" />
+        <state relative-caret-position="2550">
+          <caret line="150" column="22" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" selection-start-line="30" selection-end-line="30" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/graphql-request/dist/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1394">
+          <caret line="82" column="14" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
         </state>
       </provider>
     </entry>

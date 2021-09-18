@@ -98,6 +98,9 @@ clientKwentaL1Volume.login(process.env.BOT_TOKEN_KWENTA_L1);
 
 const clientKwentaL2Volume = new Discord.Client();
 clientKwentaL2Volume.login(process.env.BOT_TOKEN_KWENTA_L2);
+const clientReminder = new Discord.Client();
+clientReminder.login(process.env.BOT_TOKEN_COUNCIL_REMINDER);
+
 
 const replaceString = require('replace-string');
 const https = require('https');
@@ -183,7 +186,7 @@ var coingeckoBtc = 0.000351;
 var binanceUsd = 3.74;
 var kucoinUsd = 3.74;
 
-var payday = new Date('2020-08-12 05:30');
+var payday = new Date('2020-08-12 07:30');
 
 const Synth = class {
     name;
@@ -394,6 +397,10 @@ client.on("ready", () => {
     });
     client.channels.fetch(process.env.SHORTS).then(c => {
         channelShorts = c;
+    });
+
+    clientReminder.channels.fetch('887660245063725106').then(c => {
+        councilChannel = c
     });
 
 
@@ -771,8 +778,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                    //     msg.reply("I've called for master, he will be with you shortly.");
+                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
@@ -2845,42 +2852,6 @@ setInterval(function () {
 
 setInterval(function () {
     try {
-        https.get('https://api.etherscan.io/api?module=account&action=balance&address=0xac63b3a69604925dadf2abd13877d7a4a7113308&tag=latest', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                try {
-                    let result = JSON.parse(data);
-
-                    let ethBalance = result.result / 1e18;
-
-                    if (ethBalance < 0.5) {
-                        client.channels.fetch('705191770903806022').then(c => {
-                            c.send("https://etherscan.io/address/0xac63b3a69604925dadf2abd13877d7a4a7113308 has less than 0.5 ETH")
-                        });
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}, 60 * 1000 * 60);
-
-
-setInterval(function () {
-    try {
         snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 300}).then(result => {
             console.log("Fetching exchanges in last 5 min");
             result.forEach(r => {
@@ -4171,3 +4142,139 @@ async function getILVProposalsData() {
         }
     }
 }
+
+
+const activeproposals = gql`
+    query Proposals {
+        proposals(
+            first: 20,
+            skip: 0,
+            where: {
+                space_in: ["snxgov.eth"],
+                state: "active"
+            },
+            orderBy: "created",
+            orderDirection: desc
+        ) {
+            id
+            title
+            body
+            choices
+            start
+            end
+            snapshot
+            state
+            author
+            space {
+                id
+                name
+            }
+        }
+    }
+`;
+
+let votes = gql`
+    query getVotes($voteid: String!){
+        votes (
+            first: 1000
+            skip: 0
+            where: {
+                proposal: $voteid
+            }
+            orderBy: "created",
+            orderDirection: desc
+        ) {
+            id
+            voter
+            created
+            proposal {
+                id
+            }
+            choice
+            space {
+                id
+            }
+        }
+    }
+
+`;
+
+let voters = [
+    {
+        name: 'kain',
+        address: '0x42f9134E9d3Bf7eEE1f8A5Ac2a4328B059E7468c',
+        discordId: '420339322785366019'
+    },
+    {
+        name: 'sm',
+        address: '0x0bc3668d2AaFa53eD5E5134bA13ec74ea195D000',
+        discordId: '530165298360483850'
+    },
+    {
+        name: 'spreek',
+        address: '0x935D2fD458fdf41B6F7B62471f593797866a3Ce6',
+        discordId: '136272881666621440'
+    },
+    {
+        name: 'brian',
+        address: '0xB0a5a05ac5791AD5a28905B57182CAB1DF9B10aA',
+        discordId: '382531227288076288'
+    },
+    {
+        name: 'michael',
+        address: '0x65DCD62932fEf5af25AdA91F0F24658e94e259c5',
+        discordId: '319916151415242755'
+    },
+    {
+        name: 'jackson',
+        address: '0x0120666306F4D15bb125696f322BFD8EE83423a9',
+        discordId: '420339322785366019'
+    },
+    {
+        name: 'danijel',
+        address: '0x461783A831E6dB52D68Ba2f3194F6fd1E0087E04',
+        discordId: '513707101730897921'
+    },
+    {
+        name: 'bojan',
+        address: '0x4412bCaf3c6e37d0e6Fb14a00167B5d98D1dd8C1',
+        discordId: '472722669754646541'
+    }
+]
+
+function checkVotes() {
+    try {
+        request('https://hub.snapshot.org/graphql', activeproposals).then((data) => {
+            console.log(data.proposals);
+
+            data.proposals.forEach(p => {
+                const variables = {
+                    voteid: p.id,
+                }
+                request('https://hub.snapshot.org/graphql', votes, variables).then((datavotes) => {
+                    console.log(datavotes);
+                    let votedVoters = datavotes.votes.map(v => {
+                        return v.voter;
+                    })
+                    voters.forEach(v => {
+                        if (!votedVoters.includes(v.address)) {
+                            let discordUser = '<@!' + v.discordId + '>';
+                            councilChannel.send('Reminding ' + discordUser + ' to vote on https://staking.synthetix.io/gov/snxgov.eth/' + p.id);
+                            guild.members.fetch(v.discordId).then(member => {
+                                try {
+                                    member.send('Reminder to vote on https://staking.synthetix.io/gov/snxgov.eth/' + p.id);
+                                } catch (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
+                    })
+                });
+            })
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+setInterval(checkVotes, 1000 * 60 * 60 * 5);
