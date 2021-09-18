@@ -3971,11 +3971,17 @@ async function getL2KwentaVolume() {
     await (async () => {
         const body = JSON.stringify({
             query: `{
-  totals(first: 1) {
-    id
-    trades
-    exchangers
-    exchangeUSDTally
+  dailyTotals(
+    orderBy:timestamp,
+        orderDirection:desc,
+    first: 1) {
+    id,
+    timestamp,
+    trades,
+    exchangers,
+    exchangeUSDTally,
+    totalFeesGeneratedInUSD
+    
   }
 }`,
             variables: null,
@@ -3990,7 +3996,7 @@ async function getL2KwentaVolume() {
         clientKwentaL2Volume.guilds.cache.forEach(function (value, key) {
             try {
                 console.log("Updating KWENTA L2");
-                value.members.cache.get(clientKwentaL2Volume.user.id).setNickname("24h = $" + getNumberLabel(json.data.totals[0].exchangeUSDTally));
+                value.members.cache.get(clientKwentaL2Volume.user.id).setNickname("24h = $" + getNumberLabel(json.data.dailyTotals[0].exchangeUSDTally));
             } catch (e) {
                 console.log(e);
             }
