@@ -778,8 +778,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                //     msg.reply("I've called for master, he will be with you shortly.");
+                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                    //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
@@ -3939,9 +3939,9 @@ async function getL1KwentaVolume() {
 
 async function getL2KwentaVolume() {
     // Fetch all kwenta l2 trading in the last 24hrs
-    await (async () => {
-        const body = JSON.stringify({
-            query: `{
+
+    const body = JSON.stringify({
+        query: `{
   dailyTotals(
     orderBy:timestamp,
         orderDirection:desc,
@@ -3955,25 +3955,25 @@ async function getL2KwentaVolume() {
     
   }
 }`,
-            variables: null,
-        });
+        variables: null,
+    });
 
-        const response = await fetch(l2synthetixExchanger, {
-            method: 'POST',
-            body,
-        });
+    const response = await fetch(l2synthetixExchanger, {
+        method: 'POST',
+        body,
+    });
 
-        const json = await response.json();
-        clientKwentaL2Volume.guilds.cache.forEach(function (value, key) {
-            try {
-                console.log("Updating KWENTA L2");
-                value.members.cache.get(clientKwentaL2Volume.user.id).setNickname("24h = $" + getNumberLabel(json.data.dailyTotals[0].exchangeUSDTally));
-            } catch (e) {
-                console.log(e);
-            }
-        });
-        await clientKwentaL2Volume.user.setActivity("KWENTA L2 trading volume", {type: 'WATCHING'});
-    })();
+    const json = await response.json();
+    console.log(json);
+    clientKwentaL2Volume.guilds.cache.forEach(function (value, key) {
+        try {
+            console.log("Updating KWENTA L2");
+            value.members.cache.get(clientKwentaL2Volume.user.id).setNickname("24h = $" + getNumberLabel(json.data.dailyTotals[0].exchangeUSDTally));
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    await clientKwentaL2Volume.user.setActivity("KWENTA L2 trading volume", {type: 'WATCHING'});
 }
 
 function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
