@@ -2215,7 +2215,7 @@ let usdt2peg = 1;
 
 setInterval(function () {
     try {
-        https.get('https://api.1inch.exchange/v3.0/10/quote?fromTokenAddress=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&toTokenAddress=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&amount=1000000000000000000000', (resp) => {
+        https.get('https://api.1inch.exchange/v3.0/10/quote?fromTokenAddress=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&toTokenAddress=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&amount=10000000000000000000000', (resp) => {
             try {
                 let data = '';
 
@@ -2251,7 +2251,7 @@ setInterval(function () {
 let usdcL2Peg = 1;
 setInterval(function () {
     try {
-        https.get('https://api.1inch.exchange/v3.0/10/quote?fromTokenAddress=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&toTokenAddress=0x7f5c764cbc14f9669b88837ca1490cca17c31607&amount=1000000000000000000000', (resp) => {
+        https.get('https://api.1inch.exchange/v3.0/10/quote?fromTokenAddress=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&toTokenAddress=0x7f5c764cbc14f9669b88837ca1490cca17c31607&amount=10000000000000000000000', (resp) => {
             try {
                 let data = '';
 
