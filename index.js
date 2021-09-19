@@ -34,6 +34,9 @@ clientFaqPrice.login(process.env.BOT_TOKEN_SNX);
 const clientPegPrice = new Discord.Client();
 clientPegPrice.login(process.env.BOT_TOKEN_PEG);
 
+const clientPegL2Price = new Discord.Client();
+clientPegL2Price.login(process.env.BOT_TOKEN_L2_PEG);
+
 const clientsSEthPegPrice = new Discord.Client();
 clientsSEthPegPrice.login(process.env.BOT_TOKEN_SETH_PEG);
 
@@ -2208,6 +2211,79 @@ setInterval(function () {
 
 }, 60 * 1000);
 
+let usdt2peg = 1;
+
+setInterval(function () {
+    try {
+        https.get('https://api.1inch.exchange/v3.0/10/quote?fromTokenAddress=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&toTokenAddress=0x94b008aa00579c1307b0ef2c499ad98a8ce58e58&amount=1000000000000000000000', (resp) => {
+            try {
+                let data = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    try {
+                        let result = JSON.parse(data).toTokenAmount / 1e10;
+                        usdt2peg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    } catch
+                        (e) {
+                        console.log("Error on fetching l2 1inch peg: ", e);
+                    }
+                });
+            } catch (e) {
+                console.log("Error on fetching l2 1inch peg: ", e);
+            }
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    } catch
+        (e) {
+        console.log("Error on fetching l2 1inch peg: ", e);
+    }
+
+}, 60 * 1000);
+
+let usdcL2Peg = 1;
+setInterval(function () {
+    try {
+        https.get('https://api.1inch.exchange/v3.0/10/quote?fromTokenAddress=0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9&toTokenAddress=0x7f5c764cbc14f9669b88837ca1490cca17c31607&amount=1000000000000000000000', (resp) => {
+            try {
+                let data = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    try {
+                        let result = JSON.parse(data).toTokenAmount / 1e10;
+                        usdcL2Peg = Math.round(((result * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    } catch (e) {
+                        console.log("Error l2 peg: ", e);
+                    }
+                });
+            } catch
+                (e) {
+                console.log("Error on fetching l2 1inch peg: ", e);
+            }
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    } catch
+        (e) {
+        console.log("Error on fetching l2 1inch peg: ", e);
+    }
+
+}, 60 * 1000);
+
 setInterval(function () {
     try {
         https.get('https://api.1inch.exchange/v3.0/1/quote?fromTokenAddress=0x57Ab1ec28D129707052df4dF418D58a2D46d5f51&toTokenAddress=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&amount=10000000000000000000000', (resp) => {
@@ -2335,6 +2411,14 @@ setInterval(function () {
             console.log(e);
         }
     });
+    clientPegL2Price.guilds.cache.forEach(function (value, key) {
+        try {
+            value.members.cache.get(clientPegL2Price.user.id).setNickname("$" + Math.round(((((usdcL2Peg + usdt2peg) / 2)) + Number.EPSILON) * 100) / 100);
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    clientPegL2Price.user.setActivity("usdt=" + usdt2peg + " usdc=" + usdcL2Peg, {type: 'PLAYING'});
     clientsSEthPegPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("844321938456313887").setNickname("sETH peg");
