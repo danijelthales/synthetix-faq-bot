@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "When you 'claim' in the Rewards tab in the staking dapp you are assigned your portion of SNX for that epoch in an escrow record in the [RewardEscrow Contract ](https://etherscan.io/address/0xb671F2210B1F6621A2607EA63E6B2DC3e2464d1F). Your rewards will not show in your wallet address, but they are assigned to your wallet address to be vested in 12 months from their claim date. However, you can still mint from those escrowed SNX because they can also be used as collateral.",
+      "value": "All staking SNX rewards claimed are not tokenized transferable SNX in your wallet until they are ‘vested’ out of escrow which can be done after the 12-month waiting/escrow period. While your rewards are in escrow, they are simply assigned to your wallet address as escrowed SNX which then can be used to further collateralize your staking position and minted upon. Escrowed SNX performs identically to your wallet SNX in terms of anything within the Staking dapp.",
       "inline": true
     },
     {
