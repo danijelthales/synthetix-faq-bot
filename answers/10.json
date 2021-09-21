@@ -1,13 +1,25 @@
 {
   "title": "Question 10:",
-  "description": "I used to have some Havven (HAV) tokens. How do I switch them to SNX?",
+  "description": "How do I report unsolicited DMs and scammers?",
   "color": "0099ff",
-  "url": "https://synthetix.community/docs/other#why-arent-my-snx-tokens-showing-up-in-etherscan-or-another-platform",
   "fields": [
     {
-      "title": "Answer:",
-      "value": "HAV tokens had a name change to SNX, and at this time all HAV holders were dropped SNX. From this point on, all HAV tokens had no market or value. So, you don’t have to convert them, you only need to get your wallet or viewer to see them (if you haven’t already transferred/sold since). Not every cryptocurrency wallet enables all ERC20 tokens to be viewable by default.\n\nFirst check the token balance of your address on [etherscan](https://etherscan.io/) to see if you actually have SNX that matches to the below contract address. If they are showing in etherscan but not in your wallet, then you’ll know it’s just that your wallet provider has not made the new SNX tokens viewable by default. If so, look for your wallet provider's help documents to find out how to add custom tokens and use the current SNX contract address below. Once your wallet can see them, you will be able to send them on or exchange them directly.\n\nAlternatively, you can go directly to the Synthetix [Staking dapp](https://staking.synthetix.io/staking) and connect your wallet, which will display your current SNX balance and enable you to participate in the native staking ecosystem if you so desire.\n\nThe token address for SNX is: [0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F](https://etherscan.io/token/0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F) \nDecimals: 18\nYou can find a list of all our token contracts here:  [synthetix.io/tokens] (https://docs.synthetix.io/addresses/)."
+      "title": "Scammers in Discord",
+      "value": "Scammers are present in almost every Crypto related Discord server now. Please understand that NO SUPPORT PERSONEL WILL DM YOU FIRST! It is important we all work together to remove them as fast as possible so they cannot eventually fool a user and steal the contents of their wallet. Even if these users have the same name as a moderator or admin in the server, you should not reply and report in the #report-scammers channel immediately. You may know they are a scammer, but perhaps one of the next users they try it on may fall for it, so please report ASAP to help your fellow users."
+    },
+    {
+      "title": "@ Reporting a user in Discord (PC)",
+      "value": "From the DM screen, click on the user’s avatar. A sub window should appear with the user’s unique id number after (e.g. username#2637). Highlight/select the entire text there including the #number and copy it to your clipboard (ctrl+c). Ensure Synthetix discord server is a mutual server (otherwise use this process to report in the relative discord server the scammer is in) and head to the #report-scammers channel. In the chat box type the @ symbol followed by pasting your clipboard (ctrl+v). This process of copying a user’s ID directly will bypass their privacy settings in which would block their name coming up on the suggested list when using @ tag and just typing their name. You have successfully tagged them so that server mods can identify and ban them very fast. However, you still need to show evidence, or this process can be abused."
+    },
+    {
+      "title": "Providing evidence for the report (can only do this part if you want)",
+      "value": "You will need to provide screenshot evidence of the DM you received. On a PC you can use the print screen key on your keyboard (next to F12) which will copy your entire screen(s) as an image to your clipboard. If you are happy to post an entire shot of your screen, you can straight to pasting into the report channel (you can always delete you post after they have been deleted). If you want to narrow the screenshot to only a relevant image, then you then need to paste it (ctrl+v) into basic image software such as ms paint. You can then select an area and copy again (ctrl+c) which will then only paste that square. See the gify for a quick demo on this. For a phone you will need to follow your model’s procedure for screenshots. It is usually the i/o and a volume button at the same time, however it can vary between models."
+    },
+	{
+      "title": "Notes",
+      "value": "The ID copy step can be skipped, but it does help the moderators source the correct user faster. You can just do the evidence step here if you don’t have time or can’t work out how to @ the user (on a phone). If you do only do this step, you need to include the user’s full ID (including the #number) into the screenshot, or mods may not be 100% sure its the same user that's in your DM. If this window is blocking the message content, you can post multiple screenshots. \n\nIf in doubt, just report. You won’t get into trouble for accidentally reporting an actual mod/admin/engineer."
     }
   ],
+  "image": "scamreport.gif",
   "footer": {}
 }
