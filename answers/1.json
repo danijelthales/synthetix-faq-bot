@@ -6,7 +6,7 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "All staking SNX rewards claimed are not tokenized transferable SNX in your wallet until they are ‘vested’ out of escrow which can be done after the 12-month waiting/escrow period. While your rewards are in escrow, they are simply assigned to your wallet address as escrowed SNX which then can be used to further collateralize your staking position and minted upon. Escrowed SNX performs identically to your wallet SNX in terms of anything within the Staking dapp.",
+      "value": "Claimed staking SNX rewards are not tokenized and transferable SNX in your wallet until they are ‘vested’ out of escrow which can be done after the 12-month waiting/escrow period. However, while your rewards are in escrow, they are designated to your wallet address as escrowed SNX which can still be used to further collateralise your staking position and minted upon. Escrowed SNX performs identically to your wallet SNX in terms of staking.\n\nTo see your escrow schedule or to vest escrowed SNX that have passed their time lock, go to the [WALLET > ESCROW](https://staking.synthetix.io/escrow) page from within the Staking dapp.",
       "inline": true
     },
     {
