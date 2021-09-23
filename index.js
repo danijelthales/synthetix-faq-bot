@@ -2631,7 +2631,7 @@ function doCalculate(command, msg, gasPriceParam, fromDM) {
         if (gasPriceParam) {
             gasPriceToUse = gasPriceParam;
         }
-        let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+        let resRew = Math.round(((((command * snxRewardsThisPeriod) / (totalDebt * snxToMintUsd)) + Number.EPSILON) * 100) / 100);
         let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
         let mintingPrice = Math.round(((mintGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
         let claimPrice = Math.round(((claimGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
