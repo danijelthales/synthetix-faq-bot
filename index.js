@@ -2631,7 +2631,12 @@ function doCalculate(command, msg, gasPriceParam, fromDM) {
         if (gasPriceParam) {
             gasPriceToUse = gasPriceParam;
         }
-        let resRew = Math.round(((command * snxRewardsPerMinterUsd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+
+
+        var re = new RegExp(",", 'g');
+        var totalDebtNumber = totalDebt.replace(re, '');
+
+        let resRew = Math.round(((((command * snxRewardsThisPeriod.split(" ")[0].replace(",", "")) / (totalDebtNumber.substring(1, totalDebtNumber.length) * snxToMintUsd)) + Number.EPSILON) * 100) / 100);
         let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
         let mintingPrice = Math.round(((mintGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
         let claimPrice = Math.round(((claimGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
@@ -3082,23 +3087,34 @@ setInterval(function () {
 
 
 let volume = 100000;
-let distinctTraders = new Set();
+let distinctTraders = 0;
 
-function getVolume() {
+async function getVolume() {
     volume = 0;
-    distinctTraders = new Set();
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 3600 * 24}).then(result => {
-            console.log("Fetching exchanges in last day");
-            result.forEach(r => {
-                try {
-                    volume += r.toAmountInUSD;
-                    distinctTraders.add(r.fromAddress)
-                } catch (e) {
-                    console.log(e);
-                }
-            })
+
+        const body = JSON.stringify({
+            query: `{
+  dailyTotals( orderBy:timestamp,
+        orderDirection:desc,
+    first: 1) {
+    timestamp
+    exchangers
+    exchangeUSDTally
+    totalFeesGeneratedInUSD
+  }
+}`,
+            variables: null,
         });
+
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
+            method: 'POST',
+            body,
+        });
+        const json = await response.json();
+        volume = json.data.dailyTotals[0].exchangeUSDTally;
+        distinctTraders = json.data.dailyTotals[0].exchangers;
+
     } catch (e) {
         console.log(e);
     }
@@ -3117,7 +3133,7 @@ setInterval(function () {
         try {
             if (volume > 0) {
                 value.members.cache.get("784489616781869067").setNickname("24h = $" + getNumberLabel(volume));
-                value.members.cache.get("784489616781869067").user.setActivity("Traders=" + distinctTraders.size, {type: 'PLAYING'});
+                value.members.cache.get("784489616781869067").user.setActivity("Traders=" + distinctTraders, {type: 'PLAYING'});
             }
         } catch (e) {
             console.log(e);
