@@ -3012,7 +3012,7 @@ setInterval(async function () {
                         exampleEmbed.addField("From",
                             numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(Number(r.toAmount.toFixed(2))) + " " + toCurrencyKey);
+                            numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + toCurrencyKey);
                         exampleEmbed.addField("Value",
                             numberWithCommas(Number(r.fromAmountInUSD.toFixed(2))) + " sUSD");
                         trades100.send(exampleEmbed);
