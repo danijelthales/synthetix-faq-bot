@@ -4070,14 +4070,14 @@ async function getL1KwentaVolume() {
         const body = JSON.stringify({
             query: `{
       dailyExchangePartners(
-        orderBy:dayID,
+        orderBy:timestamp,
         orderDirection:desc,
-        max:"1",
+        first:1,
         where:{partner: "KWENTA"
                }
       )
       {
-        dayID
+        timestamp
         partner
         usdFees
         usdVolume
