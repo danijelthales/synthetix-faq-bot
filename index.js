@@ -2962,6 +2962,7 @@ setInterval(async function () {
         toAddress
         toAmount
         toAmountInUSD
+        from
         feesInUSD
       }
     }`,
@@ -2979,19 +2980,25 @@ setInterval(async function () {
         synthExchanges.forEach(r => {
             if (startDateUnixTime < r.timestamp) {
                 try {
-                    console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
+
+                    var fromCurrenyKey = web3.utils.hexToAscii(r.fromCurrencyKey);
+                    fromCurrenyKey = fromCurrenyKey.replace(/\0/g, '');
+                    var toCurrencyKey = web3.utils.hexToAscii(r.toCurrencyKey);
+                    toCurrencyKey = toCurrencyKey.replace(/\0/g, '');
+
+                    console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD >= 1000000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.setURL("https://etherscan.io/block/" + r.block);
                         exampleEmbed.addField("Wallet",
-                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.from + '](https://etherscan.io/address/' + r.from + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + r.fromCurrencyKey);
+                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + r.toCurrencyKey);
+                            numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + toCurrencyKey);
                         exampleEmbed.addField("Value",
                             numberWithCommas(Number(r.fromAmountInUSD).toFixed(2)) + " sUSD");
                         trades1000.send(exampleEmbed);
@@ -2999,13 +3006,13 @@ setInterval(async function () {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.setURL("https://etherscan.io/block/" + r.block);
                         exampleEmbed.addField("Wallet",
-                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.from + '](https://etherscan.io/address/' + r.from + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + r.fromCurrencyKey);
+                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(Number(r.toAmount.toFixed(2))) + " " + r.toCurrencyKey);
+                            numberWithCommas(Number(r.toAmount.toFixed(2))) + " " + toCurrencyKey);
                         exampleEmbed.addField("Value",
                             numberWithCommas(Number(r.fromAmountInUSD.toFixed(2))) + " sUSD");
                         trades100.send(exampleEmbed);
@@ -3111,6 +3118,7 @@ setInterval(async function () {
         toAddress
         toAmount
         toAmountInUSD
+        from
         feesInUSD
       }
     }`,
@@ -3128,19 +3136,24 @@ setInterval(async function () {
         synthExchanges.forEach(r => {
             if (startDateUnixTime < r.timestamp) {
                 try {
-                    console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
+                    var fromCurrenyKey = web3.utils.hexToAscii(r.fromCurrencyKey);
+                    fromCurrenyKey = fromCurrenyKey.replace(/\0/g, '');
+                    var toCurrencyKey = web3.utils.hexToAscii(r.toCurrencyKey);
+                    toCurrencyKey = toCurrencyKey.replace(/\0/g, '');
+
+                    console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD < 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("00770f");
                         exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.setURL("https://etherscan.io/block/" + r.block);
                         exampleEmbed.addField("Wallet",
-                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.from + '](https://etherscan.io/address/' + r.from + ')');
                         exampleEmbed.addField("From",
-                            Number(r.fromAmount).toFixed(3) + " " + r.fromCurrencyKey);
+                            Number(r.fromAmount).toFixed(3) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
-                            Number(r.toAmount).toFixed(3) + " " + r.toCurrencyKey);
+                            Number(r.toAmount).toFixed(3) + " " + toCurrencyKey);
                         trades.send(exampleEmbed);
                     }
                 } catch (e) {
