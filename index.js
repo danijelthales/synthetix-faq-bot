@@ -2989,11 +2989,11 @@ setInterval(async function () {
                         exampleEmbed.addField("Wallet",
                             '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(r.fromAmount.toFixed(2)) + " " + r.fromCurrencyKey);
+                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(r.toAmount.toFixed(2)) + " " + r.toCurrencyKey);
+                            numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + r.toCurrencyKey);
                         exampleEmbed.addField("Value",
-                            numberWithCommas(r.fromAmountInUSD.toFixed(2)) + " sUSD");
+                            numberWithCommas(Number(r.fromAmountInUSD).toFixed(2)) + " sUSD");
                         trades1000.send(exampleEmbed);
                     } else if (r.toAmountInUSD >= 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
@@ -3003,11 +3003,11 @@ setInterval(async function () {
                         exampleEmbed.addField("Wallet",
                             '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(r.fromAmount.toFixed(2)) + " " + r.fromCurrencyKey);
+                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(r.toAmount.toFixed(2)) + " " + r.toCurrencyKey);
+                            numberWithCommas(Number(r.toAmount.toFixed(2))) + " " + r.toCurrencyKey);
                         exampleEmbed.addField("Value",
-                            numberWithCommas(r.fromAmountInUSD.toFixed(2)) + " sUSD");
+                            numberWithCommas(Number(r.fromAmountInUSD.toFixed(2))) + " sUSD");
                         trades100.send(exampleEmbed);
                     }
                 } catch (e) {
@@ -3138,9 +3138,9 @@ setInterval(async function () {
                         exampleEmbed.addField("Wallet",
                             '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
                         exampleEmbed.addField("From",
-                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                            Number(r.fromAmount).toFixed(3) + " " + r.fromCurrencyKey);
                         exampleEmbed.addField("To",
-                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                            Number(r.toAmount).toFixed(3) + " " + r.toCurrencyKey);
                         trades.send(exampleEmbed);
                     }
                 } catch (e) {
