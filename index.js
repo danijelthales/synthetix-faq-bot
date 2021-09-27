@@ -2939,11 +2939,45 @@ setInterval(function () {
 
 }, 60 * 1000);
 
-setInterval(function () {
+setInterval(async function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 300}).then(result => {
-            console.log("Fetching exchanges in last 5 min");
-            result.forEach(r => {
+        var startdate = new Date();
+        var durationInMinutes = 5;
+        startdate.setMinutes(startdate.getMinutes() - durationInMinutes);
+        let startDateUnixTime = Math.floor(startdate / 1000)
+        const body = JSON.stringify({
+            query: `{
+      synthExchanges(
+        orderBy:timestamp,
+        orderDirection:desc,
+        first:20
+      )
+      {
+        fromAmount
+        fromAmountInUSD
+        fromCurrencyKey
+        toCurrencyKey
+        block
+        timestamp
+        toAddress
+        toAmount
+        toAmountInUSD
+        feesInUSD
+      }
+    }`,
+            variables: null,
+        });
+
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
+            method: 'POST',
+            body,
+        });
+
+        const json = await response.json();
+        const {synthExchanges} = json.data;
+
+        synthExchanges.forEach(r => {
+            if (startDateUnixTime < r.timestamp) {
                 try {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
@@ -2979,8 +3013,8 @@ setInterval(function () {
                 } catch (e) {
                     console.log(e);
                 }
-            })
-        });
+            }
+        })
     } catch (e) {
         console.log(e);
     }
@@ -3054,11 +3088,45 @@ async function getl2Exchanges() {
 setInterval(getl2Exchanges, 1000 * 60 * 60);
 
 
-setInterval(function () {
+setInterval(async function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 120}).then(result => {
-            console.log("Fetching exchanges in last two minutes");
-            result.forEach(r => {
+        var startdate = new Date();
+        var durationInMinutes = 2;
+        startdate.setMinutes(startdate.getMinutes() - durationInMinutes);
+        let startDateUnixTime = Math.floor(startdate / 1000)
+        const body = JSON.stringify({
+            query: `{
+      synthExchanges(
+        orderBy:timestamp,
+        orderDirection:desc,
+        first:20
+      )
+      {
+        fromAmount
+        fromAmountInUSD
+        fromCurrencyKey
+        toCurrencyKey
+        block
+        timestamp
+        toAddress
+        toAmount
+        toAmountInUSD
+        feesInUSD
+      }
+    }`,
+            variables: null,
+        });
+
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
+            method: 'POST',
+            body,
+        });
+
+        const json = await response.json();
+        const {synthExchanges} = json.data;
+
+        synthExchanges.forEach(r => {
+            if (startDateUnixTime < r.timestamp) {
                 try {
                     console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
@@ -3078,8 +3146,8 @@ setInterval(function () {
                 } catch (e) {
                     console.log(e);
                 }
-            })
-        });
+            }
+        })
     } catch (e) {
         console.log(e);
     }
