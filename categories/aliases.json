@@ -36,6 +36,22 @@
     "alias": "haven"
   },
   {
+    "number": 10,
+    "alias": "scam"
+  },
+  {
+    "number": 10,
+    "alias": "scammer"
+  },
+  {
+    "number": 10,
+    "alias": "report"
+  },
+  {
+    "number": 10,
+    "alias": "report scammer"
+  },
+  {
     "number": 42,
     "alias": "inflation"
   },
@@ -210,10 +226,6 @@
   {
     "number": 22,
     "alias": "claiming blocked"
-  },
-  {
-    "number": 10,
-    "alias": "delegate claiming"
   },
   {
     "number": 37,
