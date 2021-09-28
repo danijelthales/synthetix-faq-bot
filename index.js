@@ -277,6 +277,7 @@ let trades100 = null;
 let trades1000 = null;
 let l2tradesBelow10k = null;
 let l2tradesAbove10k = null;
+let l2tradesAbove50k = null;
 let general = null;
 let councilChannel = null;
 let fundChannel = null;
@@ -367,6 +368,9 @@ client.on("ready", () => {
     });
     client.channels.fetch('880035104456572958').then(c => {
         l2tradesAbove10k = c
+    });
+    client.channels.fetch('892116005898289212').then(c => {
+        l2tradesAbove50k = c
     });
     client.channels.fetch('413890591840272398').then(c => {
         general = c;
@@ -3080,9 +3084,12 @@ async function getl2Exchanges() {
 
                 if (r.toAmountInUSD < 10000)
                     l2tradesBelow10k.send(exampleEmbed);
-                else {
+                else if (r.toAmountInUSD > 50000) {
+                    l2tradesAbove50k.send(exampleEmbed);
+                } else {
                     l2tradesAbove10k.send(exampleEmbed);
                 }
+
             } catch (e) {
                 console.log(e);
             }
