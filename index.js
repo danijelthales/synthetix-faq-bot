@@ -277,6 +277,7 @@ let trades100 = null;
 let trades1000 = null;
 let l2tradesBelow10k = null;
 let l2tradesAbove10k = null;
+let l2tradesAbove50k = null;
 let general = null;
 let councilChannel = null;
 let fundChannel = null;
@@ -367,6 +368,9 @@ client.on("ready", () => {
     });
     client.channels.fetch('880035104456572958').then(c => {
         l2tradesAbove10k = c
+    });
+    client.channels.fetch('892116005898289212').then(c => {
+        l2tradesAbove50k = c
     });
     client.channels.fetch('413890591840272398').then(c => {
         general = c;
@@ -2939,48 +2943,89 @@ setInterval(function () {
 
 }, 60 * 1000);
 
-setInterval(function () {
+setInterval(async function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 300}).then(result => {
-            console.log("Fetching exchanges in last 5 min");
-            result.forEach(r => {
+        var startdate = new Date();
+        var durationInMinutes = 5;
+        startdate.setMinutes(startdate.getMinutes() - durationInMinutes);
+        let startDateUnixTime = Math.floor(startdate / 1000)
+        const body = JSON.stringify({
+            query: `{
+      synthExchanges(
+        orderBy:timestamp,
+        orderDirection:desc,
+        first:20
+      )
+      {
+        fromAmount
+        fromAmountInUSD
+        fromCurrencyKey
+        toCurrencyKey
+        block
+        timestamp
+        toAddress
+        toAmount
+        toAmountInUSD
+        from
+        feesInUSD
+      }
+    }`,
+            variables: null,
+        });
+
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
+            method: 'POST',
+            body,
+        });
+
+        const json = await response.json();
+        const {synthExchanges} = json.data;
+
+        synthExchanges.forEach(r => {
+            if (startDateUnixTime < r.timestamp) {
                 try {
-                    console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
+
+                    var fromCurrenyKey = web3.utils.hexToAscii(r.fromCurrencyKey);
+                    fromCurrenyKey = fromCurrenyKey.replace(/\0/g, '');
+                    var toCurrencyKey = web3.utils.hexToAscii(r.toCurrencyKey);
+                    toCurrencyKey = toCurrencyKey.replace(/\0/g, '');
+
+                    console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD >= 1000000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.setURL("https://etherscan.io/block/" + r.block);
                         exampleEmbed.addField("Wallet",
-                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.from + '](https://etherscan.io/address/' + r.from + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(r.fromAmount.toFixed(2)) + " " + r.fromCurrencyKey);
+                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(r.toAmount.toFixed(2)) + " " + r.toCurrencyKey);
+                            numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + toCurrencyKey);
                         exampleEmbed.addField("Value",
-                            numberWithCommas(r.fromAmountInUSD.toFixed(2)) + " sUSD");
+                            numberWithCommas(Number(r.fromAmountInUSD).toFixed(2)) + " sUSD");
                         trades1000.send(exampleEmbed);
                     } else if (r.toAmountInUSD >= 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.setURL("https://etherscan.io/block/" + r.block);
                         exampleEmbed.addField("Wallet",
-                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.from + '](https://etherscan.io/address/' + r.from + ')');
                         exampleEmbed.addField("From",
-                            numberWithCommas(r.fromAmount.toFixed(2)) + " " + r.fromCurrencyKey);
+                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
-                            numberWithCommas(r.toAmount.toFixed(2)) + " " + r.toCurrencyKey);
+                            numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + toCurrencyKey);
                         exampleEmbed.addField("Value",
-                            numberWithCommas(r.fromAmountInUSD.toFixed(2)) + " sUSD");
+                            numberWithCommas(Number(r.fromAmountInUSD).toFixed(2)) + " sUSD");
                         trades100.send(exampleEmbed);
                     }
                 } catch (e) {
                     console.log(e);
                 }
-            })
-        });
+            }
+        })
     } catch (e) {
         console.log(e);
     }
@@ -3039,9 +3084,12 @@ async function getl2Exchanges() {
 
                 if (r.toAmountInUSD < 10000)
                     l2tradesBelow10k.send(exampleEmbed);
-                else {
+                else if (r.toAmountInUSD > 50000) {
+                    l2tradesAbove50k.send(exampleEmbed);
+                } else {
                     l2tradesAbove10k.send(exampleEmbed);
                 }
+
             } catch (e) {
                 console.log(e);
             }
@@ -3054,32 +3102,72 @@ async function getl2Exchanges() {
 setInterval(getl2Exchanges, 1000 * 60 * 60);
 
 
-setInterval(function () {
+setInterval(async function () {
     try {
-        snxData.exchanges.since({minTimestamp: Math.round(new Date().getTime() / 1000) - 120}).then(result => {
-            console.log("Fetching exchanges in last two minutes");
-            result.forEach(r => {
+        var startdate = new Date();
+        var durationInMinutes = 2;
+        startdate.setMinutes(startdate.getMinutes() - durationInMinutes);
+        let startDateUnixTime = Math.floor(startdate / 1000)
+        const body = JSON.stringify({
+            query: `{
+      synthExchanges(
+        orderBy:timestamp,
+        orderDirection:desc,
+        first:20
+      )
+      {
+        fromAmount
+        fromAmountInUSD
+        fromCurrencyKey
+        toCurrencyKey
+        block
+        timestamp
+        toAddress
+        toAmount
+        toAmountInUSD
+        from
+        feesInUSD
+      }
+    }`,
+            variables: null,
+        });
+
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
+            method: 'POST',
+            body,
+        });
+
+        const json = await response.json();
+        const {synthExchanges} = json.data;
+
+        synthExchanges.forEach(r => {
+            if (startDateUnixTime < r.timestamp) {
                 try {
-                    console.log("Exchanged " + r.fromAmount + " " + r.fromCurrencyKey + " to " + r.toAmount + " " + r.toCurrencyKey);
+                    var fromCurrenyKey = web3.utils.hexToAscii(r.fromCurrencyKey);
+                    fromCurrenyKey = fromCurrenyKey.replace(/\0/g, '');
+                    var toCurrencyKey = web3.utils.hexToAscii(r.toCurrencyKey);
+                    toCurrencyKey = toCurrencyKey.replace(/\0/g, '');
+
+                    console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD < 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("00770f");
                         exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/tx/" + r.hash);
+                        exampleEmbed.setURL("https://etherscan.io/block/" + r.block);
                         exampleEmbed.addField("Wallet",
-                            '[' + r.fromAddress + '](https://etherscan.io/address/' + r.fromAddress + ')');
+                            '[' + r.from + '](https://etherscan.io/address/' + r.from + ')');
                         exampleEmbed.addField("From",
-                            r.fromAmount.toFixed(3) + " " + r.fromCurrencyKey);
+                            Number(r.fromAmount).toFixed(3) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
-                            r.toAmount.toFixed(3) + " " + r.toCurrencyKey);
+                            Number(r.toAmount).toFixed(3) + " " + toCurrencyKey);
                         trades.send(exampleEmbed);
                     }
                 } catch (e) {
                     console.log(e);
                 }
-            })
-        });
+            }
+        })
     } catch (e) {
         console.log(e);
     }
@@ -4002,14 +4090,14 @@ async function getL1KwentaVolume() {
         const body = JSON.stringify({
             query: `{
       dailyExchangePartners(
-        orderBy:dayID,
+        orderBy:timestamp,
         orderDirection:desc,
-        max:"1",
+        first:1,
         where:{partner: "KWENTA"
                }
       )
       {
-        dayID
+        timestamp
         partner
         usdFees
         usdVolume
