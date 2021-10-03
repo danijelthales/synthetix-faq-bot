@@ -4161,7 +4161,7 @@ async function getL2KwentaVolume() {
             console.log(e);
         }
     });
-    await clientKwentaL2Volume.user.setActivity("KWENTA L2 trading volume", {type: 'WATCHING'});
+    await clientKwentaL2Volume.user.setActivity("Traders=" + json.data.dailyTotals[0].exchangers, {type: 'WATCHING'});
 }
 
 function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
