@@ -281,10 +281,6 @@
   },
   {
     "number": 19,
-    "alias": "scam"
-  },
-  {
-    "number": 19,
     "alias": "telegram"
   },
   {
@@ -294,6 +290,13 @@
   {
     "number": 61,
     "alias": "eth"
+  },
+  {
+    "number": 14,
+    "alias": "c-ratio"
+  },
+    "number": 14,
+    "alias": "cratio"
   },
   {
     "number": 13,
@@ -344,6 +347,22 @@
     "alias": "id"
   },
   {
+    "number": 12,
+    "alias": "scammer"
+  },
+  {
+    "number": 12,
+    "alias": "scam"
+  },
+  {
+    "number": 12,
+    "alias": "report"
+  },
+  {
+    "number": 12,
+    "alias": "report scammer"
+  },
+  {
     "number": 4,
     "alias": "buy snx"
   },
@@ -377,7 +396,7 @@
   },
   {
     "number": 68,
-    "alias": "contract"
+    "alias": "old snx"
   },
   {
     "number": 69,
@@ -498,14 +517,6 @@
   {
     "number": 86,
     "alias": "time lock"
-  },
-  {
-    "number": 88,
-    "alias": "buy SNX to fix c-ratio"
-  },
-  {
-    "number": 88,
-    "alias": "buy SNX instead of burning sUSD"
   },
   {
     "number": 89,

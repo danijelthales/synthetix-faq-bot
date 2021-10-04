@@ -6,7 +6,11 @@
   "fields": [
     {
       "title": "Answer:",
-      "value": "If your C-Ratio is below the Target Collateralization Ratio (currently set at 600% Collateral at this of this article), you will be blocked from claiming rewards and you will need to increase your C-Ratio to claim.You can increase your C-Ratio in two ways: 1) Burning sUSD, or 2) Buying more SNX and mint more sUSD. If your C-Ratio is below the Target Collateralization Ratio, you will be blocked and unable to claim your fee rewards. If your C-Ratio is above the Target Collateralization Ratio, Mintr will display your status as 'Good' and you can then: 1) Do nothing. Continue to receive fees against your existing minted sUSD. 2) Mint more sUSD. To receive a greater proposition of fees in the next fee period. 3) If you choose to mint more sUSD, you may want to leave a buffer of sUSD to accommodate market fluctuation of the SNX price. Your Collateralization Ratio must be above the Target Collateralization Ratio to be able to claim your fee rewards."
+      "value": "If your C-Ratio is below the Target Collateralization Ratio (currently set at 600% for L2 and 400% for L1), you will be blocked from claiming rewards and you will need to increase your C-Ratio to claim. You can increase your C-Ratio in two ways: 1) Burning sUSD, or 2) Buying more SNX and mint more sUSD. The reasoning behind this is to incentivise the on-going correction of an under-collateralised debt pool."
+    },
+    {
+      "title": "Notes:",
+      "value": "There is a C-Ratio to target C-Ratio tolerance of 1% with claiming to allow for some market volatility between on-chain transactions. For example, if the Target C-Ratio is 400% you can still claim in the 396-400% range.\n\nWith regard to the two options to correct, adding SNX to fix C-Ratio is much more value intensive (C-Ratio multiplier) so burning sUSD is the cheapest way to increase your C-Ratio in order to claim your Epoch rewards."
     },
     {
       "title": "For more details visit the help page:",

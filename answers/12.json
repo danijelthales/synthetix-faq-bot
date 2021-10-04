@@ -5,7 +5,7 @@
   "fields": [
     {
       "title": "Answer",
-      "value": "You need to go to User Settings > Appearance and activate Developer Mode."
+      "value": "You need to activate developer mode in your discord app. On the desktop app you can do this by going to User Settings > Advanced > Developer Mode.\n\n You then get a right click option on users to Copy ID."
     }
   ],
   "footer": {},
