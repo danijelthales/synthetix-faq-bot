@@ -3348,7 +3348,10 @@ app.post("/pdao", async (req, res) => {
                     channelPdao.send("New transaction from pDAO: https://etherscan.io/tx/" + content.hash);
                 }
                 if (content.from.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase())) {
+                    content.to.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase()) ||
+                    content.from.toLowerCase().includes("0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92".toLowerCase()) ||
+                    content.to.toLowerCase().includes("0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92".toLowerCase())
+                ) {
                     channelSdao.send("New transaction from sDAO: https://etherscan.io/tx/" + content.hash);
                 }
                 if (content.from.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase()) ||
