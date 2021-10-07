@@ -366,7 +366,7 @@ client.on("ready", () => {
     client.channels.fetch('871713566225485834').then(c => {
         l2tradesBelow10k = c
     });
-    client.channels.fetch('880035104456572958').then(c => {
+    client.channels.fetch('895691615568531466').then(c => {
         l2tradesAbove10k = c
     });
     client.channels.fetch('892116005898289212').then(c => {
