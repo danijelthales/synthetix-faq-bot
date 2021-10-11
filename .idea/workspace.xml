@@ -22,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="2237" column="19" selection-start-line="2237" selection-start-column="19" selection-end-line="2237" selection-end-column="64" />
+            <state relative-caret-position="306">
+              <caret line="4421" column="38" selection-start-line="4421" selection-start-column="38" selection-end-line="4421" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -66,8 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getMintrData</find>
-      <find>infura</find>
       <find>block is</find>
       <find>web3</find>
       <find>new proposal</find>
@@ -75,8 +73,6 @@
       <find>marketsMap.get(market)</find>
       <find>synthetix</find>
       <find>&quot;synthetix</find>
-      <find>graph</find>
-      <find>gql</find>
       <find>discord</find>
       <find>.client</find>
       <find>cliet</find>
@@ -96,6 +92,10 @@
       <find>performance</find>
       <find>coingecko</find>
       <find>coingeckoUsd</find>
+      <find>debt</find>
+      <find>l2synthetixExchanger</find>
+      <find>graph</find>
+      <find>gql</find>
     </findStrings>
     <replaceStrings>
       <replace>https://synthetix.community/docs/susd-tracker</replace>
@@ -202,6 +202,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="CatdeaLogs" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,7 +215,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="CatdeaLogs" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -423,12 +423,16 @@
       <workItem from="1631571942568" duration="2755000" />
       <workItem from="1631698591942" duration="8976000" />
       <workItem from="1631775210079" duration="1209000" />
-      <workItem from="1631874583058" duration="594000" />
+      <workItem from="1631874583058" duration="1913000" />
+      <workItem from="1632677527137" duration="27000" />
+      <workItem from="1632926209765" duration="2345000" />
+      <workItem from="1633335883289" duration="594000" />
+      <workItem from="1633964796657" duration="305000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="585543000" />
+    <option name="totallyTimeSpent" value="590133000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -441,13 +445,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5040783" side_tool="true" weight="0.30197755" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.17857143" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.4959217" visible="true" weight="0.18550107" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32827735" />
       <window_info active="true" anchor="bottom" id="Terminal" order="1" sideWeight="0.4989339" visible="true" weight="0.27952328" />
@@ -852,8 +857,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="2237" column="19" selection-start-line="2237" selection-start-column="19" selection-end-line="2237" selection-end-column="64" />
+        <state relative-caret-position="306">
+          <caret line="4421" column="38" selection-start-line="4421" selection-start-column="38" selection-end-line="4421" selection-end-column="38" />
         </state>
       </provider>
     </entry>

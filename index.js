@@ -4397,19 +4397,19 @@ let voters = [
         discordId: '420339322785366019'
     },
     {
-        name: 'sm',
-        address: '0x0bc3668d2AaFa53eD5E5134bA13ec74ea195D000',
-        discordId: '530165298360483850'
+        name: 'BigP',
+        address: '0x9cFc4cfB2aa99bedc98d52E2DCc0Eb010F20718f',
+        discordId: '721289531135098942'
     },
     {
-        name: 'spreek',
-        address: '0x935D2fD458fdf41B6F7B62471f593797866a3Ce6',
-        discordId: '136272881666621440'
+        name: 'jj',
+        address: '0x9947040a84B4AC584BFac6E7aA4A2677321d8D54',
+        discordId: '472219141517082660'
     },
     {
-        name: 'brian',
-        address: '0xB0a5a05ac5791AD5a28905B57182CAB1DF9B10aA',
-        discordId: '382531227288076288'
+        name: 'afif',
+        address: '0xDF09B6BB09FdEe5f8d4c17C6642F0A54D6A7654A',
+        discordId: '653608579315662879'
     },
     {
         name: 'michael',
@@ -4417,9 +4417,9 @@ let voters = [
         discordId: '319916151415242755'
     },
     {
-        name: 'jackson',
-        address: '0x0120666306F4D15bb125696f322BFD8EE83423a9',
-        discordId: '420339322785366019'
+        name: 'kaleb',
+        address: '0x1A7fC76f1aC7FeCb71256A79482DD5aD879F293A',
+        discordId: '672907769841451009'
     },
     {
         name: 'danijel',
