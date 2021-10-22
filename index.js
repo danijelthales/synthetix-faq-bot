@@ -3467,122 +3467,150 @@ knownAddress.add("0xbf49b454818783d12bf4f3375ff17c59015e66cb");
 knownAddress.add("0x0120666306f4d15bb125696f322bfd8ee83423a9");
 
 const dateformat = require('dateformat');
-// setInterval(function () {
-//     https.get('https://hub.snapshot.page/api/snxgov.eth/proposals', (resp) => {
-//         let data = '';
-//
-//         // A chunk of data has been recieved.
-//         resp.on('data', (chunk) => {
-//             data += chunk;
-//         });
-//
-//         // The whole response has been received. Print out the result.
-//         resp.on('end', async () => {
-//             try {
-//                 let results = JSON.parse(data);
-//                 let print = false;
-//                 if (synthetixProposals.size > 0) {
-//                     print = true;
-//                 }
-//                 var counterInc = 0;
-//                 let keys = [];
-//                 for (const result in results) {
-//                     keys.push(result);
-//                 }
-//                 keys = keys.reverse();
-//                 for (const res in keys) {
-//                     let result = keys[res];
-//                     if (!synthetixProposals.has(result)) {
-//                         let proposal = results[result];
-//                         synthetixProposals.set(result, proposal);
-//                         let start = new Date(proposal.msg.payload.start * 1000);
-//                         let end = new Date(proposal.msg.payload.end * 1000);
-//                         let content = proposal.msg.payload.body;
-//                         let name = proposal.msg.payload.name;
-//
-//                         if (content.length > 1024) {
-//                             content = content.substring(0, 1020) + "...";
-//                         }
-//
-//                         const exampleEmbed = new Discord.MessageEmbed();
-//                         exampleEmbed.setColor("00770f");
-//                         exampleEmbed.setTitle("New proposal");
-//                         exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
-//                         exampleEmbed.addField("Name",
-//                             name);
-//                         exampleEmbed.addField("Start",
-//                             dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-//                         exampleEmbed.addField("End",
-//                             dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-//                         exampleEmbed.addField("Description",
-//                             content);
-//                         if (print) {
-//
-//                             counterInc += 5;
-//                             setTimeout(
-//                                 function () {
-//                                     https.get('https://hub.snapshot.page/api/synthetixproposal/proposal/' + result, (resp) => {
-//                                         let data = '';
-//
-//                                         // A chunk of data has been recieved.
-//                                         resp.on('data', (chunk) => {
-//                                             data += chunk;
-//                                         });
-//
-//                                         // The whole response has been received. Print out the result.
-//                                         resp.on('end', () => {
-//                                             try {
-//                                                 let resultsV = JSON.parse(data);
-//                                                 let print = false;
-//                                                 let yes = 0;
-//                                                 let no = 0;
-//                                                 for (const resultV in resultsV) {
-//                                                     let vote = resultsV[resultV];
-//                                                     let voter = vote.address;
-//                                                     if (knownAddress.has(voter)) {
-//                                                         let voteRes = vote.msg.payload.choice;
-//                                                         if (voteRes == '2') {
-//                                                             no++;
-//                                                         } else {
-//                                                             yes++;
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 exampleEmbed.addField("Votes",
-//                                                     "sYES: " + yes + " iNO: " + no);
-//
-//                                                 channelGov.send(exampleEmbed);
-//                                             } catch
-//                                                 (e) {
-//                                                 console.log(e);
-//                                             }
-//
-//                                         });
-//
-//
-//                                     })
-//                                 }, counterInc * 1000)
-//
-//
-//                         }
-//
-//                         if (process.env.REDIS_URL) {
-//                             redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
-//                             });
-//                         }
-//                     }
-//                 }
-//             } catch (e) {
-//                 console.log(e);
-//             }
-//
-//         });
-//
-//     }).on("error", (err) => {
-//         console.log("Error: " + err.message);
-//     });
-//
-// }, 1000 * 60 * 5);
+
+const proposalQL = gql`
+    query Proposals {
+        proposals(
+            first: 20,
+            skip: 0,
+            where: {
+                space_in: ["snxgov.eth"]
+            },
+            orderBy: "created",
+            orderDirection: desc
+        ) {
+            id
+            title
+            body
+            choices
+            start
+            end
+            snapshot
+            state
+            author
+            space {
+                id
+                name
+            }
+        }
+    }
+`;
+
+setInterval(function () {
+    request('https://hub.snapshot.org/graphql', proposalQL).then((data) => {
+        try {
+            let results = data.proposals;
+            let print = false;
+
+            if (synthetixProposals.size > 0) {
+                print = true;
+            }
+            var counterInc = 0;
+            let keys = [];
+            for (const result in results) {
+                keys.push(result);
+            }
+            keys = keys.reverse();
+            for (const res in keys) {
+                let result = keys[res];
+                if (!synthetixProposals.has(result)) {
+                    let proposal = results[result];
+                    synthetixProposals.set(result, proposal);
+                    let start = new Date(proposal.start * 1000);
+                    let end = new Date(proposal.end * 1000);
+                    let content = proposal.body;
+                    let name = proposal.title;
+
+                    if (content.length > 1024) {
+                        content = content.substring(0, 1020) + "...";
+                    }
+
+                    const exampleEmbed = new Discord.MessageEmbed();
+                    exampleEmbed.setColor("00770f");
+                    exampleEmbed.setTitle("New proposal");
+                    exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
+                    exampleEmbed.addField("Name",
+                        name);
+                    exampleEmbed.addField("Start",
+                        dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
+                    exampleEmbed.addField("End",
+                        dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
+                    exampleEmbed.addField("Description",
+                        content);
+                    if (print) {
+                        counterInc += 5;
+                        setTimeout(
+                            function () {
+                                const votesQL = gql`
+    query Votes {
+  votes (
+    first: 1000
+    skip: 0
+    where: {
+      proposal: "${proposal.id}"
+    }
+    orderBy: "created",
+    orderDirection: desc
+  ) {
+    id
+    voter
+    created
+     proposal {
+      id
+    }
+    choice
+    space {
+      id
+    }
+  }
+}
+
+`;
+                                request('https://hub.snapshot.org/graphql', votesQL).then((data) => {
+                                    try {
+                                        let resultsV = data.votes;
+                                        let print = false;
+                                        let yes = 0;
+                                        let no = 0;
+                                        for (const resultV in resultsV) {
+                                            let vote = resultsV[resultV];
+                                            let voter = vote.voter;
+                                            if (knownAddress.has(voter)) {
+                                                let voteRes = vote.choice;
+                                                if (voteRes == '2') {
+                                                    no++;
+                                                } else {
+                                                    yes++;
+                                                }
+                                            }
+                                        }
+                                        exampleEmbed.addField("Votes",
+                                            "sYES: " + yes + " iNO: " + no);
+
+                                        channelGov.send(exampleEmbed);
+                                    } catch
+                                        (e) {
+                                        console.log(e);
+                                    }
+                                });
+
+                            }, counterInc * 1000)
+
+
+                    }
+
+                    if (process.env.REDIS_URL) {
+                        redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
+                        });
+                    }
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+    });
+}, 1000 * 60 * 5);
 
 const clientIllGov = new Discord.Client();
 clientIllGov.login(process.env.BOT_TOKEN_ILLUVIUM_GOVERNANCE);
