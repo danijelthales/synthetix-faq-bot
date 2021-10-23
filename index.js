@@ -40,71 +40,72 @@ clientPegL2Price.login(process.env.BOT_TOKEN_L2_PEG);
 const clientsSEthPegPrice = new Discord.Client();
 clientsSEthPegPrice.login(process.env.BOT_TOKEN_SETH_PEG);
 
+const {Octokit} = require("@octokit/core");
 
+const octokit = new Octokit({auth: process.env.GIT_TOKEN_BUGS});
 const clientTknPrice = new Discord.Client();
+
 clientTknPrice.login(process.env.BOT_TOKEN_TKN);
-
 const clientEthPrice = new Discord.Client();
+
 clientEthPrice.login(process.env.BOT_TOKEN_ETH);
-
 const clientCRVPrice = new Discord.Client();
+
 clientCRVPrice.login(process.env.BOT_TOKEN_CRV);
-
 const clientSWTHPrice = new Discord.Client();
+
 clientSWTHPrice.login(process.env.BOT_TOKEN_SWTH);
-
 const clientPicklePrice = new Discord.Client();
+
 clientPicklePrice.login(process.env.BOT_TOKEN_PICKLE);
-
 const clientMetaPrice = new Discord.Client();
+
 clientMetaPrice.login(process.env.BOT_TOKEN_META);
-
 const clientYUSDPrice = new Discord.Client();
+
 clientYUSDPrice.login(process.env.BOT_TOKEN_YUSD);
-
 const clientVIDYAPrice = new Discord.Client();
+
 clientVIDYAPrice.login(process.env.BOT_TOKEN_VIDYA);
-
 const clientYFVPrice = new Discord.Client();
+
 clientYFVPrice.login(process.env.BOT_TOKEN_YFV);
-
 const clientYFVOldPrice = new Discord.Client();
+
 clientYFVOldPrice.login(process.env.BOT_TOKEN_YFV_OLD);
-
 const clientYaxisPrice = new Discord.Client();
+
 clientYaxisPrice.login(process.env.BOT_TOKEN_YAXIS);
-
 const clientYaxisSupply = new Discord.Client();
+
 clientYaxisSupply.login(process.env.BOT_TOKEN_YAXIS_SUPPLY);
-
 const clientSwervePrice = new Discord.Client();
+
 clientSwervePrice.login(process.env.BOT_TOKEN_SWERVE);
-
 const clientHegicPrice = new Discord.Client();
+
 clientHegicPrice.login(process.env.BOT_TOKEN_HEGIC);
-
 const clientDodoPrice = new Discord.Client();
+
 clientDodoPrice.login(process.env.BOT_TOKEN_DODO);
-
 const clientDrcPrice = new Discord.Client();
+
 clientDrcPrice.login(process.env.BOT_TOKEN_DRC);
-
 const clientPerpPrice = new Discord.Client();
+
 clientPerpPrice.login(process.env.BOT_TOKEN_PERP);
-
 const clientNecPrice = new Discord.Client();
+
 clientNecPrice.login(process.env.BOT_TOKEN_NEC);
-
 const clientKwentaL1Volume = new Discord.Client();
+
+
 clientKwentaL1Volume.login(process.env.BOT_TOKEN_KWENTA_L1);
-
-
 const clientKwentaL2Volume = new Discord.Client();
 clientKwentaL2Volume.login(process.env.BOT_TOKEN_KWENTA_L2);
 const clientReminder = new Discord.Client();
+
 clientReminder.login(process.env.BOT_TOKEN_COUNCIL_REMINDER);
-
-
 const replaceString = require('replace-string');
 const https = require('https');
 const http = require('http');
@@ -2573,7 +2574,7 @@ function getNumberLabel(labelValue) {
 
                 ? Math.round(Math.abs(Number(labelValue)) / 1.0e+3) + "K"
 
-                : Math.abs(Number(labelValue));
+                : Math.round(Math.abs(Number(labelValue)));
 
 }
 
@@ -3846,6 +3847,10 @@ app.post('/bug', (req, res) => {
     let bugRequest = req.body.bug;
     let bugJson = JSON.stringify(bugRequest);
     redisClient.lpush(bugRedisKey, bugJson);
+    octokit.request('POST /projects/columns/{column_id}/cards', {
+        column_id: 16551998,
+        note: bugJson
+    })
     res.send(bugRequest.id);
 });
 
