@@ -105,6 +105,12 @@ const clientKwentaL2Volume = new Discord.Client();
 clientKwentaL2Volume.login(process.env.BOT_TOKEN_KWENTA_L2);
 const clientReminder = new Discord.Client();
 
+const clientInflationRewardsL1 = new Discord.Client();
+clientInflationRewardsL1.login(process.env.BOT_TOKEN_INFLATION_L1);
+
+const clientInflationRewardsL2 = new Discord.Client();
+clientInflationRewardsL2.login(process.env.BOT_TOKEN_INFLATION_L2);
+
 clientReminder.login(process.env.BOT_TOKEN_COUNCIL_REMINDER);
 const replaceString = require('replace-string');
 const https = require('https');
@@ -346,11 +352,17 @@ clientKwentaL2Volume.once('ready', () => {
     getL2KwentaVolume();
 });
 
+clientInflationRewardsL2.once('ready', () => {
+    console.log("updating inflation rewards")
+    getInflationRewards();
+});
 
 setInterval(function () {
     console.log("kwenta trading volumes")
     getL1KwentaVolume();
     getL2KwentaVolume();
+    console.log("inflation rewards");
+    getInflationRewards();
 }, 360 * 1000);
 
 client.on("ready", () => {
@@ -4498,3 +4510,50 @@ function checkVotes() {
 }
 
 setInterval(checkVotes, 1000 * 60 * 60 * 5);
+
+async function getInflationRewards() {
+    try {
+        var network = 'mainnet';
+        const provider = ethers.getDefaultProvider();
+        const {abi} = synthetixAPI.getSource({
+            network,
+            contract: "RewardsDistribution"
+        });
+        let address = '0x29C295B046a73Cde593f21f63091B072d407e3F2';
+        const RewardsDistribution = new ethers.Contract(address, abi, provider);
+        let distributions = await RewardsDistribution.distributions(2);
+        let inflationRewardL2 = web3.utils.hexToNumberString(distributions[1]._hex) / 1e18;
+        let inflationRewardsTotalResponse = await axios.get('https://api.etherscan.io/api?module=logs&action=getLogs&address=0xA05e45396703BabAa9C' +
+            '276B5E5A9B6e2c175b521&fromBlock=379224&toBlock=latest&topic0=0x601e517d4811033fed8290c7' +
+            '9b7823ce1ab70258da45400fe2391a3c7432edab&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ');
+        let resultsLength = inflationRewardsTotalResponse.data.result.length - 1;
+        let inflationRewardsTotal = web3.utils.hexToNumberString(inflationRewardsTotalResponse.data.result[resultsLength].data.substring(0, 66)) / 1e18;
+        let inflationRewardsL1 = inflationRewardsTotal - inflationRewardL2;
+
+
+        clientInflationRewardsL1.guilds.cache.forEach(function (value, key) {
+            try {
+                console.log("Updating  inflation L1");
+                value.members.cache.get(clientInflationRewardsL1.user.id).setNickname(getNumberLabel(inflationRewardsL1) + ' SNX');
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        clientInflationRewardsL1.user.setActivity(("Inflation rewards L1"), {type: 'WATCHING'});
+
+        clientInflationRewardsL2.guilds.cache.forEach(function (value, key) {
+            try {
+                console.log("Updating  inflation L2");
+                value.members.cache.get(clientInflationRewardsL2.user.id).setNickname(getNumberLabel(inflationRewardL2) + ' SNX');
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        clientInflationRewardsL2.user.setActivity(("Inflation rewards L2"), {type: 'WATCHING'});
+
+    } catch (e) {
+        console.log("Inflation rewards error! " + e);
+    }
+
+
+}
