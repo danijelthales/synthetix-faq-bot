@@ -3361,7 +3361,7 @@ app.post("/pdao", async (req, res) => {
                     content.from.toLowerCase().includes("0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92".toLowerCase()) ||
                     content.to.toLowerCase().includes("0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92".toLowerCase())
                 ) {
-                    channelSdao.send("New transaction from sDAO: https://etherscan.io/tx/" + content.hash);
+                    channelSdao.send("New transaction from Treasury Council: https://etherscan.io/tx/" + content.hash);
                 }
                 if (content.from.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase()) ||
                     content.to.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase())) {
