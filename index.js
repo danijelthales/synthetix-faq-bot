@@ -2418,8 +2418,8 @@ setInterval(function () {
     });
     clientPegPrice.guilds.cache.forEach(function (value, key) {
         try {
-            value.members.cache.get("745786402817441854").setNickname("$" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100);
-            value.members.cache.get("745786402817441854").user.setActivity("usdt=" + usdtPeg + " usdc=" + usdcPeg, {type: 'PLAYING'});
+            value.members.cache.get("745786402817441854").setNickname("sUSD");
+            value.members.cache.get("745786402817441854").user.setActivity("L1 $" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100 + " | L2 $" + "$" + Math.round(((((usdcL2Peg + usdt2peg) / 2)) + Number.EPSILON) * 100) / 100, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -4157,15 +4157,43 @@ async function getL1KwentaVolume() {
         });
 
         const json = await response.json();
+
+
+        const bodyL2 = JSON.stringify({
+            query: `{
+  dailyTotals(
+    orderBy:timestamp,
+        orderDirection:desc,
+    first: 1) {
+    id,
+    timestamp,
+    trades,
+    exchangers,
+    exchangeUSDTally,
+    totalFeesGeneratedInUSD
+    
+  }
+}`,
+            variables: null,
+        });
+
+        const responseL2 = await fetch(l2synthetixExchanger, {
+            method: 'POST',
+            body,
+        });
+
+        const jsonL2 = await responseL2.json();
+        console.log(jsonL2);
+
         clientKwentaL1Volume.guilds.cache.forEach(function (value, key) {
             try {
                 console.log("Updating KWENTA L1");
-                value.members.cache.get(clientKwentaL1Volume.user.id).setNickname("24h = $" + getNumberLabel(json.data.dailyExchangePartners[0].usdVolume));
+                value.members.cache.get(clientKwentaL1Volume.user.id).setNickname("KWENTA 24h volume");
             } catch (e) {
                 console.log(e);
             }
         });
-        await clientKwentaL1Volume.user.setActivity("KWENTA L1 trading volume", {type: 'WATCHING'});
+        await clientKwentaL1Volume.user.setActivity("L1 $" + getNumberLabel(json.data.dailyExchangePartners[0].usdVolume + ' | L2 $' + getNumberLabel(jsonL2.data.dailyTotals[0].exchangeUSDTally), {type: 'WATCHING'}));
     })();
 }
 
@@ -4534,12 +4562,14 @@ async function getInflationRewards() {
         clientInflationRewardsL1.guilds.cache.forEach(function (value, key) {
             try {
                 console.log("Updating  inflation L1");
-                value.members.cache.get(clientInflationRewardsL1.user.id).setNickname(getNumberLabel(inflationRewardsL1) + ' SNX');
+                value.members.cache.get(clientInflationRewardsL1.user.id).setNickname('Inflation rewards');
             } catch (e) {
                 console.log(e);
             }
         });
-        clientInflationRewardsL1.user.setActivity(("Inflation rewards L1"), {type: 'WATCHING'});
+
+
+        clientInflationRewardsL1.user.setActivity(("L1 " + getNumberLabel(inflationRewardsL1) + ' SNX | L2' + getNumberLabel(inflationRewardL2) + ' SNX'), {type: 'WATCHING'});
 
         clientInflationRewardsL2.guilds.cache.forEach(function (value, key) {
             try {
