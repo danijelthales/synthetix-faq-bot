@@ -2419,7 +2419,7 @@ setInterval(function () {
     clientPegPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("745786402817441854").setNickname("sUSD");
-            value.members.cache.get("745786402817441854").user.setActivity("L1 $" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100 + " | L2 $" + "$" + Math.round(((((usdcL2Peg + usdt2peg) / 2)) + Number.EPSILON) * 100) / 100, {type: 'PLAYING'});
+            value.members.cache.get("745786402817441854").user.setActivity("L1 $" + Math.round(((((usdcPeg + usdtPeg) / 2)) + Number.EPSILON) * 100) / 100 + " | L2 $" + Math.round(((((usdcL2Peg + usdt2peg) / 2)) + Number.EPSILON) * 100) / 100, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -4131,7 +4131,7 @@ const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTi
 async function getL1KwentaVolume() {
     // Fetch all kwenta l1 trading in the last 24hrs
     await (async () => {
-        const body = JSON.stringify({
+        let body = JSON.stringify({
             query: `{
       dailyExchangePartners(
         orderBy:timestamp,
@@ -4159,7 +4159,7 @@ async function getL1KwentaVolume() {
         const json = await response.json();
 
 
-        const bodyL2 = JSON.stringify({
+        body = JSON.stringify({
             query: `{
   dailyTotals(
     orderBy:timestamp,
@@ -4179,7 +4179,7 @@ async function getL1KwentaVolume() {
 
         const responseL2 = await fetch(l2synthetixExchanger, {
             method: 'POST',
-            bodyL2,
+            body,
         });
 
         const jsonL2 = await responseL2.json();
@@ -4188,12 +4188,12 @@ async function getL1KwentaVolume() {
         clientKwentaL1Volume.guilds.cache.forEach(function (value, key) {
             try {
                 console.log("Updating KWENTA L1");
-                value.members.cache.get(clientKwentaL1Volume.user.id).setNickname("KWENTA 24h volume");
+                value.members.cache.get(clientKwentaL1Volume.user.id).setNickname("KWENTA 24h");
             } catch (e) {
                 console.log(e);
             }
         });
-        await clientKwentaL1Volume.user.setActivity("L1 $" + getNumberLabel(json.data.dailyExchangePartners[0].usdVolume + ' | L2 $' + getNumberLabel(jsonL2.data.dailyTotals[0].exchangeUSDTally), {type: 'WATCHING'}));
+        await clientKwentaL1Volume.user.setActivity("L1 $" + getNumberLabel(json.data.dailyExchangePartners[0].usdVolume) + ' | L2 $' + getNumberLabel(jsonL2.data.dailyTotals[0].exchangeUSDTally), {type: 'WATCHING'});
     })();
 }
 
@@ -4562,14 +4562,14 @@ async function getInflationRewards() {
         clientInflationRewardsL1.guilds.cache.forEach(function (value, key) {
             try {
                 console.log("Updating  inflation L1");
-                value.members.cache.get(clientInflationRewardsL1.user.id).setNickname('Inflation rewards');
+                value.members.cache.get(clientInflationRewardsL1.user.id).setNickname('Inflation rewards SNX');
             } catch (e) {
                 console.log(e);
             }
         });
 
 
-        clientInflationRewardsL1.user.setActivity(("L1 " + getNumberLabel(inflationRewardsL1) + ' SNX | L2' + getNumberLabel(inflationRewardL2) + ' SNX'), {type: 'WATCHING'});
+        clientInflationRewardsL1.user.setActivity(("L1 " + getNumberLabel(inflationRewardsL1) + ' | L2 ' + getNumberLabel(inflationRewardL2)), {type: 'WATCHING'});
 
         clientInflationRewardsL2.guilds.cache.forEach(function (value, key) {
             try {
