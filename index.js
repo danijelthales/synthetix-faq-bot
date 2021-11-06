@@ -4179,7 +4179,7 @@ async function getL1KwentaVolume() {
 
         const responseL2 = await fetch(l2synthetixExchanger, {
             method: 'POST',
-            body,
+            bodyL2,
         });
 
         const jsonL2 = await responseL2.json();
