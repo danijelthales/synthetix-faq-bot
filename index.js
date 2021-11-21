@@ -21,7 +21,7 @@ let allTimeHistoricMarketCaps = new Map();
 const w3utils = require('web3-utils');
 const fetch = require('node-fetch');
 const l2synthetixExchanger =
-    'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanges';
+    'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main';
 const l1synthetixExchanger =
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger';
 
@@ -347,10 +347,6 @@ clientKwentaL1Volume.once('ready', () => {
     getL1KwentaVolume();
 });
 
-clientKwentaL2Volume.once('ready', () => {
-    console.log("kwenta l1 volume getting date")
-    getL2KwentaVolume();
-});
 
 clientInflationRewardsL2.once('ready', () => {
     console.log("updating inflation rewards")
@@ -360,7 +356,6 @@ clientInflationRewardsL2.once('ready', () => {
 setInterval(function () {
     console.log("kwenta trading volumes")
     getL1KwentaVolume();
-    getL2KwentaVolume();
     console.log("inflation rewards");
     getInflationRewards();
 }, 360 * 1000);
@@ -3054,9 +3049,16 @@ async function getl2Exchanges() {
       {
         fromAmount
         fromAmountInUSD
-        fromCurrencyKey
-        toCurrencyKey
-        block
+        fromSynth{
+          id,
+          name,
+          symbol
+        }
+        toSynth{
+          id,
+          name,
+          symbol
+        }
         timestamp
         toAddress
         toAmount
@@ -3067,7 +3069,7 @@ async function getl2Exchanges() {
             variables: null,
         });
 
-        const response = await fetch('https://api.thegraph.com/subgraphs/name/killerbyte/optimism-exchanges', {
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main', {
             method: 'POST',
             body,
         });
@@ -3076,7 +3078,13 @@ async function getl2Exchanges() {
         const {synthExchanges} = json.data;
         synthExchanges.forEach(r => {
             try {
-                console.log("Exchanged " + r.fromAmount + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4) + " to " + r.toAmount + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                let fromSynth = "";
+                try {
+                    fromSynth = r.fromSynth.symbol
+                } catch (e) {
+                    console.log(e);
+                }
+                console.log("Exchanged " + r.fromAmount + " " + fromSynth + " to " + r.toAmount + " " + r.toSynth.symbol);
                 console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                 const exampleEmbed = new Discord.MessageEmbed();
                 exampleEmbed.setColor("ff0000");
@@ -3085,9 +3093,9 @@ async function getl2Exchanges() {
                 exampleEmbed.addField("Wallet",
                     '[' + r.toAddress + '](https://optimistic.etherscan.io/address/' + r.toAddress + ')');
                 exampleEmbed.addField("From",
-                    numberWithCommas((r.fromAmount * 1.0).toFixed(2)) + " " + fromBytes32(r.fromCurrencyKey).substring(0, 4));
+                    numberWithCommas((r.fromAmount * 1.0).toFixed(2)) + " " + fromSynth);
                 exampleEmbed.addField("To",
-                    numberWithCommas((r.toAmount * 1.0).toFixed(2)) + " " + fromBytes32(r.toCurrencyKey).substring(0, 4));
+                    numberWithCommas((r.toAmount * 1.0).toFixed(2)) + " " + r.toSynth.symbol);
                 exampleEmbed.addField("Value",
                     numberWithCommas((r.fromAmountInUSD * 1.0).toFixed(2)) + " sUSD");
 
@@ -4161,16 +4169,17 @@ async function getL1KwentaVolume() {
 
         body = JSON.stringify({
             query: `{
-  dailyTotals(
+  dailyExchangePartners(
     orderBy:timestamp,
         orderDirection:desc,
+         where:  {partner: "KWENTA"},
     first: 1) {
     id,
     timestamp,
     trades,
-    exchangers,
-    exchangeUSDTally,
-    totalFeesGeneratedInUSD
+    usdVolume,
+    partner,
+    timestamp
     
   }
 }`,
@@ -4193,7 +4202,7 @@ async function getL1KwentaVolume() {
                 console.log(e);
             }
         });
-        await clientKwentaL1Volume.user.setActivity("L1 $" + getNumberLabel(json.data.dailyExchangePartners[0].usdVolume) + ' | L2 $' + getNumberLabel(jsonL2.data.dailyTotals[0].exchangeUSDTally), {type: 'WATCHING'});
+        await clientKwentaL1Volume.user.setActivity("L1 $" + getNumberLabel(json.data.dailyExchangePartners[0].usdVolume) + ' | L2 $' + getNumberLabel(jsonL2.data.dailyExchangePartners[0].usdVolume), {type: 'WATCHING'});
     })();
 }
 
