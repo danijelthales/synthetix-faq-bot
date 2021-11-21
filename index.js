@@ -3513,52 +3513,60 @@ const proposalQL = gql`
     }
 `;
 
-setInterval(function () {
-    request('https://hub.snapshot.org/graphql', proposalQL).then((data) => {
-        try {
-            let results = data.proposals;
-            let print = false;
+setInterval(async function () {
+    let data = await request('https://hub.snapshot.org/graphql', proposalQL)
+    try {
 
-            if (synthetixProposals.size > 0) {
-                print = true;
-            }
-            var counterInc = 0;
-            let keys = [];
-            for (const result in results) {
-                keys.push(result);
-            }
-            keys = keys.reverse();
-            for (const res in keys) {
-                let result = keys[res];
-                if (!synthetixProposals.has(result)) {
-                    let proposal = results[result];
-                    synthetixProposals.set(result, proposal);
-                    let start = new Date(proposal.start * 1000);
-                    let end = new Date(proposal.end * 1000);
-                    let content = proposal.body;
-                    let name = proposal.title;
+        let abi = await axios.get('https://api.etherscan.io/api?module=contract&action=getabi&address=0xff4e21298e5dce1398d6fc9857098eae3caf1e72&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ');
+        const contractCouncil = new ethers.Contract("0xff4e21298e5dce1398d6fc9857098eae3caf1e72", JSON.parse(abi.data.result), provider);
+        let results = data.proposals;
+        let print = false;
 
-                    if (content.length > 1024) {
-                        content = content.substring(0, 1020) + "...";
-                    }
+        if (synthetixProposals.size > 0) {
+            print = true;
+        }
+        var counterInc = 0;
+        let keys = [];
+        for (const result in results) {
+            keys.push(result);
+        }
+        let hashes = new Array();
+        for (const resultForProposals of results) {
+            hashes.push(resultForProposals.id)
+        }
+        keys = keys.reverse();
+        for (const res in keys) {
+            let result = keys[res];
+            let validProposals = await contractCouncil.getValidProposals(hashes);
+            if (!synthetixProposals.has(result) && validProposals.includes(results[result].id)) {
+                let proposal = results[result];
+                synthetixProposals.set(result, proposal);
+                let start = new Date(proposal.start * 1000);
+                let end = new Date(proposal.end * 1000);
+                let content = proposal.body;
+                let name = proposal.title;
 
-                    const exampleEmbed = new Discord.MessageEmbed();
-                    exampleEmbed.setColor("00770f");
-                    exampleEmbed.setTitle("New proposal");
-                    exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
-                    exampleEmbed.addField("Name",
-                        name);
-                    exampleEmbed.addField("Start",
-                        dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
-                    exampleEmbed.addField("End",
-                        dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
-                    exampleEmbed.addField("Description",
-                        content);
-                    if (print) {
-                        counterInc += 5;
-                        setTimeout(
-                            function () {
-                                const votesQL = gql`
+                if (content.length > 1024) {
+                    content = content.substring(0, 1020) + "...";
+                }
+
+                const exampleEmbed = new Discord.MessageEmbed();
+                exampleEmbed.setColor("00770f");
+                exampleEmbed.setTitle("New proposal");
+                exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
+                exampleEmbed.addField("Name",
+                    name);
+                exampleEmbed.addField("Start",
+                    dateformat(new Date(start), 'dd.mm.yyyy.HH:MM'));
+                exampleEmbed.addField("End",
+                    dateformat(new Date(end), 'dd.mm.yyyy.HH:MM'));
+                exampleEmbed.addField("Description",
+                    content);
+                if (print) {
+                    counterInc += 5;
+                    setTimeout(
+                        function () {
+                            const votesQL = gql`
     query Votes {
   votes (
     first: 1000
@@ -3583,50 +3591,49 @@ setInterval(function () {
 }
 
 `;
-                                request('https://hub.snapshot.org/graphql', votesQL).then((data) => {
-                                    try {
-                                        let resultsV = data.votes;
-                                        let print = false;
-                                        let yes = 0;
-                                        let no = 0;
-                                        for (const resultV in resultsV) {
-                                            let vote = resultsV[resultV];
-                                            let voter = vote.voter;
-                                            if (knownAddress.has(voter)) {
-                                                let voteRes = vote.choice;
-                                                if (voteRes == '2') {
-                                                    no++;
-                                                } else {
-                                                    yes++;
-                                                }
+                            request('https://hub.snapshot.org/graphql', votesQL).then((data) => {
+                                try {
+                                    let resultsV = data.votes;
+                                    let print = false;
+                                    let yes = 0;
+                                    let no = 0;
+                                    for (const resultV in resultsV) {
+                                        let vote = resultsV[resultV];
+                                        let voter = vote.voter;
+                                        if (knownAddress.has(voter)) {
+                                            let voteRes = vote.choice;
+                                            if (voteRes == '2') {
+                                                no++;
+                                            } else {
+                                                yes++;
                                             }
                                         }
-                                        exampleEmbed.addField("Votes",
-                                            "sYES: " + yes + " iNO: " + no);
-
-                                        channelGov.send(exampleEmbed);
-                                    } catch
-                                        (e) {
-                                        console.log(e);
                                     }
-                                });
+                                    exampleEmbed.addField("Votes",
+                                        "sYES: " + yes + " iNO: " + no);
 
-                            }, counterInc * 1000)
+                                    channelGov.send(exampleEmbed);
+                                } catch
+                                    (e) {
+                                    console.log(e);
+                                }
+                            });
+
+                        }, counterInc * 1000)
 
 
-                    }
+                }
 
-                    if (process.env.REDIS_URL) {
-                        redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
-                        });
-                    }
+                if (process.env.REDIS_URL) {
+                    redisClient.set("synthetixProposals", JSON.stringify([...synthetixProposals]), function () {
+                    });
                 }
             }
-        } catch (e) {
-            console.log(e);
         }
+    } catch (e) {
+        console.log(e);
+    }
 
-    });
 }, 1000 * 60 * 5);
 
 const clientIllGov = new Discord.Client();
