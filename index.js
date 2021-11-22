@@ -3194,11 +3194,14 @@ setInterval(async function () {
 let volume = 100000;
 let distinctTraders = 0;
 
+let volumeL2 = 100000;
+let distinctTradersL2 = 0;
+
 async function getVolume() {
     volume = 0;
     try {
 
-        const body = JSON.stringify({
+        let body = JSON.stringify({
             query: `{
   dailyTotals( orderBy:timestamp,
         orderDirection:desc,
@@ -3220,6 +3223,35 @@ async function getVolume() {
         volume = json.data.dailyTotals[0].exchangeUSDTally;
         distinctTraders = json.data.dailyTotals[0].exchangers;
 
+        body = JSON.stringify({
+            query: `{
+  dailyExchangePartners(
+    orderBy:timestamp,
+        orderDirection:desc,
+         where:  {partner: "KWENTA"},
+    first: 1) {
+    id,
+    timestamp,
+    trades,
+    usdVolume,
+    partner,
+    timestamp
+    
+  }
+}`,
+            variables: null,
+        });
+
+        const responseL2 = await fetch(l2synthetixExchanger, {
+            method: 'POST',
+            body,
+        });
+
+        const jsonL2 = await responseL2.json();
+        console.log(jsonL2);
+
+        volumeL2 = jsonL2.data.dailyExchangePartners[0].usdVolume;
+        distinctTradersL2 = jsonL2.data.dailyExchangePartners[0].trades;
     } catch (e) {
         console.log(e);
     }
@@ -3237,8 +3269,8 @@ setInterval(function () {
     clientKwenta.guilds.cache.forEach(function (value, key) {
         try {
             if (volume > 0) {
-                value.members.cache.get("784489616781869067").setNickname("24h = $" + getNumberLabel(volume));
-                value.members.cache.get("784489616781869067").user.setActivity("Traders=" + distinctTraders, {type: 'PLAYING'});
+                value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(volume) + ", L2=" + getNumberLabel(volumeL2));
+                value.members.cache.get("784489616781869067").user.setActivity("Trades: L1=" + distinctTraders + " L2=" + distinctTradersL2, {type: 'PLAYING'});
             }
         } catch (e) {
             console.log(e);
