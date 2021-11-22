@@ -3210,6 +3210,7 @@ async function getVolume() {
     exchangers
     exchangeUSDTally
     totalFeesGeneratedInUSD
+    trades
   }
 }`,
             variables: null,
@@ -3221,7 +3222,7 @@ async function getVolume() {
         });
         const json = await response.json();
         volume = json.data.dailyTotals[0].exchangeUSDTally;
-        distinctTraders = json.data.dailyTotals[0].exchangers;
+        distinctTraders = json.data.dailyTotals[0].trades;
 
         body = JSON.stringify({
             query: `{
