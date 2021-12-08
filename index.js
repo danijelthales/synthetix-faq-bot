@@ -3557,7 +3557,7 @@ setInterval(async function () {
 
         if (synthetixProposals.size > 0) {
             print = true;
-        }
+//                         exampleEmbed.setURL("http://snapshot.org/#/snxgov.eth" + result);
         var counterInc = 0;
         let keys = [];
         for (const result in results) {
@@ -4568,10 +4568,10 @@ function checkVotes() {
                     voters.forEach(v => {
                         if (!votedVoters.includes(v.address)) {
                             let discordUser = '<@!' + v.discordId + '>';
-                            councilChannel.send('Reminding ' + discordUser + ' to vote on https://staking.synthetix.io/gov/snxgov.eth/' + p.id);
+                            councilChannel.send('Reminding ' + discordUser + ' to vote on http://snapshot.org/#/snxgov.eth' + p.id);
                             guild.members.fetch(v.discordId).then(member => {
                                 try {
-                                    member.send('Reminder to vote on https://staking.synthetix.io/gov/snxgov.eth/' + p.id);
+                                    member.send('Reminder to vote on http://snapshot.org/#/snxgov.eth' + p.id);
                                 } catch (e) {
                                     console.log(e);
                                 }
