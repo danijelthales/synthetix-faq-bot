@@ -793,8 +793,8 @@ client.on("message", msg => {
                 if (msg.content.toLowerCase().trim() == "!faq") {
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
-                    // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
-                    //     msg.reply("I've called for master, he will be with you shortly.");
+                // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
+                //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
                     msg.channel.send('It will be:', {
@@ -3557,7 +3557,7 @@ setInterval(async function () {
 
         if (synthetixProposals.size > 0) {
             print = true;
-//                         exampleEmbed.setURL("http://snapshot.org/#/snxgov.eth" + result);
+        }
         var counterInc = 0;
         let keys = [];
         for (const result in results) {
@@ -3586,7 +3586,7 @@ setInterval(async function () {
                 const exampleEmbed = new Discord.MessageEmbed();
                 exampleEmbed.setColor("00770f");
                 exampleEmbed.setTitle("New proposal");
-                exampleEmbed.setURL("https://staking.synthetix.io/gov/snxgov.eth/" + result);
+                exampleEmbed.setURL("http://snapshot.org/#/snxgov.eth/" + result);
                 exampleEmbed.addField("Name",
                     name);
                 exampleEmbed.addField("Start",
@@ -3600,30 +3600,30 @@ setInterval(async function () {
                     setTimeout(
                         function () {
                             const votesQL = gql`
-    query Votes {
-  votes (
-    first: 1000
-    skip: 0
-    where: {
-      proposal: "${proposal.id}"
-    }
-    orderBy: "created",
-    orderDirection: desc
-  ) {
-    id
-    voter
-    created
-     proposal {
-      id
-    }
-    choice
-    space {
-      id
-    }
-  }
-}
+                                query Votes {
+                                    votes (
+                                        first: 1000
+                                        skip: 0
+                                        where: {
+                                            proposal: "${proposal.id}"
+                                        }
+                                        orderBy: "created",
+                                        orderDirection: desc
+                                    ) {
+                                        id
+                                        voter
+                                        created
+                                        proposal {
+                                            id
+                                        }
+                                        choice
+                                        space {
+                                            id
+                                        }
+                                    }
+                                }
 
-`;
+                            `;
                             request('https://hub.snapshot.org/graphql', votesQL).then((data) => {
                                 try {
                                     let resultsV = data.votes;
@@ -4568,10 +4568,10 @@ function checkVotes() {
                     voters.forEach(v => {
                         if (!votedVoters.includes(v.address)) {
                             let discordUser = '<@!' + v.discordId + '>';
-                            councilChannel.send('Reminding ' + discordUser + ' to vote on http://snapshot.org/#/snxgov.eth' + p.id);
+                            councilChannel.send('Reminding ' + discordUser + ' to vote on http://snapshot.org/#/snxgov.eth/' + p.id);
                             guild.members.fetch(v.discordId).then(member => {
                                 try {
-                                    member.send('Reminder to vote on http://snapshot.org/#/snxgov.eth' + p.id);
+                                    member.send('Reminder to vote on http://snapshot.org/#/snxgov.eth/' + p.id);
                                 } catch (e) {
                                     console.log(e);
                                 }
