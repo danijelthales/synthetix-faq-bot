@@ -3205,7 +3205,7 @@ async function getVolume() {
             query: `{
   dailyTotals( orderBy:timestamp,
         orderDirection:desc,
-    first: 1) {
+    first: 2) {
     timestamp
     exchangers
     exchangeUSDTally
@@ -3221,8 +3221,8 @@ async function getVolume() {
             body,
         });
         const json = await response.json();
-        volume = json.data.dailyTotals[0].exchangeUSDTally;
-        distinctTraders = json.data.dailyTotals[0].trades;
+        volume = json.data.dailyTotals[1].exchangeUSDTally;
+        distinctTraders = json.data.dailyTotals[1].trades;
 
         body = JSON.stringify({
             query: `{
@@ -3230,7 +3230,7 @@ async function getVolume() {
     orderBy:timestamp,
         orderDirection:desc,
          where:  {partner: "KWENTA"},
-    first: 1) {
+    first: 2) {
     id,
     timestamp,
     trades,
@@ -3251,8 +3251,8 @@ async function getVolume() {
         const jsonL2 = await responseL2.json();
         console.log(jsonL2);
 
-        volumeL2 = jsonL2.data.dailyExchangePartners[0].usdVolume;
-        distinctTradersL2 = jsonL2.data.dailyExchangePartners[0].trades;
+        volumeL2 = jsonL2.data.dailyExchangePartners[1].usdVolume;
+        distinctTradersL2 = jsonL2.data.dailyExchangePartners[1].trades;
     } catch (e) {
         console.log(e);
     }
