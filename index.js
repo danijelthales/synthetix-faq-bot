@@ -27,6 +27,7 @@ const l1synthetixExchanger =
 
 const Discord = require("discord.js");
 const client = new Discord.Client();
+let tradesL2List = new Array();
 
 const clientFaqPrice = new Discord.Client();
 clientFaqPrice.login(process.env.BOT_TOKEN_SNX);
@@ -2987,8 +2988,8 @@ setInterval(async function () {
 
         synthExchanges.forEach(r => {
             if (startDateUnixTime < r.timestamp) {
+                tradesL2List.push(r);
                 try {
-
                     var fromCurrenyKey = web3.utils.hexToAscii(r.fromCurrencyKey);
                     fromCurrenyKey = fromCurrenyKey.replace(/\0/g, '');
                     var toCurrencyKey = web3.utils.hexToAscii(r.toCurrencyKey);
@@ -3197,71 +3198,6 @@ let distinctTraders = 0;
 let volumeL2 = 100000;
 let distinctTradersL2 = 0;
 
-async function getVolume() {
-    volume = 0;
-    try {
-
-        let body = JSON.stringify({
-            query: `{
-  dailyTotals( orderBy:timestamp,
-        orderDirection:desc,
-    first: 2) {
-    timestamp
-    exchangers
-    exchangeUSDTally
-    totalFeesGeneratedInUSD
-    trades
-  }
-}`,
-            variables: null,
-        });
-
-        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
-            method: 'POST',
-            body,
-        });
-        const json = await response.json();
-        volume = json.data.dailyTotals[1].exchangeUSDTally;
-        distinctTraders = json.data.dailyTotals[1].trades;
-
-        body = JSON.stringify({
-            query: `{
-  dailyExchangePartners(
-    orderBy:timestamp,
-        orderDirection:desc,
-         where:  {partner: "KWENTA"},
-    first: 2) {
-    id,
-    timestamp,
-    trades,
-    usdVolume,
-    partner,
-    timestamp
-    
-  }
-}`,
-            variables: null,
-        });
-
-        const responseL2 = await fetch(l2synthetixExchanger, {
-            method: 'POST',
-            body,
-        });
-
-        const jsonL2 = await responseL2.json();
-        console.log(jsonL2);
-
-        volumeL2 = jsonL2.data.dailyExchangePartners[1].usdVolume;
-        distinctTradersL2 = jsonL2.data.dailyExchangePartners[1].trades;
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-setTimeout(getVolume, 1000 * 60 * 2);
-setInterval(function () {
-    getVolume();
-}, 1000 * 60 * 30);
 
 const clientKwenta = new Discord.Client();
 clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
@@ -3269,6 +3205,16 @@ setInterval(function () {
 
     clientKwenta.guilds.cache.forEach(function (value, key) {
         try {
+            var startdate = new Date();
+            var oneDay = 1440;
+            startdate.setMinutes(startdate.getMinutes() - oneDay);
+            let startDateUnixTime = Math.floor(startdate / 1000)
+            tradesL2List = tradesL2List.filter(tradeL2 => startDateUnixTime < tradeL2.timestamp);
+            for (const tradeL2 of tradesL2List) {
+                volumeL2 =  Math.round(tradeL2.toAmountInUSD) +  Math.round(tradeL2.toAmountInUSD);
+            }
+            distinctTradersL2 = tradesL2List.length;
+            console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
             if (volume > 0) {
                 value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(volume) + ", L2=" + getNumberLabel(volumeL2));
                 value.members.cache.get("784489616781869067").user.setActivity("Trades: L1=" + distinctTraders + " L2=" + distinctTradersL2, {type: 'PLAYING'});
