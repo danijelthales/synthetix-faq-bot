@@ -3211,11 +3211,14 @@ clientKwenta.once('ready', () => {
 });
 
 async function getL2TradesFromRedis() {
-         redisClient.lrange(tradesL2List, 0, -1,  function (err, trades) {
+
+    redisClient.llen(tradesL2RedisKey, function (err, listSize) {
+        redisClient.lrange(tradesL2RedisKey, 0, listSize, function (err, trades) {
             trades.forEach( function (trade) {
                 tradesL2List.push(JSON.parse(trade));
             });
         });
+    });
 }
 
 setInterval(function () {
