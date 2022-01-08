@@ -10,6 +10,7 @@ const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = re
 var yaxis = null;
 var pair = null;
 const bugRedisKey = 'Bug';
+const tradesL2RedisKey = 'tradesL2';
 const {v4: uuidv4} = require('uuid');
 let leadingMarketCap;
 const QuickChart = require('quickchart-js');
@@ -347,6 +348,8 @@ clientKwentaL1Volume.once('ready', () => {
     console.log("kwenta l1 volume getting date")
     getL1KwentaVolume();
 });
+
+
 
 
 clientInflationRewardsL2.once('ready', () => {
@@ -2989,6 +2992,8 @@ setInterval(async function () {
         synthExchanges.forEach(r => {
             if (startDateUnixTime < r.timestamp) {
                 tradesL2List.push(r);
+                let tradesL2ListJson = JSON.stringify(tradesL2List);
+                redisClient.lpush(tradesL2RedisKey, tradesL2ListJson);
                 try {
                     var fromCurrenyKey = web3.utils.hexToAscii(r.fromCurrencyKey);
                     fromCurrenyKey = fromCurrenyKey.replace(/\0/g, '');
@@ -3195,26 +3200,46 @@ setInterval(async function () {
 let volume = 100000;
 let distinctTraders = 0;
 
-let volumeL2 = 100000;
 let distinctTradersL2 = 0;
 
 
 const clientKwenta = new Discord.Client();
 clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
+
+clientKwenta.once('ready', () => {
+    getL2TradesFromRedis();
+});
+
+async function getL2TradesFromRedis() {
+         redisClient.lrange(tradesL2List, 0, -1,  function (err, trades) {
+            trades.forEach( function (trade) {
+                tradesL2List.push(JSON.parse(trade));
+            });
+        });
+}
+
 setInterval(function () {
 
-    clientKwenta.guilds.cache.forEach(function (value, key) {
+    clientKwenta.guilds.cache.forEach( function (value, key) {
         try {
             var startdate = new Date();
             var oneDay = 1440;
             startdate.setMinutes(startdate.getMinutes() - oneDay);
             let startDateUnixTime = Math.floor(startdate / 1000)
             tradesL2List = tradesL2List.filter(tradeL2 => startDateUnixTime < tradeL2.timestamp);
+            let volumeL2=0;
             for (const tradeL2 of tradesL2List) {
-                volumeL2 =  Math.round(tradeL2.toAmountInUSD) +  Math.round(tradeL2.toAmountInUSD);
+                volumeL2 = volumeL2 + Math.round(tradeL2.toAmountInUSD);
             }
+            let tradesL2ListJson = JSON.stringify(tradesL2List);
+            redisClient.lpush(tradesL2RedisKey, tradesL2ListJson);
             distinctTradersL2 = tradesL2List.length;
             console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
+            //TODO to be removed
+            if(Date.now()<1641728275){
+            distinctTradersL2 = 10
+            volumeL2  = 1986697;
+            }
             if (volume > 0) {
                 value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(volume) + ", L2=" + getNumberLabel(volumeL2));
                 value.members.cache.get("784489616781869067").user.setActivity("Trades: L1=" + distinctTraders + " L2=" + distinctTradersL2, {type: 'PLAYING'});
