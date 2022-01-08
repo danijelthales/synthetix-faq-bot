@@ -3199,12 +3199,80 @@ setInterval(async function () {
 
 let volume = 100000;
 let distinctTraders = 0;
-
-let distinctTradersL2 = 0;
+let oldVolumeL2 = 100000;
+let oldDistinctTradersL2 = 0;
 
 
 const clientKwenta = new Discord.Client();
 clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
+
+async function getVolume() {
+    volume = 0;
+    try {
+
+        let body = JSON.stringify({
+            query: `{
+  dailyTotals( orderBy:timestamp,
+        orderDirection:desc,
+    first: 2) {
+    timestamp
+    exchangers
+    exchangeUSDTally
+    totalFeesGeneratedInUSD
+    trades
+  }
+}`,
+            variables: null,
+        });
+
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
+            method: 'POST',
+            body,
+        });
+        const json = await response.json();
+        volume = json.data.dailyTotals[1].exchangeUSDTally;
+        distinctTraders = json.data.dailyTotals[1].trades;
+
+        body = JSON.stringify({
+            query: `{
+  dailyExchangePartners(
+    orderBy:timestamp,
+        orderDirection:desc,
+         where:  {partner: "KWENTA"},
+    first: 2) {
+    id,
+    timestamp,
+    trades,
+    usdVolume,
+    partner,
+    timestamp
+    
+  }
+}`,
+            variables: null,
+        });
+
+        const responseL2 = await fetch(l2synthetixExchanger, {
+            method: 'POST',
+            body,
+        });
+
+        const jsonL2 = await responseL2.json();
+        console.log(jsonL2);
+
+        oldVolumeL2 = jsonL2.data.dailyExchangePartners[1].usdVolume;
+        oldDistinctTradersL2 = jsonL2.data.dailyExchangePartners[1].trades;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+setTimeout(getVolume, 1000 * 60 * 2);
+setInterval(function () {
+    getVolume();
+}, 1000 * 60 * 30);
+
+
 
 clientKwenta.once('ready', () => {
     getL2TradesFromRedis();
@@ -3236,12 +3304,12 @@ setInterval(function () {
             }
             let tradesL2ListJson = JSON.stringify(tradesL2List);
             redisClient.lpush(tradesL2RedisKey, tradesL2ListJson);
-            distinctTradersL2 = tradesL2List.length;
+            let distinctTradersL2 = tradesL2List.length;
             console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
             //TODO to be removed
             if(Date.now()<1641734758){
-            distinctTradersL2 = 10
-            volumeL2  = 1986697;
+            distinctTradersL2 = oldDistinctTradersL2;
+            volumeL2  = oldVolumeL2;
             }
             if (volume > 0) {
                 value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(volume) + ", L2=" + getNumberLabel(volumeL2));
