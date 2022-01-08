@@ -10,7 +10,7 @@ const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = re
 var yaxis = null;
 var pair = null;
 const bugRedisKey = 'Bug';
-const tradesL2RedisKey = 'tradesL2';
+const tradesL2RedisKey = 'tradesL2List';
 const {v4: uuidv4} = require('uuid');
 let leadingMarketCap;
 const QuickChart = require('quickchart-js');
@@ -2991,9 +2991,6 @@ setInterval(async function () {
 
         synthExchanges.forEach(r => {
             if (startDateUnixTime < r.timestamp) {
-                tradesL2List.push(r);
-                let tradesL2ListJson = JSON.stringify(tradesL2List);
-                redisClient.lpush(tradesL2RedisKey, tradesL2ListJson);
                 try {
                     var fromCurrenyKey = web3.utils.hexToAscii(r.fromCurrencyKey);
                     fromCurrenyKey = fromCurrenyKey.replace(/\0/g, '');
@@ -3090,6 +3087,9 @@ async function getl2Exchanges() {
                 } catch (e) {
                     console.log(e);
                 }
+                tradesL2List.push(r);
+                let tradesL2ListJson = JSON.stringify(tradesL2List);
+                redisClient.lpush(tradesL2RedisKey, tradesL2ListJson);
                 console.log("Exchanged " + r.fromAmount + " " + fromSynth + " to " + r.toAmount + " " + r.toSynth.symbol);
                 console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                 const exampleEmbed = new Discord.MessageEmbed();
@@ -3239,7 +3239,7 @@ setInterval(function () {
             distinctTradersL2 = tradesL2List.length;
             console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
             //TODO to be removed
-            if(Date.now()<1641728275){
+            if(Date.now()<1641734758){
             distinctTradersL2 = 10
             volumeL2  = 1986697;
             }
