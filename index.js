@@ -4586,7 +4586,7 @@ function checkVotes() {
     }
 }
 
-setInterval(checkVotes, 1000 * 60 * 60 * 5);
+/*setInterval(checkVotes, 1000 * 60 * 60 * 5);*/
 
 async function getInflationRewards() {
     try {
