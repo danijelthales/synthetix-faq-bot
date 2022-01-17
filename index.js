@@ -10,7 +10,6 @@ const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = re
 var yaxis = null;
 var pair = null;
 const bugRedisKey = 'Bug';
-const tradesL2RedisKey = 'tradesL2List';
 const {v4: uuidv4} = require('uuid');
 let leadingMarketCap;
 const QuickChart = require('quickchart-js');
@@ -2596,6 +2595,24 @@ function getNumberLabel(labelValue) {
 
 }
 
+function getNumberLabelPrecise(labelValue) {
+
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e+9
+
+        ? Math.round(Math.abs(Number(labelValue)) / 1.0e+9) + "B"
+        // Six Zeroes for Millions
+        : Math.abs(Number(labelValue)) >= 1.0e+6
+
+            ? Math.round((Math.abs(Number(labelValue)) / 1.0e+6) * 100) / 100 + "M"
+            // Three Zeroes for Thousands
+            : Math.abs(Number(labelValue)) >= 1.0e+3
+
+                ? Math.round(Math.abs(Number(labelValue)) / 1.0e+3) + "K"
+
+                : Math.round(Math.abs(Number(labelValue)));
+
+}
 
 setInterval(async function () {
     try {
@@ -3094,9 +3111,6 @@ async function getl2Exchanges() {
                 } catch (e) {
                     console.log(e);
                 }
-                tradesL2List.push(r);
-                let tradesL2ListJson = JSON.stringify(tradesL2List);
-                redisClient.lpush(tradesL2RedisKey, tradesL2ListJson);
                 console.log("Exchanged " + r.fromAmount + " " + fromSynth + " to " + r.toAmount + " " + r.toSynth.symbol);
                 console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                 const exampleEmbed = new Discord.MessageEmbed();
@@ -3206,8 +3220,8 @@ setInterval(async function () {
 
 let volume = 100000;
 let distinctTraders = 0;
-let oldVolumeL2 = 100000;
-let oldDistinctTradersL2 = 0;
+let volumeL2 = 100000;
+let distinctTradersL2 = 0;
 
 
 const clientKwenta = new Discord.Client();
@@ -3239,23 +3253,37 @@ async function getVolume() {
         const json = await response.json();
         volume = json.data.dailyTotals[1].exchangeUSDTally;
         distinctTraders = json.data.dailyTotals[1].trades;
-
+        var d = new Date();
+        d.setDate(d.getDate()-1);
+        const oneDayAgo = Math.floor(d.getTime() / 1e3);
         body = JSON.stringify({
             query: `{
-  dailyExchangePartners(
-    orderBy:timestamp,
+      synthExchanges(
+        first:1000,
+        orderBy:timestamp,
         orderDirection:desc,
-         where:  {partner: "KWENTA"},
-    first: 2) {
-    id,
-    timestamp,
-    trades,
-    usdVolume,
-    partner,
-    timestamp
-    
-  }
-}`,
+        where:{timestamp_gt: ${oneDayAgo}}
+      )
+      {
+        fromAmount
+        fromAmountInUSD
+        fromSynth{
+          id,
+          name,
+          symbol
+        }
+        toSynth{
+          id,
+          name,
+          symbol
+        }
+        timestamp
+        toAddress
+        toAmount
+        toAmountInUSD
+        feesInUSD
+      }
+    }`,
             variables: null,
         });
 
@@ -3265,10 +3293,15 @@ async function getVolume() {
         });
 
         const jsonL2 = await responseL2.json();
-        console.log(jsonL2);
+        const {synthExchanges} = jsonL2.data;
 
-        oldVolumeL2 = jsonL2.data.dailyExchangePartners[1].usdVolume;
-        oldDistinctTradersL2 = jsonL2.data.dailyExchangePartners[1].trades;
+        volumeL2=0;
+        for (const tradeL2 of synthExchanges) {
+            volumeL2 = volumeL2 + Math.round(tradeL2.toAmountInUSD);
+        }
+        distinctTradersL2 = synthExchanges.length;
+        console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
+
     } catch (e) {
         console.log(e);
     }
@@ -3281,45 +3314,14 @@ setInterval(function () {
 
 
 
-clientKwenta.once('ready', () => {
-    getL2TradesFromRedis();
-});
 
-async function getL2TradesFromRedis() {
-
-    redisClient.llen(tradesL2RedisKey, function (err, listSize) {
-        redisClient.lrange(tradesL2RedisKey, 0, listSize, function (err, trades) {
-            trades.forEach( function (trade) {
-                tradesL2List.push(JSON.parse(trade));
-            });
-        });
-    });
-}
 
 setInterval(function () {
 
     clientKwenta.guilds.cache.forEach( function (value, key) {
         try {
-            var startdate = new Date();
-            var oneDay = 1440;
-            startdate.setMinutes(startdate.getMinutes() - oneDay);
-            let startDateUnixTime = Math.floor(startdate / 1000)
-            tradesL2List = tradesL2List.filter(tradeL2 => startDateUnixTime < tradeL2.timestamp);
-            let volumeL2=0;
-            for (const tradeL2 of tradesL2List) {
-                volumeL2 = volumeL2 + Math.round(tradeL2.toAmountInUSD);
-            }
-            let tradesL2ListJson = JSON.stringify(tradesL2List);
-            redisClient.lpush(tradesL2RedisKey, tradesL2ListJson);
-            let distinctTradersL2 = tradesL2List.length;
-            console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
-            //TODO to be removed
-            if(Date.now()<1641734758){
-            distinctTradersL2 = oldDistinctTradersL2;
-            volumeL2  = oldVolumeL2;
-            }
-            if (volume > 0) {
-                value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(volume) + ", L2=" + getNumberLabel(volumeL2));
+            if (volumeL2 > 0) {
+                value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(volume) + ", L2=" + getNumberLabelPrecise(volumeL2));
                 value.members.cache.get("784489616781869067").user.setActivity("Trades: L1=" + distinctTraders + " L2=" + distinctTradersL2, {type: 'PLAYING'});
             }
         } catch (e) {
@@ -3331,78 +3333,6 @@ setInterval(function () {
 
 
 const {request, gql} = require('graphql-request');
-const queryPerformanceHistory = gql`
-    {
-        performanceHistory(address: "0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed", period:"week") {
-            day
-            week
-        }
-    }
-`;
-
-let performance = null;
-setInterval(function () {
-    request('https://api.dhedge.org/graphql', queryPerformanceHistory).then((data) => {
-            performance = data.performanceHistory;
-        }
-    );
-}, 1000 * 60 * 5);
-
-const fundInfo = gql`
-    {
-        fund(address: "0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed") {
-            fundComposition{
-                tokenName
-                amount
-                rate
-            }
-            totalValue
-        }
-    }
-`;
-
-
-let fund = null;
-setInterval(function () {
-    request('https://api.dhedge.org/graphql', fundInfo).then((data) => {
-            fund = data.fund;
-        }
-    );
-}, 1000 * 60 * 5);
-
-
-function printFund() {
-    const exampleEmbed = new Discord.MessageEmbed();
-    exampleEmbed.setColor("00770f");
-    exampleEmbed.setTitle("Synthetix Community Pool Daily digest");
-    exampleEmbed.setURL("https://app.dhedge.org/pool/0x0f0f7f24ce3a52b9508b9fbce1a6bdb2ebb0d7ed");
-    let dayperf = (performance.day / 1e18 - 1) * 100;
-    let weekerf = (performance.week / 1e18 - 1) * 100;
-    exampleEmbed.addField("Performance",
-        "Day: " + (dayperf).toFixed(2) + "%\n Week: " + (weekerf).toFixed(2) + "%");
-    let composition = "";
-    fund.fundComposition.forEach(c => {
-        if ((c.amount * 1.0) > 0) {
-            composition += "Token: " + c.tokenName;
-            composition += " Amount: " + (c.amount / 1e18).toFixed(2);
-            composition += " Value: $" + (c.amount / 1e18 * c.rate / 1e18).toFixed(2);
-            composition += "\n";
-        }
-    });
-    exampleEmbed.addField("Composition",
-        composition);
-    exampleEmbed.addField("Total value",
-        "$" + getNumberLabel(fund.totalValue / 1e18));
-    fundChannel.send(exampleEmbed);
-}
-
-
-var schedule = require('node-schedule');
-
-schedule.scheduleJob('0 1 * * *', function () {
-    printFund();
-});
-
 
 var express = require("express");
 var app = express();
