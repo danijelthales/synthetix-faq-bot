@@ -26,6 +26,9 @@ const l2synthetixExchanger =
 const l1synthetixExchanger =
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger';
 
+const CoinGecko = require('coingecko-api');
+const CoinGeckoClient = new CoinGecko();
+
 const Discord = require("discord.js");
 const client = new Discord.Client();
 let tradesL2List = new Array();
@@ -112,6 +115,10 @@ clientInflationRewardsL1.login(process.env.BOT_TOKEN_INFLATION_L1);
 
 const clientInflationRewardsL2 = new Discord.Client();
 clientInflationRewardsL2.login(process.env.BOT_TOKEN_INFLATION_L2);
+
+const clientLYRAPrice = new Discord.Client();
+
+clientLYRAPrice.login(process.env.BOT_TOKEN_LYRA);
 
 clientReminder.login(process.env.BOT_TOKEN_COUNCIL_REMINDER);
 const replaceString = require('replace-string');
@@ -4675,6 +4682,37 @@ async function getInflationRewards() {
     } catch (e) {
         console.log("Inflation rewards error! " + e);
     }
+
+    const getLYRAPrice = async () => {
+
+        let data = await CoinGeckoClient.coins.fetch("lyra-finance");
+
+        clientLYRAPrice.guilds.cache.forEach(function (value, key) {
+            try {
+                console.log("Updating LYRA Price info " + data.data.market_data.current_price.usd);
+                value.members.cache.get(clientLYRAPrice.user.id).setNickname("$" + round(data.data.market_data.current_price.usd));
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        clientLYRAPrice.user.setActivity("LYRA price", {type: 'WATCHING'});
+    }
+
+    setInterval(function () {
+        console.log("geting LYRA information")
+        getLYRAPrice();
+    }, 360 * 1000);
+
+    clientLYRAPrice.once('ready', () => {
+        getLYRAPrice();
+    });
+
+
+    const round = function (num) {
+        var m = Number((Math.abs(num) * 100).toPrecision(15));
+        return Math.round(m) / 100 * Math.sign(num);
+    }
+
 
 
 }
