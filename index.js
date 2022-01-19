@@ -3231,18 +3231,32 @@ async function getVolume() {
     volume = 0;
     try {
 
+        var d = new Date();
+        d.setDate(d.getDate()-1);
+        const oneDayAgo = Math.floor(d.getTime() / 1e3);
+
         let body = JSON.stringify({
             query: `{
-  dailyTotals( orderBy:timestamp,
+      synthExchanges(
+        first:1000,
+        orderBy:timestamp,
         orderDirection:desc,
-    first: 2) {
-    timestamp
-    exchangers
-    exchangeUSDTally
-    totalFeesGeneratedInUSD
-    trades
-  }
-}`,
+        where:{timestamp_gt: ${oneDayAgo}}
+      )
+      {
+        fromAmount
+        fromAmountInUSD
+        fromCurrencyKey
+        toCurrencyKey
+        block
+        timestamp
+        toAddress
+        toAmount
+        toAmountInUSD
+        from
+        feesInUSD
+      }
+    }`,
             variables: null,
         });
 
@@ -3251,11 +3265,16 @@ async function getVolume() {
             body,
         });
         const json = await response.json();
-        volume = json.data.dailyTotals[1].exchangeUSDTally;
-        distinctTraders = json.data.dailyTotals[1].trades;
-        var d = new Date();
-        d.setDate(d.getDate()-1);
-        const oneDayAgo = Math.floor(d.getTime() / 1e3);
+
+        let synthExchangesL1 = json.data.synthExchanges;
+
+        volume=0;
+        for (const tradeL1 of synthExchangesL1) {
+            volume = volume + Math.round(tradeL1.toAmountInUSD);
+        }
+        distinctTraders = synthExchangesL1.length;
+        console.log("l1 traders are "+ distinctTraders + " and volume is "+volume);
+
         body = JSON.stringify({
             query: `{
       synthExchanges(
@@ -4615,17 +4634,21 @@ async function getInflationRewards() {
 
     const getLYRAPrice = async () => {
 
+        try{
         let data = await CoinGeckoClient.coins.fetch("lyra-finance");
-
+        let lyraValue = round(data.data.market_data.current_price.usd);
+        console.log("lyra value is "+ data.data.market_data.current_price.usd);
         clientLYRAPrice.guilds.cache.forEach(function (value, key) {
             try {
-                console.log("Updating LYRA Price info " + data.data.market_data.current_price.usd);
-                value.members.cache.get(clientLYRAPrice.user.id).setNickname("$" + round(data.data.market_data.current_price.usd));
+                value.members.cache.get(clientLYRAPrice.user.id).setNickname("$" +lyraValue);
             } catch (e) {
                 console.log(e);
             }
         });
         clientLYRAPrice.user.setActivity("LYRA price", {type: 'WATCHING'});
+        } catch (e) {
+            console.log('error while checking lyra '+e);
+        }
     }
 
     setInterval(function () {
@@ -4633,7 +4656,8 @@ async function getInflationRewards() {
         getLYRAPrice();
     }, 360 * 1000);
 
-    clientLYRAPrice.once('ready', () => {
+    clientLYRAPrice.on("ready", () => {
+        console.log("geting LYRA information")
         getLYRAPrice();
     });
 
