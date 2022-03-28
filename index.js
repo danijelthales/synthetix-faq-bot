@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const Web3 = require('web3');
 const DataFrame = require("dataframe-js");
+var fs = require('fs');
 const infuraId = process.env.INFURA;
 const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/" + infuraId));
 const axios = require('axios');
@@ -24,6 +25,9 @@ const l2synthetixExchanger =
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main';
 const l1synthetixExchanger =
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger';
+let contractFuturesRaw = fs.readFileSync('contracts/futures.json');
+let contractFutures = JSON.parse(contractFuturesRaw);
+const web3L2 = new Web3(new Web3.providers.WebsocketProvider("wss://opt-mainnet.g.alchemy.com/v2/XU2U42ViXuMjUJ1fMbNfBL0UgEjYHala"));
 
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -134,6 +138,8 @@ var lowGasPrice = 200;
 var instantGasPrice = 350;
 var ethPrice = 360;
 var tknPrice = 0.77;
+var bitcoinTokenPrice = 40000;
+var linkTokenPrice = 20;
 var tknMarketCap = 19161119;
 var swthPrice = 0.063;
 var swthMarketCap = 35196236;
@@ -288,6 +294,8 @@ let trades = null;
 let trades100 = null;
 let trades1000 = null;
 let l2tradesBelow10k = null;
+let l2WhaleFutures = null;
+let l2ShrimpFutures = null;
 let l2tradesAbove10k = null;
 let l2tradesAbove50k = null;
 let general = null;
@@ -381,6 +389,12 @@ client.on("ready", () => {
     client.channels.fetch('871713566225485834').then(c => {
         l2tradesBelow10k = c
     });
+    client.channels.fetch('955448139018547220').then(c => {
+        l2ShrimpFutures = c
+    });
+    client.channels.fetch('955448048509661225').then(c => {
+        l2WhaleFutures = c
+    });
     client.channels.fetch('895691615568531466').then(c => {
         l2tradesAbove10k = c
     });
@@ -437,6 +451,7 @@ client.on("ready", () => {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
+    getFuturesL2();
 });
 // client.on("guildMemberAdd", function (member) {
 //     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
@@ -1504,6 +1519,59 @@ setInterval(function () {
 
 }, 50 * 1000);
 
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/chainlink', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                linkTokenPrice = result.market_data.current_price.usd;
+                linkTokenPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
+            } catch (e) {
+                console.log(e);
+            }
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
+setInterval(function () {
+    https.get('https://api.coingecko.com/api/v3/coins/bitcoin', (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            try {
+                let result = JSON.parse(data);
+                bitcoinTokenPrice = result.market_data.current_price.usd;
+                bitcoinTokenPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
+            } catch (e) {
+                console.log(e);
+            }
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+}, 50 * 1000);
+
 setInterval(function () {
     https.get('https://api.coingecko.com/api/v3/coins/yaxis', (resp) => {
         let data = '';
@@ -1702,33 +1770,7 @@ setInterval(function () {
 
 }, 50 * 1000);
 
-setInterval(function () {
-    https.get('https://api.coingecko.com/api/v3/coins/dracula-token', (resp) => {
-        let data = '';
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            try {
-                let result = JSON.parse(data);
-                drcPrice = result.market_data.current_price.usd;
-                drcPrice = Math.round(((drcPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                drcMarketcap = result.market_data.market_cap.usd;
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 50 * 1000);
 
 
 setInterval(function () {
@@ -2512,14 +2554,7 @@ setInterval(function () {
             console.log(e);
         }
     });
-    clientDrcPrice.guilds.cache.forEach(function (value, key) {
-        try {
-            value.members.cache.get("772406482184175636").setNickname("$" + drcPrice);
-            value.members.cache.get("772406482184175636").user.setActivity("marketcap=$" + getNumberLabel(drcMarketcap), {type: 'PLAYING'});
-        } catch (e) {
-            console.log(e);
-        }
-    });
+
     clientPerpPrice.guilds.cache.forEach(function (value, key) {
         try {
             value.members.cache.get("775312068106125343").setNickname("$" + perpPrice);
@@ -4629,8 +4664,99 @@ async function getInflationRewards() {
         console.log("Inflation rewards error! " + e);
     }
 
+}
+
+async function getFuturesL2() {
+
+    let  futuresContractETH =  new web3L2.eth.Contract(contractFutures, "0xf86048DFf23cF130107dfB4e6386f574231a5C65");
+    let  futuresContractLINK =  new web3L2.eth.Contract(contractFutures, "0x1228c7D8BBc5bC53DB181bD7B1fcE765aa83bF8A");
+    let  futuresContractBTC =  new web3L2.eth.Contract(contractFutures, "0xEe8804d8Ad10b0C3aD1Bd57AC3737242aD24bB95");
 
 
+    futuresContractBTC.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+            if( Math.abs(Math.round((Number(event.returnValues.tradeSize) / 1e+18) * 100) / 100)>0.5)    {
+                sendFuturesMessage(event,"BTC",true,bitcoinTokenPrice);
+            }
+            else {
+                sendFuturesMessage(event,"BTC",false,bitcoinTokenPrice);
+            }
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
 
+    futuresContractETH.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                if( Math.abs(Math.round((Number(event.returnValues.tradeSize) / 1e+18) * 100) / 100)>6)    {
+                    sendFuturesMessage(event,"ETH",true, ethPrice);
+                }
+                else {
+                    sendFuturesMessage(event,"ETH",false, ethPrice);
+                }
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractLINK.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                if( Math.abs(Math.round((Number(event.returnValues.tradeSize) / 1e+18) * 100) / 100)>13000)    {
+                    sendFuturesMessage(event,"LINK",true,linkTokenPrice);
+                }
+                else {
+                    sendFuturesMessage(event,"LINK",false,linkTokenPrice);
+                }
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+}
+
+async function sendFuturesMessage(future,futuresTYPE,isWhale,usdPrice){
+
+    const exampleEmbed = new Discord.MessageEmbed();
+    exampleEmbed.setColor("#0b5394");
+    exampleEmbed.setTitle("New Futures "+future.returnValues.account.substring(0,5));
+    exampleEmbed.setURL("https://optimistic.etherscan.io/tx/" + future.transactionHash);
+    let tradeMessage;
+    if(Number(future.returnValues.tradeSize)  < 0 ){
+        tradeMessage = futuresTYPE+" SHORT"
+    }else{
+        tradeMessage = futuresTYPE+" LONG";
+    }
+
+    let margin = Math.round((Number(future.returnValues.margin) / 1e+18) * 100) / 100;
+    let size = Math.round((Number(future.returnValues.size) / 1e+18) * 100) / 100;
+    let tradeSize = Math.round((Number(future.returnValues.tradeSize) / 1e+18) * 100) / 100;
+    let lastPrice = Math.round((Number(future.returnValues.lastPrice) / 1e+18) * 100) / 100;
+    let fee = Math.round((Number(future.returnValues.fee) / 1e+18) * 100) / 100;
+    let tradeSizeUSD =  Math.round(tradeSize * lastPrice * 100)/100;
+
+    exampleEmbed.addField("Trade",
+        tradeMessage);
+    exampleEmbed.addField("Margin",
+        numberWithCommas(margin));
+    exampleEmbed.addField("Size",
+        numberWithCommas(size));
+    exampleEmbed.addField("Trade Size",
+        numberWithCommas(tradeSize));
+    exampleEmbed.addField("Last Price",
+        numberWithCommas(lastPrice));
+    exampleEmbed.addField("Fee",
+        numberWithCommas(fee));
+    exampleEmbed.addField("Trade size in USD",
+         numberWithCommas(tradeSizeUSD));
+    if(isWhale){
+       l2WhaleFutures.send(exampleEmbed);
+    }else{
+        l2ShrimpFutures.send(exampleEmbed);
+    }
 
 }
