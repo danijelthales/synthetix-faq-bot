@@ -28,7 +28,8 @@ const l1synthetixExchanger =
 let contractFuturesRaw = fs.readFileSync('contracts/futures.json');
 let contractFutures = JSON.parse(contractFuturesRaw);
 const web3L2 = new Web3(new Web3.providers.WebsocketProvider("wss://opt-mainnet.g.alchemy.com/v2/XU2U42ViXuMjUJ1fMbNfBL0UgEjYHala"));
-
+let mapFutures = new Map();
+let futuresKey = "l2FuturesKey"
 const Discord = require("discord.js");
 const client = new Discord.Client();
 let tradesL2List = new Array();
@@ -240,6 +241,14 @@ if (process.env.REDIS_URL) {
     redisClient = redis.createClient(process.env.REDIS_URL);
     redisClient.on("error", function (error) {
         console.error(error);
+    });
+
+    redisClient.get(futuresKey, function (err, obj) {
+        console.log("obj:" + obj);
+        if (obj) {
+            mapFutures = new Map(JSON.parse(obj));
+            console.log("mapFutures:" + mapFutures);
+        }
     });
 
     redisClient.get("gasSubscribersMap", function (err, obj) {
@@ -3347,6 +3356,24 @@ async function getVolume() {
         const {synthExchanges} = jsonL2.data;
 
         volumeL2=0;
+
+        let currentDate = new Date();
+        currentDate.setDate(currentDate.getDate()-1);
+        let timestampYesterday=currentDate.getTime();
+
+        let totalFuturesVolume = 0;
+        for (const [key, value] of mapFutures.entries()) {
+            if(key>timestampYesterday){
+                totalFuturesVolume = Math.round(totalFuturesVolume + value);
+            }else{
+                mapFutures.delete(key);
+            }
+        }
+        redisClient.set(futuresKey, JSON.stringify([...mapFutures]), function () {
+            console.log("added correctly")
+        });
+
+        volumeL2  = totalFuturesVolume;
         for (const tradeL2 of synthExchanges) {
             volumeL2 = volumeL2 + Math.round(tradeL2.toAmountInUSD);
         }
@@ -4758,5 +4785,8 @@ async function sendFuturesMessage(future,futuresTYPE,isWhale,usdPrice){
     }else{
         l2ShrimpFutures.send(exampleEmbed);
     }
-
+    mapFutures.set(new Date().getTime(),Math.abs(tradeSizeUSD));
+    redisClient.set(futuresKey, JSON.stringify([...mapFutures]), function () {
+        console.log("added future okay")
+    });
 }
