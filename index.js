@@ -4698,17 +4698,20 @@ async function getFuturesL2() {
     let  futuresContractETH =  new web3L2.eth.Contract(contractFutures, "0xf86048DFf23cF130107dfB4e6386f574231a5C65");
     let  futuresContractLINK =  new web3L2.eth.Contract(contractFutures, "0x1228c7D8BBc5bC53DB181bD7B1fcE765aa83bF8A");
     let  futuresContractBTC =  new web3L2.eth.Contract(contractFutures, "0xEe8804d8Ad10b0C3aD1Bd57AC3737242aD24bB95");
+    let  futuresContractAAVE =  new web3L2.eth.Contract(contractFutures, "0x001b7876F567f0b3A639332Ed1e363839c6d85e2");
+    let  futuresContractAVAX =  new web3L2.eth.Contract(contractFutures, "0x4ff54624D5FB61C34c634c3314Ed3BfE4dBB665a");
+    let  futuresContractEUR =  new web3L2.eth.Contract(contractFutures, "0xad44873632840144fFC97b2D1de716f6E2cF0366");
+    let  futuresContractMATIC =  new web3L2.eth.Contract(contractFutures, "0xbCB2D435045E16B059b2130b28BE70b5cA47bFE5");
+    let  futuresContractSOL =  new web3L2.eth.Contract(contractFutures, "0xcF853f7f8F78B2B801095b66F8ba9c5f04dB1640");
+    let  futuresContractUNI =  new web3L2.eth.Contract(contractFutures, "0x5Af0072617F7f2AEB0e314e2faD1DE0231Ba97cD");
+    let  futuresContractXAG =  new web3L2.eth.Contract(contractFutures, "0xb147C69BEe211F57290a6cde9d1BAbfD0DCF3Ea3");
+    let  futuresContractXAU =  new web3L2.eth.Contract(contractFutures, "0x4434f56ddBdE28fab08C4AE71970a06B300F8881");
 
 
     futuresContractBTC.events.PositionModified({})
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
-            if( Math.abs(Math.round((Number(event.returnValues.tradeSize) / 1e+18) * 100) / 100)>0.5)    {
-                sendFuturesMessage(event,"BTC",true,bitcoinTokenPrice);
-            }
-            else {
-                sendFuturesMessage(event,"BTC",false,bitcoinTokenPrice);
-            }
+                sendFuturesMessage(event,"BTC");
             }
         })
         .on('error', async function(event){
@@ -4718,12 +4721,7 @@ async function getFuturesL2() {
     futuresContractETH.events.PositionModified({})
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
-                if( Math.abs(Math.round((Number(event.returnValues.tradeSize) / 1e+18) * 100) / 100)>6)    {
-                    sendFuturesMessage(event,"ETH",true, ethPrice);
-                }
-                else {
-                    sendFuturesMessage(event,"ETH",false, ethPrice);
-                }
+                    sendFuturesMessage(event,"ETH");
             }
         })
         .on('error', async function(event){
@@ -4733,12 +4731,87 @@ async function getFuturesL2() {
     futuresContractLINK.events.PositionModified({})
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
-                if( Math.abs(Math.round((Number(event.returnValues.tradeSize) / 1e+18) * 100) / 100)>13000)    {
-                    sendFuturesMessage(event,"LINK",true,linkTokenPrice);
-                }
-                else {
-                    sendFuturesMessage(event,"LINK",false,linkTokenPrice);
-                }
+                    sendFuturesMessage(event,"LINK");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractAAVE.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"AAVE");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractAVAX.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"AVAX");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractEUR.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"EUR");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractMATIC.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"MATIC");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractSOL.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"SOL");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractUNI.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"UNI");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractXAG.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"XAG");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractXAU.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                    sendFuturesMessage(event,"XAU");
             }
         })
         .on('error', async function(event){
@@ -4746,7 +4819,7 @@ async function getFuturesL2() {
         });
 }
 
-async function sendFuturesMessage(future,futuresTYPE,isWhale,usdPrice){
+async function sendFuturesMessage(future,futuresTYPE){
 
     const exampleEmbed = new Discord.MessageEmbed();
     exampleEmbed.setColor("#0b5394");
@@ -4780,7 +4853,7 @@ async function sendFuturesMessage(future,futuresTYPE,isWhale,usdPrice){
         numberWithCommas(fee));
     exampleEmbed.addField("Trade size in USD",
          numberWithCommas(tradeSizeUSD));
-    if(isWhale){
+    if(Math.abs(tradeSizeUSD)>10000){
        l2WhaleFutures.send(exampleEmbed);
     }else{
         l2ShrimpFutures.send(exampleEmbed);
