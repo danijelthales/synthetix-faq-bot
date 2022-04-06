@@ -4,12 +4,14 @@ const Web3 = require('web3');
 const DataFrame = require("dataframe-js");
 var fs = require('fs');
 const infuraId = process.env.INFURA;
+const csv = require('csv-parser');
 const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/" + infuraId));
 const axios = require('axios');
 const synthetixAPI = require('synthetix');
 const {ChainId, Fetcher, Route, Trade, TokenAmount, TradeType, WETH, Token} = require('@uniswap/sdk');
 var yaxis = null;
 var pair = null;
+let debtArray = new Array();
 const bugRedisKey = 'Bug';
 const {v4: uuidv4} = require('uuid');
 let leadingMarketCap;
@@ -461,6 +463,7 @@ client.on("ready", () => {
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
     getFuturesL2();
+    loadDebtFile();
 });
 // client.on("guildMemberAdd", function (member) {
 //     member.send("Hi and welcome to Synthetix! I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help**.");
@@ -813,6 +816,7 @@ setInterval(function () {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
+    loadDebtFile();
 }, 1000 * 60 * 60 * 12);
 
 client.on("message", msg => {
@@ -3771,11 +3775,21 @@ function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
             .setDescription("Debt pool:")
             .setColor("#0060ff");
         let counter = 1;
-        for (const dfElement of df.toArray()) {
-            debtMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', "\u200b");
+        debtArray.sort((a, b) => (Number(a.debt_in_percent) > Number(b.debt_in_percent)) ? -1 : 1);
+        let debtSummary = 0;
+        for (const debtElement of debtArray) {
+            if(Number(debtElement.debt_in_percent)>5){
+                if(debtElement.currencyKey=='sETH' && Number(debtElement.cap)<0){
+                    debtMessage.addField(counter + ') Short' + debtElement.currencyKey.replace("s", "") + ' ' + debtElement.debt_in_percent + '%', "\u200b");
+                }else {
+            debtMessage.addField(counter + ') ' + debtElement.currencyKey.replace("s", "") + ' ' + debtElement.debt_in_percent + '%', "\u200b");
+            }
             counter++;
+            }else{
+                debtSummary = parseFloat(debtSummary) + parseFloat(debtElement.debt_in_percent);
+            }
         }
-        debtMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', "\u200b");
+        debtMessage.addField(counter + ') others ' + Math.round(debtSummary) + '%', "\u200b");
         return debtMessage;
     }
 }
@@ -4862,4 +4876,36 @@ async function sendFuturesMessage(future,futuresTYPE){
     redisClient.set(futuresKey, JSON.stringify([...mapFutures]), function () {
         console.log("added future okay")
     });
+}
+
+
+async function loadDebtFile(){
+    var myDropboxURL = 'https://www.dropbox.com/s/dl/0v6z67eqqzxrwco/data.csv?dl=1';
+    var file = fs.createWriteStream('data.csv');
+    var request = (url) => {
+        https.get(url, (response) => {
+            if (response.statusCode == 302) { // it's a redirect!
+                request(response.headers.location);
+            } else {
+                response.pipe(file);
+                file.on('finish', () => {
+                    file.close(() => {
+                        console.log("sss");
+                        fs.createReadStream('data.csv')
+                            .pipe(csv())
+                            .on('data', (row) => {
+                                if(Number(row.debt_in_percent)>0)
+                                    debtArray.push(row);
+                            })
+                            .on('end', () => {
+                                console.log('CSV file successfully processed');
+                            });
+                    });
+                });
+            }
+        }).on('error', (err) => {
+            console.log(err)
+        });
+    }
+    request(myDropboxURL);
 }
