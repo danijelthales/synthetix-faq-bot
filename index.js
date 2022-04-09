@@ -29,7 +29,16 @@ const l1synthetixExchanger =
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger';
 let contractFuturesRaw = fs.readFileSync('contracts/futures.json');
 let contractFutures = JSON.parse(contractFuturesRaw);
-const web3L2 = new Web3(new Web3.providers.WebsocketProvider("wss://opt-mainnet.g.alchemy.com/v2/XU2U42ViXuMjUJ1fMbNfBL0UgEjYHala"));
+const options = {
+    // Enable auto reconnection
+    reconnect: {
+        auto: true,
+        delay: 5000, // ms
+        maxAttempts: 5,
+        onTimeout: false
+    }
+};
+const web3L2 = new Web3(new Web3.providers.WebsocketProvider("wss://opt-mainnet.g.alchemy.com/v2/XU2U42ViXuMjUJ1fMbNfBL0UgEjYHala",options));
 let mapFutures = new Map();
 let futuresKey = "l2FuturesKey"
 const Discord = require("discord.js");
