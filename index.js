@@ -4680,9 +4680,7 @@ async function getInflationRewards() {
         const RewardsDistribution = new ethers.Contract(address, abi, provider);
         let distributions = await RewardsDistribution.distributions(2);
         let inflationRewardL2 = web3.utils.hexToNumberString(distributions[1]._hex) / 1e18;
-        let inflationRewardsTotalResponse = await axios.get('https://api.etherscan.io/api?module=logs&action=getLogs&address=0xA05e45396703BabAa9C' +
-            '276B5E5A9B6e2c175b521&fromBlock=379224&toBlock=latest&topic0=0x601e517d4811033fed8290c7' +
-            '9b7823ce1ab70258da45400fe2391a3c7432edab&apikey=YKYE3MBJ1YXMAUQRNK7HZ7YQPKGIT1X6PJ');
+        let inflationRewardsTotalResponse = await axios.get('https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=1&toBlock=latest&topic0=0x601e517d4811033fed8290c79b7823ce1ab70258da45400fe2391a3c7432edab&address=0x8d203c458d536fe0f97e9f741bc231eac8cd91cf');
         let resultsLength = inflationRewardsTotalResponse.data.result.length - 1;
         let inflationRewardsTotal = web3.utils.hexToNumberString(inflationRewardsTotalResponse.data.result[resultsLength].data.substring(0, 66)) / 1e18;
         let inflationRewardsL1 = inflationRewardsTotal - inflationRewardL2;
