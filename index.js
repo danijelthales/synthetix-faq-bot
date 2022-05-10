@@ -219,7 +219,8 @@ var coingeckoBtc = 0.000351;
 var binanceUsd = 3.74;
 var kucoinUsd = 3.74;
 
-var payday = new Date('2020-08-12 07:30');
+
+var payday = new Date("Apr 20, 2022 16:00:00 UTC");
 
 const Synth = class {
     name;
@@ -3332,7 +3333,7 @@ async function getVolume() {
         body = JSON.stringify({
             query: `{
       synthExchanges(
-        first:1000,
+        first: 1000,
         orderBy:timestamp,
         orderDirection:desc,
         where:{timestamp_gt: ${oneDayAgo}}
