@@ -4729,6 +4729,9 @@ async function getFuturesL2() {
     let  futuresContractXAG =  new web3L2.eth.Contract(contractFutures, "0xb147C69BEe211F57290a6cde9d1BAbfD0DCF3Ea3");
     let  futuresContractXAU =  new web3L2.eth.Contract(contractFutures, "0x4434f56ddBdE28fab08C4AE71970a06B300F8881");
 
+    let  futuresContractAPE =  new web3L2.eth.Contract(contractFutures, "0xFe00395ec846240dc693e92AB2Dd720F94765Aa3");
+    let  futuresContractDYDX =  new web3L2.eth.Contract(contractFutures, "0x10305C1854d6DB8A1060dF60bDF8A8B2981249Cf");
+
 
     futuresContractBTC.events.PositionModified({})
         .on('data', async function(event){
@@ -4834,6 +4837,26 @@ async function getFuturesL2() {
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
                     sendFuturesMessage(event,"XAU");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractAPE.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"APE");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    futuresContractDYDX.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"DYDX");
             }
         })
         .on('error', async function(event){
