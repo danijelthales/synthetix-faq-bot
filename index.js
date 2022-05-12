@@ -3765,19 +3765,19 @@ function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
             .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
             .setColor("#0060ff");
         let counter = 1;
-        for (const dfElement of df.toArray()) {
-            var percentMain = (debtValue / 100) * dfElement[5];
-            var unitsMain = (percentMain / dfElement[4]);
-            if (unitsMain > 1) {
-                unitsMain = Math.round((unitsMain + Number.EPSILON) * 100) / 100;
-            } else {
-                unitsMain = unitsMain.toFixed(5);
+        debtArray.sort((a, b) => (Number(a.user_debt_hedge_with_correlation_in_usd) > Number(b.user_debt_hedge_with_correlation_in_usd)) ? -1 : 1);
+        for (const debtElement of debtArray) {
+            if(debtElement.currencyKey=='sETH' || debtElement.currencyKey=='sUSD'){
+                let hedgeAmount = Math.round((Math.abs(debtElement.user_debt_hedge_with_correlation_in_usd * debtValue)/100)*100)/100;
+                if(debtElement.user_debt_hedge_with_correlation_in_usd>0){
+                    hedgeMessage.addField(counter + ') ' + debtElement.currencyKey.replace("s", "") + ' ' + Math.round((Math.abs(debtElement.user_debt_hedge_with_correlation_in_usd) * 100))/100 + '%', '  $' + hedgeAmount + ' worth');
+                }else {
+                    hedgeMessage.addField(counter + ') Short ' + debtElement.currencyKey.replace("s", "") + ' ' + Math.round((Math.abs(debtElement.user_debt_hedge_with_correlation_in_usd) * 100))/100 + '%', '  $' + hedgeAmount + ' worth');
+                }
+                counter++;
             }
-            hedgeMessage.addField(counter + ') ' + dfElement[3].replace("s", "") + ' ' + dfElement[5] + '%', '  $' + percentMain.toFixed(2) + ' worth | ' + unitsMain + ' units');
-            counter++;
         }
-        var percent = (debtValue / 100) * Math.round(parseFloat(othersDebtSum) * 100);
-        hedgeMessage.addField(counter + ') others ' + Math.round(parseFloat(othersDebtSum) * 100) + '%', '$' + percent.toFixed(2) + ' worth');
+        hedgeMessage.addField("Disclaimer","The proportions mentioned assume that the eth/btc correlation is stable across time, advanced users are encouraged to look into the composition of the debt pool and the relevant leverage it incorporates.")
         return hedgeMessage;
     } else {
         var debtMessage = new Discord.MessageEmbed()
