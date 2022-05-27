@@ -826,8 +826,11 @@ setInterval(function () {
     calculateDebt();
     calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
-    loadDebtFile();
 }, 1000 * 60 * 60 * 12);
+
+setInterval(function () {
+    loadDebtFile();
+}, 1000 * 60 * 60 * 2);
 
 client.on("message", msg => {
 
@@ -3768,13 +3771,18 @@ function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
         debtArray.sort((a, b) => (Number(a.user_debt_hedge_with_correlation_in_usd) > Number(b.user_debt_hedge_with_correlation_in_usd)) ? -1 : 1);
         for (const debtElement of debtArray) {
             if(debtElement.currencyKey=='sETH' || debtElement.currencyKey=='sUSD'){
+
                 let hedgeAmount = Math.round((Math.abs(debtElement.user_debt_hedge_with_correlation_in_usd * debtValue)/100)*100)/100;
                 if(debtElement.user_debt_hedge_with_correlation_in_usd>0){
                     hedgeMessage.addField(counter + ') ' + debtElement.currencyKey.replace("s", "") + ' ' + Math.round((Math.abs(debtElement.user_debt_hedge_with_correlation_in_usd) * 100))/100 + '%', '  $' + hedgeAmount + ' worth');
                 }else {
                     hedgeMessage.addField(counter + ') Short ' + debtElement.currencyKey.replace("s", "") + ' ' + Math.round((Math.abs(debtElement.user_debt_hedge_with_correlation_in_usd) * 100))/100 + '%', '  $' + hedgeAmount + ' worth');
                 }
+                if(counter==2){
+                    break;
+                }
                 counter++;
+
             }
         }
         hedgeMessage.addField("Disclaimer","The proportions mentioned assume that the eth/btc correlation is stable across time, advanced users are encouraged to look into the composition of the debt pool and the relevant leverage it incorporates.")
@@ -4911,6 +4919,7 @@ async function sendFuturesMessage(future,futuresTYPE){
 
 
 async function loadDebtFile(){
+    debtArray = await new Array();
     var myDropboxURL = 'https://www.dropbox.com/s/dl/0v6z67eqqzxrwco/data.csv?dl=1';
     var file = fs.createWriteStream('data.csv');
     var request = (url) => {
