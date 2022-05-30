@@ -312,12 +312,10 @@ if (process.env.REDIS_URL) {
 
 let channel = null;
 let trades = null;
-let trades100 = null;
 let trades1000 = null;
 let l2tradesBelow10k = null;
 let l2WhaleFutures = null;
 let l2ShrimpFutures = null;
-let l2tradesAbove10k = null;
 let l2tradesAbove50k = null;
 let general = null;
 let councilChannel = null;
@@ -401,9 +399,6 @@ client.on("ready", () => {
     client.channels.fetch('785320922278133800').then(c => {
         trades = c
     });
-    client.channels.fetch('785321056197935124').then(c => {
-        trades100 = c
-    });
     client.channels.fetch('790349176289624084').then(c => {
         trades1000 = c
     });
@@ -415,9 +410,6 @@ client.on("ready", () => {
     });
     client.channels.fetch('955448048509661225').then(c => {
         l2WhaleFutures = c
-    });
-    client.channels.fetch('895691615568531466').then(c => {
-        l2tradesAbove10k = c
     });
     client.channels.fetch('892116005898289212').then(c => {
         l2tradesAbove50k = c
@@ -3081,7 +3073,7 @@ setInterval(async function () {
 
                     console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    if (r.toAmountInUSD >= 1000000) {
+                    if (r.toAmountInUSD >= 100000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
@@ -3095,20 +3087,6 @@ setInterval(async function () {
                         exampleEmbed.addField("Value",
                             numberWithCommas(Number(r.fromAmountInUSD).toFixed(2)) + " sUSD");
                         trades1000.send(exampleEmbed);
-                    } else if (r.toAmountInUSD >= 100000) {
-                        const exampleEmbed = new Discord.MessageEmbed();
-                        exampleEmbed.setColor("ff0000");
-                        exampleEmbed.setTitle("New trade");
-                        exampleEmbed.setURL("https://etherscan.io/block/" + r.block);
-                        exampleEmbed.addField("Wallet",
-                            '[' + r.from + '](https://etherscan.io/address/' + r.from + ')');
-                        exampleEmbed.addField("From",
-                            numberWithCommas(Number(r.fromAmount).toFixed(2)) + " " + fromCurrenyKey);
-                        exampleEmbed.addField("To",
-                            numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + toCurrencyKey);
-                        exampleEmbed.addField("Value",
-                            numberWithCommas(Number(r.fromAmountInUSD).toFixed(2)) + " sUSD");
-                        trades100.send(exampleEmbed);
                     }
                 } catch (e) {
                     console.log(e);
@@ -3186,12 +3164,9 @@ async function getl2Exchanges() {
 
                 if (r.toAmountInUSD < 10000)
                     l2tradesBelow10k.send(exampleEmbed);
-                else if (r.toAmountInUSD > 50000) {
+                else  {
                     l2tradesAbove50k.send(exampleEmbed);
-                } else {
-                    l2tradesAbove10k.send(exampleEmbed);
                 }
-
             } catch (e) {
                 console.log(e);
             }
