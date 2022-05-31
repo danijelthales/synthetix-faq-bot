@@ -3073,7 +3073,7 @@ setInterval(async function () {
 
                     console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    if (r.toAmountInUSD >= 100000) {
+                    if (r.toAmountInUSD >= 10000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
@@ -3227,7 +3227,7 @@ setInterval(async function () {
 
                     console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
-                    if (r.toAmountInUSD < 100000) {
+                    if (r.toAmountInUSD < 10000) {
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("00770f");
                         exampleEmbed.setTitle("New trade");
