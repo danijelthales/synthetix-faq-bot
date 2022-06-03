@@ -384,7 +384,7 @@ clientKwentaL1Volume.once('ready', () => {
 
 clientInflationRewardsL2.once('ready', () => {
     console.log("updating inflation rewards")
-    getInflationRewards();
+        getInflationRewards();
 });
 
 setInterval(function () {
@@ -463,8 +463,8 @@ client.on("ready", () => {
 
     calculateDebt();
     calculateHistoricDebt();
-    calculateAllTimeHistoricDebt();
-    getFuturesL2();
+    calculateHistoricDebt();
+    //getFuturesL2();
     loadDebtFile();
 });
 // client.on("guildMemberAdd", function (member) {
@@ -490,7 +490,7 @@ function doInnerQuestion(command, doReply, msg) {
     try {
         let rawdata = fs.readFileSync('answers/' + command + '.json');
         let answer = JSON.parse(rawdata);
-
+        console.trace("I am here");
         const exampleEmbed = new Discord.MessageEmbed();
         exampleEmbed.setColor(answer.color);
         exampleEmbed.setTitle(answer.title);
@@ -504,8 +504,10 @@ function doInnerQuestion(command, doReply, msg) {
             exampleEmbed.addField("Fast gas price:", fastGasPrice + ' gwei', false);
             exampleEmbed.addField("Instant gas price:", instantGasPrice + ' gwei', false);
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -522,8 +524,10 @@ function doInnerQuestion(command, doReply, msg) {
             exampleEmbed.addField("ETH (coingecko):", coingeckoEth, false);
             exampleEmbed.addField("BTC (coingecko):", coingeckoBtc, false);
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -547,8 +551,10 @@ function doInnerQuestion(command, doReply, msg) {
                     exampleEmbed.addField("USD", result.market_data.current_price.usd, false);
                     exampleEmbed.addField("BTC:", result.market_data.current_price.btc, false);
                     if (doReply) {
+                        console.trace("I am here");
                         msg.reply(exampleEmbed);
                     } else {
+                        console.trace("I am here");
                         msg.channel.send(exampleEmbed).then(function (message) {
                             message.react("❌");
                         }).catch(function () {
@@ -582,8 +588,10 @@ function doInnerQuestion(command, doReply, msg) {
                             .setImage('attachment://perfect.jpg');
                     }
                     if (doReply) {
+                        console.trace("I am here");
                         msg.reply(exampleEmbed);
                     } else {
+                        console.trace("I am here");
                         msg.channel.send(exampleEmbed).then(function (message) {
                             message.react("❌");
                         }).catch(function () {
@@ -613,8 +621,10 @@ function doInnerQuestion(command, doReply, msg) {
 
             exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -626,8 +636,10 @@ function doInnerQuestion(command, doReply, msg) {
 
             exampleEmbed.addField("Volume in this period:", periodVolume, false);
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -657,8 +669,10 @@ function doInnerQuestion(command, doReply, msg) {
             exampleEmbed.addField("Synth no change:", synthsBreakEven, false);
             exampleEmbed.addField("Synth losers:", synthsLosers, false);
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -675,8 +689,10 @@ function doInnerQuestion(command, doReply, msg) {
 
             exampleEmbed.addField("Biggest gainers:", synthsPrices, false);
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -693,8 +709,10 @@ function doInnerQuestion(command, doReply, msg) {
 
             exampleEmbed.addField("Biggest losers:", synthsPrices, false);
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -712,8 +730,10 @@ function doInnerQuestion(command, doReply, msg) {
             }
 
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -732,8 +752,10 @@ function doInnerQuestion(command, doReply, msg) {
             }
 
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -761,8 +783,10 @@ function doInnerQuestion(command, doReply, msg) {
             exampleEmbed.addField("Countdown:", days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ", false);
 
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -792,8 +816,10 @@ function doInnerQuestion(command, doReply, msg) {
             }
 
             if (doReply) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -802,9 +828,12 @@ function doInnerQuestion(command, doReply, msg) {
             }
         }
     } catch (e) {
+        console.log("error inner q",e);
         if (doReply) {
+            console.trace("I am here");
             msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***question questionNumber***, e.g. **question 1**\nYou can get the question number via **list**");
         } else {
+            console.trace("I am here");
             msg.reply("Oops, there seems to be something wrong there. \nChoose your question with ***!FAQ question questionNumber***, e.g. **question 1**\nYou can get the question number if you send me **list** in DM");
         }
     }
@@ -825,18 +854,21 @@ setInterval(function () {
 }, 1000 * 60 * 60 * 2);
 
 client.on("message", msg => {
-
+    try{
         if (!msg.author.username.includes("FAQ")) {
 
             if (!(msg.channel.type == "dm")) {
                 // this is logic for channels
+                console.log("send a normal message");
                 if (msg.content.toLowerCase().trim() == "!faq") {
+                    console.trace("I am here");
                     msg.reply("Hi, I am Synthetix FAQ bot. I will be very happy to assist you, just ask me for **help** in DM.");
                 }
                 // else if (msg.content.toLowerCase().includes("<@!513707101730897921>")) {
                 //     msg.reply("I've called for master, he will be with you shortly.");
                 // }
                 else if (msg.content.toLowerCase().trim() == "!faq soonthetix") {
+                    console.trace("I am here");
                     msg.channel.send('It will be:', {
                         files: [
                             "images/soonthetix.gif"
@@ -847,6 +879,7 @@ client.on("message", msg => {
                         //Something
                     });
                 } else if (msg.content.toLowerCase().trim() == "!faq help") {
+                    console.trace("I am here");
                     msg.reply("I can only answer a predefined question by its number or by alias in a channel, e.g. **question 1**, or **gas price**. \n For more commands and options send me **help** in DM");
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq question")) {
                     doQuestion(msg, "!faq question", false);
@@ -884,21 +917,42 @@ client.on("message", msg => {
                     const command = args.shift().trim();
                     getMintrData(msg, command, false);
                 } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("!faq show chart")) {
+                    console.trace("I am here");
                     msg.reply("No longer supported. Use $ticker snx");
                 } else if (msg.content.toLowerCase().startsWith(`!faq hedge`)) {
                     const args = msg.content.slice(`!faq hedge`.length).trim().split(' ');
                     const command = args.shift().toLowerCase();
-                    msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                    try{
+                        console.trace("I am here");
+                        msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                    }catch (e) {
+                        console.log("debt hedge error",e);
+                    }
                     getDebtHedgeMessage(command, df, othersDebtSum);
                 } else if (msg.content.toLowerCase().startsWith(`!hedge`)) {
                     const args = msg.content.slice(`!hedge`.length).trim().split(' ');
                     const command = args.shift().toLowerCase();
-                    msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                    try{
+                        console.trace("I am here");
+                        msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                    }catch (e) {
+                        console.log("debt hedge error",e);
+                    }
                     getDebtHedgeMessage(command, df, othersDebtSum);
                 } else if (msg.content.toLowerCase() == (`!faq debt`)) {
-                    msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                    try{
+                        console.trace("I am here");
+                        msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                    }catch (e) {
+                        console.log("debt",e)
+                    }
                 } else if (msg.content.toLowerCase() == (`!debt`)) {
-                    msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                    try{
+                        console.trace("I am here");
+                        msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                    }catch (e) {
+                        console.log("debt");
+                    }
                 } else if (msg.content.toLowerCase() == (`!faq historical debt 1y`)) {
                     createHistoricChart(msg, true);
                 } else if (msg.content.toLowerCase() == (`!historical debt 1y`)) {
@@ -922,6 +976,7 @@ client.on("message", msg => {
                         bug: bugDTO
                     }).then(res => {
                         console.log(JSON.stringify(bugDTO) + `is now created`);
+                        console.trace("I am here");
                         var messageEmbed = new Discord.MessageEmbed()
                             .addFields(
                                 {
@@ -929,7 +984,12 @@ client.on("message", msg => {
                                     value: "Your bug was stored with id " + bugDTO.id + ". A spartan will follow up."
                                 }
                             ).setColor("#d32222");
-                        msg.channel.send(messageEmbed);
+                        try{
+                            console.trace("I am here");
+                            msg.channel.send(messageEmbed);
+                        }catch (e) {
+                            console.log("bug",e);
+                        }
                     })
                         .catch(error => {
                             console.error(error)
@@ -938,6 +998,7 @@ client.on("message", msg => {
                     let found = checkAliasMatching(false);
                     if (!found) {
                         let notFoundMessage = "Oops, I don't know that one. You can check out my user guide: https://www.notion.so/Synthetix-Discord-FAQ-Bot-bb9f93cd2d1148ba86c0abbc58b06da0";
+                        console.trace("I am here");
                         msg.channel.send(notFoundMessage).then(function (message) {
                             message.react("❌");
                         }).catch(function () {
@@ -953,10 +1014,20 @@ client.on("message", msg => {
                     if (msg.content.toLowerCase().startsWith(`hedge`)) {
                         const args = msg.content.slice(`hedge`.length).trim().split(' ');
                         const command = args.shift().toLowerCase();
-                        msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                        try{
+                            console.trace("I am here");
+                            msg.channel.send(getDebtHedgeMessage(command, df, othersDebtSum));
+                        }catch (e) {
+                            console.log("hedge");
+                        }
                         getDebtHedgeMessage(command, df, othersDebtSum);
                     } else if (msg.content.toLowerCase() == (`debt`)) {
-                        msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                        try{
+                            console.trace("I am here");
+                            msg.channel.send(getDebtHedgeMessage('debt', df, othersDebtSum));
+                        }catch (e) {
+                            console.log("debt",e);
+                        }
                     } else if (msg.content.toLowerCase() == (`historical debt 1y`)) {
                         createHistoricChart(msg, true);
                     } else if (msg.content.toLowerCase() == (`historical debt`)) {
@@ -982,6 +1053,7 @@ client.on("message", msg => {
                                     redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
                                     });
                                 }
+                                console.trace("I am here");
                                 msg.reply("You are now unsubscribed from gas updates");
                             } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("subscribe gas")) {
                                 const args = msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').slice("subscribe gas".length).split(' ');
@@ -996,9 +1068,11 @@ client.on("message", msg => {
                                         redisClient.set("gasSubscribersLastPushMap", JSON.stringify([...gasSubscribersLastPushMap]), function () {
                                         });
                                     }
+                                    console.trace("I am here");
                                     msg.reply(" I will send you a message once safe gas price is below " + command + " gwei , and every hour after that that it remains below that level. \nTo change the threshold level for gas price, send me a new subscribe message with the new amount.\n" +
                                         "To unsubscribe, send me another DM **unsubscribe**.");
                                 } else {
+                                    console.trace("I am here");
                                     msg.reply(command + " is not a proper integer number.");
                                 }
                             } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show wallet")) {
@@ -1015,12 +1089,16 @@ client.on("message", msg => {
                                 args.shift();
                                 const command = args.shift().trim();
                                 if (command == "question") {
+                                    console.trace("I am here");
                                     msg.reply("Choose your question with ***question questionNumber***, e.g. ***question 1***\nYou can get the question number via **list** command");
                                 } else if (command == "category") {
+                                    console.trace("I am here");
                                     msg.reply("Choose your category with ***category categoryName***, e.g. ***category SNX-Rewards***\nCategory name is fetched from **categories** command");
                                 } else if (command == "search") {
+                                    console.trace("I am here");
                                     msg.reply("Search for questions with ***search searchTerm***, e.g. ***search failing transactions***");
                                 } else {
+                                    console.trace("I am here");
                                     msg.reply("I don't know that one. Try just **help** for known commands");
                                 }
                             } else if (msg.content.toLowerCase().trim() == "list" || msg.content.toLowerCase().trim() == "questions") {
@@ -1046,7 +1124,7 @@ client.on("message", msg => {
 
                                 let rawdata = fs.readFileSync('categories/categories.json');
                                 let categories = JSON.parse(rawdata);
-
+                                console.trace("I am here");
                                 const exampleEmbed = new Discord.MessageEmbed()
                                     .setColor('#0099ff')
                                     .setTitle('Questions in category ' + command + ':');
@@ -1067,6 +1145,7 @@ client.on("message", msg => {
                                 } else {
                                     exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
                                 }
+                                console.trace("I am here");
                                 msg.reply(exampleEmbed);
 
                             } else if (msg.content.toLowerCase().startsWith("search ")) {
@@ -1104,6 +1183,7 @@ client.on("message", msg => {
                                     doCalculateSusd(command, msg, true);
                                 }
                             } else if (msg.content.toLowerCase().trim().replace(/ +(?= )/g, '').startsWith("show chart")) {
+                                console.trace("I am here");
                                 msg.reply("No longer supported. Use $ticker snx")
                             } else {
                                 if (!msg.author.username.toLowerCase().includes("faq")) {
@@ -1112,6 +1192,7 @@ client.on("message", msg => {
                                         const searchWord = msg.content;
                                         doCustomQuestion(searchWord, args);
                                     } else {
+                                        console.trace("I am here");
                                         msg.reply("Oops, I don't know that one. Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
                                     }
                                 }
@@ -1119,6 +1200,7 @@ client.on("message", msg => {
                         }
                     }
                 } catch (e) {
+                    console.trace("I am here");
                     msg.reply("Unknown error ocurred.  Try **help** to see what I do know, or if you want to ask a custom question, make sure it ends with a question mark **?**");
                 }
             }
@@ -1139,7 +1221,7 @@ client.on("message", msg => {
                     questionMap.set(alias.number, aliasQuestion);
                 }
             });
-
+            console.trace("I am here");
             let exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Known aliases')
@@ -1160,14 +1242,17 @@ client.on("message", msg => {
                 counter++;
                 if (counter == 10) {
                     if (isDM) {
+                        console.trace("I am here");
                         msg.reply(exampleEmbed);
                     } else {
+                        console.trace("I am here");
                         msg.channel.send(exampleEmbed).then(function (message) {
                             message.react("❌");
                         }).catch(function () {
                             //Something
                         });
                     }
+                    console.trace("I am here");
                     exampleEmbed = new Discord.MessageEmbed()
                         .setColor('#0099ff')
                         .setTitle('Known aliases page ' + pagenumber)
@@ -1180,8 +1265,10 @@ client.on("message", msg => {
             }
 
             if (isDM) {
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             } else {
+                console.trace("I am here");
                 msg.channel.send(exampleEmbed).then(function (message) {
                     message.react("❌");
                 }).catch(function () {
@@ -1191,13 +1278,14 @@ client.on("message", msg => {
         }
 
         function answerUltimateQuestion() {
+            console.trace("I am here");
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Bravo, you found the ultimate question!');
 
             exampleEmbed.setDescription(Buffer.from("d2hhdCBpcyB0aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nPw==", 'base64').toString('utf-8'));
             exampleEmbed.addField("The answer is:", Buffer.from("NDI=", 'base64').toString('utf-8'));
-
+            console.trace("I am here");
             msg.reply(exampleEmbed);
         }
 
@@ -1224,6 +1312,7 @@ client.on("message", msg => {
         }
 
         function doFaqHelp() {
+            console.trace("I am here");
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Synthetix Frequently Asked Questions')
@@ -1259,11 +1348,12 @@ client.on("message", msg => {
             exampleEmbed.addField("bug description of the bug",
                 "Place the special word !bug at start of the sentence and a bug will be created containing your sentence");
             exampleEmbed.addField("\u200b", "*Or just ask me a question and I will do my best to find a match for you, e.g. **What is the current gas price?***");
-
+            console.trace("I am here");
             msg.reply(exampleEmbed);
         }
 
         function listQuestions() {
+            console.trace("I am here");
             let exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Frequently Asked Questions')
@@ -1283,6 +1373,7 @@ client.on("message", msg => {
                         exampleEmbed.addField(file.substring(0, file.lastIndexOf(".")), rawdata, false);
                         counter++;
                         if (counter == 20) {
+                            console.trace("I am here");
                             msg.reply(exampleEmbed);
                             exampleEmbed = new Discord.MessageEmbed()
                                 .setColor('#0099ff')
@@ -1294,6 +1385,7 @@ client.on("message", msg => {
                     })
                 }
                 exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             })
         }
@@ -1301,7 +1393,7 @@ client.on("message", msg => {
         function listCategories() {
             let rawdata = fs.readFileSync('categories/categories.json');
             let categories = JSON.parse(rawdata);
-
+            console.trace("I am here");
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Categories');
@@ -1311,10 +1403,12 @@ client.on("message", msg => {
             });
 
             exampleEmbed.addField('\u200b', "Choose the category with **category categoryName**, e.g. **category SNX**, or **category Synthetix.Exchange**");
+            console.trace("I am here");
             msg.reply(exampleEmbed);
         }
 
         function doSearch(searchWord, args) {
+            console.trace("I am here");
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Questions found for ***' + searchWord + '***:');
@@ -1390,11 +1484,13 @@ client.on("message", msg => {
 
                     exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
                 }
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             })
         }
 
         function doCustomQuestion(searchWord, args) {
+            console.trace("I am here");
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Looks like you asked a custom question. This is the best I could find for your query:');
@@ -1470,6 +1566,7 @@ client.on("message", msg => {
 
                     exampleEmbed.addField('\u200b', 'Choose your question with e.g. **question 1**');
                 }
+                console.trace("I am here");
                 msg.reply(exampleEmbed);
             })
         }
@@ -1481,7 +1578,9 @@ client.on("message", msg => {
             const command = args.shift();
             doInnerQuestion(command, doReply, msg);
         }
-
+}catch (e) {
+    console.log("exception on message",e)
+}
     }
 );
 
@@ -2035,8 +2134,13 @@ function handleGasSubscription() {
                         var hours = Math.abs(curDate - lastNotification) / 36e5;
                         if (hours > 1) {
                             if (client.users.cache.get(key)) {
-                                client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
-                                gasSubscribersLastPushMap.set(key, new Date().getTime());
+                                try{
+                                    console.trace("I am here");
+                                    client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
+                                }catch (e) {
+                                    console.log("gas subscribers map",e)
+                                }
+                                 gasSubscribersLastPushMap.set(key, new Date().getTime());
                                 if (process.env.REDIS_URL) {
                                     redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
                                     });
@@ -2057,7 +2161,12 @@ function handleGasSubscription() {
                         }
                     } else {
                         if (client.users.cache.get(key)) {
-                            client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
+                            try{
+                                console.trace("I am here");
+                                client.users.cache.get(key).send('gas price is now below your threshold. Current safe gas price is: ' + gasPrice);
+                            }catch (e) {
+                                console.log("gas price below",e);
+                            }
                             gasSubscribersLastPushMap.set(key, new Date());
                             if (process.env.REDIS_URL) {
                                 redisClient.set("gasSubscribersMap", JSON.stringify([...gasSubscribersMap]), function () {
@@ -2664,6 +2773,7 @@ function getNumberLabelPrecise(labelValue) {
 
 }
 
+
 setInterval(async function () {
     try {
         yaxis = new Token(ChainId.MAINNET, '0xb1dC9124c395c1e97773ab855d66E879f053A289', 18);
@@ -2726,6 +2836,7 @@ function doCalculate(command, msg, gasPriceParam, fromDM) {
         let resRewInSusd = Math.round(((resRew * snxPrice) + Number.EPSILON) * 100) / 100;
         let mintingPrice = Math.round(((mintGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
         let claimPrice = Math.round(((claimGas * gasPriceToUse * ethPrice * 0.000000001) + Number.EPSILON) * 100) / 100;
+        console.trace("I am here");
         const exampleEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Calculated rewards:');
@@ -2740,8 +2851,10 @@ function doCalculate(command, msg, gasPriceParam, fromDM) {
                 "  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate rewards [stakedSnxAmount]");
         }
         if (fromDM) {
+            console.trace("I am here");
             msg.reply(exampleEmbed);
         } else {
+            console.trace("I am here");
             msg.channel.send(exampleEmbed).then(function (message) {
                 message.react("❌");
             }).catch(function () {
@@ -2776,6 +2889,7 @@ function doCalculateSusd(command, msg, fromDM) {
 
 
         let resRew = Math.round(((command * sUsdRewardPerMintedSusd / snxToMintUsd) + Number.EPSILON) * 100) / 100;
+        console.trace("I am here");
         const exampleEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Calculated rewards:');
@@ -2791,8 +2905,10 @@ function doCalculateSusd(command, msg, fromDM) {
                 " amounts in a public forum.  Just omit the \"!faq\" prefix. Send a DM message to FAQ bot with the command: calculate susd rewards [stakedSnxAmount]");
         }
         if (fromDM) {
+            console.trace("I am here");
             msg.reply(exampleEmbed);
         } else {
+            console.trace("I am here");
             msg.channel.send(exampleEmbed).then(function (message) {
                 message.react("❌");
             }).catch(function () {
@@ -2866,20 +2982,18 @@ setInterval(function () {
 }, 60 * 1000);
 
 
-client.login(process.env.BOT_TOKEN);
 
+client.login(process.env.BOT_TOKEN);
 
 const ethers = require('ethers');
 let contractRaw = fs.readFileSync('contracts/Synthetix.json');
 let contract = JSON.parse(contractRaw);
-
-
 const provider = ethers.getDefaultProvider("homestead");
 const synthetix = new ethers.Contract('0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F',
     contract, provider);
-
 async function getMintrData(msg, address, isDM) {
     try {
+        console.trace("I am here");
         const exampleEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Wallet info');
@@ -2930,8 +3044,10 @@ async function getMintrData(msg, address, isDM) {
         reply += "mintableSusd: **" + mintableSusd + "**\n";
 
         exampleEmbed.addField(address, reply);
+        console.trace("I am here");
         msg.reply(exampleEmbed);
     } catch (e) {
+        console.trace("I am here");
         msg.reply("error occurred");
     }
 }
@@ -2994,6 +3110,7 @@ async function getWalletInfo(address) {
         //console.log(e);
     }
 }
+
 
 const clientPayday = new Discord.Client();
 clientPayday.login(process.env.BOT_TOKEN_PAYDAY);
@@ -3074,6 +3191,7 @@ setInterval(async function () {
                     console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD >= 10000) {
+                        console.trace("I am here");
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("ff0000");
                         exampleEmbed.setTitle("New trade");
@@ -3086,7 +3204,12 @@ setInterval(async function () {
                             numberWithCommas(Number(r.toAmount).toFixed(2)) + " " + toCurrencyKey);
                         exampleEmbed.addField("Value",
                             numberWithCommas(Number(r.fromAmountInUSD).toFixed(2)) + " sUSD");
+                        try{
+                            console.trace("I am here");
                         trades1000.send(exampleEmbed);
+                        }catch (e) {
+                            console.log("new trade",e);
+                        }
                     }
                 } catch (e) {
                     console.log(e);
@@ -3149,6 +3272,7 @@ async function getl2Exchanges() {
                 }
                 console.log("Exchanged " + r.fromAmount + " " + fromSynth + " to " + r.toAmount + " " + r.toSynth.symbol);
                 console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
+                console.trace("I am here");
                 const exampleEmbed = new Discord.MessageEmbed();
                 exampleEmbed.setColor("ff0000");
                 exampleEmbed.setTitle("New trade");
@@ -3162,10 +3286,16 @@ async function getl2Exchanges() {
                 exampleEmbed.addField("Value",
                     numberWithCommas((r.fromAmountInUSD * 1.0).toFixed(2)) + " sUSD");
 
-                if (r.toAmountInUSD < 10000)
+                try{
+                if (r.toAmountInUSD < 10000) {
+                    console.trace("I am here");
                     l2tradesBelow10k.send(exampleEmbed);
-                else  {
+                } else  {
+                        console.trace("I am here");
                     l2tradesAbove50k.send(exampleEmbed);
+                }
+                }catch (e) {
+                    console.log("below and above");
                 }
             } catch (e) {
                 console.log(e);
@@ -3228,6 +3358,7 @@ setInterval(async function () {
                     console.log("Exchanged " + r.fromAmount + " " + fromCurrenyKey + " to " + r.toAmount + " " + toCurrencyKey);
                     console.log("Exchanged amount in sUSD was:" + r.toAmountInUSD);
                     if (r.toAmountInUSD < 10000) {
+                        console.trace("I am here");
                         const exampleEmbed = new Discord.MessageEmbed();
                         exampleEmbed.setColor("00770f");
                         exampleEmbed.setTitle("New trade");
@@ -3238,6 +3369,7 @@ setInterval(async function () {
                             Number(r.fromAmount).toFixed(3) + " " + fromCurrenyKey);
                         exampleEmbed.addField("To",
                             Number(r.toAmount).toFixed(3) + " " + toCurrencyKey);
+                        console.trace("I am here");
                         trades.send(exampleEmbed);
                     }
                 } catch (e) {
@@ -3263,7 +3395,7 @@ clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
 async function getVolume() {
     volume = 0;
     try {
-
+        console.log("getting volume");
         var d = new Date();
         d.setDate(d.getDate()-1);
         const oneDayAgo = Math.floor(d.getTime() / 1e3);
@@ -3402,6 +3534,7 @@ setInterval(function () {
 }, 60 * 1000);
 
 
+
 const {request, gql} = require('graphql-request');
 
 var express = require("express");
@@ -3433,36 +3566,62 @@ setInterval(function () {
 app.post("/pdao", async (req, res) => {
         try {
             let content = req.body;
-            console.log(content);
+            console.log("pdao"+content);
             if (
                 content.status.toLowerCase().includes("confirmed")
             ) {
                 if (content.from.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())
                     ||
                     content.to.toLowerCase().includes("0xeb9a82736cc030fc4a4cd4b53e9b2c67e153208d".toLowerCase())) {
-                    channelGdao.send("New transaction from gDAO: https://etherscan.io/tx/" + content.hash);
+                    try{
+                        console.trace("I am here");
+                        channelGdao.send("New transaction from gDAO: https://etherscan.io/tx/" + content.hash);
+                    }catch (e) {
+                        console.log("pdao");
+                    }
                 }
                 if (content.from.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase()) ||
                     content.to.toLowerCase().includes("0xeb3107117fead7de89cd14d463d340a2e6917769".toLowerCase())) {
-                    channelPdao.send("New transaction from pDAO: https://etherscan.io/tx/" + content.hash);
+                    try{
+                        console.trace("I am here");
+                        channelPdao.send("New transaction from pDAO: https://etherscan.io/tx/" + content.hash);
+                    }catch (e) {
+                        console.log("pdao");
+                    }
                 }
                 if (content.from.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase()) ||
                     content.to.toLowerCase().includes("0x49BE88F0fcC3A8393a59d3688480d7D253C37D2A".toLowerCase()) ||
                     content.from.toLowerCase().includes("0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92".toLowerCase()) ||
                     content.to.toLowerCase().includes("0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92".toLowerCase())
                 ) {
-                    channelSdao.send("New transaction from Treasury Council: https://etherscan.io/tx/" + content.hash);
+                    try{
+                        console.trace("I am here");
+                        channelSdao.send("New transaction from Treasury Council: https://etherscan.io/tx/" + content.hash);
+                    }catch (e) {
+                        console.log("pdao");
+                    }
                 }
                 if (content.from.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase()) ||
                     content.to.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase())) {
-                    channelDeployer.send("New transaction from Synthetix Deployer: https://etherscan.io/tx/" + content.hash);
+                    try{
+                        console.trace("I am here");
+                        channelDeployer.send("New transaction from Synthetix Deployer: https://etherscan.io/tx/" + content.hash);
+                    }catch (e) {
+                        console.log("pdao");
+                    }
                 }
                 if (content.from.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase()) ||
                     content.to.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase())) {
-                    channelAmbassadors.send("New transaction from Synthetix Ambassadors: https://etherscan.io/tx/" + content.hash);
+                    try{
+                        console.trace("I am here");
+                        channelAmbassadors.send("New transaction from Synthetix Ambassadors: https://etherscan.io/tx/" + content.hash);
+                    }catch (e) {
+                        console.log("pdao");
+                    }
                 }
                 if (content.from.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase()) ||
                     content.to.toLowerCase().includes("0x1f2c3a1046c32729862fcb038369696e3273a516".toLowerCase())) {
+                    console.trace("I am here");
                     const exampleEmbed = new Discord.MessageEmbed();
                     exampleEmbed.setColor("00770f");
                     exampleEmbed.setTitle("New loan tx");
@@ -3483,7 +3642,12 @@ app.post("/pdao", async (req, res) => {
                         exampleEmbed.addField("Amount",
                             amount);
                     }
-                    channelShorts.send(exampleEmbed);
+                    try{
+                        console.trace("I am here");
+                        channelShorts.send(exampleEmbed);
+                    }catch (e) {
+                        console.log("pdao");
+                    }
                 }
             }
         } catch (e) {
@@ -3631,7 +3795,7 @@ setInterval(async function () {
                 if (content.length > 1024) {
                     content = content.substring(0, 1020) + "...";
                 }
-
+                console.trace("I am here");
                 const exampleEmbed = new Discord.MessageEmbed();
                 exampleEmbed.setColor("00770f");
                 exampleEmbed.setTitle("New proposal");
@@ -3694,6 +3858,7 @@ setInterval(async function () {
                                     exampleEmbed.addField("Votes",
                                         "sYES: " + yes + " iNO: " + no);
 
+                                    console.trace("I am here");
                                     channelGov.send(exampleEmbed);
                                 } catch
                                     (e) {
@@ -3738,6 +3903,7 @@ setInterval(function () {
 
 function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
     if (debtValue != 'debt') {
+        console.trace("I am here");
         var hedgeMessage = new Discord.MessageEmbed()
             .setTitle("Hedge command")
             .setDescription("In order to hedge a sUSD " + debtValue + " worth of debt, the mirror strategy is to invest the synths in the following manner (in sUSD terms):")
@@ -3763,6 +3929,7 @@ function getDebtHedgeMessage(debtValue, df, othersDebtSum) {
         hedgeMessage.addField("Disclaimer","The proportions mentioned assume that the eth/btc correlation is stable across time, advanced users are encouraged to look into the composition of the debt pool and the relevant leverage it incorporates.")
         return hedgeMessage;
     } else {
+        console.trace("I am here");
         var debtMessage = new Discord.MessageEmbed()
             .setTitle("Debt command")
             .setDescription("Debt pool:")
@@ -3961,6 +4128,7 @@ app.get('/bugs', (req, res) => {
             bugs.forEach(function (bug) {
                 obj.push(JSON.parse(bug));
             });
+            console.trace("I am here");
             res.send(obj);
         });
     });
@@ -3975,6 +4143,7 @@ app.post('/bug', (req, res) => {
         column_id: 16551998,
         note: bugJson
     })
+    console.trace("I am here");
     res.send(bugRequest.id);
 });
 
@@ -3989,6 +4158,7 @@ app.delete('/bug/:bugid', (req, res) => {
                 }
             });
         });
+        console.trace("I am here");
         res.send('bug with id ' + bugId + ' is deleted');
     });
 });
@@ -3999,6 +4169,10 @@ function mapToDateString(date) {
 }
 
 function createHistoricChart(msg, isMarketCapsIncluded) {
+
+    try {
+
+
     let calculatedMarketCaps = new Map();
     //divide everything by market cap value
     for (let [key, value] of historicMarketCaps.entries()) {
@@ -4065,6 +4239,8 @@ function createHistoricChart(msg, isMarketCapsIncluded) {
                 url: chart.getUrl(),
             },
         };
+        console.log("sending chart");
+        console.trace("I am here");
         msg.channel.send({embed: chartEmbed});
     } else {
         chart.setConfig({
@@ -4096,9 +4272,13 @@ function createHistoricChart(msg, isMarketCapsIncluded) {
                 url: chart.getUrl(),
             },
         };
+        console.log("sending chart");
+        console.trace("I am here");
         msg.channel.send({embed: chartEmbed});
     }
-
+    }catch (e) {
+        console.log("historic error",e);
+    }
 
 }
 
@@ -4240,6 +4420,7 @@ const getHistoricalDebt = function (contractInstance, blockNumber, date, isAllTi
 };
 
 
+
 async function getL1KwentaVolume() {
     // Fetch all kwenta l1 trading in the last 24hrs
     await (async () => {
@@ -4310,6 +4491,7 @@ async function getL1KwentaVolume() {
     })();
 }
 
+
 async function getL2KwentaVolume() {
     // Fetch all kwenta l2 trading in the last 24hrs
 
@@ -4350,6 +4532,7 @@ async function getL2KwentaVolume() {
 }
 
 function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
+    try{
     let calculatedMarketCaps = new Map();
     //divide everything by market cap value
     for (let [key, value] of allTimeHistoricMarketCaps.entries()) {
@@ -4413,7 +4596,8 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
                 url: chart.getUrl(),
             },
         };
-
+        console.log("sending chart");
+        console.trace("I am here");
         msg.channel.send({embed: chartEmbed});
 
     } else {
@@ -4446,13 +4630,17 @@ function createAllTimeHistoricChart(msg, isMarketCapsIncluded) {
                 url: chart.getUrl(),
             },
         };
-
+        console.log("sending chart");
+        console.trace("I am here");
         msg.channel.send({embed: chartEmbed});
+    }}catch (e) {
+        console.log("chart problems",e);
     }
 }
 
 
 async function getILVProposalsData() {
+    try{
 
     const body = JSON.stringify({
         query: `
@@ -4498,7 +4686,7 @@ async function getILVProposalsData() {
             if (content.length > 1024) {
                 content = content.substring(0, 1020) + "...";
             }
-
+            console.trace("I am here");
             const exampleEmbed = new Discord.MessageEmbed();
             exampleEmbed.setColor("00770f");
             exampleEmbed.setTitle("New proposal");
@@ -4511,8 +4699,15 @@ async function getILVProposalsData() {
                 dateformat(new Date(proposal.end * 1000), 'dd.mm.yyyy.HH:MM'));
             exampleEmbed.addField("Description",
                 content);
+            try{
+                console.trace("I am here");
             channelIllProposals.send(exampleEmbed);
+            }catch (e) {
+                console.log("ilv problems",e);
+            }
         }
+    }}catch (e) {
+        console.log("ilv problems",e);
     }
 }
 
@@ -4632,9 +4827,15 @@ function checkVotes() {
                     voters.forEach(v => {
                         if (!votedVoters.includes(v.address)) {
                             let discordUser = '<@!' + v.discordId + '>';
+                            try{
+                                console.trace("I am here");
                             councilChannel.send('Reminding ' + discordUser + ' to vote on http://snapshot.org/#/snxgov.eth/' + p.id);
+                            }catch (e) {
+                                console.log("council channel",e);
+                            }
                             guild.members.fetch(v.discordId).then(member => {
                                 try {
+                                    console.trace("I am here");
                                     member.send('Reminder to vote on http://snapshot.org/#/snxgov.eth/' + p.id);
                                 } catch (e) {
                                     console.log(e);
@@ -4697,7 +4898,7 @@ async function getInflationRewards() {
     }
 
 }
-
+/*
 async function getFuturesL2() {
 
     let  futuresContractETH =  new web3L2.eth.Contract(contractFutures, "0xf86048DFf23cF130107dfB4e6386f574231a5C65");
@@ -4849,6 +5050,9 @@ async function getFuturesL2() {
 
 async function sendFuturesMessage(future,futuresTYPE){
 
+    try{
+    console.log("new futures");
+        console.trace("I am here");
     const exampleEmbed = new Discord.MessageEmbed();
     exampleEmbed.setColor("#0b5394");
     exampleEmbed.setTitle("New Futures "+future.returnValues.account.substring(0,5));
@@ -4882,16 +5086,21 @@ async function sendFuturesMessage(future,futuresTYPE){
     exampleEmbed.addField("Trade size in USD",
          numberWithCommas(tradeSizeUSD));
     if(Math.abs(tradeSizeUSD)>10000){
+        console.trace("I am here");
        l2WhaleFutures.send(exampleEmbed);
     }else{
+        console.trace("I am here");
         l2ShrimpFutures.send(exampleEmbed);
     }
     mapFutures.set(new Date().getTime(),Math.abs(tradeSizeUSD));
     redisClient.set(futuresKey, JSON.stringify([...mapFutures]), function () {
         console.log("added future okay")
     });
+    }catch (e) {
+        console.log("error while sending futures",e);
+    }
 }
-
+*/
 
 async function loadDebtFile(){
     debtArray = await new Array();
@@ -4924,3 +5133,13 @@ async function loadDebtFile(){
     }
     request(myDropboxURL);
 }
+
+
+process.on('uncaughtException', err => {
+    Error.stackTraceLimit = Infinity;
+    console.trace("I am here",err.stack);
+    console.error((new Date).toUTCString() + ' uncaughtException:', err.message)
+    console.error(err);
+    console.error(err.stack)
+    process.exit(1); // mandatory (as per the Node.js docs)
+});
