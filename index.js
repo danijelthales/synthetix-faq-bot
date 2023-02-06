@@ -40,7 +40,7 @@ const options = {
 };
 const web3L2 = new Web3(new Web3.providers.WebsocketProvider("wss://opt-mainnet.g.alchemy.com/v2/XU2U42ViXuMjUJ1fMbNfBL0UgEjYHala",options));
 let mapFutures = new Map();
-let futuresKey = "l2FuturesKey"
+let futuresKey = "l2FuturesKey";
 const Discord = require("discord.js");
 const client = new Discord.Client();
 let tradesL2List = new Array();
@@ -220,7 +220,7 @@ var binanceUsd = 3.74;
 var kucoinUsd = 3.74;
 
 
-var payday = new Date("Apr 20, 2022 16:00:00 UTC");
+var payday = new Date("Nov 02, 2022 18:00:00 UTC");
 
 const Synth = class {
     name;
@@ -462,7 +462,7 @@ client.on("ready", () => {
     });
 
     calculateDebt();
-    calculateHistoricDebt();
+    //calculateHistoricDebt();
     calculateAllTimeHistoricDebt();
     getFuturesL2();
     loadDebtFile();
@@ -1498,7 +1498,9 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
+                if(result.market_data){
                 ethPrice = result.market_data.current_price.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1523,9 +1525,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
+                if(result.market_data){
                 tknPrice = result.market_data.current_price.usd;
                 tknPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
                 tknMarketCap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1551,8 +1555,10 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
+                if(result.market_data){
                 linkTokenPrice = result.market_data.current_price.usd;
                 linkTokenPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1577,8 +1583,10 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
+                if(result.market_data){
                 bitcoinTokenPrice = result.market_data.current_price.usd;
                 bitcoinTokenPrice = Math.round(((tknPrice * 1.0) + Number.EPSILON) * 100) / 100;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1603,10 +1611,12 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                yaxisEth = result.market_data.current_price.eth;
-                yaxisEth = Math.round(((yaxisEth * 1.0) + Number.EPSILON) * 10000) / 10000;
-                yaxisMarketCap = result.market_data.total_supply * yaxisPrice;
-                yaxisMarketCap = Math.round(((yaxisMarketCap * 1.0) + Number.EPSILON) * 100) / 100;
+                if(result.market_data) {
+                    yaxisEth = result.market_data.current_price.eth;
+                    yaxisEth = Math.round(((yaxisEth * 1.0) + Number.EPSILON) * 10000) / 10000;
+                    yaxisMarketCap = result.market_data.total_supply * yaxisPrice;
+                    yaxisMarketCap = Math.round(((yaxisMarketCap * 1.0) + Number.EPSILON) * 100) / 100;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1631,9 +1641,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                swthPrice = result.market_data.current_price.usd;
-                swthPrice = Math.round(((swthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                swthMarketCap = result.market_data.market_cap.usd;
+                if(result.market_data) {
+                    swthPrice = result.market_data.current_price.usd;
+                    swthPrice = Math.round(((swthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    swthMarketCap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1659,9 +1671,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
+                if(result.market_data){
                 yusdPrice = result.market_data.current_price.usd;
                 yusdPrice = Math.round(((yusdPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
                 yusdMarketCap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1688,9 +1702,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                yfvPrice = result.market_data.current_price.usd;
-                yfvPrice = Math.round(((yfvPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                yfvMarketCap = result.market_data.market_cap.usd;
+                if(result.market_data) {
+                    yfvPrice = result.market_data.current_price.usd;
+                    yfvPrice = Math.round(((yfvPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    yfvMarketCap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1717,9 +1733,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                swervePrice = result.market_data.current_price.usd;
-                swervePrice = Math.round(((swervePrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                swerveMarketcap = result.market_data.market_cap.usd;
+                if(result.market_data) {
+                    swervePrice = result.market_data.current_price.usd;
+                    swervePrice = Math.round(((swervePrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    swerveMarketcap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1745,9 +1763,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                dodoPrice = result.market_data.current_price.usd;
-                dodoPrice = Math.round(((dodoPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                dodoMarketcap = result.market_data.market_cap.usd;
+                if(result.market_data) {
+                    dodoPrice = result.market_data.current_price.usd;
+                    dodoPrice = Math.round(((dodoPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    dodoMarketcap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1760,33 +1780,6 @@ setInterval(function () {
 
 }, 50 * 1000);
 
-setInterval(function () {
-    https.get('https://api.coingecko.com/api/v3/coins/nectar-token', (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            try {
-                let result = JSON.parse(data);
-                necPrice = result.market_data.current_price.usd;
-                necPrice = Math.round(((necPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                necMarketcap = result.market_data.market_cap.usd;
-            } catch (e) {
-                console.log(e);
-            }
-
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
-
-}, 50 * 1000);
 
 
 
@@ -1833,9 +1826,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                hegicPrice = result.market_data.current_price.usd;
-                hegicPrice = Math.round(((hegicPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                hegicMarketcap = result.market_data.market_cap.usd;
+                if(result.market_data) {
+                    hegicPrice = result.market_data.current_price.usd;
+                    hegicPrice = Math.round(((hegicPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    hegicMarketcap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1862,9 +1857,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                metaPrice = result.market_data.current_price.usd;
-                metaPrice = Math.round(((metaPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                metaMarketCap = result.market_data.market_cap.usd;
+                if(result.market_data) {
+                    metaPrice = result.market_data.current_price.usd;
+                    metaPrice = Math.round(((metaPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    metaMarketCap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1890,10 +1887,12 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                picklePrice = result.market_data.current_price.usd;
-                picklePrice = Math.round(((picklePrice * 1.0) + Number.EPSILON) * 1000) / 1000;
-                pickleEthPrice = result.market_data.current_price.eth;
-                pickleEthPrice = Math.round(((pickleEthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                if(result.market_data) {
+                    picklePrice = result.market_data.current_price.usd;
+                    picklePrice = Math.round(((picklePrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                    pickleEthPrice = result.market_data.current_price.eth;
+                    pickleEthPrice = Math.round(((pickleEthPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1919,10 +1918,12 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                vidyaPrice = result.market_data.current_price.usd;
-                vidyaPrice = Math.round(((vidyaPrice * 1.0) + Number.EPSILON) * 10000) / 10000;
-                vidyaEthPrice = result.market_data.current_price.eth;
-                vidyaEthPrice = Math.round(((vidyaEthPrice * 1.0) + Number.EPSILON) * 100000) / 100000;
+                if(result.market_data) {
+                    vidyaPrice = result.market_data.current_price.usd;
+                    vidyaPrice = Math.round(((vidyaPrice * 1.0) + Number.EPSILON) * 10000) / 10000;
+                    vidyaEthPrice = result.market_data.current_price.eth;
+                    vidyaEthPrice = Math.round(((vidyaEthPrice * 1.0) + Number.EPSILON) * 100000) / 100000;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1948,8 +1949,10 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                crvPrice = result.market_data.current_price.usd;
-                crvPrice = Math.round(((crvPrice * 1.0) + Number.EPSILON) * 100) / 100;
+                if(result.market_data) {
+                    crvPrice = result.market_data.current_price.usd;
+                    crvPrice = Math.round(((crvPrice * 1.0) + Number.EPSILON) * 100) / 100;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -1974,7 +1977,9 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
-                snxPrice = result.market_data.current_price.usd;
+                if(result.market_data) {
+                    snxPrice = result.market_data.current_price.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -2408,11 +2413,13 @@ setInterval(function () {
             resp.on('end', () => {
                 try {
                     let result = JSON.parse(data);
-                    coingeckoUsd = result.market_data.current_price.usd;
-                    coingeckoEth = result.market_data.current_price.eth;
-                    coingeckoEth = Math.round(((coingeckoEth * 1.0) + Number.EPSILON) * 1000) / 1000;
-                    coingeckoBtc = result.market_data.current_price.btc;
-                    coingeckoBtc = Math.round(((coingeckoBtc * 1.0) + Number.EPSILON) * 1000000) / 1000000;
+                    if(result.market_data) {
+                        coingeckoUsd = result.market_data.current_price.usd;
+                        coingeckoEth = result.market_data.current_price.eth;
+                        coingeckoEth = Math.round(((coingeckoEth * 1.0) + Number.EPSILON) * 1000) / 1000;
+                        coingeckoBtc = result.market_data.current_price.btc;
+                        coingeckoBtc = Math.round(((coingeckoBtc * 1.0) + Number.EPSILON) * 1000000) / 1000000;
+                    }
                 } catch (e) {
                     console.log(e);
                 }
@@ -2577,14 +2584,6 @@ setInterval(function () {
         try {
             value.members.cache.get("775312068106125343").setNickname("$" + perpPrice);
             value.members.cache.get("775312068106125343").user.setActivity("marketcap=$" + getNumberLabel(perpMarketcap), {type: 'PLAYING'});
-        } catch (e) {
-            console.log(e);
-        }
-    });
-    clientNecPrice.guilds.cache.forEach(function (value, key) {
-        try {
-            value.members.cache.get("776881969450582026").setNickname("$" + necPrice);
-            value.members.cache.get("776881969450582026").user.setActivity("marketcap=$" + getNumberLabel(necMarketcap), {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
@@ -3453,8 +3452,8 @@ app.post("/pdao", async (req, res) => {
                 ) {
                     channelSdao.send("New transaction from Treasury Council: https://etherscan.io/tx/" + content.hash);
                 }
-                if (content.from.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase()) ||
-                    content.to.toLowerCase().includes("0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe".toLowerCase())) {
+                if (content.from.toLowerCase().includes("0x819addc3dd780704ae85ea12c18252f7020c24d0".toLowerCase()) ||
+                    content.to.toLowerCase().includes("0x819addc3dd780704ae85ea12c18252f7020c24d0".toLowerCase())) {
                     channelDeployer.send("New transaction from Synthetix Deployer: https://etherscan.io/tx/" + content.hash);
                 }
                 if (content.from.toLowerCase().includes("0x46abFE1C972fCa43766d6aD70E1c1Df72F4Bb4d1".toLowerCase()) ||
@@ -4705,6 +4704,7 @@ async function getFuturesL2() {
     let  futuresContractBTC =  new web3L2.eth.Contract(contractFutures, "0xEe8804d8Ad10b0C3aD1Bd57AC3737242aD24bB95");
     let  futuresContractAAVE =  new web3L2.eth.Contract(contractFutures, "0x001b7876F567f0b3A639332Ed1e363839c6d85e2");
     let  futuresContractAVAX =  new web3L2.eth.Contract(contractFutures, "0x4ff54624D5FB61C34c634c3314Ed3BfE4dBB665a");
+    let  futuresContractPERP =  new web3L2.eth.Contract(contractFutures, "0x2B3bb4c683BFc5239B029131EEf3B1d214478d93");
     let  futuresContractEUR =  new web3L2.eth.Contract(contractFutures, "0xad44873632840144fFC97b2D1de716f6E2cF0366");
     let  futuresContractMATIC =  new web3L2.eth.Contract(contractFutures, "0xbCB2D435045E16B059b2130b28BE70b5cA47bFE5");
     let  futuresContractSOL =  new web3L2.eth.Contract(contractFutures, "0xcF853f7f8F78B2B801095b66F8ba9c5f04dB1640");
@@ -4729,7 +4729,7 @@ async function getFuturesL2() {
     futuresContractETH.events.PositionModified({})
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
-                    sendFuturesMessage(event,"ETH");
+                sendFuturesMessage(event,"ETH");
             }
         })
         .on('error', async function(event){
@@ -4739,7 +4739,7 @@ async function getFuturesL2() {
     futuresContractLINK.events.PositionModified({})
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
-                    sendFuturesMessage(event,"LINK");
+                sendFuturesMessage(event,"LINK");
             }
         })
         .on('error', async function(event){
@@ -4765,6 +4765,17 @@ async function getFuturesL2() {
         .on('error', async function(event){
             console.log(event);
         });
+
+    futuresContractPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
 
     futuresContractEUR.events.PositionModified({})
         .on('data', async function(event){
@@ -4819,7 +4830,7 @@ async function getFuturesL2() {
     futuresContractXAU.events.PositionModified({})
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
-                    sendFuturesMessage(event,"XAU");
+                sendFuturesMessage(event,"XAU");
             }
         })
         .on('error', async function(event){
@@ -4848,44 +4859,12 @@ async function getFuturesL2() {
 }
 
 async function sendFuturesMessage(future,futuresTYPE){
-
-    const exampleEmbed = new Discord.MessageEmbed();
-    exampleEmbed.setColor("#0b5394");
-    exampleEmbed.setTitle("New Futures "+future.returnValues.account.substring(0,5));
-    exampleEmbed.setURL("https://optimistic.etherscan.io/tx/" + future.transactionHash);
-    let tradeMessage;
-    if(Number(future.returnValues.tradeSize)  < 0 ){
-        tradeMessage = futuresTYPE+" SHORT"
-    }else{
-        tradeMessage = futuresTYPE+" LONG";
-    }
-
     let margin = Math.round((Number(future.returnValues.margin) / 1e+18) * 100) / 100;
     let size = Math.round((Number(future.returnValues.size) / 1e+18) * 100) / 100;
     let tradeSize = Math.round((Number(future.returnValues.tradeSize) / 1e+18) * 100) / 100;
     let lastPrice = Math.round((Number(future.returnValues.lastPrice) / 1e+18) * 100) / 100;
     let fee = Math.round((Number(future.returnValues.fee) / 1e+18) * 100) / 100;
     let tradeSizeUSD =  Math.round(tradeSize * lastPrice * 100)/100;
-
-    exampleEmbed.addField("Trade",
-        tradeMessage);
-    exampleEmbed.addField("Margin",
-        numberWithCommas(margin));
-    exampleEmbed.addField("Size",
-        numberWithCommas(size));
-    exampleEmbed.addField("Trade Size",
-        numberWithCommas(tradeSize));
-    exampleEmbed.addField("Last Price",
-        numberWithCommas(lastPrice));
-    exampleEmbed.addField("Fee",
-        numberWithCommas(fee));
-    exampleEmbed.addField("Trade size in USD",
-         numberWithCommas(tradeSizeUSD));
-    if(Math.abs(tradeSizeUSD)>10000){
-       l2WhaleFutures.send(exampleEmbed);
-    }else{
-        l2ShrimpFutures.send(exampleEmbed);
-    }
     mapFutures.set(new Date().getTime(),Math.abs(tradeSizeUSD));
     redisClient.set(futuresKey, JSON.stringify([...mapFutures]), function () {
         console.log("added future okay")
@@ -4894,33 +4873,6 @@ async function sendFuturesMessage(future,futuresTYPE){
 
 
 async function loadDebtFile(){
-    debtArray = await new Array();
-    var myDropboxURL = 'https://www.dropbox.com/s/dl/0v6z67eqqzxrwco/data.csv?dl=1';
-    var file = fs.createWriteStream('data.csv');
-    var request = (url) => {
-        https.get(url, (response) => {
-            if (response.statusCode == 302) { // it's a redirect!
-                request(response.headers.location);
-            } else {
-                response.pipe(file);
-                file.on('finish', () => {
-                    file.close(() => {
-                        console.log("sss");
-                        fs.createReadStream('data.csv')
-                            .pipe(csv())
-                            .on('data', (row) => {
-                                if(Number(row.debt_in_percent)>0)
-                                    debtArray.push(row);
-                            })
-                            .on('end', () => {
-                                console.log('CSV file successfully processed');
-                            });
-                    });
-                });
-            }
-        }).on('error', (err) => {
-            console.log(err)
-        });
-    }
-    request(myDropboxURL);
+    let debtResponse = await axios.get('https://api.synthetix.io/debt-pool-comp');
+    debtArray = debtResponse.data;
 }
