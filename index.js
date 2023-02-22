@@ -4704,14 +4704,35 @@ async function getFuturesL2() {
     let  futuresContractBTC =  new web3L2.eth.Contract(contractFutures, "0xEe8804d8Ad10b0C3aD1Bd57AC3737242aD24bB95");
     let  futuresContractAAVE =  new web3L2.eth.Contract(contractFutures, "0x001b7876F567f0b3A639332Ed1e363839c6d85e2");
     let  futuresContractAVAX =  new web3L2.eth.Contract(contractFutures, "0x4ff54624D5FB61C34c634c3314Ed3BfE4dBB665a");
-    let  futuresContractPERP =  new web3L2.eth.Contract(contractFutures, "0x2B3bb4c683BFc5239B029131EEf3B1d214478d93");
+    let  futuresContractPERPETH =  new web3L2.eth.Contract(contractFutures, "0x2B3bb4c683BFc5239B029131EEf3B1d214478d93");
     let  futuresContractEUR =  new web3L2.eth.Contract(contractFutures, "0xad44873632840144fFC97b2D1de716f6E2cF0366");
     let  futuresContractMATIC =  new web3L2.eth.Contract(contractFutures, "0xbCB2D435045E16B059b2130b28BE70b5cA47bFE5");
     let  futuresContractSOL =  new web3L2.eth.Contract(contractFutures, "0xcF853f7f8F78B2B801095b66F8ba9c5f04dB1640");
     let  futuresContractUNI =  new web3L2.eth.Contract(contractFutures, "0x5Af0072617F7f2AEB0e314e2faD1DE0231Ba97cD");
     let  futuresContractXAG =  new web3L2.eth.Contract(contractFutures, "0xb147C69BEe211F57290a6cde9d1BAbfD0DCF3Ea3");
     let  futuresContractXAU =  new web3L2.eth.Contract(contractFutures, "0x4434f56ddBdE28fab08C4AE71970a06B300F8881");
-
+    let  PerpsV2ProxyAAVEPERP =  new web3L2.eth.Contract(contractFutures, "0x5374761526175B59f1E583246E20639909E189cE");
+    let  PerpsV2ProxyAPEPERP =  new web3L2.eth.Contract(contractFutures, "0x5B6BeB79E959Aac2659bEE60fE0D0885468BF886");
+    let  PerpsV2ProxyATOMPERP =  new web3L2.eth.Contract(contractFutures, "0xbB16C7B3244DFA1a6BF83Fcce3EE4560837763CD");
+    let  PerpsV2ProxyAUDPERP =  new web3L2.eth.Contract(contractFutures, "0x9De146b5663b82F44E5052dEDe2aA3Fd4CBcDC99");
+    let  PerpsV2ProxyAVAXPERP =  new web3L2.eth.Contract(contractFutures, "0xc203A12F298CE73E44F7d45A4f59a43DBfFe204D");
+    let  PerpsV2ProxyAXSPERP =  new web3L2.eth.Contract(contractFutures, "0x3a52b21816168dfe35bE99b7C5fc209f17a0aDb1");
+    let  PerpsV2ProxyBNBPERP =  new web3L2.eth.Contract(contractFutures, "0x0940B0A96C5e1ba33AEE331a9f950Bb2a6F2Fb25");
+    let  PerpsV2ProxyBTCPERP =  new web3L2.eth.Contract(contractFutures, "0x59b007E9ea8F89b069c43F8f45834d30853e3699");
+    let  PerpsV2ProxyDOGEPERP =  new web3L2.eth.Contract(contractFutures, "0x98cCbC721cc05E28a125943D69039B39BE6A21e9");
+    let  PerpsV2ProxyDYDXPERP =  new web3L2.eth.Contract(contractFutures, "0x139F94E4f0e1101c1464a321CBA815c34d58B5D9");
+    let  PerpsV2ProxyEURPERP =  new web3L2.eth.Contract(contractFutures, "0x87AE62c5720DAB812BDacba66cc24839440048d1");
+    let  PerpsV2ProxyFLOWPERP =  new web3L2.eth.Contract(contractFutures, "0x27665271210aCff4Fab08AD9Bb657E91866471F0");
+    let  PerpsV2ProxyFTMPERP =  new web3L2.eth.Contract(contractFutures, "0xC18f85A6DD3Bcd0516a1CA08d3B1f0A4E191A2C4");
+    let  PerpsV2ProxyGBPPERP =  new web3L2.eth.Contract(contractFutures, "0x1dAd8808D8aC58a0df912aDC4b215ca3B93D6C49");
+    let  PerpsV2ProxyLINKPERP =  new web3L2.eth.Contract(contractFutures, "0x31A1659Ca00F617E86Dc765B6494Afe70a5A9c1A");
+    let  PerpsV2ProxyMATICPERP =  new web3L2.eth.Contract(contractFutures, "0x074B8F19fc91d6B2eb51143E1f186Ca0DDB88042");
+    let  PerpsV2ProxyNEARPERP =  new web3L2.eth.Contract(contractFutures, "0xC8fCd6fB4D15dD7C455373297dEF375a08942eCe");
+    let  PerpsV2ProxyOPPERP =  new web3L2.eth.Contract(contractFutures, "0x442b69937a0daf9D46439a71567fABE6Cb69FBaf");
+    let  PerpsV2ProxySOLPERP =  new web3L2.eth.Contract(contractFutures, "0x0EA09D97b4084d859328ec4bF8eBCF9ecCA26F1D");
+    let  PerpsV2ProxyUNIPERP =  new web3L2.eth.Contract(contractFutures, "0x4308427C463CAEAaB50FFf98a9deC569C31E4E87");
+    let  PerpsV2ProxyXAGPERP =  new web3L2.eth.Contract(contractFutures, "0xdcB8438c979fA030581314e5A5Df42bbFEd744a0");
+    let  PerpsV2ProxyXAUPERP =  new web3L2.eth.Contract(contractFutures, "0x549dbDFfbd47bD5639f9348eBE82E63e2f9F777A");
     let  futuresContractAPE =  new web3L2.eth.Contract(contractFutures, "0xFe00395ec846240dc693e92AB2Dd720F94765Aa3");
     let  futuresContractDYDX =  new web3L2.eth.Contract(contractFutures, "0x10305C1854d6DB8A1060dF60bDF8A8B2981249Cf");
 
@@ -4766,10 +4787,10 @@ async function getFuturesL2() {
             console.log(event);
         });
 
-    futuresContractPERP.events.PositionModified({})
+    futuresContractPERPETH.events.PositionModified({})
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
-                sendFuturesMessage(event,"PERP");
+                sendFuturesMessage(event,"PERPETH");
             }
         })
         .on('error', async function(event){
@@ -4851,6 +4872,221 @@ async function getFuturesL2() {
         .on('data', async function(event){
             if(Math.abs(Number(event.returnValues.tradeSize))>0){
                 sendFuturesMessage(event,"DYDX");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyDOGEPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyDOGEPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyBTCPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyBTCPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+
+    PerpsV2ProxyBNBPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyBNBPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyAXSPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyAXSPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyAVAXPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyAVAXPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyAUDPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyAUDPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyATOMPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyATOMPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+
+    PerpsV2ProxyAPEPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyAPEPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyAAVEPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyAAVEPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyMATICPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyMATICPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyMATICPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyMATICPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyLINKPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyLINKPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyGBPPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyGBPPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyFTMPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyFTMPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyFLOWPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyFLOWPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyEURPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyEURPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+    PerpsV2ProxyDYDXPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyDYDXPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+
+    PerpsV2ProxyXAGPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyXAGPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyUNIPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyUNIPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxySOLPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxySOLPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyOPPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyOPPERP");
+            }
+        })
+        .on('error', async function(event){
+            console.log(event);
+        });
+
+    PerpsV2ProxyNEARPERP.events.PositionModified({})
+        .on('data', async function(event){
+            if(Math.abs(Number(event.returnValues.tradeSize))>0){
+                sendFuturesMessage(event,"PerpsV2ProxyNEARPERP");
             }
         })
         .on('error', async function(event){
