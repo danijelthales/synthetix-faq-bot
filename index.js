@@ -125,6 +125,10 @@ const clientReminder = new Discord.Client();
 const clientInflationRewardsL1 = new Discord.Client();
 clientInflationRewardsL1.login(process.env.BOT_TOKEN_INFLATION_L1);
 
+
+const clientCirculatingSupply = new Discord.Client();
+clientCirculatingSupply.login(process.env.BOT_TOKEN_CIRCULATING_SUPPLY);
+
 const clientInflationRewardsL2 = new Discord.Client();
 clientInflationRewardsL2.login(process.env.BOT_TOKEN_INFLATION_L2);
 
@@ -379,6 +383,10 @@ clientKwentaL1Volume.once('ready', () => {
     getL1KwentaVolume();
 });
 
+clientCirculatingSupply.once('ready', () => {
+    updateSNXCS();
+});
+
 
 
 
@@ -392,6 +400,7 @@ setInterval(function () {
     getL1KwentaVolume();
     console.log("inflation rewards");
     getInflationRewards();
+    updateSNXCS();
 }, 360 * 1000);
 
 client.on("ready", () => {
@@ -5112,3 +5121,23 @@ async function loadDebtFile(){
     let debtResponse = await axios.get('https://api.synthetix.io/debt-pool-comp');
     debtArray = debtResponse.data;
 }
+
+let number  = "142,532,637";
+const updateSNXCS = async () => {
+    let response = await axios.get('https://api.synthetix.io/circulating-supply');
+    number = numberWithCommas(response.data.circulatingSupply.split('.')[0]);
+    if (number) {
+        clientCirculatingSupply.guilds.cache.forEach(function (value, key) {
+            try {
+                value.members.cache
+                    .get(clientCirculatingSupply.user.id)
+                    .setNickname("Circulating Supply");
+                clientCirculatingSupply.user.setActivity(number+ " SNX", {
+                    type: "WATCHING",
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        });
+    }
+};
