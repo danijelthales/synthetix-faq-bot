@@ -24,7 +24,7 @@ let allTimeHistoricMarketCaps = new Map();
 const w3utils = require('web3-utils');
 const fetch = require('node-fetch');
 const l2synthetixExchanger =
-    'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main';
+    'https://api.thegraph.com/subgraphs/name/kwenta/optimism-main';
 const l1synthetixExchanger =
     'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger';
 let contractFuturesRaw = fs.readFileSync('contracts/futures.json');
@@ -251,6 +251,15 @@ let illuviumProposals = new Map();
 
 let votesMapNew4 = new Map();
 
+let totalAmountL2Key = "totalAmountL2Key";
+let totalAmountTradersL2Key = "totalAmountTradersL2Key";
+let totalAmountTradersL1Key = "totalAmountTradersL1Key";
+let totalAmountL1Key = "totalAmountL1Key";
+let totalAmountOfTradesL2 = 45510000;
+let totalAmountOfTradesL1 = 528000;
+let totalAmountOfTradersL2 = 24;
+let totalAmountOfTradersL1 = 2;
+
 console.log("Redis URL:" + process.env.REDIS_URL);
 
 if (process.env.REDIS_URL) {
@@ -307,6 +316,34 @@ if (process.env.REDIS_URL) {
         if (illuviumproposalsRaw) {
             illuviumProposals = new Map(JSON.parse(illuviumproposalsRaw));
             console.log("illuviumProposals:" + illuviumProposals);
+        }
+    });
+
+    redisClient.get(totalAmountL2Key, function (err, obj) {
+        if(obj){
+            console.log("setting object "+obj);
+            totalAmountOfTradesL2 = Number(obj);
+        }
+    });
+
+    redisClient.get(totalAmountTradersL2Key, function (err, obj) {
+        if(obj){
+            console.log("setting object "+obj);
+            totalAmountOfTradersL2 = Number(obj);
+        }
+    });
+
+    redisClient.get(totalAmountL1Key, function (err, obj) {
+        if(obj){
+            console.log("setting object "+obj);
+            totalAmountOfTradesL1 = Number(obj);
+        }
+    });
+
+    redisClient.get(totalAmountTradersL1Key, function (err, obj) {
+        if(obj){
+            console.log("setting object "+obj);
+            totalAmountOfTradersL1 = Number(obj);
         }
     });
 
@@ -470,9 +507,9 @@ client.on("ready", () => {
         }
     });
 
-    calculateDebt();
+    //calculateDebt();
     //calculateHistoricDebt();
-    calculateAllTimeHistoricDebt();
+    //calculateAllTimeHistoricDebt();
     getFuturesL2();
     loadDebtFile();
 });
@@ -1806,9 +1843,11 @@ setInterval(function () {
         resp.on('end', () => {
             try {
                 let result = JSON.parse(data);
+                if(result.market_data){
                 perpPrice = result.market_data.current_price.usd;
                 perpPrice = Math.round(((perpPrice * 1.0) + Number.EPSILON) * 1000) / 1000;
                 perpMarketcap = result.market_data.market_cap.usd;
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -3259,9 +3298,9 @@ setInterval(async function () {
 }, 1000 * 60 * 2);
 
 
-let volume = 100000;
+let volume = 0;
 let distinctTraders = 0;
-let volumeL2 = 100000;
+let volumeL2 = 0;
 let distinctTradersL2 = 0;
 
 
@@ -3269,7 +3308,6 @@ const clientKwenta = new Discord.Client();
 clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
 
 async function getVolume() {
-    volume = 0;
     try {
 
         var d = new Date();
@@ -3301,7 +3339,7 @@ async function getVolume() {
             variables: null,
         });
 
-        const response = await fetch('https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges', {
+        const response = await fetch('https://api.thegraph.com/subgraphs/name/kwenta/mainnet-main', {
             method: 'POST',
             body,
         });
@@ -3379,6 +3417,30 @@ async function getVolume() {
         }
         distinctTradersL2 = synthExchanges.length;
         console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
+        if (volume > 0) {
+            totalAmountOfTradesL1 = volume;
+            await redisClient.set(totalAmountL1Key, volume, function (err, reply) {
+                console.log(reply); // OK
+            });
+        }
+        if (volumeL2 > 0) {
+            totalAmountOfTradesL2 = volumeL2;
+            await redisClient.set(totalAmountL2Key, volumeL2, function (err, reply) {
+                console.log(reply); // OK
+            });
+        }
+        if (distinctTraders > 0) {
+            totalAmountOfTradersL1 = distinctTraders;
+            await redisClient.set(totalAmountOfTradersL1, distinctTraders, function (err, reply) {
+                console.log(reply); // OK
+            });
+        }
+        if (distinctTradersL2 > 0) {
+            totalAmountOfTradersL2 = distinctTradersL2;
+            await redisClient.set(totalAmountOfTradersL2, distinctTradersL2, function (err, reply) {
+                console.log(reply); // OK
+            });
+        }
 
     } catch (e) {
         console.log(e);
@@ -3391,23 +3453,25 @@ setInterval(function () {
 }, 1000 * 60 * 10);
 
 
-
-
-
-setInterval(function () {
-
-    clientKwenta.guilds.cache.forEach( function (value, key) {
+async function setTotalL1L2() {
+    clientKwenta.guilds.cache.forEach(function (value, key) {
         try {
-            if (volumeL2 > 0) {
-                value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(volume) + ", L2=" + getNumberLabelPrecise(volumeL2));
-                value.members.cache.get("784489616781869067").user.setActivity("Trades: L1=" + distinctTraders + " L2=" + distinctTradersL2, {type: 'PLAYING'});
-            }
+            value.members.cache.get("784489616781869067").setNickname("L1=" + getNumberLabel(totalAmountOfTradesL1) + ", L2=" + getNumberLabelPrecise(totalAmountOfTradesL2));
+            value.members.cache.get("784489616781869067").user.setActivity("Trades: L1=" + totalAmountOfTradersL1 + " L2=" + totalAmountOfTradersL2, {type: 'PLAYING'});
         } catch (e) {
             console.log(e);
         }
     });
+}
 
-}, 60 * 1000);
+setInterval(function () {
+    setTotalL1L2();
+
+}, 360 * 1000);
+
+setTimeout(function () {
+    setTotalL1L2();
+}, 1000 * 30 * 1);
 
 
 const {request, gql} = require('graphql-request');
