@@ -417,7 +417,7 @@ async function checkMessages() {
 
 clientKwentaL1Volume.once('ready', () => {
     console.log("kwenta l1 volume getting date")
-    getL1KwentaVolume();
+   // getL1KwentaVolume();
 });
 
 clientCirculatingSupply.once('ready', () => {
@@ -434,7 +434,7 @@ clientInflationRewardsL2.once('ready', () => {
 
 setInterval(function () {
     console.log("kwenta trading volumes")
-    getL1KwentaVolume();
+   // getL1KwentaVolume();
     console.log("inflation rewards");
     getInflationRewards();
     updateSNXCS();
@@ -3310,6 +3310,7 @@ clientKwenta.login(process.env.BOT_TOKEN_KWENTA);
 async function getVolume() {
     try {
 
+        console.log("getting volume");
         var d = new Date();
         d.setDate(d.getDate()-1);
         const oneDayAgo = Math.floor(d.getTime() / 1e3);
@@ -3325,14 +3326,10 @@ async function getVolume() {
       {
         fromAmount
         fromAmountInUSD
-        fromCurrencyKey
-        toCurrencyKey
-        block
         timestamp
         toAddress
         toAmount
         toAmountInUSD
-        from
         feesInUSD
       }
     }`,
@@ -3395,28 +3392,42 @@ async function getVolume() {
 
         volumeL2=0;
 
-        let currentDate = new Date();
-        currentDate.setDate(currentDate.getDate()-1);
-        let timestampYesterday=currentDate.getTime();
-
-        let totalFuturesVolume = 0;
-        for (const [key, value] of mapFutures.entries()) {
-            if(key>timestampYesterday){
-                totalFuturesVolume = Math.round(totalFuturesVolume + value);
-            }else{
-                mapFutures.delete(key);
-            }
-        }
-        redisClient.set(futuresKey, JSON.stringify([...mapFutures]), function () {
-            console.log("added correctly")
-        });
-
-        volumeL2  = totalFuturesVolume;
-        for (const tradeL2 of synthExchanges) {
+       for (const tradeL2 of synthExchanges) {
             volumeL2 = volumeL2 + Math.round(tradeL2.toAmountInUSD);
         }
         distinctTradersL2 = synthExchanges.length;
-        console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
+
+        body = JSON.stringify({
+            query: `{
+      futuresPositions(
+        first:1000,
+        where:{openTimestamp_gt: ${oneDayAgo},
+        isOpen: true}
+      )
+      {
+       isOpen
+       size
+       totalVolume
+      }
+    }`,
+            variables: null,
+        });
+
+        const responseFutures = await fetch('https://api.thegraph.com/subgraphs/name/synthetix-perps/perps', {
+            method: 'POST',
+            body,
+        });
+        const jsonFutures = await responseFutures.json();
+
+        let synthExchangesFutures = jsonFutures.data.futuresPositions;
+
+        for (const futureTradeL2 of synthExchangesFutures) {
+            volumeL2 = volumeL2 + Math.round(futureTradeL2.totalVolume/1e18);
+        }
+
+        distinctTradersL2 = distinctTradersL2 + synthExchangesFutures.length;
+
+       console.log("l2 traders are "+ distinctTradersL2 + " and volume is "+volumeL2);
         if (volume > 0) {
             totalAmountOfTradesL1 = volume;
             await redisClient.set(totalAmountL1Key, volume, function (err, reply) {
@@ -3450,7 +3461,7 @@ async function getVolume() {
 setTimeout(getVolume, 1000 * 60 * 2);
 setInterval(function () {
     getVolume();
-}, 1000 * 60 * 10);
+}, 1000 * 60 * 5);
 
 
 async function setTotalL1L2() {
